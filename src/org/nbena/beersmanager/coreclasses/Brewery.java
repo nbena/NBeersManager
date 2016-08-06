@@ -25,6 +25,15 @@ public class Brewery implements Comparable<Brewery> {
 		this.description = description;
 		this.website = website;
 	}
+	
+	public Brewery(String name, String town, String country, String description, String website, boolean isAuthenticTrappist) {
+		this.name = name;
+		this.town = town;
+		this.country = country;
+		this.description = description;
+		this.website = website;
+		this.isAuthenticTrappist=isAuthenticTrappist;
+	}
 
 	/**
 	 * @return the name

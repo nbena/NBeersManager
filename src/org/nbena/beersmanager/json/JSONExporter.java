@@ -72,8 +72,7 @@ public class JSONExporter {
 	*/
 	
 	public static void writeBeer(List<Beer> beers, OutputStream out) throws Exception{
-		JSONArray array=new JSONArray();
-		array.put(beers);
+		JSONArray array=new JSONArray(beers);
 		PrintStream ps=new PrintStream(out);
 		ps.print(array.toString());
 		

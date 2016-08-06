@@ -7,7 +7,10 @@ import java.util.List;
 
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
+import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.json.JSONExporter;
+import org.nbena.beersmanager.query.QueryRunner;
 
 public class Main {
 	
@@ -27,7 +30,7 @@ public class Main {
 		errors=new LinkedList<String>();
 		loadFiles();
 		System.out.println("Starting reading...");
-		loadLists();
+		
 
 	}
 	
@@ -85,19 +88,55 @@ public class Main {
 		System.out.println(jsonFiles[2].getAbsolutePath()+"\n");
 	}
 	
-	private void loadLists() throws FileNotFoundException, Exception{
+	private void loadBreweriesStyles() throws FileNotFoundException, Exception{
+		
+		styles=Utils.readStyles(jsonFiles[2]);
+		breweries=Utils.readBreweries(jsonFiles[1]);
+	}
+	
+	private void loadListsComplete() throws FileNotFoundException, Exception{
 		
 		styles=Utils.readStyles(jsonFiles[2]);
 		breweries=Utils.readBreweries(jsonFiles[1]);
 		beers=Utils.readBeers(jsonFiles[0], breweries, styles);
 	}
 	
+	private void saveStyles() throws FileNotFoundException, Exception	{
+		System.out.println("Now adding styles...\n");
+		Utils.saveStyles(StupidClass.someStyle(), jsonFiles[2]);
+	}
+	
+	private void saveBreweries() throws FileNotFoundException, Exception	{
+		System.out.println("Now adding  breweries...\n");
+		Utils.saveBreweries(StupidClass.someBreweries(), jsonFiles[1]);
+		
+	}
+	
+	private void saveBeers() throws FileNotFoundException, Exception	{
+		System.out.println("Now adding beers...\n");
+		Utils.saveBeers(StupidClass.someBeers(breweries, styles), jsonFiles[0]);		
+	}
+
+	
 	public static void main(String[] args) {
 		try {
 			Main m = new Main();
-			Utils.printBreweriesComplete(m.getBreweries(), System.out);
+
+			
+			m.saveStyles();
+			m.saveBreweries();
+			
+			m.loadBreweriesStyles();
+			
+			m.saveBeers();
+			
+			m.loadListsComplete();
+			
 			Utils.printStylesComplete(m.getStyles(),System.out);
+			Utils.printBreweriesComplete(m.getBreweries(), System.out);
 			Utils.printBeersComplete(m.getBeers(), System.out);
+
+
 			
 			
 		} catch (Exception e) {

@@ -1,0 +1,115 @@
+package org.nbena.beersmanager.exe;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.nbena.beersmanager.coreclasses.*;
+
+public class StupidClass {
+	
+	public static List<Style> someStyle(){
+		
+		List<Style> styles=new LinkedList<Style>();
+		styles.add(new Style("Stout", "Oyster", "Una stout (tipicamente Dry) alla quale durante la fase di bollitura vengono aggiunte in qualche modo ostriche,"+
+		"per dare un sapore salmastro. I primi indizi dello stile risalgono all'inizio del '900, anche se da sempre Stout e ostriche sono considerate un ottimo "+
+		"abbinamento", "Irlanda", Fermentation.HIGH));
+		styles.add(new Style("Strong Ale", "Belgian (Strong Belgian Pale Ale)", "Birra \"forte \" belga per eccellenza. Colore che varia dal biondo-ambrato al rosso, con "+
+		"gradazione dagli 8 gradi circa in poi.", "Belgio", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial", "Stout Imperiale, gradazione alcolica superiore agli 8 gradi circa, corpo medio-pieno. Una goduria.", "Inghilterra", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Chocolate", "Imperial Stout con l'aggiunta di cacao o cioccolato.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Coffe", "Imperial Stout con l'aggiunta di caffè.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Oatmeal", "Stout \"classica\" con l'aggiunta di fiocchi d'avena (maltati o no), per aggiungere cremosità.", "Inghilterra", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Chocolate", "Stout classica con l'aggiunta di cacao o cioccolato.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Coffee", "Stout classica con l'aggiunta di caffè.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Chocolate Coffee", "Imperial Stout con l'aggiunta di cacao/cioccolate e caffè.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Oatmeal", "Imperial Stout con fiocchi d'avena.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Oatmeal Chocolate", "Imperial Oatmeal Stout con l'aggiunta di fiocchi d'avena e cacao-cioccolato.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Oatmeal Coffee", "Imperial Oatmeal Stout con l'aggiunta di fiocchi d'avena, cacao-cioccolato e caffè.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Oatmeal Chocolate Coffee", "Imperial oatmeal Stout con l'aggiunta di fiocchi d'avena, cacao-cioccolato e caffè.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Vanilla", "Imperial Oatmeal Stout con l'aggiunta di vaniglia.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Oatmeal Vanilla", "Imperial Oatmeal Stout con l'aggiunta di fiocchi d'avena e vaniglia.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Oatmeal Vanilla Chocolate", "Imperial Oatmeal Stout con l'aggiunta di fiocchi d'avena, cacao-cioccolato e vaniglia.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Oatmeal Vanilla Chocolate Coffee", "Imperial Oatmeal Stout con l'aggiunta di fiocchi d'avena, cacao-cioccolato, vaniglia, caffè..", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Vanilla", "Stout \"classica\" con l'aggiunta di vaniglia.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Irish Dry", "LA STOUT che tutti conoscono. Malto d'orzo e orzo tostato, per un finale secco, corpo leggero.", "Irlanda", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Milk-Sweet", "Stout con aggiunta di lattosio per una maggiore dolcezza.", "Inghilterra", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Milk-Sweet", "Imperial Milk Stout.", "USA", Fermentation.HIGH));
+		styles.add(new Style("Stout", "Imperial Milk-Sweet Chocolate", "Imperial Milk Stout con l'aggiunta di cacao-cioccolato.", "USA", Fermentation.HIGH));
+		
+		styles.add(new Style("Lager", "North American Adjunt", "Lager che prevede l'aggiunta di altri cereali, maltati e no, tipo mais. Tipicamente usato dalle grandi multinazionali per"+
+		"abbattere i costi di produzione a scapito ovviamente della qualità.", "USA", Fermentation.LOW));
+		styles.add(new Style("Lager", "Strong", "Lager dal buon contenuto alcolico, si spera anche di miglior sapore.", "Germania", Fermentation.LOW));
+		styles.add(new Style("Lager", "Vienna", "Lager dal buon contenuto alcolico, colore ambrato-rosso, di solito si utilizza il malto gustoso malto Vienna."+
+		"Un tempo molto diffuso, prima della craft beer revolution è quasi scomparso.", "Austria", Fermentation.LOW));
+		styles.add(new Style("Marzen", "", "Birra tedesca dal buon contenuto alcolico. In origine, non si poteva produrre birra in Germania da marzo in poi, così i birrai tedeschi "+
+		"crearono delle lager forti, che avrebbero potuto resistere tutta l'estate ed essere bevute anche alle varie Oktoberfest.", "Germania", Fermentation.LOW));
+		styles.add(new Style("Marzen", "Rauchbier", "Versione con malto affumicato della Marzen. La Schlenkerla di Bamberga ne è un chiaro esempio.", "Germania", Fermentation.LOW));
+		
+		styles.add(new Style("Bock", "Eis (Eisbock)", "Una Doppelbock distillata a freddo, come fa qualche birrificio (BrewDog & co) per ottenere birre super-alcoliche. Lo stile nasce"+
+		"per sbaglio a Kulmbach, Baviera, quando di inverno si lasciò all'esterno una botte di Doppelbock. I cristalli di ghiaccio furono rimossi e si ottene di fatto un concentrato. "+
+		"La gradazione alcolica supera di solito i 10%.", "Germania", Fermentation.LOW));
+		styles.add(new Style("Bock", "Doppel (Dobbelbock)", "Una \"Imperial Bock\", più alcol, più gusto, più corpo.", "Germania", Fermentation.LOW));
+		styles.add(new Style("Bock", "", "Una bassa fermentazione ambrata e dal corpo medio, con alcol intorno ai 6%.", "Germania", Fermentation.LOW));
+		
+		styles.add(new Style("Lambic", "", "65% malto d'orzo, 35% malto di frumento, luppoli solo essicati e lieviti selvaggi, così nascono le lambic. Si tratta di birre che di fatto "+
+		"non scadono e che garantiscono grandi evoluzioni nel tempo. I Brettamonyces Bruxellensis donano quell'acidità che è tipica dello stile.", "Belgio", Fermentation.SPONTANEOUS));
+		styles.add(new Style("Lambic", "Geueze", "Un blend di lambic di 3, 2, 1 anno. Il lambic giovane contiene le sostanze adatte ad una seconda fermentazione in bottiglia.", "Belgio",
+				Fermentation.SPONTANEOUS));
+		
+		styles.add(new Style("Quadrupel", "", "Qualcuno dice che non vi è differenza dalle Belgian Strong Dark, qualcuno sì. Birre nate nell'abbazia come le più complesse in assoluto, e"+
+		"le migliori rimangono sempre quelle prodotte nelle abbazie trappiste del Belgio.", "Belgio", Fermentation.HIGH));
+		
+		return styles;
+		
+		
+	}
+	
+	public static List<Beer> someBeers(List<Brewery> breweries, List<Style> styles){
+		List<Beer> beers = new LinkedList<Beer>();
+		
+		Beer b1=new Beer();
+		b1.setName("Trappistes Westvleteren 12");
+		b1.setBrewery(breweries.get(0));
+		b1.setColor("Marrone scuro");
+		b1.setDescription("La migliore in assoluto.");
+		b1.setMark(100);
+		b1.setNumberOfStars(5);
+		b1.setPlaceTried("beer-shop.it");
+		b1.setPrice(20.0);
+		b1.setStyle(styles.get(styles.size()-1));
+		b1.setAlcool(10.2);
+		b1.setTried(true);
+		beers.add(b1);
+		
+		Beer b2=new Beer();
+		b2.setName("Trappistes Rochefort 10");
+		b2.setBrewery(breweries.get(1));
+		b2.setColor("Marrone scuro");
+		b2.setDescription("Nella top 3 delle mie migliori birre");
+		b2.setMark(99);
+		b2.setNumberOfStars(5);
+		b2.setPlaceTried("Iper");
+		b2.setPrice(3.50);
+		b2.setStyle(styles.get(styles.size()-1));
+		b2.setAlcool(11.3);
+		b2.setTried(true);
+		beers.add(b2);
+		
+		
+		return beers;
+	}
+	
+	public static List<Brewery> someBreweries(){
+		List<Brewery> breweries=new LinkedList<Brewery>();
+		breweries.add(new Brewery("Browerij Notre Dame de St. Sixtus", "Westvletern", "Belgio", "Il più ricercato ed il più parco nella produzione birrificio trappista del mondo.", "", true));
+		breweries.add(new Brewery("Abaye de Notre Dame de Saint-Remy", "Rochefort", "Belgio", "Sicuramente il miglior birrificio trappista per il rapporto qualità-prezzo-reperibilità.", "", true));
+		return breweries;
+	}
+	
+	
+
+	public StupidClass() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

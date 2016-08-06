@@ -400,6 +400,23 @@ public class Comparators {
 		
 	}
 	
+	public static class ComparatorBeerByCountryBreweryAverage implements Comparator<Beer>{
+
+		@Override
+		public int compare(Beer arg0, Beer arg1) {
+			int rCountry, rBrewery, ret;
+			rCountry=arg0.getBrewery().getCountry().compareTo(arg1.getBrewery().getCountry());
+			if (rCountry==0){
+				rBrewery = arg0.getMark() > arg1.getMark() ? 1 : 0;
+				ret=rBrewery;
+			}else{
+				ret=rCountry;
+			}
+			return ret;
+		}
+		
+	}
+	
 	public static void main(String args[]){
 		LinkedList<Brewery> breweries=new LinkedList<Brewery>();
 		Brewery b=new Brewery("Carlow Brewing", "Carlow", "Ireland", "a", "b");

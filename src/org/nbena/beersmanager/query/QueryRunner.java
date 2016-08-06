@@ -33,7 +33,7 @@ public class QueryRunner {
 	
 
 	
-	public static List<Beer> beersFilteredByBrewery(LinkedList<Beer> beers, Brewery brewery){
+	public static List<Beer> beersFilteredByBrewery(List<Beer> beers, Brewery brewery){
 		return beers.stream().filter(b -> b.getBrewery().compareTo(brewery)==0)
 		.collect(Collectors.toList());
 	}
@@ -52,7 +52,7 @@ public class QueryRunner {
 	
 	
 	
-	public static List<Beer> beersFilteredByIsTried(LinkedList<Beer> beers, boolean isTried){
+	public static List<Beer> beersFilteredByIsTried(List<Beer> beers, boolean isTried){
 		return beers.stream().filter(b -> b.isTried()==isTried)
 				.collect(Collectors.toList());
 	}
@@ -60,12 +60,12 @@ public class QueryRunner {
 	
 	
 	
-	public static List<Beer> beersFilteredByMinimumNumberOfStars(LinkedList<Beer> beers, int numberOfStar){
+	public static List<Beer> beersFilteredByMinimumNumberOfStars(List<Beer> beers, int numberOfStar){
 		return beers.stream().filter(b -> b.getNumberOfStars()>=numberOfStar)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<Beer> beersFilteredByExactNumberOfStars(LinkedList<Beer> beers, int numberOfStar){
+	public static List<Beer> beersFilteredByExactNumberOfStars(List<Beer> beers, int numberOfStar){
 		return beers.stream().filter(b -> b.getNumberOfStars()==numberOfStar)
 				.collect(Collectors.toList());
 	}
@@ -73,12 +73,12 @@ public class QueryRunner {
 	
 	
 	
-	public static List<Beer> beersFilteredByMinimumAlcool(LinkedList<Beer> beers, double alcool){
+	public static List<Beer> beersFilteredByMinimumAlcool(List<Beer> beers, double alcool){
 		return beers.stream().filter(b -> b.getAlcool()>=alcool)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<Beer> beersFilteredByExatcAlcool(LinkedList<Beer> beers, double alcool){
+	public static List<Beer> beersFilteredByExatcAlcool(List<Beer> beers, double alcool){
 		return beers.stream().filter(b -> b.getAlcool()==alcool)
 				.collect(Collectors.toList());
 	}
@@ -111,7 +111,7 @@ public class QueryRunner {
 	
 	
 	
-	public static List<Beer> beersFilteredByBreweryCountry(LinkedList<Beer> beers, String country){	
+	public static List<Beer> beersFilteredByBreweryCountry(List<Beer> beers, String country){	
 		return beers.stream().filter(b -> b.getBrewery().getCountry().equalsIgnoreCase(country))
 				.collect(Collectors.toList());
 			
@@ -119,7 +119,7 @@ public class QueryRunner {
 	
 	
 	
-	public static List<Beer> beersFilteredByStyleProvenience(LinkedList<Beer> beers, String provenience){
+	public static List<Beer> beersFilteredByStyleProvenience(List<Beer> beers, String provenience){
 		return beers.stream().filter(b -> b.getStyle().getStyleCountryOrigin().equalsIgnoreCase(provenience))
 				.collect(Collectors.toList());
 	}
@@ -264,6 +264,24 @@ public class QueryRunner {
 		return bestBreweriesMap;
 	}
 	
+	public static double breweryAverage(List<Beer> beers, Brewery b){
+		double average=0;
+		List<Beer> beersFiltered = beersFilteredByBrewery(beers, b);
+		for (Beer beer: beersFiltered){
+			average+=beer.getMark();
+		}
+		return average/beersFiltered.size();
+	}
+	
+	
+	public static HashMap<Brewery, Double> breweriesAverage(List<Beer> beers){
+		HashMap<Brewery, Double> map=new HashMap<Brewery, Double>();
+		List<Brewery> breweries = getAllBreweries(beers);
+		for(Brewery b: breweries){
+			map.put(b, breweryAverage(beers, b));
+		}
+		return map;
+	}
 	
 	
 	//SORT FUNCTIONS

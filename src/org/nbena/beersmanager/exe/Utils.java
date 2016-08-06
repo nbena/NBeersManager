@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class Utils {
 		PrintStream out=new PrintStream(output);
 		out.println("-------------Style:--------------");
 		for(Style style: styles){
-			out.println(" "+style.getStyleMainName()+ " "+style.getStyleSubCategory()+", "+style.getFermentation()+" fermentation");
+			out.println(" "+style.getStyleSubCategory()+" "+style.getStyleMainName()+", "+style.getFermentation()+" fermentation");
 			out.println(" "+style.getDescription()+"\n");
 		}
 	}
@@ -80,6 +81,7 @@ public class Utils {
 		return directory.concat("beers.json");
 	}
 	
+	
 	public static List<Style> readStyles(File file) throws FileNotFoundException, Exception{
 		 return Converter.toNormalStyleList(JSONExporter.readStylesSpecial(new FileInputStream(file)));  
 	}
@@ -94,6 +96,19 @@ public class Utils {
 		beersSpecial = JSONExporter.readBeersSpecial( new FileInputStream(file));
 		beersRead = Converter.recompose(beersSpecial, breweries, styles);
 		return beersRead;
+	}
+	
+	public static void saveStyles(List<Style> styles, File file) throws FileNotFoundException, Exception{
+		JSONExporter.writeStyleSpecial(styles, new FileOutputStream(file));
+	}
+	
+	public static void saveBreweries(List<Brewery> breweries, File file) throws FileNotFoundException, Exception{
+		JSONExporter.writeBrewery(breweries, new FileOutputStream(file));
+	}
+	
+	public static void saveBeers(List<Beer> beers, File file) throws FileNotFoundException, Exception{
+		//List<BeerJSONSpecialClass> beersSpecial = Converter.toSpecialBeerList(beers);
+		JSONExporter.writeBeerSpecial(beers, new FileOutputStream(file)); //already done by json
 	}
 
 }
