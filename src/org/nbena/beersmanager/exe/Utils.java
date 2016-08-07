@@ -110,5 +110,55 @@ public class Utils {
 		//List<BeerJSONSpecialClass> beersSpecial = Converter.toSpecialBeerList(beers);
 		JSONExporter.writeBeerSpecial(beers, new FileOutputStream(file)); //already done by json
 	}
+	
+	public static Object[] fromStyle(Style s){
+		Object[] array=new Object[5];
+		array[0]=s.getStyleMainName();
+		array[1]=s.getStyleSubCategory();
+		array[2]=s.getFermentation();
+		array[3]=s.getStyleCountryOrigin();
+		array[4]=s.getDescription();
+		return array;
+	}
+	
+	public static Object[][] fromStyles(List<Style> styles){
+		Object[][] array=new Object[styles.size()][5];
+		for(int i=0;i<styles.size();i++){
+			Style s=styles.get(i);
+			array[i]=fromStyle(s);
+		}
+		return array;
+	}
+	
+	public static class Constants{
+		public static final Object[] TABLE_HEADER_BEERS = {
+				"Nome",
+				"Birrificio",
+				"Stile",
+				"ABV %",
+				"Voto",
+				"Stelle",
+				"Provata",
+				"Luogo",
+				"Prezzo",
+				"Descrizione"
+		};
+		
+		public static final Object[] TABLE_HEADER_BREWERY = {
+				"Nome",
+				"Nazione",
+				"Città",
+				"Descizione",
+				"Web"
+		};
+		
+		public static final Object[] TABLE_HEADER_STYLE = {
+				"Stile",
+				"Sottostile",
+				"Fermentazione",
+				"Paese d'origine",
+				"Descrizione"
+		};
+	}
 
 }

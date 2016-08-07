@@ -1,4 +1,4 @@
-package org.nbena.beersmanager.exe.gui;
+package org.nbena.beersmanager.exe.views;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class AddNewStyle extends JFrame {
+public class ViewAddNewStyle extends JFrame {
 
 	private JPanel contentPane;
 
@@ -18,7 +18,7 @@ public class AddNewStyle extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddNewStyle frame = new AddNewStyle();
+					ViewAddNewStyle frame = new ViewAddNewStyle();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,7 +30,7 @@ public class AddNewStyle extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddNewStyle() {
+	public ViewAddNewStyle() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

@@ -1,4 +1,4 @@
-package org.nbena.beersmanager.exe.gui;
+package org.nbena.beersmanager.exe.views;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -7,8 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.GridLayout;
 
-public class AddNewBeer extends JDialog {
+public class ViewAddNewBeer extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
@@ -17,7 +18,7 @@ public class AddNewBeer extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			AddNewBeer dialog = new AddNewBeer();
+			ViewAddNewBeer dialog = new ViewAddNewBeer();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -28,12 +29,12 @@ public class AddNewBeer extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public AddNewBeer() {
-		setBounds(100, 100, 450, 300);
+	public ViewAddNewBeer() {
+		setBounds(100, 100, 673, 408);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(new GridLayout(1, 0, 0, 0));
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

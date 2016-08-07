@@ -5,10 +5,18 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
+
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.exe.controllers.ControllerMainGUI;
+import org.nbena.beersmanager.exe.models.Model;
+import org.nbena.beersmanager.exe.models.ModelStyleTable;
+import org.nbena.beersmanager.exe.views.ViewMainGUI;
 import org.nbena.beersmanager.json.JSONExporter;
 import org.nbena.beersmanager.query.QueryRunner;
 
@@ -120,6 +128,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		try {
+			/*
 			Main m = new Main();
 
 			
@@ -137,7 +146,23 @@ public class Main {
 			Utils.printBeersComplete(m.getBeers(), System.out);
 
 
+			*/
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
+			Model model =new Model();
+			//DefaultTableModel tableModel=new ModelStyleTable(Utils.fromStyles(StupidClass.someStyle()));
+			ModelStyleTable tableModel=new ModelStyleTable();
+			model.setTableModel(tableModel);
+			ViewMainGUI gui = new ViewMainGUI(model);
+			ControllerMainGUI controller=new ControllerMainGUI(gui, model);
+			ModelStyleTable t=(ModelStyleTable)model.getTableModel();
+			t.setData(StupidClass.someStyle());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -101,8 +101,8 @@ public class StupidClass {
 	
 	public static List<Brewery> someBreweries(){
 		List<Brewery> breweries=new LinkedList<Brewery>();
-		breweries.add(new Brewery("Browerij Notre Dame de St. Sixtus", "Westvletern", "Belgio", "Il più ricercato ed il più parco nella produzione birrificio trappista del mondo.", "", true));
-		breweries.add(new Brewery("Abaye de Notre Dame de Saint-Remy", "Rochefort", "Belgio", "Sicuramente il miglior birrificio trappista per il rapporto qualità-prezzo-reperibilità.", "", true));
+		breweries.add(new Brewery("Browerij De Sint-Sixtusabdji van Westvleteren", "Westvletern", "Belgio", "Il più ricercato ed il più parco nella produzione birrificio trappista del mondo.", "", true));
+		breweries.add(new Brewery("Abbaye Notre-Dame de Saint-Rémy", "Rochefort", "Belgio", "Sicuramente il miglior birrificio trappista per il rapporto qualità-prezzo-reperibilità.", "", true));
 		return breweries;
 	}
 	
