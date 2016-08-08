@@ -13,10 +13,11 @@ import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
-import org.nbena.beersmanager.exe.controllers.ControllerMainGUI;
-import org.nbena.beersmanager.exe.models.Model;
-import org.nbena.beersmanager.exe.models.ModelStyleTable;
-import org.nbena.beersmanager.exe.views.ViewMainGUI;
+import org.nbena.beersmanager.exe.ui.controllers.ControllerMainGUI;
+import org.nbena.beersmanager.exe.ui.models.Model;
+import org.nbena.beersmanager.exe.ui.models.ModelBreweryTable;
+import org.nbena.beersmanager.exe.ui.models.ModelStyleTable;
+import org.nbena.beersmanager.exe.ui.views.ViewMainGUI;
 import org.nbena.beersmanager.json.JSONExporter;
 import org.nbena.beersmanager.query.QueryRunner;
 
@@ -156,13 +157,18 @@ public class Main {
 			}
 			
 			Model model =new Model();
-			//DefaultTableModel tableModel=new ModelStyleTable(Utils.fromStyles(StupidClass.someStyle()));
+			model.setDataShownNow(Model.DataShownNow.STYLE);
+			
 			ModelStyleTable tableModel=new ModelStyleTable();
-			model.setTableModel(tableModel);
+			ModelBreweryTable tableModelB=new ModelBreweryTable();
+			//model.setTableModel(tableModel);
+			model.setTableModel(tableModelB);
+			
 			ViewMainGUI gui = new ViewMainGUI(model);
 			ControllerMainGUI controller=new ControllerMainGUI(gui, model);
-			ModelStyleTable t=(ModelStyleTable)model.getTableModel();
-			t.setData(StupidClass.someStyle());
+			model.setBreweryData(StupidClass.someBreweries());
+			//ModelStyleTable t=(ModelStyleTable)model.getTableModel();
+			//t.setData(StupidClass.someStyle());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

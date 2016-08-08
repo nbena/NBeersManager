@@ -431,7 +431,7 @@ public class Comparators {
 		breweries.add(b4);
 		breweries.add(b5);
 		Collections.sort(breweries, new ComparatorBreweryGeographycally());
-		Utils.printBreweriesComplete(breweries, System.out);
+		Utils.printBreweries(breweries, System.out);
 		
 	}
 

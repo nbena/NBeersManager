@@ -21,8 +21,42 @@ public class Utils {
 	public Utils() {
 	}
 	
+	public static void printStyle(Style style, OutputStream output){
+		PrintStream out=new PrintStream(output);
+		out.println("-------");
+		out.println(" "+style.getStyleSubCategory()+" "+style.getStyleMainName()+", "+style.getFermentation()+" fermentation");
+		out.println(" "+style.getDescription()+"\n");
+	}
 	
-	public static void printBeersComplete(List<Beer> beers, OutputStream output){
+	public static void printBeer(Beer beer, OutputStream output){
+		PrintStream out=new PrintStream(output);
+		out.println("-------");
+		out.println(" "+beer.getBrewery().getName()+": "+beer.getName());
+		out.println(" "+beer.getStyle().getStyleMainName()+"  "+beer.getStyle().getStyleSubCategory());
+		out.println(" "+beer.getColor()+" - Fermentation: "+beer.getFermentation());
+		out.println(" Alcool: "+beer.getAlcool()+"% ");
+		out.println(" Description: "+beer.getDescription());
+		out.println(" Mark: "+beer.getMark());
+		out.println(" Star: "+beer.getNumberOfStars());
+		if(beer.isTried()){
+			out.println(" Tried: yes");
+			out.println(" Place tried: "+beer.getPlaceTried()+ " Price: "+beer.getPrice());
+		}
+		else{
+			out.println(" Tried: no");
+		}
+		out.println();
+	}
+	
+	public static void printBrewery(Brewery brewery, OutputStream output){
+		PrintStream out=new PrintStream(output);
+		out.println("-------");
+		out.println(" "+brewery.getName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite());
+		out.println(" "+brewery.getDescription()+"\n");
+	}
+	
+	public static void printBeers(List<Beer> beers, OutputStream output){
+		/*
 		PrintStream out=new PrintStream(output);
 		out.println("-------------Beers:--------------");
 		for(Beer beer: beers){
@@ -39,13 +73,18 @@ public class Utils {
 				out.println(" Place tried: "+beer.getPlaceTried()+ " Price: "+beer.getPrice());
 			}
 			else{
-				out.println(" Tried: no"+System.lineSeparator());
+				out.println(" Tried: no"+"\n");
 			}
 		}
 		out.println();
+		*/
+		for(Beer b: beers){
+			printBeer(b, output);
+		}
 	}
 	
-	public static void printBreweriesComplete(List<Brewery> breweries, OutputStream output){
+	public static void printBreweries(List<Brewery> breweries, OutputStream output){
+		/*
 		PrintStream out=new PrintStream(output);
 		out.println("-------------Breweries:--------------");
 		for(Brewery brewery: breweries){
@@ -53,14 +92,23 @@ public class Utils {
 			out.println(" "+brewery.getName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite());
 			out.println(" "+brewery.getDescription()+"\n");
 		}
+		*/
+		for(Brewery b: breweries){
+			printBrewery(b, output);
+		}
 	}
 	
-	public static void printStylesComplete(List<Style> styles, OutputStream output){
+	public static void printStyles(List<Style> styles, OutputStream output){
+		/*
 		PrintStream out=new PrintStream(output);
 		out.println("-------------Style:--------------");
 		for(Style style: styles){
 			out.println(" "+style.getStyleSubCategory()+" "+style.getStyleMainName()+", "+style.getFermentation()+" fermentation");
 			out.println(" "+style.getDescription()+"\n");
+		}
+		*/
+		for(Style s: styles){
+			printStyle(s, output);
 		}
 	}
 	
@@ -111,7 +159,7 @@ public class Utils {
 		JSONExporter.writeBeerSpecial(beers, new FileOutputStream(file)); //already done by json
 	}
 	
-	public static Object[] fromStyle(Style s){
+	public static Object[] fromStyleToObjectArray(Style s){
 		Object[] array=new Object[5];
 		array[0]=s.getStyleMainName();
 		array[1]=s.getStyleSubCategory();
@@ -121,11 +169,54 @@ public class Utils {
 		return array;
 	}
 	
-	public static Object[][] fromStyles(List<Style> styles){
+	public static Object[] fromBeerToObjectArray(Beer b){
+		Object[] array=new Object[10];
+		array[0]=b.getName();
+		array[1]=b.getBrewery().getName();
+		array[2]=b.getStyle().getStyleSubCategory()+" "+b.getStyle().getStyleMainName();
+		array[3]=b.getAlcool();
+		array[4]=b.getMark();
+		array[5]=b.getNumberOfStars();
+		array[6]=b.isTried();
+		array[7]=b.getPlaceTried();
+		array[8]=b.getPrice();
+		array[9]=b.getDescription();
+		return array;
+	}
+	
+	public static Object[] fromBreweryToObjectArray(Brewery b){
+		Object [] array=new Object[5];
+		array[0]=b.getName();
+		array[1]=b.getCountry();
+		array[2]=b.getTown();
+		array[3]=b.getDescription();
+		array[4]=b.getWebsite();
+		return array;
+	}
+	
+	public static Object[][] fromStylesToObjectMatrix(List<Style> styles){
 		Object[][] array=new Object[styles.size()][5];
 		for(int i=0;i<styles.size();i++){
 			Style s=styles.get(i);
-			array[i]=fromStyle(s);
+			array[i]=fromStyleToObjectArray(s);
+		}
+		return array;
+	}
+	
+	public static Object[][] fromBeersToObjectMatrix(List<Beer> beers){
+		Object [][] array=new Object[beers.size()][10];
+		for(int i=0;i<beers.size();i++){
+			Beer b=beers.get(i);
+			array[i]=fromBeerToObjectArray(b);
+		}
+		return array;
+	}
+	
+	public static Object[][] fromBreweriesToObjectMatrix(List<Brewery> breweries){
+		Object [][] array=new Object[breweries.size()][10];
+		for(int i=0;i<breweries.size();i++){
+			Brewery b=breweries.get(i);
+			array[i]=fromBreweryToObjectArray(b);
 		}
 		return array;
 	}
