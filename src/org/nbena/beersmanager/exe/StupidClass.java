@@ -99,6 +99,20 @@ public class StupidClass {
 		return beers;
 	}
 	
+	
+	public static List<String> someCountries(){
+		List<String> countries=new LinkedList<String>();
+		countries.add("Afganistan");
+		countries.add("Belgio");
+		countries.add("Danimarca");	
+		countries.add("Inghilterra");
+		countries.add("Irlanda");
+		countries.add("Italia");
+		countries.add("Paesi Bassi");
+		countries.add("USA");
+		return countries;
+	}
+	
 	public static List<Brewery> someBreweries(){
 		List<Brewery> breweries=new LinkedList<Brewery>();
 		breweries.add(new Brewery("Browerij De Sint-Sixtusabdji van Westvleteren", "Westvletern", "Belgio", "Il più ricercato ed il più parco nella produzione birrificio trappista del mondo.", "", true));

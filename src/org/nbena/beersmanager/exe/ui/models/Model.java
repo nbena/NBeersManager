@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.query.QueryRunner;
 
 public class Model {
 	
@@ -30,6 +31,8 @@ public class Model {
 	private List<Style> styleData;
 	private List<Beer> beerData;
 	private List<Brewery> breweryData;
+	
+	private List<String> countries;
 	
 	private Beer beerDialog;
 	private Brewery breweryDialog;
@@ -113,12 +116,24 @@ public class Model {
 	 * @param styleData the styleData to set
 	 */
 	public void setStyleData(List<Style> styleData) {
-		this.styleData = styleData;
+		this.styleData = styleData;		
+	}
+	
+	public void setStyleDataAndShow(List<Style> styleData){
+		this.styleData = styleData;	
 		dataShownNow=DataShownNow.STYLE;
 		tableModel.clear();
 		ModelStyleTable tableModelOld=(ModelStyleTable)tableModel;
 		tableModel=tableModelOld;
-		tableModel.setData(styleData); //it work||		
+		tableModel.setData(styleData); //it work||
+	}
+	
+	public void showStyleData(){
+		dataShownNow=DataShownNow.STYLE;
+		tableModel.clear();
+		ModelStyleTable tableModelOld=(ModelStyleTable)tableModel;
+		tableModel=tableModelOld;
+		tableModel.setData(styleData); //it work||
 	}
 
 	/**
@@ -133,6 +148,19 @@ public class Model {
 	 */
 	public void setBeerData(List<Beer> beerData) {
 		this.beerData = beerData;
+
+	}
+	
+	public void setBeerDataAndShow(List<Beer> beerData){
+		this.beerData = beerData;
+		dataShownNow=DataShownNow.BEER;
+		tableModel.clear();
+		ModelBeerTable tableModelOld=(ModelBeerTable)tableModel;
+		tableModel=tableModelOld;
+		tableModel.setData(beerData); //it work||
+	}
+	
+	public void showBeerData(){
 		dataShownNow=DataShownNow.BEER;
 		tableModel.clear();
 		ModelBeerTable tableModelOld=(ModelBeerTable)tableModel;
@@ -152,6 +180,18 @@ public class Model {
 	 */
 	public void setBreweryData(List<Brewery> breweryData) {
 		this.breweryData = breweryData;
+	}
+	
+	public void setBreweryDataAndShow(List<Brewery> breweryData){
+		this.breweryData = breweryData;
+		dataShownNow=DataShownNow.BREWERY;
+		tableModel.clear();
+		ModelBreweryTable tableModelOld=(ModelBreweryTable)tableModel;
+		tableModel=tableModelOld;
+		tableModel.setData(breweryData); //it work||
+	}
+	
+	public void showBreweryData(){
 		dataShownNow=DataShownNow.BREWERY;
 		tableModel.clear();
 		ModelBreweryTable tableModelOld=(ModelBreweryTable)tableModel;
@@ -178,6 +218,20 @@ public class Model {
 		this.dataShownNow = dataShownNow;
 	}
 
+
+	/**
+	 * @return the countries
+	 */
+	public List<String> getCountries() {
+		return countries;
+	}
+
+	/**
+	 * @param countries the countries to set
+	 */
+	public void setCountries(List<String> countries) {
+		this.countries = countries;
+	}
 
 	public Beer getSelectedBeer(int index){
 		if (dataShownNow==DataShownNow.BEER){
@@ -254,6 +308,14 @@ public class Model {
 		this.styleDialog = styleDialog;
 	}
 
+	
+	public List<Style> getOnlyMainStyle(){
+		return QueryRunner.onlyMainStyles(styleData);
+	}
+	
+	public List<String> getOnlyMainStyles(){
+		return QueryRunner.onlyMainStylesAsString(styleData);
+	}
 
 	
 

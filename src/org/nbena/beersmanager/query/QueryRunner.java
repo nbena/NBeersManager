@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 import org.nbena.beersmanager.coreclasses.*;
+import org.nbena.beersmanager.exe.Utils;
 public class QueryRunner {
 	
 	public static enum ORDER_BY_BEER{}
@@ -178,6 +179,40 @@ public class QueryRunner {
 				.collect(Collectors.toList());
 	}
 	
+	public static List<Style> onlyMainStyles(List<Style> styles){
+		List<Style> filteredStyles=new LinkedList<Style>();
+		//Style nakedStyle;
+		for(Style s: styles){
+			//nakedStyle=Utils.getNakedStyle(s);
+			//if(Collections.binarySearch(filteredStyles, nakedStyle, new Comparators.ComparatorStyleOnlyMain())<0){
+			if(!searchForMainStyle(filteredStyles, s)){
+//				filteredStyles.add(nakedStyle);
+				filteredStyles.add(s);
+			}
+		}
+		return filteredStyles;
+	}
+	
+	private static boolean searchForMainStyle(List<Style> styles, Style style){
+		boolean ret=false;
+		for(int i=0;i<styles.size();i++){
+			Style s=styles.get(i);
+			if (s.getStyleMainName().equals(style.getStyleMainName())){
+				i=styles.size();
+				ret=true;
+			}
+		}
+		return ret;
+	}
+	
+	public static List<String> onlyMainStylesAsString(List<Style> styles){
+		List<Style> filtered=onlyMainStyles(styles);
+		List<String> strings=new LinkedList<String>();
+		for(Style s: filtered){
+			strings.add(s.getStyleMainName());
+		}
+		return strings;
+	}
 	
 	
 	public static List<Beer> theBestBeersBasedOnMark(List<Beer> beers){

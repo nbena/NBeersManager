@@ -2,69 +2,58 @@ package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import org.nbena.beersmanager.coreclasses.Brewery;
 
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.util.List;
-
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JComboBox;
-
-public class ViewAddNewBrewery extends JDialog {
+//public class ViewViewBrewery extends JDialog {
+	
+	public class ViewViewBrewery extends ViewAbstractDialog {
 
 	private final JPanel contentPanel = new JPanel();
+	
 	private JTextField textFieldName;
 	private JTextField textFieldTown;
+	private JTextField textFieldCountry;
 	private JTextField textFieldWebsite;
-	
 	private JTextArea textAreaDescription;
 	
 	private JButton okButton;
-	private JButton cancelButton;
-	
-	private JComboBox<String> comboBoxCountry;
-	
-	
-	public void fillThings(List<String> countries){
-		for(String s: countries){
-			comboBoxCountry.addItem(s);
-		}
-	}
+	private JButton cancelButton; 
+	private JButton btnModify;
 	
 	
-	
-	public String getBreweryName(){
-		return textFieldName.getText();
-	}
-	
-	public String getBreweryTown(){
-		return textFieldTown.getText();
-	}
-	
-	public String getBreweryCountry(){
-		//return textFieldCountry.getText();
-		return null;
-	}
-	
-	public String getBreweryWebsite(){
-		return textFieldWebsite.getText();
-	}
-	
-	public String getDescription(){
-		return textAreaDescription.getText();
-	}
+//	public String getBreweryName(){
+//		return textFieldName.getText();
+//	}
+//	
+//	public String getBreweryTown(){
+//		return textFieldTown.getText();
+//	}
+//	
+//	public String getBreweryCountry(){
+//		//return textFieldCountry.getText();
+//		return null;
+//	}
+//	
+//	public String getBreweryWebsite(){
+//		return textFieldWebsite.getText();
+//	}
+//	
+//	public String getDescription(){
+//		return textAreaDescription.getText();
+//	}
 	
 	
 	public void setBreweryName(String text){
@@ -95,20 +84,32 @@ public class ViewAddNewBrewery extends JDialog {
 		cancelButton.addActionListener(listener);
 	}
 	
-	/**
-	public void setEditable(boolean editable){
-		textFieldName.setEditable(editable);
-		textFieldTown.setEditable(editable);
-		//textFieldCountry.setEditable(editable);
-		textFieldWebsite.setEditable(editable);
-		textAreaDescription.setEditable(editable);
+	public void addActionListenerModifyButton(ActionListener listener){
+		btnModify.addActionListener(listener);
 	}
-	*/
+	
+	
+	
+//	public void setEditable(boolean editable){
+//		textFieldName.setEditable(editable);
+//		textFieldTown.setEditable(editable);
+//		//textFieldCountry.setEditable(editable);
+//		textFieldWebsite.setEditable(editable);
+//		textAreaDescription.setEditable(editable);
+//	}
+	
+	private void setEditable(){
+		textFieldName.setEditable(false);
+		textFieldTown.setEditable(false);
+		textFieldCountry.setEditable(false);
+		textFieldWebsite.setEditable(false);
+		textAreaDescription.setEditable(false);
+	}
 	
 	public void setBrewery(Brewery b){
 		textFieldName.setText(b.getName());
 		textFieldTown.setText(b.getTown());
-		comboBoxCountry.setSelectedItem(b.getCountry());
+		textFieldCountry.setText(b.getCountry());
 		textFieldWebsite.setText(b.getWebsite());
 		textAreaDescription.setText(b.getDescription());
 	}
@@ -118,7 +119,7 @@ public class ViewAddNewBrewery extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			ViewAddNewBrewery dialog = new ViewAddNewBrewery();
+			ViewViewBrewery dialog = new ViewViewBrewery();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -129,7 +130,7 @@ public class ViewAddNewBrewery extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ViewAddNewBrewery() {
+	public ViewViewBrewery() {
 		setBounds(100, 100, 509, 446);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -193,13 +194,14 @@ public class ViewAddNewBrewery extends JDialog {
 			contentPanel.add(lblNazione, gbc_lblNazione);
 		}
 		{
-			comboBoxCountry = new JComboBox();
-			GridBagConstraints gbc_comboBoxCountry = new GridBagConstraints();
-			gbc_comboBoxCountry.insets = new Insets(0, 0, 5, 0);
-			gbc_comboBoxCountry.fill = GridBagConstraints.HORIZONTAL;
-			gbc_comboBoxCountry.gridx = 3;
-			gbc_comboBoxCountry.gridy = 6;
-			contentPanel.add(comboBoxCountry, gbc_comboBoxCountry);
+			textFieldCountry = new JTextField();
+			GridBagConstraints gbc_textFieldCountry = new GridBagConstraints();
+			gbc_textFieldCountry.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldCountry.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldCountry.gridx = 3;
+			gbc_textFieldCountry.gridy = 6;
+			contentPanel.add(textFieldCountry, gbc_textFieldCountry);
+			textFieldCountry.setColumns(10);
 		}
 		{
 			JLabel lblWeb = new JLabel("Web:");
@@ -237,20 +239,45 @@ public class ViewAddNewBrewery extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			GridBagLayout gbl_buttonPane = new GridBagLayout();
+			gbl_buttonPane.columnWidths = new int[]{369, 47, 67, 0};
+			gbl_buttonPane.rowHeights = new int[]{23, 0};
+			gbl_buttonPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_buttonPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+			buttonPane.setLayout(gbl_buttonPane);
+			{
+				btnModify = new JButton("Modifica");
+				GridBagConstraints gbc_btnModify = new GridBagConstraints();
+				gbc_btnModify.anchor = GridBagConstraints.WEST;
+				gbc_btnModify.insets = new Insets(0, 0, 0, 5);
+				gbc_btnModify.gridx = 0;
+				gbc_btnModify.gridy = 0;
+				buttonPane.add(btnModify, gbc_btnModify);
+			}
 			{
 			    okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
+				GridBagConstraints gbc_okButton = new GridBagConstraints();
+				gbc_okButton.anchor = GridBagConstraints.NORTHWEST;
+				gbc_okButton.insets = new Insets(0, 0, 0, 5);
+				gbc_okButton.gridx = 1;
+				gbc_okButton.gridy = 0;
+				buttonPane.add(okButton, gbc_okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				cancelButton = new JButton("Annulla");
 				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				GridBagConstraints gbc_cancelButton = new GridBagConstraints();
+				gbc_cancelButton.anchor = GridBagConstraints.NORTHWEST;
+				gbc_cancelButton.gridx = 2;
+				gbc_cancelButton.gridy = 0;
+				buttonPane.add(cancelButton, gbc_cancelButton);
 			}
 		}
+		
+		setEditable();
 	}
 
 }

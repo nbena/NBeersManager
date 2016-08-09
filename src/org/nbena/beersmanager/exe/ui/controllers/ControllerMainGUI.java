@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.JDialog;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -13,9 +14,14 @@ import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.models.Model.DataShownNow;
+import org.nbena.beersmanager.exe.ui.views.ViewAbstractDialog;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewBeer;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewBrewery;
+import org.nbena.beersmanager.exe.ui.views.ViewAddNewStyle;
 import org.nbena.beersmanager.exe.ui.views.ViewMainGUI;
+import org.nbena.beersmanager.exe.ui.views.ViewViewBeer;
+import org.nbena.beersmanager.exe.ui.views.ViewViewBrewery;
+import org.nbena.beersmanager.exe.ui.views.ViewViewStyle;
 import org.nbena.beersmanager.export.Exporter;
 import org.nbena.beersmanager.export.JSONExporter;
 import org.nbena.beersmanager.export.MSExcelNewExporter;
@@ -26,8 +32,13 @@ public class ControllerMainGUI {
 	private ViewMainGUI gui;
 	private Model model;
 	
-	private ViewAddNewBeer beerDialog;
-	private ViewAddNewBrewery breweryDialog;
+	private ViewAddNewBeer addBeerDialog;
+	private ViewAddNewBrewery addBreweryDialog;
+	private ViewAddNewStyle addStyleDialog;
+	
+	private ViewViewBeer viewBeerDialog;
+	private ViewViewBrewery viewBreweryDialog;
+	private ViewViewStyle viewStyleDialog;
 	//
 	private Exporter exporter;
 
@@ -162,29 +173,115 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	private void setOkCancelViewDialog(ViewAbstractDialog dialog){
+		dialog.addActionListenerOkButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dialog.setVisible(false);
+				dialog.dispose();
+			}
+			
+		});
+		
+		dialog.addActionListenerCancelButton(new ActionListener(){
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dialog.setVisible(false);
+				dialog.dispose();
+			}
+		});
+	}
+	
+	private void openStyleDialog(int row){
+		Style s=model.getSelectedStyle(row);
+		model.setStyleDialog(s);
+		viewStyleDialog=new ViewViewStyle();
+		viewStyleDialog.setStyle(s);
+		viewStyleDialog.setVisible(true);
+		
+		setOkCancelViewDialog(viewStyleDialog);
+		setStyleDialogModifyButtonListener();
+	}
+	
+	private void openBreweryDialog(int row){
+		Brewery b=model.getSelectedBrewery(row);
+		model.setBreweryDialog(b); //call then
+		viewBreweryDialog=new ViewViewBrewery();
+		viewBreweryDialog.setBrewery(b);
+		viewBreweryDialog.setVisible(true);
+		
+		setOkCancelViewDialog(viewBreweryDialog);
+		setBreweryModifyButtonListener();
+	}
+	
+	private void setStyleDialogModifyButtonListener(){
+		viewStyleDialog.addActionListenerModifyButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				viewStyleDialog.setVisible(false);
+				viewStyleDialog.dispose();
+				
+				addStyleDialog=new ViewAddNewStyle();
+				addStyleDialog.fillThings(model.getOnlyMainStyle(), model.getCountries());
+				addStyleDialog.setStyle(model.getStyleDialog());
+				addStyleDialog.setVisible(true);
+			}
+			
+		});
+	}
+	
+	private void setBreweryModifyButtonListener(){
+		viewBreweryDialog.addActionListenerModifyButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				viewBreweryDialog.setVisible(false);
+				viewBreweryDialog.dispose();
+				
+				addBreweryDialog=new ViewAddNewBrewery();
+				addBreweryDialog.fillThings(model.getCountries());
+				addBreweryDialog.setBrewery(model.getBreweryDialog());
+				addBreweryDialog.setVisible(true);
+				
+			}
+			
+		});
+	}
 	
 	private void addListSelectionListener(){
 		gui.addTableListSelectionListener(new ListSelectionListener(){
 			
 			@Override
 			public void valueChanged(ListSelectionEvent event){
-				int row=gui.getTableSelectedRow();
-				if(model.getDataShownNow()==DataShownNow.BEER){
-					Beer b=model.getSelectedBeer(row);
-					//Utils.printBeer(b, System.out);
+				
+				if(event.getValueIsAdjusting()){ //if not do this, the event is fired twice.
 					
-				}else if(model.getDataShownNow()==DataShownNow.BREWERY){
-					Brewery b=model.getSelectedBrewery(row);
-					//Utils.printBrewery(b, System.out);
-					model.setBreweryDialog(b); //call then
-					breweryDialog=new ViewAddNewBrewery();
-					breweryDialog.setBrewery(b);
-					breweryDialog.setVisible(true);
+					int row=gui.getTableSelectedRow();
+					if(model.getDataShownNow()==DataShownNow.BEER){
+						Beer b=model.getSelectedBeer(row);
+						//Utils.printBeer(b, System.out);
+						
+					}else if(model.getDataShownNow()==DataShownNow.BREWERY){
+//						Brewery b=model.getSelectedBrewery(row);
+//						model.setBreweryDialog(b); //call then
+//						viewBreweryDialog=new ViewViewBrewery();
+//						viewBreweryDialog.setBrewery(b);
+//						viewBreweryDialog.setVisible(true);
+						openBreweryDialog(row);
+					}
+					else{
+//						Style s=model.getSelectedStyle(row);
+//						model.setStyleDialog(s);
+//						viewStyleDialog=new ViewViewStyle();
+//						viewStyleDialog.setStyle(s);
+//						viewStyleDialog.setVisible(true);
+						openStyleDialog(row);
+					}
 				}
-				else{
-					Style s=model.getSelectedStyle(row);
-					Utils.printStyle(s, System.out);
-				}
+				
 			}
 			
 		});

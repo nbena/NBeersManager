@@ -157,16 +157,32 @@ public class Main {
 			}
 			
 			Model model =new Model();
-			model.setDataShownNow(Model.DataShownNow.STYLE);
 			
-			ModelStyleTable tableModel=new ModelStyleTable();
-			ModelBreweryTable tableModelB=new ModelBreweryTable();
-			//model.setTableModel(tableModel);
-			model.setTableModel(tableModelB);
+//			model.setDataShownNow(Model.DataShownNow.STYLE);
+//			ModelStyleTable tableModelStyle=new ModelStyleTable();
+//			model.setTableModel(tableModelStyle);
+			
+			ModelBreweryTable tableModelBrewery=new ModelBreweryTable();
+			model.setDataShownNow(Model.DataShownNow.BREWERY);
+			model.setTableModel(tableModelBrewery);
+			
+			model.setCountries(StupidClass.someCountries());
 			
 			ViewMainGUI gui = new ViewMainGUI(model);
 			ControllerMainGUI controller=new ControllerMainGUI(gui, model);
+			
+			
+			
+			
+			
+			model.setStyleData(StupidClass.someStyle());
 			model.setBreweryData(StupidClass.someBreweries());
+			model.setBeerData(StupidClass.someBeers(StupidClass.someBreweries(), StupidClass.someStyle()));
+			
+//			model.showStyleData();
+			model.showBreweryData();
+			
+			
 			//ModelStyleTable t=(ModelStyleTable)model.getTableModel();
 			//t.setData(StupidClass.someStyle());
 			

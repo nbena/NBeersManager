@@ -221,6 +221,12 @@ public class Utils {
 		return array;
 	}
 	
+	public static Style getNakedStyle(Style s){
+		Style naked=new Style();
+		naked.setStyleMainName(s.getStyleMainName());
+		return naked;
+	}
+	
 	public static class Constants{
 		public static final Object[] TABLE_HEADER_BEERS = {
 				"Nome",

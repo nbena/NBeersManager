@@ -418,6 +418,17 @@ public class Comparators {
 		
 	}
 	
+	@Deprecated
+	public static class ComparatorStyleOnlyMain implements Comparator<Style>{
+
+		@Override
+		public int compare(Style arg0, Style arg1) {
+			return Utils.getNakedStyle(arg0).getStyleMainName().compareTo(Utils.getNakedStyle(arg1).getStyleMainName());
+		}
+		
+	}
+	
+	
 	public static void main(String args[]){
 		LinkedList<Brewery> breweries=new LinkedList<Brewery>();
 		Brewery b=new Brewery("Carlow Brewing", "Carlow", "Ireland", "a", "b");
