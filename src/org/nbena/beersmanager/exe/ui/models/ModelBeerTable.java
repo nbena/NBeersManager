@@ -4,6 +4,7 @@ package org.nbena.beersmanager.exe.ui.models;
 
 
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.nbena.beersmanager.coreclasses.Beer;
@@ -20,10 +21,15 @@ public class ModelBeerTable extends /*DefaultTableModel*/MyModelAbstractTable {
 
 	public ModelBeerTable() {
 		super(new Object[][]{}, Utils.Constants.TABLE_HEADER_BEERS);
+		System.out.println(Arrays.toString(Utils.Constants.TABLE_HEADER_BEERS));
+		super.setColumnIdentifiers(Utils.Constants.TABLE_HEADER_BEERS);
+		
 	}
 	
 	public ModelBeerTable(Object [][] data){
 		super(data, Utils.Constants.TABLE_HEADER_BEERS);
+		//System.out.println(Arrays.toString(arg0));
+		
 		
 	}
 

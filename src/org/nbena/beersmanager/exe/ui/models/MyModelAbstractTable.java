@@ -40,6 +40,10 @@ public abstract class MyModelAbstractTable extends DefaultTableModel {
 		super(data, columnNames);
 	}
 	
+	public MyModelAbstractTable(Object [] columnNames){
+		super(new Object[][]{}, columnNames);
+	}
+	
 	public  MyModelAbstractTable(Object [][]data){}
 	
 	public abstract void clear();

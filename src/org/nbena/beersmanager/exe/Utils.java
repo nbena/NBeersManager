@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
+import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.json.BeerJSONSpecialClass;
 import org.nbena.beersmanager.json.Converter;
@@ -170,17 +171,18 @@ public class Utils {
 	}
 	
 	public static Object[] fromBeerToObjectArray(Beer b){
-		Object[] array=new Object[10];
+//		Object[] array=new Object[10];
+		Object[] array=new Object[9];
 		array[0]=b.getName();
 		array[1]=b.getBrewery().getName();
 		array[2]=b.getStyle().getStyleSubCategory()+" "+b.getStyle().getStyleMainName();
 		array[3]=b.getAlcool();
 		array[4]=b.getMark();
 		array[5]=b.getNumberOfStars();
-		array[6]=b.isTried();
+		array[6]=Utils.getBooleanItalian(b.isTried());
 		array[7]=b.getPlaceTried();
 		array[8]=b.getPrice();
-		array[9]=b.getDescription();
+//		array[9]=b.getDescription();
 		return array;
 	}
 	
@@ -204,7 +206,8 @@ public class Utils {
 	}
 	
 	public static Object[][] fromBeersToObjectMatrix(List<Beer> beers){
-		Object [][] array=new Object[beers.size()][10];
+//		Object [][] array=new Object[beers.size()][10];
+		Object [][] array=new Object[beers.size()][9];
 		for(int i=0;i<beers.size();i++){
 			Beer b=beers.get(i);
 			array[i]=fromBeerToObjectArray(b);
@@ -227,6 +230,53 @@ public class Utils {
 		return naked;
 	}
 	
+	public static String getStyleString(Style s){
+		return s.getStyleSubCategory()+" "+s.getStyleMainName();
+	}
+	
+	public static String getBreweryString(Brewery b){
+		return b.getName()+", "+b.getTown()+" ("+b.getCountry()+")";
+	}
+	
+	public static List<String> getBreweriesString(List<Brewery> breweries){
+		List<String> strings=new LinkedList<String>();
+		for(Brewery b: breweries){
+			strings.add(getBreweryString(b));
+		}
+		return strings;
+	}
+	
+	public static List<String> getStylesString(List<Style> styles){
+		List<String> strings=new LinkedList<String>();
+		for(Style s: styles){
+			strings.add(getStyleString(s));
+		}
+		return strings;
+	}
+	
+	public static String getBooleanItalian(boolean b){
+		return b==true ? "Sì" : "No";
+	}
+	
+	public static List<String> getMainStyleString(List<Style> styles){
+		List<String> strings=new LinkedList<String>();
+		for(Style s: styles){
+			strings.add(s.getStyleMainName());
+		}
+		return strings;
+	}
+	
+	public static String getFermentationString(Fermentation f){
+		String s=null;
+		if(f==Fermentation.HIGH)
+			s="Alta";
+		else if(f==Fermentation.LOW)
+			s="Bassa";
+		else
+			s="Spontanea";
+		return s;
+	}
+	
 	public static class Constants{
 		public static final Object[] TABLE_HEADER_BEERS = {
 				"Nome",
@@ -237,8 +287,8 @@ public class Utils {
 				"Stelle",
 				"Provata",
 				"Luogo",
-				"Prezzo",
-				"Descrizione"
+				"Prezzo"/*,*/
+				/*"Descrizione"*/
 		};
 		
 		public static final Object[] TABLE_HEADER_BREWERY = {

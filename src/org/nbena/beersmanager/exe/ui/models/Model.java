@@ -119,14 +119,14 @@ public class Model {
 		this.styleData = styleData;		
 	}
 	
-	public void setStyleDataAndShow(List<Style> styleData){
-		this.styleData = styleData;	
-		dataShownNow=DataShownNow.STYLE;
-		tableModel.clear();
-		ModelStyleTable tableModelOld=(ModelStyleTable)tableModel;
-		tableModel=tableModelOld;
-		tableModel.setData(styleData); //it work||
-	}
+//	public void setStyleDataAndShow(List<Style> styleData){
+//		this.styleData = styleData;	
+//		dataShownNow=DataShownNow.STYLE;
+//		tableModel.clear();
+//		ModelStyleTable tableModelOld=(ModelStyleTable)tableModel;
+//		tableModel=tableModelOld;
+//		tableModel.setData(styleData); //it work||
+//	}
 	
 	public void showStyleData(){
 		dataShownNow=DataShownNow.STYLE;
@@ -151,14 +151,14 @@ public class Model {
 
 	}
 	
-	public void setBeerDataAndShow(List<Beer> beerData){
-		this.beerData = beerData;
-		dataShownNow=DataShownNow.BEER;
-		tableModel.clear();
-		ModelBeerTable tableModelOld=(ModelBeerTable)tableModel;
-		tableModel=tableModelOld;
-		tableModel.setData(beerData); //it work||
-	}
+//	public void setBeerDataAndShow(List<Beer> beerData){
+//		this.beerData = beerData;
+//		dataShownNow=DataShownNow.BEER;
+//		tableModel.clear();
+//		ModelBeerTable tableModelOld=(ModelBeerTable)tableModel;
+//		tableModel=tableModelOld;
+//		tableModel.setData(beerData); //it work||
+//	}
 	
 	public void showBeerData(){
 		dataShownNow=DataShownNow.BEER;
@@ -182,14 +182,14 @@ public class Model {
 		this.breweryData = breweryData;
 	}
 	
-	public void setBreweryDataAndShow(List<Brewery> breweryData){
-		this.breweryData = breweryData;
-		dataShownNow=DataShownNow.BREWERY;
-		tableModel.clear();
-		ModelBreweryTable tableModelOld=(ModelBreweryTable)tableModel;
-		tableModel=tableModelOld;
-		tableModel.setData(breweryData); //it work||
-	}
+//	public void setBreweryDataAndShow(List<Brewery> breweryData){
+//		this.breweryData = breweryData;
+//		dataShownNow=DataShownNow.BREWERY;
+//		tableModel.clear();
+//		ModelBreweryTable tableModelOld=(ModelBreweryTable)tableModel;
+//		tableModel=tableModelOld;
+//		tableModel.setData(breweryData); //it work||
+//	}
 	
 	public void showBreweryData(){
 		dataShownNow=DataShownNow.BREWERY;

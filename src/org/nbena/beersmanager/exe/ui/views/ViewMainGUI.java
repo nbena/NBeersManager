@@ -16,6 +16,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import java.awt.GridBagConstraints;
@@ -239,6 +240,7 @@ public class ViewMainGUI extends JFrame {
 		contentPane.setLayout(gbl_contentPane);
 		
 		table = new JTable(model.getTableModel());
+		
 		GridBagConstraints gbc_table = new GridBagConstraints();
 		gbc_table.fill = GridBagConstraints.BOTH;
 		gbc_table.gridx = 0;

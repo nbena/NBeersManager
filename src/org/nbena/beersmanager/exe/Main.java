@@ -15,6 +15,7 @@ import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.ui.controllers.ControllerMainGUI;
 import org.nbena.beersmanager.exe.ui.models.Model;
+import org.nbena.beersmanager.exe.ui.models.ModelBeerTable;
 import org.nbena.beersmanager.exe.ui.models.ModelBreweryTable;
 import org.nbena.beersmanager.exe.ui.models.ModelStyleTable;
 import org.nbena.beersmanager.exe.ui.views.ViewMainGUI;
@@ -158,13 +159,20 @@ public class Main {
 			
 			Model model =new Model();
 			
-//			model.setDataShownNow(Model.DataShownNow.STYLE);
 //			ModelStyleTable tableModelStyle=new ModelStyleTable();
 //			model.setTableModel(tableModelStyle);
 			
-			ModelBreweryTable tableModelBrewery=new ModelBreweryTable();
-			model.setDataShownNow(Model.DataShownNow.BREWERY);
-			model.setTableModel(tableModelBrewery);
+//			ModelBreweryTable tableModelBrewery=new ModelBreweryTable();
+//			model.setTableModel(tableModelBrewery);
+			
+			ModelBeerTable tableModelBeer = new ModelBeerTable();
+			model.setTableModel(tableModelBeer);
+				
+			
+//			model.setDataShownNow(Model.DataShownNow.BREWERY);
+//			model.setDataShownNow(Model.DataShownNow.STYLE);
+//			model.setDataShownNow(Model.DataShownNow.BEER);
+			
 			
 			model.setCountries(StupidClass.someCountries());
 			
@@ -180,7 +188,11 @@ public class Main {
 			model.setBeerData(StupidClass.someBeers(StupidClass.someBreweries(), StupidClass.someStyle()));
 			
 //			model.showStyleData();
-			model.showBreweryData();
+//			model.showBreweryData();
+			
+			
+			
+			model.showBeerData();
 			
 			
 			//ModelStyleTable t=(ModelStyleTable)model.getTableModel();

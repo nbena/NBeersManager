@@ -1,6 +1,7 @@
 package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,8 +19,9 @@ import javax.swing.border.EmptyBorder;
 import org.nbena.beersmanager.coreclasses.Brewery;
 
 //public class ViewViewBrewery extends JDialog {
+public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog{
 	
-	public class ViewViewBrewery extends ViewAbstractDialog {
+//	public class ViewViewBrewery extends JDialog implements ViewAbstractDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	
@@ -32,6 +34,7 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 	private JButton okButton;
 	private JButton cancelButton; 
 	private JButton btnModify;
+	private JButton btnDelete;
 	
 	
 //	public String getBreweryName(){
@@ -65,7 +68,7 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 	}
 	
 	public void setBreweryCountry(String text){
-		//textFieldCountry.setText(text);
+		textFieldCountry.setText(text);
 	}
 	
 	public void setBreweryWebsite(String text){
@@ -88,6 +91,11 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 		btnModify.addActionListener(listener);
 	}
 	
+	@Override
+	public void addActionListenerDeleteButton(ActionListener listener){
+		btnDelete.addActionListener(listener);
+	}
+	
 	
 	
 //	public void setEditable(boolean editable){
@@ -106,6 +114,7 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 		textAreaDescription.setEditable(false);
 	}
 	
+	@Deprecated
 	public void setBrewery(Brewery b){
 		textFieldName.setText(b.getName());
 		textFieldTown.setText(b.getTown());
@@ -132,6 +141,7 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 	 */
 	public ViewViewBrewery() {
 		setBounds(100, 100, 509, 446);
+		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -237,42 +247,102 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 			gbc_textAreaDescription.gridy = 10;
 			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
 		}
+//		{
+//			JPanel buttonPane = new JPanel();
+//			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+//			GridBagLayout gbl_buttonPane = new GridBagLayout();
+//			gbl_buttonPane.columnWidths = new int[]{369, 47, 67, 0};
+//			gbl_buttonPane.rowHeights = new int[]{23, 0};
+//			gbl_buttonPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+//			gbl_buttonPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+//			buttonPane.setLayout(gbl_buttonPane);
+//			{
+//				btnModify = new JButton("Modifica");
+//				GridBagConstraints gbc_btnModify = new GridBagConstraints();
+//				gbc_btnModify.anchor = GridBagConstraints.WEST;
+//				gbc_btnModify.insets = new Insets(0, 0, 0, 5);
+//				gbc_btnModify.gridx = 0;
+//				gbc_btnModify.gridy = 0;
+//				buttonPane.add(btnModify, gbc_btnModify);
+//			}
+//			{
+//			    okButton = new JButton("OK");
+//				okButton.setActionCommand("OK");
+//				GridBagConstraints gbc_okButton = new GridBagConstraints();
+//				gbc_okButton.anchor = GridBagConstraints.NORTHWEST;
+//				gbc_okButton.insets = new Insets(0, 0, 0, 5);
+//				gbc_okButton.gridx = 1;
+//				gbc_okButton.gridy = 0;
+//				buttonPane.add(okButton, gbc_okButton);
+//				getRootPane().setDefaultButton(okButton);
+//			}
+//			{
+//				cancelButton = new JButton("Annulla");
+//				cancelButton.setActionCommand("Cancel");
+//				GridBagConstraints gbc_cancelButton = new GridBagConstraints();
+//				gbc_cancelButton.anchor = GridBagConstraints.NORTHWEST;
+//				gbc_cancelButton.gridx = 2;
+//				gbc_cancelButton.gridy = 0;
+//				buttonPane.add(cancelButton, gbc_cancelButton);
+//			}
+//		}
+		
 		{
 			JPanel buttonPane = new JPanel();
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+//			GridBagLayout gbl_buttonPane = new GridBagLayout();
+//			gbl_buttonPane.columnWidths = new int[]{376, 47, 65, 0};
+//			gbl_buttonPane.rowHeights = new int[]{23, 0};
+//			gbl_buttonPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+//			gbl_buttonPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+//			buttonPane.setLayout(gbl_buttonPane);
 			GridBagLayout gbl_buttonPane = new GridBagLayout();
-			gbl_buttonPane.columnWidths = new int[]{369, 47, 67, 0};
-			gbl_buttonPane.rowHeights = new int[]{23, 0};
-			gbl_buttonPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-			gbl_buttonPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 			buttonPane.setLayout(gbl_buttonPane);
+			
+			GridBagConstraints constraint = new GridBagConstraints();
+			constraint.fill = GridBagConstraints.HORIZONTAL;
+			constraint.weightx = 0;
+			constraint.gridx = 0;
+			constraint.gridy = 0;
+			
 			{
 				btnModify = new JButton("Modifica");
 				GridBagConstraints gbc_btnModify = new GridBagConstraints();
-				gbc_btnModify.anchor = GridBagConstraints.WEST;
-				gbc_btnModify.insets = new Insets(0, 0, 0, 5);
 				gbc_btnModify.gridx = 0;
 				gbc_btnModify.gridy = 0;
+				gbc_btnModify.weightx = 0;
 				buttonPane.add(btnModify, gbc_btnModify);
 			}
+			
 			{
-			    okButton = new JButton("OK");
+				btnDelete = new JButton("Elimina");
+				GridBagConstraints gbc_btnDelete = new GridBagConstraints();
+				gbc_btnDelete.gridx = 1;
+				gbc_btnDelete.gridy = 0;
+				gbc_btnDelete.weightx = 0;
+				buttonPane.add(btnDelete, gbc_btnDelete);
+			}
+			
+			
+			
+			
+			{
+				okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
 				GridBagConstraints gbc_okButton = new GridBagConstraints();
-				gbc_okButton.anchor = GridBagConstraints.NORTHWEST;
-				gbc_okButton.insets = new Insets(0, 0, 0, 5);
-				gbc_okButton.gridx = 1;
+				gbc_okButton.gridx = 2;
 				gbc_okButton.gridy = 0;
+				gbc_okButton.weightx = 0;
 				buttonPane.add(okButton, gbc_okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				cancelButton = new JButton("Annulla");
+				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 				GridBagConstraints gbc_cancelButton = new GridBagConstraints();
-				gbc_cancelButton.anchor = GridBagConstraints.NORTHWEST;
-				gbc_cancelButton.gridx = 2;
+				gbc_cancelButton.gridx = 3;
 				gbc_cancelButton.gridy = 0;
+				gbc_cancelButton.weightx = 0;
 				buttonPane.add(cancelButton, gbc_cancelButton);
 			}
 		}

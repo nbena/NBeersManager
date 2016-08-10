@@ -19,7 +19,8 @@ import javax.swing.border.EmptyBorder;
 import org.nbena.beersmanager.coreclasses.Style;
 
 //public class ViewViewStyle extends JDialog {
-public class ViewViewStyle extends ViewAbstractDialog {
+public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
+//public class ViewViewStyle extends JDialog implements ViewAbstractDialog{
 
 	private final JPanel contentPanel = new JPanel();
 	
@@ -34,6 +35,7 @@ public class ViewViewStyle extends ViewAbstractDialog {
 	private JButton okButton;
 	private JButton cancelButton;
 	private JButton btnModify;
+	private JButton btnDelete;
 	
 	public void addActionListenerOkButton(ActionListener listener){
 		okButton.addActionListener(listener);
@@ -45,6 +47,11 @@ public class ViewViewStyle extends ViewAbstractDialog {
 	
 	public void addActionListenerModifyButton(ActionListener listener){
 		btnModify.addActionListener(listener);
+	}
+	
+	@Override
+	public void addActionListenerDeleteButton(ActionListener listener){
+		btnDelete.addActionListener(listener);
 	}
 	
 	
@@ -62,6 +69,26 @@ public class ViewViewStyle extends ViewAbstractDialog {
 		textFieldStyleCountry.setEditable(false);
 		textFieldFermentation.setEditable(false);
 		textAreaDescription.setEditable(false);
+	}
+	
+	public void setStyleMainName(String t){
+		textFieldStyleMainCategory.setText(t);
+	}
+	
+	public void setStyleSubcategory(String t){
+		textFieldStyleSubcategory.setText(t);
+	}
+	
+	public void setStyleCountry(String t){
+		textFieldStyleCountry.setText(t);
+	}
+	
+	public void setFermentation(String t){
+		textFieldFermentation.setText(t);
+	}
+	
+	public void setDescription(String t){
+		textAreaDescription.setText(t);
 	}
 
 	/**
@@ -82,6 +109,7 @@ public class ViewViewStyle extends ViewAbstractDialog {
 	 */
 	public ViewViewStyle() {
 		setBounds(100, 100, 509, 446);
+		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -199,32 +227,92 @@ public class ViewViewStyle extends ViewAbstractDialog {
 			gbc_textAreaDescription.gridy = 10;
 			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
 		}
+//		{
+//			JPanel buttonPane = new JPanel();
+//			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+//			GridBagLayout gbl_buttonPane = new GridBagLayout();
+//			gbl_buttonPane.columnWidths = new int[]{371, 47, 65, 0};
+//			gbl_buttonPane.rowHeights = new int[]{23, 0};
+//			gbl_buttonPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+//			gbl_buttonPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+//			buttonPane.setLayout(gbl_buttonPane);
+//			{
+//				btnModify = new JButton("Modifica");
+//				GridBagConstraints gbc_btnModify = new GridBagConstraints();
+//				gbc_btnModify.anchor = GridBagConstraints.WEST;
+//				gbc_btnModify.insets = new Insets(0, 0, 0, 5);
+//				gbc_btnModify.gridx = 0;
+//				gbc_btnModify.gridy = 0;
+//				buttonPane.add(btnModify, gbc_btnModify);
+//			}
+//			{
+//				okButton = new JButton("OK");
+//				okButton.setActionCommand("OK");
+//				GridBagConstraints gbc_okButton = new GridBagConstraints();
+//				gbc_okButton.anchor = GridBagConstraints.NORTHWEST;
+//				gbc_okButton.insets = new Insets(0, 0, 0, 5);
+//				gbc_okButton.gridx = 1;
+//				gbc_okButton.gridy = 0;
+//				buttonPane.add(okButton, gbc_okButton);
+//				getRootPane().setDefaultButton(okButton);
+//			}
+//			{
+//				cancelButton = new JButton("Cancel");
+//				cancelButton.setActionCommand("Cancel");
+//				GridBagConstraints gbc_cancelButton = new GridBagConstraints();
+//				gbc_cancelButton.anchor = GridBagConstraints.NORTHWEST;
+//				gbc_cancelButton.gridx = 2;
+//				gbc_cancelButton.gridy = 0;
+//				buttonPane.add(cancelButton, gbc_cancelButton);
+//			}
+//		}
+		
 		{
 			JPanel buttonPane = new JPanel();
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+//			GridBagLayout gbl_buttonPane = new GridBagLayout();
+//			gbl_buttonPane.columnWidths = new int[]{376, 47, 65, 0};
+//			gbl_buttonPane.rowHeights = new int[]{23, 0};
+//			gbl_buttonPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+//			gbl_buttonPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+//			buttonPane.setLayout(gbl_buttonPane);
 			GridBagLayout gbl_buttonPane = new GridBagLayout();
-			gbl_buttonPane.columnWidths = new int[]{371, 47, 65, 0};
-			gbl_buttonPane.rowHeights = new int[]{23, 0};
-			gbl_buttonPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-			gbl_buttonPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 			buttonPane.setLayout(gbl_buttonPane);
+			
+			GridBagConstraints constraint = new GridBagConstraints();
+			constraint.fill = GridBagConstraints.HORIZONTAL;
+			constraint.weightx = 0;
+			constraint.gridx = 0;
+			constraint.gridy = 0;
+			
 			{
 				btnModify = new JButton("Modifica");
 				GridBagConstraints gbc_btnModify = new GridBagConstraints();
-				gbc_btnModify.anchor = GridBagConstraints.WEST;
-				gbc_btnModify.insets = new Insets(0, 0, 0, 5);
 				gbc_btnModify.gridx = 0;
 				gbc_btnModify.gridy = 0;
+				gbc_btnModify.weightx = 0;
 				buttonPane.add(btnModify, gbc_btnModify);
 			}
+			
+			{
+				btnDelete = new JButton("Elimina");
+				GridBagConstraints gbc_btnDelete = new GridBagConstraints();
+				gbc_btnDelete.gridx = 1;
+				gbc_btnDelete.gridy = 0;
+				gbc_btnDelete.weightx = 0;
+				buttonPane.add(btnDelete, gbc_btnDelete);
+			}
+			
+			
+			
+			
 			{
 				okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
 				GridBagConstraints gbc_okButton = new GridBagConstraints();
-				gbc_okButton.anchor = GridBagConstraints.NORTHWEST;
-				gbc_okButton.insets = new Insets(0, 0, 0, 5);
-				gbc_okButton.gridx = 1;
+				gbc_okButton.gridx = 2;
 				gbc_okButton.gridy = 0;
+				gbc_okButton.weightx = 0;
 				buttonPane.add(okButton, gbc_okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
@@ -232,9 +320,9 @@ public class ViewViewStyle extends ViewAbstractDialog {
 				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 				GridBagConstraints gbc_cancelButton = new GridBagConstraints();
-				gbc_cancelButton.anchor = GridBagConstraints.NORTHWEST;
-				gbc_cancelButton.gridx = 2;
+				gbc_cancelButton.gridx = 3;
 				gbc_cancelButton.gridy = 0;
+				gbc_cancelButton.weightx = 0;
 				buttonPane.add(cancelButton, gbc_cancelButton);
 			}
 		}

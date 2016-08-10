@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 
-public class ViewAddNewBrewery extends JDialog {
+public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textFieldName;
@@ -76,7 +76,7 @@ public class ViewAddNewBrewery extends JDialog {
 	}
 	
 	public void setBreweryCountry(String text){
-		//textFieldCountry.setText(text);
+		comboBoxCountry.setSelectedItem(text);
 	}
 	
 	public void setBreweryWebsite(String text){

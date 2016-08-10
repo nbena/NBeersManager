@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-public class ViewAddNewStyle extends JDialog {
+public class ViewAddNewStyle extends JDialog implements StyleDialog{
 
 	private final JPanel contentPanel = new JPanel();
 	
@@ -44,7 +44,7 @@ public class ViewAddNewStyle extends JDialog {
 	}
 	
 	
-	public void fillComboFermentation(/*String[] items*/){
+	private void fillComboFermentation(/*String[] items*/){
 		//do it here because index of items must be always the same.
 		for(int i=0;i<3;i++){
 			comboBoxFermentation.addItem(Fermentation.HIGH.toFirstUpperCase());
@@ -53,7 +53,7 @@ public class ViewAddNewStyle extends JDialog {
 		}
 	}
 	
-	public void setCurrentFermentation(Style s){
+	private void setCurrentFermentation(Style s){
 		if(s.getFermentation()==Fermentation.HIGH){
 			comboBoxFermentation.setSelectedIndex(0);
 		}else if(s.getFermentation()==Fermentation.LOW){
@@ -63,32 +63,35 @@ public class ViewAddNewStyle extends JDialog {
 		}
 	}
 	
-	public void fillComboStyle(List<Style> styles){
-		for(Style s: styles){
-			comboBoxMainStyle.addItem(s.getStyleMainName());
+	
+	private void fillComboStyle(List<String> styles){
+		for(String s: styles){
+			comboBoxMainStyle.addItem(s);
 		}
 	}
-	
+	@Deprecated
 	public void setCurrentStyle(Style s){
 		comboBoxMainStyle.setSelectedItem(s.getStyleMainName());
 	}
 	
+	@Deprecated
 	public void setCurrentCountry(Style s){
 		comboBoxCountry.setSelectedItem(s.getStyleCountryOrigin());
 	}
 	
-	public void fillComboCountry(List<String> countries){
+	private void fillComboCountry(List<String> countries){
 		for(String c: countries){
 			comboBoxCountry.addItem(c);
 		}
 	}
 	
-	public void fillThings(List<Style> styles, List<String> countries){
+	public void fillThings(List<String> styles, List<String> countries){
 		fillComboStyle(styles);
 		fillComboCountry(countries);
 		fillComboFermentation();
 	}
 	
+	@Deprecated
 	public void setStyle(Style s){
 		textFieldStyleSubcategory.setText(s.getStyleSubCategory());
 		textAreaDescription.setText(s.getDescription());
@@ -96,6 +99,26 @@ public class ViewAddNewStyle extends JDialog {
 		setCurrentStyle(s);
 		setCurrentCountry(s);
 		
+	}
+	
+	public void setStyleMainName(String t){
+		comboBoxMainStyle.setSelectedItem(t);
+	}
+	
+	public void setStyleSubcategory(String t){
+		textFieldStyleSubcategory.setText(t);
+	}
+	
+	public void setFermentation(String t){
+		comboBoxFermentation.setSelectedItem(t);
+	}
+	
+	public void setStyleCountry(String t){
+		comboBoxCountry.setSelectedItem(t);
+	}
+	
+	public void setDescription(String t){
+		textAreaDescription.setText(t);
 	}
 
 	/**

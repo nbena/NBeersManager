@@ -12,5 +12,7 @@ public abstract class ViewAbstractDialog extends JDialog {
 	
 	public abstract void addActionListenerModifyButton(ActionListener listener);
 	
+	public abstract void addActionListenerDeleteButton(ActionListener listener);
+	
 
 }
