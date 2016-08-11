@@ -401,6 +401,14 @@ public class Comparators {
 		
 	}
 	
+	/**
+	 * Comparator class, that checks: <ol>
+	 * <li>beer's brewery country</li>
+	 * <li>beer's average </li>
+	 * 
+	 * @author nicola
+	 *
+	 */
 	public static class ComparatorBeerByCountryBreweryAverage implements Comparator<Beer>{
 
 		@Override

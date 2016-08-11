@@ -10,10 +10,14 @@ import javax.swing.event.ListSelectionListener;
 
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
+import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.models.Model.DataShownNow;
+import org.nbena.beersmanager.exe.ui.models.ModelBeerTable;
+import org.nbena.beersmanager.exe.ui.models.ModelBreweryTable;
+import org.nbena.beersmanager.exe.ui.models.ModelStyleTable;
 import org.nbena.beersmanager.exe.ui.views.BeerDialog;
 import org.nbena.beersmanager.exe.ui.views.BreweryDialog;
 import org.nbena.beersmanager.exe.ui.views.StyleDialog;
@@ -57,7 +61,321 @@ public class ControllerMainGUI {
 		addFileExporterListeners();
 		addAddNewThingsListeners();
 		addListSelectionListener();
+		addViewListeners();
+		addOrderBeersListeners();
 
+	}
+	
+	public void showBeers(){
+		enableShowBeersItems();
+		
+		model.setTableModel(new ModelBeerTable());
+		model.showBeerData();
+		
+		gui.setTableModel(model.getTableModel());
+	}
+	
+	public void showBreweries(){
+		enableShowBreweriesItems();
+		
+		model.setTableModel(new ModelBreweryTable());
+		model.showBreweryData();
+		
+		gui.setTableModel(model.getTableModel());
+	}
+	
+	public void showStyles(){
+		enableShowStylesItems();
+		
+		model.setTableModel(new ModelStyleTable());
+		model.showStyleData();
+		
+		gui.setTableModel(model.getTableModel());
+	}
+	
+	private void enableShowBeersItems(){
+		gui.setQueryEnabledItemsBeer(true);
+		gui.setQueryEnabledItemsBrewerie(false);
+		gui.setQueryEnabledItemsStyle(false);
+	}
+	
+	private void enableShowBreweriesItems(){
+		gui.setQueryEnabledItemsBeer(false);
+		gui.setQueryEnabledItemsBrewerie(true);
+		gui.setQueryEnabledItemsStyle(false);
+	}
+	
+	private void enableShowStylesItems(){
+		gui.setQueryEnabledItemsBeer(false);
+		gui.setQueryEnabledItemsBrewerie(false);
+		gui.setQueryEnabledItemsStyle(true);
+	}
+	
+	
+	private void addFilterBeersListeners(){
+		
+		gui.addActionMenuBeersFilteredByBrewery(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByBrewery(null);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByBreweryCountry(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByBreweryCountry(null);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByExactABV(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByExatcAlcool(0.0);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByExactMark(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByExactMark(0);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByFermentationHigh(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beerFilteredByFermentation(Fermentation.HIGH);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByFermentationLow(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beerFilteredByFermentation(Fermentation.LOW);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByFermentationSpontaneous(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beerFilteredByFermentation(Fermentation.SPONTANEOUS);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByIsTrappistNo(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByTrappist(false);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByIsTrappistYes(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByTrappist(true);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByIsTriedYes(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByIsTried(true);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredIsTriedNo(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByIsTried(false);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByMainStyle(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByMainStyle(null);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByMinimumABV(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByMinimumAlcool(0.0);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByMinimumMark(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByMiminumMark(0);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByStyleProvenience(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByStyleProvenience(null);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredExactNumberOfStars(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByExactNumberOfStars(0);
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredMinimumNumberOfStars(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.beersFilteredByMinimumNumberOfStars(0);
+				showBeers();
+			}
+			
+		});
+		
+		
+	}
+	
+	
+	private void addViewListeners(){
+		gui.addActionListenerViewBeer(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+//				enableShowBeersItems();
+//				
+//				model.setTableModel(new ModelBeerTable());
+//				model.showBeerData();
+//				
+//				gui.setTableModel(model.getTableModel());
+				
+				showBeers();
+			
+			}
+			
+		});
+		
+		gui.addActionListenerViewBrewery(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+//				enableShowBreweriesItems();
+//				
+//				model.setTableModel(new ModelBreweryTable());
+//				model.showBreweryData();
+//				
+//				gui.setTableModel(model.getTableModel());
+				
+				showBreweries();
+				
+			}
+			
+		});
+		
+		gui.addActionListenerViewStyle(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+//				enableShowStylesItems();
+//				
+//				model.setTableModel(new ModelStyleTable());
+//				model.showStyleData();
+//				
+//				gui.setTableModel(model.getTableModel());
+				
+				showStyles();
+			}
+			
+		});
+	}
+	
+	private void addOrderBeersListeners(){
+		gui.addActionMenuBeersSortedByCountryOfBreweryStyle(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				model.sortBeerByCountryOfBreweryStyle();
+				showBeers();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersSortedByFermentationCountryOfStyleBrewery(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				model.sortBeerByFermentationCountryOfStyleBrewery();
+				showBeers();			
+			}
+			
+		});
+		
+		gui.addActionMenuBeersSortedByFermentationStyleCountryOfBrewery(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				model.sortBeerByFermentationStyleCountryOfBrewery();
+				showBeers();
+			}
+			
+		});
 	}
 	
 	
@@ -353,5 +671,8 @@ public class ControllerMainGUI {
 			
 		});
 	}
+	
+	
+	
 
 }

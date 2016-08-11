@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
 
 import org.nbena.beersmanager.exe.ui.models.Model;
 
@@ -47,6 +48,134 @@ public class ViewMainGUI extends JFrame {
 	private JMenuItem mntmAsExcelOld;
 	private JTable table;
 	
+	private JMenuItem mntmViewBeers;
+	private JMenuItem mntmViewBreweries;
+	private JMenuItem mntmViewStyles;
+	
+	private JMenuItem mnOrderBeer;
+	private JMenuItem mnOrderBrewery;
+	private JMenuItem mnOrderStyle;
+	
+	private JMenuItem mnFilterBeer;
+	private JMenuItem mnFilterBrewery;
+	private JMenuItem mnFilterStyle;
+	
+	private JMenuItem mntmSortBeersByCountryOfBreweryStyle;
+	private JMenuItem mntmSortBeersByFermentationCountryOfStyleBrewery;
+	private JMenuItem mntmSortBeersByFermentationStyleCountryOfBrewery;
+	private JMenuItem mntmBeersFilteredByStyle;
+	private JMenuItem mntmBeersFilteredByMainStyle;
+	private JMenuItem mntmBeersFilteredByBrewery;
+	private JMenu mnProvata;
+	private JMenuItem mntmBeersFilteredByIsTriedYes;
+	private JMenuItem mntmBeersFilteredByIsTriedNo;
+	private JMenu mnVoto;
+	private JMenuItem mntmBeersFilteredByMiminumMark;
+	private JMenuItem mntmBeersFilteredByExactMark;
+	private JMenu mnStelle;
+	private JMenuItem mntmBeersFilteredByMinimumNumberOfStars;
+	private JMenuItem mntBeersFilteredByExactNumberOfStars;
+	private JMenu mnABV;
+	private JMenuItem mntmBeersFilteredByMinimumAlcool;
+	private JMenuItem mntmBeersFilteredByExactAlcool;
+	private JMenu mnTrappista;
+	private JMenu mnFermentazione;
+	private JMenuItem mntmBeersFilteredByBreweryCountry;
+	private JMenuItem mntmBeersFiltedredByStyleProvenience;
+	private JMenuItem mntmBeersFilteredByFermentationHigh;
+	private JMenuItem mntmBeersFilteredByFermentationLow;
+	private JMenuItem mntmBeersFilteredByFermentationSpontaneous;
+	private JMenuItem mntmBeersFilteredByTrappistYes;
+	private JMenuItem mntmBeersFiltedredByTrappistNo;
+	
+	public void addActionMenuBeersFilteredByCountryOfBreweryStyle(ActionListener listener){
+		mntmBeersFilteredByStyle.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByMainStyle(ActionListener listener){
+		mntmBeersFilteredByMainStyle.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByBrewery(ActionListener listener){
+		mntmBeersFilteredByBrewery.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByIsTriedYes(ActionListener listener){
+		mntmBeersFilteredByIsTriedYes.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredIsTriedNo(ActionListener listener){
+		mntmBeersFilteredByIsTriedNo.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByMinimumMark(ActionListener listener){
+		mntmBeersFilteredByMiminumMark.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByExactMark(ActionListener listener){
+		mntmBeersFilteredByExactMark.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredExactNumberOfStars(ActionListener listener){
+		mntBeersFilteredByExactNumberOfStars.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredMinimumNumberOfStars(ActionListener listener){
+		mntmBeersFilteredByMinimumNumberOfStars.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByMinimumABV(ActionListener listener){
+		mntmBeersFilteredByMinimumAlcool.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByExactABV(ActionListener listener){
+		mntmBeersFilteredByExactAlcool.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByIsTrappistYes(ActionListener listener){
+		mntmBeersFilteredByTrappistYes.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByIsTrappistNo(ActionListener listener){
+		mntmBeersFiltedredByTrappistNo.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByFermentationHigh(ActionListener listener){
+		mntmBeersFilteredByFermentationHigh.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByFermentationLow(ActionListener listener){
+		mntmBeersFilteredByFermentationLow.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByFermentationSpontaneous(ActionListener listener){
+		mntmBeersFilteredByFermentationSpontaneous.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByStyleProvenience(ActionListener listener){
+		mntmBeersFiltedredByStyleProvenience.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersFilteredByBreweryCountry(ActionListener listener){
+		mntmBeersFilteredByBreweryCountry.addActionListener(listener);
+	}
+	
+	
+	public void addActionMenuBeersSortedByCountryOfBreweryStyle(ActionListener listener){
+		mntmSortBeersByCountryOfBreweryStyle.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersSortedByFermentationCountryOfStyleBrewery(ActionListener listener){
+		mntmSortBeersByFermentationCountryOfStyleBrewery.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersSortedByFermentationStyleCountryOfBrewery(ActionListener listener){
+		mntmSortBeersByFermentationStyleCountryOfBrewery.addActionListener(listener);
+	}
+	
+	public void setTableModel(AbstractTableModel model){
+		table.setModel(model);
+	}
 	
 	
 	public void addActionMenuNewStyleFromFile(ActionListener action){
@@ -101,6 +230,35 @@ public class ViewMainGUI extends JFrame {
 	
 	public int getTableSelectedRow(){
 		return table.getSelectedRow();
+	}
+	
+	
+	public void setQueryEnabledItemsBeer(boolean enabled){
+		mnOrderBeer.setEnabled(enabled);
+		mnFilterBeer.setEnabled(enabled);
+	}
+	
+	public void setQueryEnabledItemsBrewerie(boolean enabled){
+		mnOrderBrewery.setEnabled(enabled);
+		mnFilterBrewery.setEnabled(enabled);
+	}
+	
+	public void setQueryEnabledItemsStyle(boolean enabled){
+		mnOrderStyle.setEnabled(enabled);
+		mnFilterStyle.setEnabled(enabled);
+	}
+	
+	
+	public void addActionListenerViewBeer(ActionListener listener){
+		mntmViewBeers.addActionListener(listener);
+	}
+	
+	public void addActionListenerViewBrewery(ActionListener listener){
+		mntmViewBreweries.addActionListener(listener);
+	}
+	
+	public void addActionListenerViewStyle(ActionListener listener){
+		mntmViewStyles.addActionListener(listener);
 	}
 
 
@@ -185,44 +343,128 @@ public class ViewMainGUI extends JFrame {
 		
 		
 		
-		JMenu mnQuery = new JMenu("Query");
+		JMenu mnQuery = new JMenu("View");
 		menuBar.add(mnQuery);
 		
-		JMenu mnBeers = new JMenu("Beers");
-		mnQuery.add(mnBeers);
+		mntmViewBeers = new JMenuItem("Beers");
+		mnQuery.add(mntmViewBeers);
 		
-		JMenuItem mntmSpecificQueryComposerBeers = new JMenuItem("Specific Query Composer");
-		mnBeers.add(mntmSpecificQueryComposerBeers);
+		mntmViewBreweries = new JMenuItem("Breweries");
+		mnQuery.add(mntmViewBreweries);
 		
-		JMenu mnBreweries = new JMenu("Breweries");
-		mnQuery.add(mnBreweries);
-		
-		JMenuItem mntmSpecificQueryComposerBreweries = new JMenuItem("Specific Query Composer");
-		mnBreweries.add(mntmSpecificQueryComposerBreweries);
-		
-		JMenu mnStyles = new JMenu("Styles");
-		mnQuery.add(mnStyles);
-		
-		JMenuItem mntmSpecificQueryComposerStyles = new JMenuItem("Specific Query Composer");
-		mnStyles.add(mntmSpecificQueryComposerStyles);
-		
-		JMenu mnViewAll = new JMenu("View all");
-		mnQuery.add(mnViewAll);
-		
-		JMenuItem mntmGropuByCountry = new JMenuItem("Gropu by country, brewery, fermentation, style");
-		mnViewAll.add(mntmGropuByCountry);
-		
-		JMenuItem mntmGroupByFermentaion = new JMenuItem("Group by fermentaion, style, country, brewery");
-		mnViewAll.add(mntmGroupByFermentaion);
-		
-		JMenuItem mntmStupidAlphabeticalOrder = new JMenuItem("Stupid alphabetical order");
-		mnViewAll.add(mntmStupidAlphabeticalOrder);
+		mntmViewStyles = new JMenuItem("Styles");
+		mnQuery.add(mntmViewStyles);
 		
 		JMenu mnOptions = new JMenu("Options");
 		menuBar.add(mnOptions);
 		
 		JMenuItem mntmPreferences = new JMenuItem("Preferences");
 		mnOptions.add(mntmPreferences);
+		
+		JMenu mnOrder = new JMenu("Order");
+		menuBar.add(mnOrder);
+		
+		mnOrderBeer = new JMenu("Beer");
+		mnOrder.add(mnOrderBeer);
+		
+		mntmSortBeersByCountryOfBreweryStyle = new JMenuItem("Nazione e nome birrificio, stile");
+		mnOrderBeer.add(mntmSortBeersByCountryOfBreweryStyle);
+		
+		mntmSortBeersByFermentationCountryOfStyleBrewery = new JMenuItem("Nazione origine stile e stile, birrificio");
+		mnOrderBeer.add(mntmSortBeersByFermentationCountryOfStyleBrewery);
+		
+		mntmSortBeersByFermentationStyleCountryOfBrewery = new JMenuItem("Stile, nazione e nome birrifcio");
+		mnOrderBeer.add(mntmSortBeersByFermentationStyleCountryOfBrewery);
+		
+		mnOrderBrewery = new JMenu("Brewery");
+		mnOrder.add(mnOrderBrewery);
+		
+		mnOrderStyle = new JMenu("Style");
+		mnOrder.add(mnOrderStyle);
+		
+		JMenu mnFilter = new JMenu("Filter");
+		menuBar.add(mnFilter);
+		
+		mnFilterBeer = new JMenu("Beer");
+		mnFilter.add(mnFilterBeer);
+		
+		mntmBeersFilteredByStyle = new JMenuItem("Stile e sottostile");
+		mnFilterBeer.add(mntmBeersFilteredByStyle);
+		
+		mntmBeersFilteredByMainStyle = new JMenuItem("Solo stile principale");
+		mnFilterBeer.add(mntmBeersFilteredByMainStyle);
+		
+		mntmBeersFilteredByBrewery = new JMenuItem("Birrificio");
+		mnFilterBeer.add(mntmBeersFilteredByBrewery);
+		
+		mnProvata = new JMenu("Provata");
+		mnFilterBeer.add(mnProvata);
+		
+		mntmBeersFilteredByIsTriedYes = new JMenuItem("S\u00EC");
+		mnProvata.add(mntmBeersFilteredByIsTriedYes);
+		
+		mntmBeersFilteredByIsTriedNo = new JMenuItem("No");
+		mnProvata.add(mntmBeersFilteredByIsTriedNo);
+		
+		mnVoto = new JMenu("Voto");
+		mnFilterBeer.add(mnVoto);
+		
+		mntmBeersFilteredByMiminumMark = new JMenuItem("Minimo");
+		mnVoto.add(mntmBeersFilteredByMiminumMark);
+		
+		mntmBeersFilteredByExactMark = new JMenuItem("Esatto");
+		mnVoto.add(mntmBeersFilteredByExactMark);
+		
+		mnStelle = new JMenu("Stelle");
+		mnFilterBeer.add(mnStelle);
+		
+		mntmBeersFilteredByMinimumNumberOfStars = new JMenuItem("Minime");
+		mnStelle.add(mntmBeersFilteredByMinimumNumberOfStars);
+		
+		mntBeersFilteredByExactNumberOfStars = new JMenuItem("Esatte");
+		mnStelle.add(mntBeersFilteredByExactNumberOfStars);
+		
+		mnABV = new JMenu("ABV%");
+		mnFilterBeer.add(mnABV);
+		
+		mntmBeersFilteredByMinimumAlcool = new JMenuItem("Minimo");
+		mnABV.add(mntmBeersFilteredByMinimumAlcool);
+		
+		mntmBeersFilteredByExactAlcool = new JMenuItem("Esatto");
+		mnABV.add(mntmBeersFilteredByExactAlcool);
+		
+		mnTrappista = new JMenu("Trappista");
+		mnFilterBeer.add(mnTrappista);
+		
+		mntmBeersFilteredByTrappistYes = new JMenuItem("S\u00EC");
+		mnTrappista.add(mntmBeersFilteredByTrappistYes);
+		
+		mntmBeersFiltedredByTrappistNo = new JMenuItem("No");
+		mnTrappista.add(mntmBeersFiltedredByTrappistNo);
+		
+		mnFermentazione = new JMenu("Fermentazione");
+		mnFilterBeer.add(mnFermentazione);
+		
+		mntmBeersFilteredByFermentationHigh = new JMenuItem("Alta");
+		mnFermentazione.add(mntmBeersFilteredByFermentationHigh);
+		
+		mntmBeersFilteredByFermentationLow = new JMenuItem("Bassa");
+		mnFermentazione.add(mntmBeersFilteredByFermentationLow);
+		
+		mntmBeersFilteredByFermentationSpontaneous = new JMenuItem("Spontanea");
+		mnFermentazione.add(mntmBeersFilteredByFermentationSpontaneous);
+		
+		mntmBeersFilteredByBreweryCountry = new JMenuItem("Nazione");
+		mnFilterBeer.add(mntmBeersFilteredByBreweryCountry);
+		
+		mntmBeersFiltedredByStyleProvenience = new JMenuItem("Nazione origine stile");
+		mnFilterBeer.add(mntmBeersFiltedredByStyleProvenience);
+		
+		mnFilterBrewery = new JMenu("Brewery");
+		mnFilter.add(mnFilterBrewery);
+		
+		mnFilterStyle = new JMenu("Style");
+		mnFilter.add(mnFilterStyle);
 		
 		
 		

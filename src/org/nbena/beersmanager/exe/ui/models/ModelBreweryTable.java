@@ -51,7 +51,8 @@ public class ModelBreweryTable extends /*DefaultTableModel*/MyModelAbstractTable
 		for(Brewery b: breweryData){
 			this.addRow(Utils.fromBreweryToObjectArray(b));
 		}
-		
+//		this.fireTableDataChanged();
+//		System.out.println("Data changed");
 	}
 
 

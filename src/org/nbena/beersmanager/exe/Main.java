@@ -187,12 +187,10 @@ public class Main {
 			model.setBreweryData(StupidClass.someBreweries());
 			model.setBeerData(StupidClass.someBeers(StupidClass.someBreweries(), StupidClass.someStyle()));
 			
-//			model.showStyleData();
-//			model.showBreweryData();
 			
-			
-			
-			model.showBeerData();
+//			controller.showBeers();
+//			controller.showBreweries();
+			controller.showStyles();
 			
 			
 			//ModelStyleTable t=(ModelStyleTable)model.getTableModel();

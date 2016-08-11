@@ -1,11 +1,13 @@
 package org.nbena.beersmanager.exe.ui.models;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.table.DefaultTableModel;
 
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
+import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.query.QueryRunner;
 
@@ -37,6 +39,10 @@ public class Model {
 	private Beer beerDialog;
 	private Brewery breweryDialog;
 	private Style styleDialog;
+	
+	private List<Beer> filteredBeers;
+	private List<Brewery> filteredBreweries;
+	private List<Style> filteredstyles;
 	
 	private DataShownNow dataShownNow;
 	private DialogShownNow dialogShown;
@@ -133,6 +139,7 @@ public class Model {
 		tableModel.clear();
 		ModelStyleTable tableModelOld=(ModelStyleTable)tableModel;
 		tableModel=tableModelOld;
+//		tableModel.fireTableStructureChanged();
 		tableModel.setData(styleData); //it work||
 	}
 
@@ -165,6 +172,7 @@ public class Model {
 		tableModel.clear();
 		ModelBeerTable tableModelOld=(ModelBeerTable)tableModel;
 		tableModel=tableModelOld;
+//		tableModel.fireTableStructureChanged();
 		tableModel.setData(beerData); //it work||
 	}
 
@@ -196,6 +204,7 @@ public class Model {
 		tableModel.clear();
 		ModelBreweryTable tableModelOld=(ModelBreweryTable)tableModel;
 		tableModel=tableModelOld;
+//		tableModel.fireTableStructureChanged();
 		tableModel.setData(breweryData); //it work||
 	}
 
@@ -266,6 +275,7 @@ public class Model {
 		//return null;
 	}
 
+	@Deprecated
 	/**
 	 * @return the beerDialog
 	 */
@@ -273,6 +283,7 @@ public class Model {
 		return beerDialog;
 	}
 
+	@Deprecated
 	/**
 	 * @param beerDialog the beerDialog to set
 	 */
@@ -280,6 +291,7 @@ public class Model {
 		this.beerDialog = beerDialog;
 	}
 
+	@Deprecated
 	/**
 	 * @return the breweryDialog
 	 */
@@ -287,6 +299,7 @@ public class Model {
 		return breweryDialog;
 	}
 
+	@Deprecated
 	/**
 	 * @param breweryDialog the breweryDialog to set
 	 */
@@ -294,6 +307,7 @@ public class Model {
 		this.breweryDialog = breweryDialog;
 	}
 
+	@Deprecated
 	/**
 	 * @return the styleDialog
 	 */
@@ -301,6 +315,7 @@ public class Model {
 		return styleDialog;
 	}
 
+	@Deprecated
 	/**
 	 * @param styleDialog the styleDialog to set
 	 */
@@ -316,7 +331,98 @@ public class Model {
 	public List<String> getOnlyMainStyles(){
 		return QueryRunner.onlyMainStylesAsString(styleData);
 	}
+	
+	
+	public void sortBeerByCountryOfBreweryStyle(){
+		beerData=QueryRunner.sortBeerByCountryOfBreweryStyle(beerData);
+	}
+	
+	public void sortBeerByFermentationCountryOfStyleBrewery(){
+		beerData=QueryRunner.sortBeerByFermentationCountryOfStyleBrewery(beerData);
+	}
+	
+	public void sortBeerByFermentationStyleCountryOfBrewery(){
+		beerData=QueryRunner.sortBeerByFermentationStyleCountryOfBrewery(beerData);
+	}
 
+	
+	
+	
+	public void beersFilteredByStyle(Style style){
+		filteredBeers=QueryRunner.beersFilteredByStyle(filteredBeers, style);
+	}
+	
+	public void beersFilteredByMainStyle(Style style){
+		filteredBeers=QueryRunner.beersFilteredByMainStyle(filteredBeers, style);
+	}
+	
+
+	
+	public void beersFilteredByBrewery(Brewery brewery){
+		filteredBeers=QueryRunner.beersFilteredByBrewery(filteredBeers, brewery);
+	}
+	
+		
+	public void beersFilteredByMiminumMark(int mark){
+		filteredBeers=QueryRunner.beersFilteredByMiminumMark(filteredBeers, mark);
+	}
+
+	public void beersFilteredByExactMark(int mark){
+		filteredBeers=QueryRunner.beersFilteredByExactMark(filteredBeers, mark);
+	}
+	
+	
+	
+	public void beersFilteredByIsTried(boolean isTried){
+		filteredBeers=QueryRunner.beersFilteredByIsTried(filteredBeers, isTried);
+	}
+	
+	
+	
+	public void beersFilteredByMinimumNumberOfStars(int numberOfStar){
+		filteredBeers=QueryRunner.beersFilteredByMinimumNumberOfStars(filteredBeers, numberOfStar);
+	}
+	
+	public void beersFilteredByExactNumberOfStars(int numberOfStar){
+		filteredBeers=QueryRunner.beersFilteredByExactNumberOfStars(filteredBeers, numberOfStar);
+	}
+	
+	
+	
+	public void beersFilteredByMinimumAlcool(double alcool){
+		filteredBeers=QueryRunner.beersFilteredByMinimumAlcool(filteredBeers, alcool);
+	}
+	
+	public void beersFilteredByExatcAlcool(double alcool){
+		filteredBeers=QueryRunner.beersFilteredByExatcAlcool(filteredBeers, alcool);
+	}
+	
+	public void beersFilteredByTrappist(boolean trappist){
+		filteredBeers=QueryRunner.beersFilteredByTrappist(filteredBeers, trappist);
+	}
+	
+	
+	public void beersFilteredByColour(String color){
+		filteredBeers=QueryRunner.beersFilteredByColour(filteredBeers, color);
+	}
+	
+		
+	
+	public void beerFilteredByFermentation(Fermentation fermentation){
+		filteredBeers=QueryRunner.beerFilteredByFermentation(filteredBeers, fermentation);
+	}
+	
+	
+
+	public void beersFilteredByBreweryCountry(String country){	
+		filteredBeers=QueryRunner.beersFilteredByBreweryCountry(filteredBeers, country);
+			
+	}
+	
+	
+	public void beersFilteredByStyleProvenience(String provenience){
+		filteredBeers=QueryRunner.beersFilteredByStyleProvenience(filteredBeers, provenience);
+	}
 	
 
 }

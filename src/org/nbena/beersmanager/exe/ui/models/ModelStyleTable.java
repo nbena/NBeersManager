@@ -52,6 +52,8 @@ public class ModelStyleTable extends /*DefaultTableModel*/MyModelAbstractTable{
 		for(Style s: styleData){
 			this.addRow(Utils.fromStyleToObjectArray(s));
 		}
+//		this.fireTableDataChanged();
+//		System.out.println("Fired");
 		
 	}
 

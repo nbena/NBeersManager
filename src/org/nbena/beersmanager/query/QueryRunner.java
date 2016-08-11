@@ -318,6 +318,58 @@ public class QueryRunner {
 		return map;
 	}
 	
+	/**
+	 * Sort beers by their brewery (country, town, name), and then by their style (fermentation, name, subcategory)
+	 * @param beers
+	 * @return
+	 */
+	public static List<Beer> sortBeerByCountryOfBreweryStyle(List<Beer> beers){
+		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByCountryBreweryStyleName());
+		return sortedBeers;
+	}
+	
+	/**
+	 * Sort beers by fermentation, then style (origin country, name, subcategory), and then brewery (town, name).
+	 * @param beers
+	 * @return
+	 */
+	public static List<Beer> sortBeerByFermentationCountryOfStyleBrewery(List<Beer> beers){
+		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByFermentationCountryStyleBreweryName());
+		return sortedBeers;
+	}
+	
+	/**
+	 * Sort beers by fermentation, style (name and subcategory) then brewery (country, town, name).
+	 * @param beers
+	 * @return
+	 */
+	public static List<Beer> sortBeerByFermentationStyleCountryOfBrewery(List<Beer> beers){
+		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByFermentationStyleCountryBreweryName());
+		return sortedBeers;
+	}
+	
+	@Deprecated 
+	/**
+	 * Only internal use for binary search.
+	 * @param beers
+	 * @return
+	 */
+	public static List<Beer> sortBeerByNameStyleBrewery(List<Beer> beers){
+		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByNameStyleBrewery());
+		return sortedBeers;
+	}
+	
+	@Deprecated //wait
+	public static List<Beer> sortBeerByCountryBreweryAverage(List<Beer> beers){
+		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByCountryBreweryAverage());
+		return sortedBeers;
+	}
+	
 	
 	//SORT FUNCTIONS
 	public static void sortStyleByFermentationThenCountry(List<Style> styles){
@@ -327,6 +379,9 @@ public class QueryRunner {
 	public static void sortStyleByCountryThenFermentationy(List<Style> styles){
 		Collections.sort(styles , new Comparators.ComparatorStyleCountryComplete());
 	}
+	
+	
+	
 	
 	
 	//exist function
