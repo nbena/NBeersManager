@@ -437,6 +437,83 @@ public class Comparators {
 	}
 	
 	
+	public static class ComparatorBeerByMarkStarAscending implements Comparator<Beer>{
+
+		@Override
+		public int compare(Beer arg0, Beer arg1) {
+			int ret;
+			if(arg0.getMark()>arg1.getMark()){
+				ret=1;
+			}
+			else if(arg0.getMark()<arg1.getMark()){
+				ret=-1;
+			}
+			else{
+				ret=arg0.getNumberOfStars()-arg1.getNumberOfStars();
+			}
+			return ret;
+		}
+		
+	}
+	
+	public static class ComparatorBeerByStarMarkAscending implements Comparator<Beer>{
+
+		@Override
+		public int compare(Beer arg0, Beer arg1) {
+			int ret;
+			if(arg0.getNumberOfStars()>arg1.getNumberOfStars()){
+				ret=1;
+			}
+			else if(arg0.getNumberOfStars()<arg1.getNumberOfStars()){
+				ret=-1;
+			}
+			else{
+				ret=arg0.getMark()-arg1.getMark();
+			}
+			return ret;
+		}
+		
+	}
+	
+	public static class ComparatorBeerByMarkStarDescending implements Comparator<Beer>{
+
+		@Override
+		public int compare(Beer arg0, Beer arg1) {
+			int ret;
+			if(arg0.getMark()>arg1.getMark()){
+				ret=-1;
+			}
+			else if(arg0.getMark()<arg1.getMark()){
+				ret=1;
+			}
+			else{
+				ret=arg1.getNumberOfStars()-arg0.getNumberOfStars();
+			}
+			return ret;
+		}
+		
+	}
+	
+	public static class ComparatorBeerByStarMarkDescending implements Comparator<Beer>{
+
+		@Override
+		public int compare(Beer arg0, Beer arg1) {
+			int ret;
+			if(arg0.getNumberOfStars()>arg1.getNumberOfStars()){
+				ret=-1;
+			}
+			else if(arg0.getNumberOfStars()<arg1.getNumberOfStars()){
+				ret=1;
+			}
+			else{
+				ret=arg1.getMark()-arg0.getMark();
+			}
+			return ret;
+		}
+		
+	}
+	
+	
 	public static void main(String args[]){
 		LinkedList<Brewery> breweries=new LinkedList<Brewery>();
 		Brewery b=new Brewery("Carlow Brewing", "Carlow", "Ireland", "a", "b");

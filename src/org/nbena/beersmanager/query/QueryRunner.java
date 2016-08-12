@@ -104,7 +104,7 @@ public class QueryRunner {
 	
 	
 	
-	public static List<Beer> beerFilteredByFermentation(List<Beer> beers, Fermentation fermentation){
+	public static List<Beer> beersFilteredByFermentation(List<Beer> beers, Fermentation fermentation){
 		return beers.stream().filter(b -> b.getStyle().getFermentation()==fermentation)
 				.collect(Collectors.toList());
 	}
@@ -323,7 +323,7 @@ public class QueryRunner {
 	 * @param beers
 	 * @return
 	 */
-	public static List<Beer> sortBeerByCountryOfBreweryStyle(List<Beer> beers){
+	public static List<Beer> beersSortedByCountryOfBreweryStyle(List<Beer> beers){
 		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
 		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByCountryBreweryStyleName());
 		return sortedBeers;
@@ -334,7 +334,7 @@ public class QueryRunner {
 	 * @param beers
 	 * @return
 	 */
-	public static List<Beer> sortBeerByFermentationCountryOfStyleBrewery(List<Beer> beers){
+	public static List<Beer> beersSortedByFermentationCountryOfStyleBrewery(List<Beer> beers){
 		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
 		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByFermentationCountryStyleBreweryName());
 		return sortedBeers;
@@ -345,9 +345,33 @@ public class QueryRunner {
 	 * @param beers
 	 * @return
 	 */
-	public static List<Beer> sortBeerByFermentationStyleCountryOfBrewery(List<Beer> beers){
+	public static List<Beer> beersSortedByFermentationStyleCountryOfBrewery(List<Beer> beers){
 		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
 		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByFermentationStyleCountryBreweryName());
+		return sortedBeers;
+	}
+	
+	public static List<Beer> beersSortedByMarkStarAscending(List<Beer> beers){
+		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByMarkStarAscending());
+		return sortedBeers;
+	}
+	
+	public static List<Beer> beersSortedByStarMarkAscending(List<Beer> beers){
+		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByStarMarkAscending());
+		return sortedBeers;
+	}
+	
+	public static List<Beer> beersSortedByMarkStarDescending(List<Beer> beers){
+		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByMarkStarDescending());
+		return sortedBeers;
+	}
+	
+	public static List<Beer> beersSortedByStarMarkDescending(List<Beer> beers){
+		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByStarMarkDescending());
 		return sortedBeers;
 	}
 	

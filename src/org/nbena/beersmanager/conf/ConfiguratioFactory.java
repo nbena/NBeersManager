@@ -2,15 +2,14 @@ package org.nbena.beersmanager.conf;
 
 import java.io.File;
 
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import org.nbena.beersmanager.conf.Configuration.BackupEnabled;
 import org.nbena.beersmanager.conf.Configuration.BeersDefault;
 import org.nbena.beersmanager.conf.Configuration.BreweriesDefault;
-import org.nbena.beersmanager.conf.Configuration.ExportDefault;
 import org.nbena.beersmanager.conf.Configuration.StyleDefault;
 import org.nbena.beersmanager.conf.Configuration.ViewAllDefault;
 import org.nbena.beersmanager.conf.Configuration.WriteToFileWhen;
@@ -19,18 +18,18 @@ public class ConfiguratioFactory {
 	
 	public static Configuration getDefaultConfiguration(){
 		Configuration conf=new Configuration();
-		conf.setBackupEnabledOption(BackupEnabled.YES);
+//		conf.setBackupEnabledOption(BackupEnabled.YES);
 		conf.setBeersDefaultOption(BeersDefault.ALL_STAR_BEERS);
 		conf.setBreweriesDeafultOption(BreweriesDefault.ALL_BREWERIES_GROUP_COUNTRY);
-		conf.setExportDefaultoption(ExportDefault.EXPORT_XML);
+//		conf.setExportDefaultoption(ExportDefault.EXPORT_XML);
 		conf.setStarMarkValue(80);
 		conf.setStyleDeafultOption(StyleDefault.ALL_STYLES_GROUP_BY_COUNTRY_FERMENTATION);
 		conf.setViewAllDefaultOption(ViewAllDefault.FERMENTATION_STYLE_COUNTRY_BREWERY);
 		conf.setWriteToFileWhenOption(WriteToFileWhen.EVERY_UPDATE);
 		String path=setupXMLPaths(conf);
-		conf.setBeweryFilePathBackup(path+"backup-default"+File.pathSeparator+"beers-backup.xml");
-		conf.setBeweryFilePathBackup(path+"backup-default"+File.pathSeparator+"breweries-backup.xml");
-		conf.setStyleFilePathBackup(path+"backup-default"+File.pathSeparator+"styles-backup.xml");
+//		conf.setBeweryFilePathBackup(path+"backup-default"+File.pathSeparator+"beers-backup.xml");
+//		conf.setBeweryFilePathBackup(path+"backup-default"+File.pathSeparator+"breweries-backup.xml");
+//		conf.setStyleFilePathBackup(path+"backup-default"+File.pathSeparator+"styles-backup.xml");
 		return conf;
 	}
 	

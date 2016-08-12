@@ -4,10 +4,12 @@ package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.EventQueue;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 
 import org.nbena.beersmanager.exe.ui.models.Model;
@@ -17,8 +19,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.awt.event.ActionEvent;
+import java.io.File;
 import javax.swing.JTable;
 import java.awt.GridBagConstraints;
 
@@ -39,13 +40,6 @@ public class ViewMainGUI extends JFrame {
 	private JMenuItem mntmAddNewBeer;
 	private JMenuItem mntmAddNewStyle;
 	private JMenuItem mntmAddNewBrewery;
-	
-	private JMenuItem mntmAsPdf;
-	private JMenuItem mntmAsXML;
-	private JMenuItem mntmAsJSON;
-	
-	private JMenuItem mntmAsExcelNew;
-	private JMenuItem mntmAsExcelOld;
 	private JTable table;
 	
 	private JMenuItem mntmViewBeers;
@@ -87,6 +81,40 @@ public class ViewMainGUI extends JFrame {
 	private JMenuItem mntmBeersFilteredByFermentationSpontaneous;
 	private JMenuItem mntmBeersFilteredByTrappistYes;
 	private JMenuItem mntmBeersFiltedredByTrappistNo;
+	
+	private JMenuItem [] mntmMainStyles;
+	private JMenuItem [] mntmStyles;
+	private JMenuItem [] mntmCountries;
+	private JMenuItem [] mntmBreweries;
+	
+	private JMenu mnSearch;
+	private JMenuItem mntmSearchBeer;
+	private JMenuItem mntmSearchBrewery;
+	private JMenuItem mntmSearchStyle;
+	private JMenuItem mntmExport;
+	
+	private JFileChooser chooser;
+	private JMenu mnMarkStar;
+	private JMenu mnStarMark;
+	
+	private JMenuItem mntmBeersSortedByMarkStarDescending;
+	private JMenuItem mntmBeersSortedByMarkStarAscending;
+	private JMenuItem mntmBeersSortedByStarMarkDescending;
+	private JMenuItem mntmBeersSortedByStarMarkAscending;
+	
+	
+	public void addActionMenuSearchBeer(ActionListener listener){
+		mntmSearchBeer.addActionListener(listener);
+	}
+	
+	public void addActionMenuSearchBrewery(ActionListener listener){
+		mntmSearchBrewery.addActionListener(listener);
+	}
+	
+	public void addActionMenuSearchStyle(ActionListener listener){
+		mntmSearchStyle.addActionListener(listener);
+	}
+	
 	
 	public void addActionMenuBeersFilteredByCountryOfBreweryStyle(ActionListener listener){
 		mntmBeersFilteredByStyle.addActionListener(listener);
@@ -161,6 +189,7 @@ public class ViewMainGUI extends JFrame {
 	}
 	
 	
+	
 	public void addActionMenuBeersSortedByCountryOfBreweryStyle(ActionListener listener){
 		mntmSortBeersByCountryOfBreweryStyle.addActionListener(listener);
 	}
@@ -173,55 +202,79 @@ public class ViewMainGUI extends JFrame {
 		mntmSortBeersByFermentationStyleCountryOfBrewery.addActionListener(listener);
 	}
 	
+	public void addActionMenuBeersSortedByMarkStarAscending(ActionListener listener){
+		mntmBeersSortedByMarkStarAscending.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersSortedByMarkStarDescending(ActionListener listener){
+		mntmBeersSortedByMarkStarDescending.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersSortedByStarMarkAscending(ActionListener listener){
+		mntmBeersSortedByStarMarkAscending.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersSortedByStarMarkDescending(ActionListener listener){
+		mntmBeersSortedByStarMarkDescending.addActionListener(listener);
+	}
+	
+	
+	
 	public void setTableModel(AbstractTableModel model){
 		table.setModel(model);
 	}
 	
 	
-	public void addActionMenuNewStyleFromFile(ActionListener action){
-		mntmNewStyleFromFile.addActionListener(action);
+	public void addActionMenuNewStyleFromFile(ActionListener listener){
+		mntmNewStyleFromFile.addActionListener(listener);
 	}
 	
-	public void addActionMenuNewBeerFromFile(ActionListener action){
-		mntmNewBeerFromFile.addActionListener(action);
+	public void addActionMenuNewBeerFromFile(ActionListener listener){
+		mntmNewBeerFromFile.addActionListener(listener);
 	}
 	
-	public void addActionMenuNewBreweryFromFile(ActionListener action){
-		mntmNewBreweryFromFile.addActionListener(action);
+	public void addActionMenuNewBreweryFromFile(ActionListener listener){
+		mntmNewBreweryFromFile.addActionListener(listener);
 	}
 	
-	public void addActionMenuAddNewStyle(ActionListener action){
-		mntmAddNewStyle.addActionListener(action);
+	public void addActionMenuAddNewStyle(ActionListener listener){
+		mntmAddNewStyle.addActionListener(listener);
 	}
 	
-	public void addActionMenuAddNewBeer(ActionListener action){
-		mntmAddNewBeer.addActionListener(action);
+	public void addActionMenuAddNewBeer(ActionListener listener){
+		mntmAddNewBeer.addActionListener(listener);
 	}
 	
-	public void addActionMenuAddNewBrewery(ActionListener action){
-		mntmAddNewBrewery.addActionListener(action);
+	public void addActionMenuAddNewBrewery(ActionListener listener){
+		mntmAddNewBrewery.addActionListener(listener);
 	}
 	
-	public void addActionExportAsPdf(ActionListener action){
-		mntmAsPdf.addActionListener(action);
-	}
 	
-	public void addActionExportAsXML(ActionListener action){
-		mntmAsXML.addActionListener(action);
-	}
 	
-	public void addActionExportAsJSON(ActionListener action){
-		mntmAsJSON.addActionListener(action);
-	}
+//	public void addActionMenuExportAsPdf(ActionListener listener){
+//		mntmExportAsPdf.addActionListener(listener);
+//	}
+//	
+//	public void addActionMenuExportAsTXT(ActionListener listener){
+//		mntmExportAsTxt.addActionListener(listener);
+//	}
+//	
+//	public void addActionMenuExportAsJSON(ActionListener listener){
+//		mntmExportAsJSON.addActionListener(listener);
+//	}
+//	
+//	public void addActionMenuExportAsExcelNew(ActionListener listener){
+//		mntmAsExcelNew.addActionListener(listener);
+//	}
+//	
+//	public void addActionMenuExportAsExcelOld(ActionListener listener){
+//		mntmAsExcelOld.addActionListener(listener);
+//	}
 	
-	public void addActionExportAsExcelNew(ActionListener action){
-		mntmAsExcelNew.addActionListener(action);
-	}
 	
-	public void addActionExportAsExcelOld(ActionListener action){
-		mntmAsExcelOld.addActionListener(action);
+	public void addActionMenuExport(ActionListener listener){
+		mntmExport.addActionListener(listener);
 	}
-	
 	
 	
 	public void addTableListSelectionListener(ListSelectionListener listener){
@@ -261,6 +314,26 @@ public class ViewMainGUI extends JFrame {
 		mntmViewStyles.addActionListener(listener);
 	}
 
+	private void setFilters(JFileChooser chooser, FileNameExtensionFilter[] filters){
+		for(FileNameExtensionFilter filter: filters){
+			chooser.setFileFilter(filter);
+		}
+	}
+	
+	public JFileChooser getJFileChooser(){
+		return chooser;
+	}
+	
+	public void initJFileChooser(FileNameExtensionFilter[] filters, File directory){
+		chooser=new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		
+		setFilters(chooser, filters);
+		
+		chooser.setCurrentDirectory(directory);
+		chooser.setAcceptAllFileFilterUsed(false);
+		chooser.setMultiSelectionEnabled(false);
+	}
 
 	/**
 	 * Launch the application.
@@ -291,14 +364,12 @@ public class ViewMainGUI extends JFrame {
 		JMenu mnFile = new JMenu("File");
 		
 		
-		JMenu mnImport = new JMenu("Import");	
-		JMenu mnExport = new JMenu("Export");
+		JMenu mnImport = new JMenu("Import");
 		JMenu mnNew = new JMenu("New");
 		
 		mnFile.add(mnNew);	
 		menuBar.add(mnFile);
 		mnFile.add(mnImport);
-		mnFile.add(mnExport);
 		
 		
 		/*JMenuItem*/ mntmNewStyleFromFile = new JMenuItem("Beer Styles");
@@ -310,26 +381,6 @@ public class ViewMainGUI extends JFrame {
 		mnImport.add(mntmNewBreweryFromFile);
 		
 		
-		
-
-		
-		/*JMenuItem */mntmAsPdf = new JMenuItem("As PDF");		
-		JMenu mnAsMsExcel = new JMenu("As MS Excel");	
-		/*JMenuItem */mntmAsXML = new JMenuItem("As XML");	
-		/*JMenuItem */mntmAsJSON = new JMenuItem("As JSON");
-		
-		mnExport.add(mntmAsPdf);
-		mnExport.add(mnAsMsExcel);
-		mnExport.add(mntmAsXML);
-		mnExport.add(mntmAsJSON);
-		
-		
-		/*JMenuItem */mntmAsExcelNew=  new JMenuItem("2010-2016 file version");
-		/*JMenuItem */mntmAsExcelOld= new JMenuItem("2003-2007 file version");
-		mnAsMsExcel.add(mntmAsExcelNew);
-		mnAsMsExcel.add(mntmAsExcelOld);
-		
-		
 			
 		/*JMenuItem */mntmAddNewBeer = new JMenuItem("Beer");
 		/*JMenuItem */mntmAddNewBrewery = new JMenuItem("Brewery");
@@ -339,6 +390,9 @@ public class ViewMainGUI extends JFrame {
 		mnNew.add(mntmAddNewBeer);
 		mnNew.add(mntmAddNewBrewery);
 		mnNew.add(mntmAddNewStyle);
+		
+		mntmExport = new JMenuItem("Export");
+		mnFile.add(mntmExport);
 		
 		
 		
@@ -375,6 +429,24 @@ public class ViewMainGUI extends JFrame {
 		
 		mntmSortBeersByFermentationStyleCountryOfBrewery = new JMenuItem("Stile, nazione e nome birrifcio");
 		mnOrderBeer.add(mntmSortBeersByFermentationStyleCountryOfBrewery);
+		
+		mnMarkStar = new JMenu("Voto, stelle");
+		mnOrderBeer.add(mnMarkStar);
+		
+		mntmBeersSortedByMarkStarDescending = new JMenuItem("Discendente");
+		mnMarkStar.add(mntmBeersSortedByMarkStarDescending);
+		
+		mntmBeersSortedByMarkStarAscending = new JMenuItem("Ascendente");
+		mnMarkStar.add(mntmBeersSortedByMarkStarAscending);
+		
+		mnStarMark = new JMenu("Stelle, voto");
+		mnOrderBeer.add(mnStarMark);
+		
+		mntmBeersSortedByStarMarkDescending = new JMenuItem("Discendente");
+		mnStarMark.add(mntmBeersSortedByStarMarkDescending);
+		
+		mntmBeersSortedByStarMarkAscending = new JMenuItem("Ascendente");
+		mnStarMark.add(mntmBeersSortedByStarMarkAscending);
 		
 		mnOrderBrewery = new JMenu("Brewery");
 		mnOrder.add(mnOrderBrewery);
@@ -465,6 +537,18 @@ public class ViewMainGUI extends JFrame {
 		
 		mnFilterStyle = new JMenu("Style");
 		mnFilter.add(mnFilterStyle);
+		
+		mnSearch = new JMenu("Search");
+		menuBar.add(mnSearch);
+		
+		mntmSearchBeer = new JMenuItem("Birra");
+		mnSearch.add(mntmSearchBeer);
+		
+		mntmSearchBrewery = new JMenuItem("Birrificio");
+		mnSearch.add(mntmSearchBrewery);
+		
+		mntmSearchStyle = new JMenuItem("Stile");
+		mnSearch.add(mntmSearchStyle);
 		
 		
 		

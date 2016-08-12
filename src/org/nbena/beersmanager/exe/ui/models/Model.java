@@ -1,14 +1,27 @@
 package org.nbena.beersmanager.exe.ui.models;
 
+import java.io.OutputStream;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+
 import java.util.stream.Collectors;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.exe.Utils;
+import org.nbena.beersmanager.export.Exporter;
+import org.nbena.beersmanager.export.JSONExporter;
+import org.nbena.beersmanager.export.PDFExporter;
+import org.nbena.beersmanager.export.TXTExporter;
+import org.nbena.beersmanager.export.MSExcelOldExporter;
+import org.nbena.beersmanager.export.MSExcelNewExporter;
+import org.nbena.beersmanager.query.Comparators;
 import org.nbena.beersmanager.query.QueryRunner;
 
 public class Model {
@@ -46,6 +59,8 @@ public class Model {
 	
 	private DataShownNow dataShownNow;
 	private DialogShownNow dialogShown;
+	
+	private Exporter exporter;
 	
 	public Model(){
 		//tableModel=new MyModelAbstractTable();
@@ -122,7 +137,8 @@ public class Model {
 	 * @param styleData the styleData to set
 	 */
 	public void setStyleData(List<Style> styleData) {
-		this.styleData = styleData;		
+		this.styleData = styleData;	
+		filteredstyles=styleData;
 	}
 	
 //	public void setStyleDataAndShow(List<Style> styleData){
@@ -155,6 +171,7 @@ public class Model {
 	 */
 	public void setBeerData(List<Beer> beerData) {
 		this.beerData = beerData;
+		filteredBeers=beerData;
 
 	}
 	
@@ -188,6 +205,7 @@ public class Model {
 	 */
 	public void setBreweryData(List<Brewery> breweryData) {
 		this.breweryData = breweryData;
+		filteredBreweries=breweryData;
 	}
 	
 //	public void setBreweryDataAndShow(List<Brewery> breweryData){
@@ -333,16 +351,40 @@ public class Model {
 	}
 	
 	
-	public void sortBeerByCountryOfBreweryStyle(){
-		beerData=QueryRunner.sortBeerByCountryOfBreweryStyle(beerData);
+	public void beersSortedByCountryOfBreweryStyle(){
+//		beerData=QueryRunner.beersSortedByCountryOfBreweryStyle(beerData);
+		beerData=QueryRunner.beersSortedByCountryOfBreweryStyle(filteredBeers);
+		filteredBeers=beerData;
 	}
 	
-	public void sortBeerByFermentationCountryOfStyleBrewery(){
-		beerData=QueryRunner.sortBeerByFermentationCountryOfStyleBrewery(beerData);
+	public void beersSortedByFermentationCountryOfStyleBrewery(){
+		beerData=QueryRunner.beersSortedByFermentationCountryOfStyleBrewery(filteredBeers);
+		filteredBeers=beerData;
 	}
 	
-	public void sortBeerByFermentationStyleCountryOfBrewery(){
-		beerData=QueryRunner.sortBeerByFermentationStyleCountryOfBrewery(beerData);
+	public void beersSortedByFermentationStyleCountryOfBrewery(){
+		beerData=QueryRunner.beersSortedByFermentationStyleCountryOfBrewery(filteredBeers);
+		filteredBeers=beerData;
+	}
+	
+	public void beersSortedByMarkStarAscending(){
+		beerData=QueryRunner.beersSortedByMarkStarAscending(filteredBeers);
+		filteredBeers=beerData;
+	}
+	
+	public void beersSortedByStarMarkAsending(){
+		beerData=QueryRunner.beersSortedByStarMarkAscending(filteredBeers);
+		filteredBeers=beerData;
+	}
+	
+	public void beersSortedByMarkStarDescending(){
+		beerData=QueryRunner.beersSortedByMarkStarDescending(filteredBeers);
+		filteredBeers=beerData;
+	}
+	
+	public void beersSortedByStarMarkDesending(){
+		beerData=QueryRunner.beersSortedByStarMarkDescending(filteredBeers);
+		filteredBeers=beerData;
 	}
 
 	
@@ -408,8 +450,8 @@ public class Model {
 	
 		
 	
-	public void beerFilteredByFermentation(Fermentation fermentation){
-		filteredBeers=QueryRunner.beerFilteredByFermentation(filteredBeers, fermentation);
+	public void beersFilteredByFermentation(Fermentation fermentation){
+		filteredBeers=QueryRunner.beersFilteredByFermentation(filteredBeers, fermentation);
 	}
 	
 	
@@ -423,6 +465,156 @@ public class Model {
 	public void beersFilteredByStyleProvenience(String provenience){
 		filteredBeers=QueryRunner.beersFilteredByStyleProvenience(filteredBeers, provenience);
 	}
+	
+	public static enum ExportType{
+		JSON,
+		EXCEL_NEW,
+		EXCEL_OLD,
+		PDF,
+		TXT
+	}
+	
+	public void exportBeers(ExportType export, OutputStream out) throws Exception{
+		switch (export){
+		case EXCEL_NEW:
+			exportMsExcelNewBeers(out);
+			break;
+		case EXCEL_OLD:
+			exportMsExcelOldBeers(out);
+			break;
+		case JSON:
+			exportJSONBeers(out);
+			break;
+		case PDF:
+			exportPDFBeers(out);
+			break;
+		case TXT:
+			exportTXTBeers(out);
+			break;	
+		}
+	}
+	
+	public void exportBreweries(ExportType export, OutputStream out) throws Exception{
+		switch (export){
+		case EXCEL_NEW:
+			exportMsExcelNewBreweries(out);
+			break;
+		case EXCEL_OLD:
+			exportMsExcelOldBreweries(out);
+			break;
+		case JSON:
+			exportJSONBreweries(out);
+			break;
+		case PDF:
+			exportPDFBreweries(out);
+			break;
+		case TXT:
+			exportTXTBreweries(out);
+			break;	
+		}
+	}
+	
+	public void exportStyles(ExportType export, OutputStream out) throws Exception{
+		switch (export){
+		case EXCEL_NEW:
+			exportMsExcelNewStyles(out);
+			break;
+		case EXCEL_OLD:
+			exportMsExcelOldStyles(out);
+			break;
+		case JSON:
+			exportJSONStyles(out);
+			break;
+		case PDF:
+			exportPDFStyles(out);
+			break;
+		case TXT:
+			exportTXTStyles(out);
+			break;	
+		}
+	}
+	
+	private void exportJSONBeers(OutputStream out) throws Exception{
+		exporter = new JSONExporter();
+		exporter.writeBeer(filteredBeers, out);
+	}
+	
+	private void exportJSONBreweries(OutputStream out) throws Exception{
+		exporter = new JSONExporter();
+		exporter.writeBrewery(filteredBreweries, out);
+	}
+	
+	private void exportJSONStyles(OutputStream out) throws Exception{
+		exporter = new JSONExporter();
+		exporter.writeStyle(styleData, out);
+	}
+	
+	
+	private void exportMsExcelNewBeers(OutputStream out) throws Exception{
+		exporter = new MSExcelNewExporter();
+		exporter.writeBeer(filteredBeers, out);
+	}
+	
+	private void exportMsExcelNewBreweries(OutputStream out) throws Exception{
+		exporter = new MSExcelNewExporter();
+		exporter.writeBrewery(filteredBreweries, out);
+	}
+	
+	private void exportMsExcelNewStyles(OutputStream out) throws Exception{
+		exporter = new MSExcelNewExporter();
+		exporter.writeStyle(styleData, out);
+	}
+	
+	
+	private void exportMsExcelOldBeers(OutputStream out) throws Exception{
+		exporter = new  MSExcelOldExporter();
+		exporter.writeBeer(filteredBeers, out);
+	}
+	
+	private void exportMsExcelOldBreweries(OutputStream out) throws Exception{
+		exporter = new MSExcelOldExporter();
+		exporter.writeBrewery(filteredBreweries, out);
+	}
+	
+	private void exportMsExcelOldStyles(OutputStream out) throws Exception{
+		exporter = new MSExcelOldExporter();
+		exporter.writeStyle(styleData, out);
+	}
+	
+	private void exportPDFBeers(OutputStream out) throws Exception{
+//		exporter = new JSONExporter();
+//		exporter.writeBeer(filteredBeers, out);
+	}
+	
+	private void exportPDFBreweries(OutputStream out) throws Exception{
+//		exporter = new JSONExporter();
+//		exporter.writeBrewery(filteredBreweries, out);
+	}
+	
+	private void exportPDFStyles(OutputStream out) throws Exception{
+//		exporter = new JSONExporter();
+//		exporter.writeStyle(styleData, out);
+	}
+	
+	private void exportTXTBeers(OutputStream out) throws Exception{
+		exporter = new TXTExporter();
+		exporter.writeBeer(filteredBeers, out);
+	}
+	
+	private void exportTXTBreweries(OutputStream out) throws Exception{
+		exporter = new TXTExporter();
+		exporter.writeBrewery(filteredBreweries, out);
+	}
+	
+	private void exportTXTStyles(OutputStream out) throws Exception{
+		exporter = new TXTExporter();
+		exporter.writeStyle(styleData, out);
+	}
+	
+	public String getLastDirectory(){
+		return System.getProperty("user.home");
+	}
+	
 	
 
 }

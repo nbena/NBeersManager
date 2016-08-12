@@ -2,11 +2,17 @@ package org.nbena.beersmanager.exe.ui.controllers;
 
 import java.awt.event.ActionEvent;
 
-import java.awt.event.ActionListener;
 
-import javax.swing.JDialog;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+
+import javax.swing.JFileChooser;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
@@ -15,6 +21,7 @@ import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.models.Model.DataShownNow;
+import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
 import org.nbena.beersmanager.exe.ui.models.ModelBeerTable;
 import org.nbena.beersmanager.exe.ui.models.ModelBreweryTable;
 import org.nbena.beersmanager.exe.ui.models.ModelStyleTable;
@@ -29,10 +36,6 @@ import org.nbena.beersmanager.exe.ui.views.ViewMainGUI;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBeer;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBrewery;
 import org.nbena.beersmanager.exe.ui.views.ViewViewStyle;
-import org.nbena.beersmanager.export.Exporter;
-import org.nbena.beersmanager.export.JSONExporter;
-import org.nbena.beersmanager.export.MSExcelNewExporter;
-import org.nbena.beersmanager.export.MSExcelOldExporter;
 
 public class ControllerMainGUI {
 	
@@ -46,15 +49,16 @@ public class ControllerMainGUI {
 	private ViewViewBeer viewBeerDialog;
 	private ViewViewBrewery viewBreweryDialog;
 	private ViewViewStyle viewStyleDialog;
-	//
-	private Exporter exporter;
+
+	
 
 	public ControllerMainGUI(ViewMainGUI gui, Model model) {
 		this.gui=gui;
 		this.model=model;
-		gui.setVisible(true);
 		
 		addListeners();
+		
+		gui.setVisible(true);
 	}
 	
 	private void addListeners(){
@@ -63,6 +67,8 @@ public class ControllerMainGUI {
 		addListSelectionListener();
 		addViewListeners();
 		addOrderBeersListeners();
+		addFilterBeersListeners();
+		addSearchMenuListeners();
 
 	}
 	
@@ -111,6 +117,75 @@ public class ControllerMainGUI {
 		gui.setQueryEnabledItemsStyle(true);
 	}
 	
+	public void beersFilteredByBrewery(Brewery b){
+		model.beersFilteredByBrewery(null);
+		showBeers();
+	}
+	
+	public void beersFilteredByBreweryCountry(String country){
+		model.beersFilteredByBreweryCountry(null);
+		showBeers();
+	}
+	
+	public void beersFilteredByExactABV(double abv){
+		model.beersFilteredByExatcAlcool(abv);
+		showBeers();
+	}
+	
+	public void beersFilteredByMinimumABV(double abv){
+		model.beersFilteredByMinimumAlcool(abv);
+		showBeers();
+	}
+	
+	public void beersFilteredByMinimumMaek(int mark){
+		model.beersFilteredByMiminumMark(mark);
+		showBeers();
+	}
+	
+	public void beersFilteredByExactMark(int mark){
+		model.beersFilteredByExactMark(mark);
+		showBeers();
+	}
+	
+	public void beersFilteredByMinimumNumberOfStars(int number){
+		model.beersFilteredByMinimumNumberOfStars(number);
+		showBeers();
+	}
+	
+	public void beersFilteredByExactNumberOfStars(int number){
+		model.beersFilteredByExactNumberOfStars(number);
+		showBeers();
+	}
+	
+	public void beersFilteredByFermentation(Fermentation f){
+		model.beersFilteredByFermentation(f);
+		showBeers();
+	}
+	
+	public void beersFilteredByStyle(Style s){
+		
+	}
+	
+	public void beersFilteredByMainStyle(Style s){
+		model.beersFilteredByMainStyle(s);
+		showBeers();
+	}
+	
+	public void beeersFilteredByStyleProvenience(String s){
+		model.beersFilteredByStyleProvenience(s);
+		showBeers();
+	}
+	
+	public void beersFilteredByTrappist(boolean trappist){
+		model.beersFilteredByTrappist(trappist);
+		showBeers();
+	}
+	
+	public void beersFilteredByIsTried(boolean tried){
+		model.beersFilteredByIsTried(tried);
+		showBeers();
+	}
+	
 	
 	private void addFilterBeersListeners(){
 		
@@ -118,8 +193,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByBrewery(null);
-				showBeers();
+//				model.beersFilteredByBrewery(null);
+//				showBeers();
+				beersFilteredByBrewery(null);
 			}
 			
 		});
@@ -128,8 +204,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByBreweryCountry(null);
-				showBeers();
+//				model.beersFilteredByBreweryCountry(null);
+//				showBeers();
+				beersFilteredByBrewery(null);
 			}
 			
 		});
@@ -138,8 +215,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByExatcAlcool(0.0);
-				showBeers();
+//				model.beersFilteredByExatcAlcool(0.0);
+//				showBeers();
+				beersFilteredByExactABV(0.0);
 			}
 			
 		});
@@ -148,8 +226,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByExactMark(0);
-				showBeers();
+//				model.beersFilteredByExactMark(0);
+//				showBeers();
+				beersFilteredByExactMark(0);
 			}
 			
 		});
@@ -158,8 +237,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beerFilteredByFermentation(Fermentation.HIGH);
-				showBeers();
+//				model.beerFilteredByFermentation(Fermentation.HIGH);
+//				showBeers();
+				beersFilteredByFermentation(Fermentation.HIGH);
 			}
 			
 		});
@@ -168,8 +248,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beerFilteredByFermentation(Fermentation.LOW);
-				showBeers();
+//				model.beerFilteredByFermentation(Fermentation.LOW);
+//				showBeers();
+				beersFilteredByFermentation(Fermentation.LOW);
 			}
 			
 		});
@@ -178,8 +259,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beerFilteredByFermentation(Fermentation.SPONTANEOUS);
-				showBeers();
+//				model.beerFilteredByFermentation(Fermentation.SPONTANEOUS);
+//				showBeers();
+				beersFilteredByFermentation(Fermentation.SPONTANEOUS);
 			}
 			
 		});
@@ -188,8 +270,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByTrappist(false);
-				showBeers();
+//				model.beersFilteredByTrappist(false);
+//				showBeers();
+				beersFilteredByTrappist(false);
 			}
 			
 		});
@@ -198,8 +281,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByTrappist(true);
-				showBeers();
+//				model.beersFilteredByTrappist(true);
+//				showBeers();
+				beersFilteredByTrappist(true);
 			}
 			
 		});
@@ -208,8 +292,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByIsTried(true);
-				showBeers();
+//				model.beersFilteredByIsTried(true);
+//				showBeers();
+				beersFilteredByIsTried(true);
 			}
 			
 		});
@@ -218,8 +303,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByIsTried(false);
-				showBeers();
+//				model.beersFilteredByIsTried(false);
+//				showBeers();
+				beersFilteredByIsTried(false);
 			}
 			
 		});
@@ -228,8 +314,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByMainStyle(null);
-				showBeers();
+//				model.beersFilteredByMainStyle(null);
+//				showBeers();
+				beersFilteredByMainStyle(null);
 			}
 			
 		});
@@ -238,8 +325,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByMinimumAlcool(0.0);
-				showBeers();
+//				model.beersFilteredByMinimumAlcool(0.0);
+//				showBeers();
+				beersFilteredByMinimumABV(0);
 			}
 			
 		});
@@ -248,8 +336,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByMiminumMark(0);
-				showBeers();
+//				model.beersFilteredByMiminumMark(0);
+//				showBeers();
+				beersFilteredByMinimumMaek(0);
 			}
 			
 		});
@@ -258,8 +347,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByStyleProvenience(null);
-				showBeers();
+//				model.beersFilteredByStyleProvenience(null);
+//				showBeers();
+				beeersFilteredByStyleProvenience(null);
 			}
 			
 		});
@@ -268,8 +358,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByExactNumberOfStars(0);
-				showBeers();
+//				model.beersFilteredByExactNumberOfStars(0);
+//				showBeers();
+				beersFilteredByExactNumberOfStars(0);
 			}
 			
 		});
@@ -278,8 +369,9 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.beersFilteredByMinimumNumberOfStars(0);
-				showBeers();
+//				model.beersFilteredByMinimumNumberOfStars(0);
+//				showBeers();
+				beersFilteredByMinimumNumberOfStars(0);
 			}
 			
 		});
@@ -343,14 +435,50 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	private void beersSortedByCountryOfBreweryStyle(){
+		model.beersSortedByCountryOfBreweryStyle();
+		showBeers();
+	}
+	
+	private void beersSortedByFermentationCountryOfStyleBrewery(){
+		model.beersSortedByFermentationCountryOfStyleBrewery();
+		showBeers();	
+	}
+	
+	private void beersSortedByFermentationStyleCountryOfBrewery(){
+		model.beersSortedByFermentationStyleCountryOfBrewery();
+		showBeers();
+	}
+	
+	private void beersSortedByMarkStarAscending(){
+		model.beersSortedByMarkStarAscending();
+		showBeers();
+	}
+	
+	private void beersSortedByMarkStarDescending(){
+		model.beersSortedByMarkStarDescending();
+		showBeers();
+	}
+	
+	private void beersSortedByStarMarkAscending(){
+		model.beersSortedByStarMarkAsending();
+		showBeers();
+	}
+	
+	private void beersSortedByStarMarkDescending(){
+		model.beersSortedByStarMarkDesending();
+		showBeers();
+	}
+	
 	private void addOrderBeersListeners(){
 		gui.addActionMenuBeersSortedByCountryOfBreweryStyle(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				model.sortBeerByCountryOfBreweryStyle();
-				showBeers();
+//				model.beersSortedByCountryOfBreweryStyle();
+//				showBeers();
+				beersSortedByCountryOfBreweryStyle();
 			}
 			
 		});
@@ -360,8 +488,9 @@ public class ControllerMainGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				model.sortBeerByFermentationCountryOfStyleBrewery();
-				showBeers();			
+//				model.beersSortedByFermentationCountryOfStyleBrewery();
+//				showBeers();
+				beersSortedByFermentationCountryOfStyleBrewery();
 			}
 			
 		});
@@ -371,61 +500,193 @@ public class ControllerMainGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				model.sortBeerByFermentationStyleCountryOfBrewery();
-				showBeers();
+//				model.beersSortedByFermentationStyleCountryOfBrewery();
+//				showBeers();
+				beersSortedByFermentationStyleCountryOfBrewery();	
+			}
+			
+		});
+		
+		gui.addActionMenuBeersSortedByMarkStarAscending(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				beersSortedByMarkStarAscending();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersSortedByMarkStarDescending(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				beersSortedByMarkStarDescending();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersSortedByStarMarkAscending(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				beersSortedByStarMarkAscending();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersSortedByStarMarkDescending(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				beersSortedByStarMarkDescending();
 			}
 			
 		});
 	}
 	
+
+	
+	
+	
+	
+	private File askFileToExport() throws FileNotFoundException{
+		File returned=null;
+		gui.initJFileChooser(Utils.getAllFileFilters(), new File(model.getLastDirectory()));
+		JFileChooser guiChooser=gui.getJFileChooser();
+		if(guiChooser.showSaveDialog(gui)==JFileChooser.APPROVE_OPTION){
+			returned=guiChooser.getSelectedFile();
+			
+			if(Utils.checkIfExtensionIsPresent(returned)==false){
+				returned=new File(returned.getAbsolutePath()+"."+Utils.getJFileChooserSelectedExtension(guiChooser));
+			}
+		}
+		return returned;
+	}
+	
+	private void exportBeers() throws Exception{
+		File f=askFileToExport();
+		if(f!=null){
+			ExportType type=Utils.getExportType(f);
+			model.exportBeers(type, new FileOutputStream(f));
+		}
+	}
+	
+	private void exportBreweries() throws Exception{
+		File f=askFileToExport();
+		if(f!=null){
+			ExportType type=Utils.getExportType(f);
+			model.exportBreweries(type, new FileOutputStream(f));
+		}
+	}
+	
+	private void exportStyles() throws Exception{
+		File f=askFileToExport();
+		if(f!=null){
+			ExportType type=Utils.getExportType(f);
+			model.exportStyles(type, new FileOutputStream(f));
+		}
+	}
+	
+	public void export()throws Exception{
+			if(model.getDataShownNow()==DataShownNow.BEER){
+				exportBeers();
+			}
+			else if(model.getDataShownNow()==DataShownNow.BREWERY){
+				exportBreweries();
+			}
+			else{
+				exportStyles();
+			}
+	}
 	
 	private void addFileExporterListeners(){
-		gui.addActionExportAsExcelNew(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				exporter=new MSExcelNewExporter();
-				//exporter.writeBeer(beers, out);
-			}
-			
-		});
+//		gui.addActionMenuExportAsExcelNew(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+////				exporter=new MSExcelNewExporter();
+//				//exporter.writeBeer(beers, out);
+//				try {
+//					export(ExportType.EXCEL_NEW);
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//			
+//		});
+//		
+//		gui.addActionMenuExportAsExcelOld(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+////				exporter=new MSExcelOldExporter();
+//				try {
+//					export(ExportType.EXCEL_OLD);
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//			
+//		});
+//		
+//		gui.addActionMenuExportAsJSON(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+////				exporter=new JSONExporter();
+//				try {
+//					export(ExportType.JSON);
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//			
+//		});
+//		
+//		gui.addActionMenuExportAsPdf(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				//exporter=new PDFExporter();
+//				try {
+//					export(ExportType.PDF);
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//			
+//		});
+//		
+//		gui.addActionMenuExportAsTXT(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				try {
+//					export(ExportType.TXT);
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//			
+//		});
 		
-		gui.addActionExportAsExcelOld(new ActionListener(){
+		gui.addActionMenuExport(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				exporter=new MSExcelOldExporter();
 				
-			}
-			
-		});
-		
-		gui.addActionExportAsJSON(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				exporter=new JSONExporter();
-				
-			}
-			
-		});
-		
-		gui.addActionExportAsPdf(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				//exporter=new PDFExporter();
-				
-			}
-			
-		});
-		
-		gui.addActionExportAsXML(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				//exporter=new XMLExporter();
-				
+				try {
+					export();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		});
@@ -672,6 +933,38 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	
+	private void addSearchMenuListeners(){
+		gui.addActionMenuSearchBeer(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		gui.addActionMenuSearchBrewery(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		gui.addActionMenuSearchStyle(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	}
 	
 	
 

@@ -9,15 +9,21 @@ import java.io.FileOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
 import org.nbena.beersmanager.json.BeerJSONSpecialClass;
 import org.nbena.beersmanager.json.Converter;
 import org.nbena.beersmanager.json.JSONExporter;
 
 public class Utils {
+	
+	//here things not strictly connected with business logic.
 
 	public Utils() {
 	}
@@ -306,6 +312,81 @@ public class Utils {
 				"Paese d'origine",
 				"Descrizione"
 		};
+		
+		public static final String[] EXCEL_OLD ={
+				"Microsoft excel 2003-2007 (xls)",
+				"xls"
+		};
+		
+		public static final String[] EXCEL_NEW ={
+				"Microsoft excel 2010-2016 (xlsx)",
+				"xlss"
+		};
+		
+		public static final String[] JSON ={
+				"JavaScript Object Notation (json)",
+				"json"
+		};
+		
+		public static final String[] PDF ={
+				"Portable Document Format (pdf)",
+				"pdf"
+		};
+		
+		public static final String[] TXT ={
+				"Text file (txt)",
+				"txt"
+		};
+	}
+	
+	public static String getFileExtension(File f){
+		String filePath=f.getAbsolutePath();
+		return filePath.substring(filePath.lastIndexOf("."), filePath.length()).replace(".", "").toLowerCase();
+	}
+	
+	public static ExportType getExportType(File f){
+		ExportType export;
+		String ext=getFileExtension(f);
+		if(ext.equals("xls")){
+			export=ExportType.EXCEL_OLD;
+		}
+		else if(ext.equals("xlsx")){
+			export=ExportType.EXCEL_NEW;
+		}
+		else if(ext.equals("json")){
+			export=ExportType.JSON;
+		}
+		else if(ext.equals("pdf")){
+			export=ExportType.PDF;
+		}else{
+			export=ExportType.TXT;
+		}
+		return export;
+	}
+	
+	public static FileNameExtensionFilter[] getAllFileFilters(){
+		FileNameExtensionFilter[] filters = new FileNameExtensionFilter[5];
+		filters[0]=new FileNameExtensionFilter(Constants.EXCEL_NEW[0], Constants.EXCEL_NEW[1]);
+		filters[1]=new FileNameExtensionFilter(Constants.EXCEL_OLD[0], Constants.EXCEL_OLD[1]);
+		filters[2]=new FileNameExtensionFilter(Constants.JSON[0], Constants.JSON[1]);
+		filters[3]=new FileNameExtensionFilter(Constants.PDF[0], Constants.PDF[1]);
+		filters[4]=new FileNameExtensionFilter(Constants.TXT[0], Constants.TXT[1]);
+		return filters;
+	}
+	
+	public static boolean checkIfExtensionIsPresent(File f){
+		boolean returned=true;
+		try{
+			getFileExtension(f);
+		}catch(StringIndexOutOfBoundsException e){
+			returned=false;
+		}
+		return returned;
+	}
+	
+	public static String getJFileChooserSelectedExtension(JFileChooser chooser){
+		FileNameExtensionFilter filter=(FileNameExtensionFilter)chooser.getFileFilter();
+		return filter.getExtensions()[0];
 	}
 
 }
