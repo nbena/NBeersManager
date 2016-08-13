@@ -16,5 +16,7 @@ public interface BreweryDialog {
 	
 	public abstract void setBreweryDescription(String t);
 	
+	public abstract void setBreweryAverage(String t);
+	
 
 }

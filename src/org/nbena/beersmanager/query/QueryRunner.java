@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 import org.nbena.beersmanager.coreclasses.*;
 import org.nbena.beersmanager.exe.Utils;
+import org.nbena.beersmanager.query.Comparators.ComparatorBreweryByAverageAscending;
+import org.nbena.beersmanager.query.Comparators.ComparatorBreweryByCountryThenAverageAscending;
 public class QueryRunner {
 	
 	public static enum ORDER_BY_BEER{}
@@ -274,49 +276,6 @@ public class QueryRunner {
 	
 
 	
-	public static HashMap<Brewery, Double> breweryWithAvrerageMoreThan(LinkedList<Beer> beers, double average, boolean isTried){
-		HashMap<Brewery, Double> bestBreweriesMap=new HashMap<Brewery, Double>();
-		List<Brewery> breweries=new LinkedList<Brewery>();
-		double forEachAverage=0;
-		breweries=getAllBreweries(beers);
-		HashMap<Brewery, Double> breweryAverage=new HashMap<Brewery, Double>();
-		for(Brewery brewery: breweries){
-			forEachAverage=0;
-			List<Beer> beerBrewery=beersFilteredByBrewery(beers, brewery);
-			for(Beer b: beerBrewery){
-				if(b.isTried()==isTried){
-					forEachAverage+=b.getMark();
-				}
-			}
-			forEachAverage/=beerBrewery.size();
-			breweryAverage.put(brewery, forEachAverage);
-		}
-		breweryAverage.forEach((k, v) -> {
-			if(v>=average){
-				bestBreweriesMap.put(k, v);
-			}
-		});
-		return bestBreweriesMap;
-	}
-	
-	public static double breweryAverage(List<Beer> beers, Brewery b){
-		double average=0;
-		List<Beer> beersFiltered = beersFilteredByBrewery(beers, b);
-		for (Beer beer: beersFiltered){
-			average+=beer.getMark();
-		}
-		return average/beersFiltered.size();
-	}
-	
-	
-	public static HashMap<Brewery, Double> breweriesAverage(List<Beer> beers){
-		HashMap<Brewery, Double> map=new HashMap<Brewery, Double>();
-		List<Brewery> breweries = getAllBreweries(beers);
-		for(Brewery b: breweries){
-			map.put(b, breweryAverage(beers, b));
-		}
-		return map;
-	}
 	
 	/**
 	 * Sort beers by their brewery (country, town, name), and then by their style (fermentation, name, subcategory)
@@ -396,15 +355,123 @@ public class QueryRunner {
 	
 	
 	//SORT FUNCTIONS
-	public static void sortStyleByFermentationThenCountry(List<Style> styles){
-		Collections.sort(styles , new Comparators.ComparatorStyleFermentationComplete());
+	public static List<Style> styleSortedByFermentationThenCountry(List<Style> styles){
+		List<Style> sortedStyles=new LinkedList<Style>(styles);
+		Collections.sort(sortedStyles , new Comparators.ComparatorStyleFermentationComplete());
+		return sortedStyles;
 	}
 	
-	public static void sortStyleByCountryThenFermentationy(List<Style> styles){
-		Collections.sort(styles , new Comparators.ComparatorStyleCountryComplete());
+	public static List<Style> styleSortedByCountryThenFermentationy(List<Style> styles){
+		List<Style> sortedStyles=new LinkedList<Style>(styles);
+		Collections.sort(sortedStyles , new Comparators.ComparatorStyleCountryComplete());
+		return sortedStyles;
 	}
 	
 	
+	public static HashMap<Brewery, Double> breweryWithAvrerageMoreThan(LinkedList<Beer> beers, double average, boolean isTried){
+		HashMap<Brewery, Double> bestBreweriesMap=new HashMap<Brewery, Double>();
+		List<Brewery> breweries=new LinkedList<Brewery>();
+		double forEachAverage=0;
+		breweries=getAllBreweries(beers);
+		HashMap<Brewery, Double> breweryAverage=new HashMap<Brewery, Double>();
+		for(Brewery brewery: breweries){
+			forEachAverage=0;
+			List<Beer> beerBrewery=beersFilteredByBrewery(beers, brewery);
+			for(Beer b: beerBrewery){
+				if(b.isTried()==isTried){
+					forEachAverage+=b.getMark();
+				}
+			}
+			forEachAverage/=beerBrewery.size();
+			breweryAverage.put(brewery, forEachAverage);
+		}
+		breweryAverage.forEach((k, v) -> {
+			if(v>=average){
+				bestBreweriesMap.put(k, v);
+			}
+		});
+		return bestBreweriesMap;
+	}
+	
+	
+	public static double breweryAverage(List<Beer> beers, Brewery b, boolean beersAlreadyFilteredByBrewery){
+		double average=0.0;
+		List<Beer> beersFiltered;
+		if(beersAlreadyFilteredByBrewery){
+			beersFiltered=new LinkedList<Beer>(beers);
+		}
+		else{
+			beersFiltered = beersFilteredByBrewery(beers, b);
+		}
+		for (Beer beer: beersFiltered){
+			average+=beer.getMark();
+		}
+		return average/beersFiltered.size();
+	}
+	
+	
+	
+	public static HashMap<Brewery, Double> breweriesAverage(List<Beer> beers, List<Brewery> breweries, boolean beersAlreadyFiltered){
+		HashMap<Brewery, Double> map=new HashMap<Brewery, Double>();
+		for(Brewery b: breweries){
+			map.put(b, breweryAverage(beers, b, beersAlreadyFiltered));
+		}
+		return map;
+	}
+	
+	
+	public static List<Brewery> breweriesSortedByCountryThenName(List<Brewery> breweries){
+		List<Brewery>  sortedBreweries=new LinkedList<Brewery>(breweries);
+		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByCountryName());
+		return sortedBreweries;
+	}
+	
+	public static List<BreweryAverage> breweriesSortedByCountryThenNameWithAverage(List<BreweryAverage> breweries){
+		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByCountryName());
+		return sortedBreweries;
+	}
+	
+	
+	
+	public static List<Brewery> breweriesSortedByName(List<Brewery> breweries){
+		List<Brewery>  sortedBreweries=new LinkedList<Brewery>(breweries);
+		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByName());
+		return sortedBreweries;
+	}
+	
+	public static List<BreweryAverage> breweriesSortedByNameWithAverage(List<BreweryAverage> breweries){
+		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByName());
+		return sortedBreweries;
+	}
+	
+	
+	public static List<BreweryAverage> breweriesSortedByAverageAscending(List<BreweryAverage> breweries) {	
+		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByAverageAscending());
+		return sortedBreweries;
+	}
+	
+	
+	public static List<BreweryAverage> breweriesSortedByCountryThenAverageAscending(List<BreweryAverage> breweries){
+		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByCountryThenAverageAscending());
+		return sortedBreweries;
+	}
+	
+	public static List<BreweryAverage> breweriesSortedByAverageDescending(List<BreweryAverage> breweries) {	
+		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByAverageDescending());
+		return sortedBreweries;
+	}
+	
+	
+	public static List<BreweryAverage> breweriesSortedByCountryThenAverageDescending(List<BreweryAverage> breweries){
+		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByCountryThenAverageDescending());
+		return sortedBreweries;
+	}
 	
 	
 	

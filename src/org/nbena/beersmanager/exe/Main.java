@@ -165,8 +165,8 @@ public class Main {
 //			ModelBreweryTable tableModelBrewery=new ModelBreweryTable();
 //			model.setTableModel(tableModelBrewery);
 			
-			ModelBeerTable tableModelBeer = new ModelBeerTable();
-			model.setTableModel(tableModelBeer);
+//			ModelBeerTable tableModelBeer = new ModelBeerTable();
+//			model.setTableModel(tableModelBeer);
 				
 			
 //			model.setDataShownNow(Model.DataShownNow.BREWERY);
@@ -180,17 +180,19 @@ public class Main {
 			ControllerMainGUI controller=new ControllerMainGUI(gui, model);
 			
 			
-			
+			controller.setShowBreweriesAverages(true);
 			
 			
 			model.setStyleData(StupidClass.someStyle());
 			model.setBreweryData(StupidClass.someBreweries());
 			model.setBeerData(StupidClass.someBeers(StupidClass.someBreweries(), StupidClass.someStyle()));
 			
+			model.setAverages(StupidClass.someBeers(StupidClass.someBreweries(), StupidClass.someStyle()));
+			
 			
 //			controller.showBeers();
-//			controller.showBreweries();
-			controller.showStyles();
+			controller.showBreweries();
+//			controller.showStyles();
 			
 			
 			//ModelStyleTable t=(ModelStyleTable)model.getTableModel();

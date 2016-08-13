@@ -30,6 +30,7 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 	private JTextField textFieldCountry;
 	private JTextField textFieldWebsite;
 	private JTextArea textAreaDescription;
+	private JTextField textFieldAverage;
 	
 	private JButton okButton;
 	private JButton cancelButton; 
@@ -79,6 +80,11 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 		textAreaDescription.setText(text);
 	}
 	
+	public void setBreweryAverage(String text){
+		System.out.println("The text is "+text);
+		textFieldAverage.setText(text);
+	}
+	
 	public void addActionListenerOkButton(ActionListener listener){
 		okButton.addActionListener(listener);
 	}
@@ -112,6 +118,7 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 		textFieldCountry.setEditable(false);
 		textFieldWebsite.setEditable(false);
 		textAreaDescription.setEditable(false);
+		textFieldAverage.setEditable(false);
 	}
 	
 	@Deprecated
@@ -140,7 +147,7 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 	 * Create the dialog.
 	 */
 	public ViewViewBrewery() {
-		setBounds(100, 100, 509, 446);
+		setBounds(100, 100, 509, 481);
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -246,6 +253,25 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 			gbc_textAreaDescription.gridx = 3;
 			gbc_textAreaDescription.gridy = 10;
 			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
+		}
+		
+		{
+			JLabel lblAverage = new JLabel("Media voti birre:");
+			GridBagConstraints gbc_lblAverage = new GridBagConstraints();
+			gbc_lblAverage.insets = new Insets(0, 0, 5, 5);
+			gbc_lblAverage.gridx = 1;
+			gbc_lblAverage.gridy = 12;
+			contentPanel.add(lblAverage, gbc_lblAverage);
+		}
+		{
+			textFieldAverage = new JTextField();
+			GridBagConstraints gbc_textFieldAverage = new GridBagConstraints();
+			gbc_textFieldAverage.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldAverage.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldAverage.gridx = 3;
+			gbc_textFieldAverage.gridy = 12;
+			contentPanel.add(textFieldAverage, gbc_textFieldAverage);
+			textFieldAverage.setColumns(7);
 		}
 //		{
 //			JPanel buttonPane = new JPanel();

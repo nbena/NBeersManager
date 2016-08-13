@@ -28,6 +28,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 	private JTextField textFieldName;
 	private JTextField textFieldTown;
 	private JTextField textFieldWebsite;
+	private JTextField textFieldAverage;
 	
 	private JTextArea textAreaDescription;
 	
@@ -87,6 +88,10 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 		textAreaDescription.setText(text);
 	}
 	
+	public void setBreweryAverage(String t) {
+		textFieldAverage.setText(t);
+	}
+	
 	public void addActionListenerOkButton(ActionListener listener){
 		okButton.addActionListener(listener);
 	}
@@ -104,7 +109,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 		textAreaDescription.setEditable(editable);
 	}
 	*/
-	
+	@Deprecated
 	public void setBrewery(Brewery b){
 		textFieldName.setText(b.getName());
 		textFieldTown.setText(b.getTown());
@@ -235,6 +240,28 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 			gbc_textAreaDescription.gridy = 10;
 			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
 		}
+		
+		
+		{
+			JLabel lblAverage = new JLabel("Media voti birre:");
+			GridBagConstraints gbc_lblAverage = new GridBagConstraints();
+			gbc_lblAverage.insets = new Insets(0, 0, 5, 5);
+			gbc_lblAverage.gridx = 1;
+			gbc_lblAverage.gridy = 12;
+			contentPanel.add(lblAverage, gbc_lblAverage);
+		}
+		{
+			textFieldAverage = new JTextField();
+			GridBagConstraints gbc_textFieldAverage = new GridBagConstraints();
+			gbc_textFieldAverage.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldAverage.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldAverage.gridx = 3;
+			gbc_textFieldAverage.gridy = 12;
+			contentPanel.add(textFieldAverage, gbc_textFieldAverage);
+			textFieldAverage.setColumns(7);
+			textFieldAverage.setEditable(false);
+		}
+		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

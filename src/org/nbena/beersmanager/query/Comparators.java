@@ -416,7 +416,14 @@ public class Comparators {
 			int rCountry, rBrewery, ret;
 			rCountry=arg0.getBrewery().getCountry().compareTo(arg1.getBrewery().getCountry());
 			if (rCountry==0){
-				rBrewery = arg0.getMark() > arg1.getMark() ? 1 : 0;
+				if(arg0.getMark()>arg1.getMark()){
+					rBrewery=1;
+				}else if(arg0.getMark()==arg1.getMark()){
+					rBrewery=0;
+				}
+				else{
+					rBrewery=-1;
+				}
 				ret=rBrewery;
 			}else{
 				ret=rCountry;
@@ -507,6 +514,132 @@ public class Comparators {
 			}
 			else{
 				ret=arg1.getMark()-arg0.getMark();
+			}
+			return ret;
+		}
+		
+	}
+	
+	
+	
+	
+//	COUNTRY_NAME,
+//	NAME,
+//	AVERAGE,
+//	COUNTRY_AVERAGE
+	
+	/**
+	 * Comparator that compares Brewery, in order:<ol>
+	 * <li>Brewery country</li>
+	 * <li>Brewery name</li>
+	 * </ol>
+	 * @author nb
+	 *
+	 */
+	public static class ComparatorBreweryByCountryName implements Comparator<Brewery>{
+
+	@Override
+	public int compare(Brewery arg0, Brewery arg1) {
+		int ret;
+		if(arg0.getCountry().equals(arg1.getCountry())){
+			ret=arg0.getName().compareToIgnoreCase(arg1.getName());
+		}else{
+			ret=arg0.getCountry().compareToIgnoreCase(arg1.getCountry());
+		}
+		return ret;
+	}
+		
+	}
+	
+	/**
+	 * Comparator that compares Brewery, in order:<ol>
+	 * <li>Brewery name</li>
+	 * </ol>
+	 * @author nb
+	 *
+	 */
+	public static class ComparatorBreweryByName implements Comparator<Brewery>{
+
+		@Override
+		public int compare(Brewery arg0, Brewery arg1) {
+			return arg0.getName().compareToIgnoreCase(arg1.getName());
+		}
+		
+	}
+	
+	public static class ComparatorBreweryByAverageAscending implements Comparator<BreweryAverage>{
+
+		@Override
+		public int compare(BreweryAverage arg0, BreweryAverage arg1) {
+			int ret;
+			if(arg0.getAverage()>arg1.getAverage()){
+				ret=1;
+			}else if(arg0.getAverage()==arg1.getAverage()){
+				ret=0;
+			}else{
+				ret=-1;
+			}
+			return ret;
+		}
+		
+	}
+	
+	public static class ComparatorBreweryByAverageDescending implements Comparator<BreweryAverage>{
+
+		@Override
+		public int compare(BreweryAverage arg0, BreweryAverage arg1) {
+			int ret;
+			if(arg0.getAverage()>arg1.getAverage()){
+				ret=-1;
+			}else if(arg0.getAverage()==arg1.getAverage()){
+				ret=0;
+			}else{
+				ret=1;
+			}
+			return ret;
+		}
+		
+	}
+	
+	public static class ComparatorBreweryByCountryThenAverageAscending implements Comparator<BreweryAverage>{
+
+		@Override
+		public int compare(BreweryAverage arg0, BreweryAverage arg1) {
+			int ret;
+			if(arg0.getCountry().equals(arg1.getCountry())){
+				if(arg0.getAverage()>arg1.getAverage()){
+					ret=1;
+				}else if(arg0.getAverage()==arg1.getAverage()){
+					ret=0;
+				}else{
+					ret=-1;
+				}
+			}
+			else{
+				ret=arg0.getCountry().compareToIgnoreCase(arg1.getCountry());
+			}
+			return ret;
+		}
+		
+	}
+	
+	
+	public static class ComparatorBreweryByCountryThenAverageDescending implements Comparator<BreweryAverage>{
+
+		@Override
+		public int compare(BreweryAverage arg0, BreweryAverage arg1) {
+			int ret;
+			if(arg0.getCountry().equals(arg1.getCountry())){
+				if(arg0.getAverage()>arg1.getAverage()){
+					ret=-1;
+				}else if(arg0.getAverage()==arg1.getAverage()){
+					ret=0;
+				}else{
+					ret=1;
+				}
+			}
+			else{
+				ret=arg0.getCountry().compareToIgnoreCase(arg1.getCountry());
 			}
 			return ret;
 		}

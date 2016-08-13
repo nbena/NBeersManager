@@ -18,6 +18,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JTable;
@@ -101,6 +103,16 @@ public class ViewMainGUI extends JFrame {
 	private JMenuItem mntmBeersSortedByMarkStarAscending;
 	private JMenuItem mntmBeersSortedByStarMarkDescending;
 	private JMenuItem mntmBeersSortedByStarMarkAscending;
+	private JMenuItem mntmStylesSortedByFermentationThenCountry;
+	private JMenuItem mntmStylesSortedByCountryThenFermentation;
+	private JMenuItem mntmBreweriesSortedByCountryThenName;
+	private JMenuItem mntmBreweriesSortedByName;
+	private JMenu mnBreweriesSortedByAverage;
+	private JMenu mnBreweriesSortedByCountryThenAverage;
+	private JMenuItem mntmBreweriesSortedByAverageDescending;
+	private JMenuItem mntmBreweriesSortedByAverageAscending;
+	private JMenuItem mntmBreweriesSortedByCountryThenAverageDescending;
+	private JMenuItem mntmBreweriesSortedByCountryThenAverageAscending;
 	
 	
 	public void addActionMenuSearchBeer(ActionListener listener){
@@ -187,6 +199,43 @@ public class ViewMainGUI extends JFrame {
 	public void addActionMenuBeersFilteredByBreweryCountry(ActionListener listener){
 		mntmBeersFilteredByBreweryCountry.addActionListener(listener);
 	}
+	
+	
+	
+	public void addActionMenuStylesSortedByFermentationThenCountry(ActionListener listener){
+		mntmStylesSortedByFermentationThenCountry.addActionListener(listener);
+	}
+	
+	public void addActionMenuStylesSortedByCountryThenFermentation(ActionListener listener){
+		mntmStylesSortedByCountryThenFermentation.addActionListener(listener);
+	}
+	
+	
+	
+	public void addActionMenuBreweriesSortedByCountryThenName(ActionListener listener){
+		mntmBreweriesSortedByCountryThenName.addActionListener(listener);
+	}
+	
+	public void addActionMenuBreweriesSortedByCountryThenAverageAscending(ActionListener listener){
+		mntmBreweriesSortedByCountryThenAverageAscending.addActionListener(listener);
+	}
+	
+	public void addActionMenuBreweriesSortedByAverageAscending(ActionListener listener){
+		mntmBreweriesSortedByAverageAscending.addActionListener(listener);
+	}
+	
+	public void addActionMenuBreweriesSortedByCountryThenAverageDescending(ActionListener listener){
+		mntmBreweriesSortedByCountryThenAverageDescending.addActionListener(listener);
+	}
+	
+	public void addActionMenuBreweriesSortedByAverageDescending(ActionListener listener){
+		mntmBreweriesSortedByAverageDescending.addActionListener(listener);
+	}
+	
+	public void addActionMenuBreweriesSortedByName(ActionListener listener){
+		mntmBreweriesSortedByName.addActionListener(listener);
+	}
+
 	
 	
 	
@@ -451,8 +500,38 @@ public class ViewMainGUI extends JFrame {
 		mnOrderBrewery = new JMenu("Brewery");
 		mnOrder.add(mnOrderBrewery);
 		
+		mntmBreweriesSortedByCountryThenName = new JMenuItem("Nazione, nome");
+		mnOrderBrewery.add(mntmBreweriesSortedByCountryThenName);
+		
+		mntmBreweriesSortedByName = new JMenuItem("Nome");
+		mnOrderBrewery.add(mntmBreweriesSortedByName);
+		
+		mnBreweriesSortedByAverage = new JMenu("Voto medio");
+		mnOrderBrewery.add(mnBreweriesSortedByAverage);
+		
+		mntmBreweriesSortedByAverageDescending = new JMenuItem("Discendente");
+		mnBreweriesSortedByAverage.add(mntmBreweriesSortedByAverageDescending);
+		
+		mntmBreweriesSortedByAverageAscending = new JMenuItem("Ascendente");
+		mnBreweriesSortedByAverage.add(mntmBreweriesSortedByAverageAscending);
+		
+		mnBreweriesSortedByCountryThenAverage = new JMenu("Nazione, voto medio");
+		mnOrderBrewery.add(mnBreweriesSortedByCountryThenAverage);
+		
+		mntmBreweriesSortedByCountryThenAverageDescending = new JMenuItem("Discendente");
+		mnBreweriesSortedByCountryThenAverage.add(mntmBreweriesSortedByCountryThenAverageDescending);
+		
+		mntmBreweriesSortedByCountryThenAverageAscending = new JMenuItem("Ascendente");
+		mnBreweriesSortedByCountryThenAverage.add(mntmBreweriesSortedByCountryThenAverageAscending);
+		
 		mnOrderStyle = new JMenu("Style");
 		mnOrder.add(mnOrderStyle);
+		
+		mntmStylesSortedByFermentationThenCountry = new JMenuItem("Fermentazione, nazione origine stile");
+		mnOrderStyle.add(mntmStylesSortedByFermentationThenCountry);
+		
+		mntmStylesSortedByCountryThenFermentation = new JMenuItem("Nazione origine stile, fermentazione");
+		mnOrderStyle.add(mntmStylesSortedByCountryThenFermentation);
 		
 		JMenu mnFilter = new JMenu("Filter");
 		menuBar.add(mnFilter);

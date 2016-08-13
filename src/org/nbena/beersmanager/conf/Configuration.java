@@ -19,31 +19,43 @@ public class Configuration {
 		STAR_MARK
 	}
 	
+	public static enum StyleSortingAlgorithm{
+		FERMENTATION_COUNTRY,
+		COUNTRY_FERMENTATION
+	}
+	
+	public static enum BrewerySortingAlgorithm{
+		COUNTRY_NAME,
+		NAME,
+		AVERAGE,
+		COUNTRY_AVERAGE
+	}
+	
 
-	public static enum ViewAllDefault{
-		COUNTRY_BREWERY_FERMENTATION_STYLE,
-		FERMENTATION_STYLE_COUNTRY_BREWERY,
-		JUST_ALPHA_ORDER
-	}
-	
-	public static enum BeersDefault{
-		ALL_TRIED_BEERS,
-		ALL_STAR_BEERS,
-		ALL_NOT_TRIED_BEERS,
-		ALL_AFTER_LIMIT_BEERS
-	}
-	
-	public static enum StyleDefault{
-		ALL_STYLES_GROUP_BY_COUNTRY_FERMENTATION,
-		STYLES_ONLY_CERTAIN_COUNTRIES,
-		STYLES_ONLY_CERTAIN_FERMENTATION
-	}
-	
-	public static enum BreweriesDefault{
-		ALL_BREWERIES_GROUP_COUNTRY,
-		BREWERIES_WITH_MORE_STARRED_BEERS,
-		BREWERIES_WITH_AVERAGE_AFTER_LIMIT
-	}
+//	public static enum ViewAllDefault{
+//		COUNTRY_BREWERY_FERMENTATION_STYLE,
+//		FERMENTATION_STYLE_COUNTRY_BREWERY,
+//		JUST_ALPHA_ORDER
+//	}
+//	
+//	public static enum BeersDefault{
+//		ALL_TRIED_BEERS,
+//		ALL_STAR_BEERS,
+//		ALL_NOT_TRIED_BEERS,
+//		ALL_AFTER_LIMIT_BEERS
+//	}
+//	
+//	public static enum StyleDefault{
+//		ALL_STYLES_GROUP_BY_COUNTRY_FERMENTATION,
+//		STYLES_ONLY_CERTAIN_COUNTRIES,
+//		STYLES_ONLY_CERTAIN_FERMENTATION
+//	}
+//	
+//	public static enum BreweriesDefault{
+//		ALL_BREWERIES_GROUP_COUNTRY,
+//		BREWERIES_WITH_MORE_STARRED_BEERS,
+//		BREWERIES_WITH_AVERAGE_AFTER_LIMIT
+//	}
 	
 	
 	public static  enum HighlightStarBeer{
@@ -56,12 +68,19 @@ public class Configuration {
 		BEFORE_CLOSE
 	}
 	
-	private ViewAllDefault viewAllDefaultOption;
-	private BeersDefault beersDefaultOption;
-	private StyleDefault styleDeafultOption;
-	private BreweriesDefault breweriesDeafultOption;
+	public static enum ShowAlsoBreweriesAverage{
+		YES,
+		NO
+	}
+	
+//	private ViewAllDefault viewAllDefaultOption;
+//	private BeersDefault beersDefaultOption;
+//	private StyleDefault styleDeafultOption;
+//	private BreweriesDefault breweriesDeafultOption;
 	private WriteToFileWhen writeToFileWhenOption;
 	private BeerSortingAlgorithm beerSortingAlgorithm;
+	private BrewerySortingAlgorithm brewerySortingAlgorithm;
+	private StyleSortingAlgorithm styleSortingAlgorithm;
 	
 	private int starMarkValue;
 	
@@ -77,41 +96,71 @@ public class Configuration {
 	private String beweryFilePathBackup;
 	private String beerFilePathBackup;
 	
+	
+	
 	public Configuration() {
 	}
 
-	public ViewAllDefault getViewAllDefaultOption() {
-		return viewAllDefaultOption;
+//	public ViewAllDefault getViewAllDefaultOption() {
+//		return viewAllDefaultOption;
+//	}
+//
+//	public void setViewAllDefaultOption(ViewAllDefault viewAllDefaultOption) {
+//		this.viewAllDefaultOption = viewAllDefaultOption;
+//	}
+//
+//	public BeersDefault getBeersDefaultOption() {
+//		return beersDefaultOption;
+//	}
+//
+//	public void setBeersDefaultOption(BeersDefault beersDefaultOption) {
+//		this.beersDefaultOption = beersDefaultOption;
+//	}
+//
+//	public StyleDefault getStyleDeafultOption() {
+//		return styleDeafultOption;
+//	}
+//
+//	public void setStyleDeafultOption(StyleDefault styleDeafultOption) {
+//		this.styleDeafultOption = styleDeafultOption;
+//	}
+//
+//	public BreweriesDefault getBreweriesDeafultOption() {
+//		return breweriesDeafultOption;
+//	}
+//
+//	public void setBreweriesDeafultOption(BreweriesDefault breweriesDeafultOption) {
+//		this.breweriesDeafultOption = breweriesDeafultOption;
+//	}
+
+
+	/**
+	 * @return the brewerySortingAlgorithm
+	 */
+	public BrewerySortingAlgorithm getBrewerySortingAlgorithm() {
+		return brewerySortingAlgorithm;
 	}
 
-	public void setViewAllDefaultOption(ViewAllDefault viewAllDefaultOption) {
-		this.viewAllDefaultOption = viewAllDefaultOption;
+	/**
+	 * @param brewerySortingAlgorithm the brewerySortingAlgorithm to set
+	 */
+	public void setBrewerySortingAlgorithm(BrewerySortingAlgorithm brewerySortingAlgorithm) {
+		this.brewerySortingAlgorithm = brewerySortingAlgorithm;
 	}
 
-	public BeersDefault getBeersDefaultOption() {
-		return beersDefaultOption;
+	/**
+	 * @return the styleSortingAlgorithm
+	 */
+	public StyleSortingAlgorithm getStyleSortingAlgorithm() {
+		return styleSortingAlgorithm;
 	}
 
-	public void setBeersDefaultOption(BeersDefault beersDefaultOption) {
-		this.beersDefaultOption = beersDefaultOption;
+	/**
+	 * @param styleSortingAlgorithm the styleSortingAlgorithm to set
+	 */
+	public void setStyleSortingAlgorithm(StyleSortingAlgorithm styleSortingAlgorithm) {
+		this.styleSortingAlgorithm = styleSortingAlgorithm;
 	}
-
-	public StyleDefault getStyleDeafultOption() {
-		return styleDeafultOption;
-	}
-
-	public void setStyleDeafultOption(StyleDefault styleDeafultOption) {
-		this.styleDeafultOption = styleDeafultOption;
-	}
-
-	public BreweriesDefault getBreweriesDeafultOption() {
-		return breweriesDeafultOption;
-	}
-
-	public void setBreweriesDeafultOption(BreweriesDefault breweriesDeafultOption) {
-		this.breweriesDeafultOption = breweriesDeafultOption;
-	}
-
 
 	public int getStarMarkValue() {
 		return starMarkValue;

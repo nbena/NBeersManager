@@ -21,8 +21,11 @@ import org.nbena.beersmanager.export.PDFExporter;
 import org.nbena.beersmanager.export.TXTExporter;
 import org.nbena.beersmanager.export.MSExcelOldExporter;
 import org.nbena.beersmanager.export.MSExcelNewExporter;
+import org.nbena.beersmanager.query.BreweryAverage;
 import org.nbena.beersmanager.query.Comparators;
 import org.nbena.beersmanager.query.QueryRunner;
+import org.nbena.beersmanager.query.Comparators.ComparatorBreweryByAverageAscending;
+import org.nbena.beersmanager.query.Comparators.ComparatorBreweryByCountryThenAverageAscending;
 
 public class Model {
 	
@@ -30,6 +33,7 @@ public class Model {
 	public static enum DataShownNow{
 		BEER,
 		BREWERY,
+		BREWERY_AVERAGE,
 		STYLE
 	}
 	
@@ -39,23 +43,28 @@ public class Model {
 		STYLE
 	}
 	
+	
 	private MyModelAbstractTable tableModel;
 	
 	private MyModelAbstractDialog dialogModel;
 	
+	private boolean showAlsoAverage=false;
+	
 	private List<Style> styleData;
 	private List<Beer> beerData;
-	private List<Brewery> breweryData;
+	private List<BreweryAverage> breweryData;
 	
 	private List<String> countries;
 	
-	private Beer beerDialog;
-	private Brewery breweryDialog;
-	private Style styleDialog;
+	private Beer beerShown;
+	private BreweryAverage breweryShown;
+	private Style styleShown;
 	
 	private List<Beer> filteredBeers;
-	private List<Brewery> filteredBreweries;
-	private List<Style> filteredstyles;
+	private List<BreweryAverage> filteredBreweries;
+	private List<Style> filteredStyles;
+	
+	
 	
 	private DataShownNow dataShownNow;
 	private DialogShownNow dialogShown;
@@ -138,7 +147,7 @@ public class Model {
 	 */
 	public void setStyleData(List<Style> styleData) {
 		this.styleData = styleData;	
-		filteredstyles=styleData;
+		filteredStyles=styleData;
 	}
 	
 //	public void setStyleDataAndShow(List<Style> styleData){
@@ -197,6 +206,10 @@ public class Model {
 	 * @return the breweryData
 	 */
 	public List<Brewery> getBreweryData() {
+		return Utils.fromBreweriesAverageToBrewery(breweryData);
+	}
+	
+	public List<BreweryAverage> getBreweryAverageData(){
 		return breweryData;
 	}
 
@@ -204,8 +217,16 @@ public class Model {
 	 * @param breweryData the breweryData to set
 	 */
 	public void setBreweryData(List<Brewery> breweryData) {
-		this.breweryData = breweryData;
-		filteredBreweries=breweryData;
+		this.breweryData = Utils.fromBreweriesToBreweriesAverage(breweryData);
+		filteredBreweries=this.breweryData;
+	}
+	
+	public void setAverages(List<Beer> beers){
+		for(BreweryAverage av: breweryData){
+			List<Beer> itsBeers=QueryRunner.beersFilteredByBrewery(beers, (Brewery)av);
+			av.setAverage(itsBeers);
+		}
+		filteredBreweries=this.breweryData;
 	}
 	
 //	public void setBreweryDataAndShow(List<Brewery> breweryData){
@@ -218,9 +239,23 @@ public class Model {
 //	}
 	
 	public void showBreweryData(){
-		dataShownNow=DataShownNow.BREWERY;
+		if(showAlsoAverage){
+			showBreweryAverageData();
+		}
+		else{
+			dataShownNow=DataShownNow.BREWERY;
+			tableModel.clear();
+			ModelBreweryTable tableModelOld=(ModelBreweryTable)tableModel;
+			tableModel=tableModelOld;
+//			tableModel.fireTableStructureChanged();
+			tableModel.setData(breweryData); //it work||
+		}
+	}
+	
+	public void showBreweryAverageData(){
+		dataShownNow=DataShownNow.BREWERY_AVERAGE;
 		tableModel.clear();
-		ModelBreweryTable tableModelOld=(ModelBreweryTable)tableModel;
+		ModelBreweryAverage tableModelOld=(ModelBreweryAverage)tableModel;
 		tableModel=tableModelOld;
 //		tableModel.fireTableStructureChanged();
 		tableModel.setData(breweryData); //it work||
@@ -264,7 +299,7 @@ public class Model {
 		if (dataShownNow==DataShownNow.BEER){
 //			Beer b = (Beer)tableModel.getSelectedObject(index);
 //			return b;
-			return beerData.get(index);
+			return filteredBeers.get(index);
 		}
 		else
 			throw new RuntimeException("Beer is not in the table");
@@ -275,70 +310,99 @@ public class Model {
 		if (dataShownNow==DataShownNow.STYLE){
 			//Style s = (Style)tableModel.getSelectedObject(index);
 			//return s;
-			return styleData.get(index);
+			return filteredStyles.get(index);
 		}
 		else
 			throw new RuntimeException("Style is not in the table");
 		//return null;
 	}
 	
-	public Brewery getSelectedBrewery(int index){
-		if (dataShownNow==DataShownNow.BREWERY){
-			//Brewery b = (Brewery)tableModel.getSelectedObject(index);
-			//return b;
-			return breweryData.get(index);
+	
+	
+	public BreweryAverage getSelectedBrewery(int index){
+		if(dataShownNow==DataShownNow.BREWERY || dataShownNow==DataShownNow.BREWERY_AVERAGE){
+//			if(dataShownNow==DataShownNow.BREWERY){
+//				Brewery b=(Brewery)tableModel.getSelectedObject(index);
+//				av=Utils.fromBreweryToBreweryAverage(b);
+//				av.setAverage(QueryRunner.beersFilteredByBrewery(beerData, b));
+//			}
+//			else{
+//				av=(BreweryAverage)tableModel.getSelectedObject(index);
+//			}
+//			Utils.printBrewery(av, System.out);
+			return filteredBreweries.get(index);
 		}
 		else
 			throw new RuntimeException("Brewery is not in the table");
-		//return null;
 	}
+	
+//	public BreweryAverage getSelectedBrewery(int index){
+////		System.out.println(dataShownNow);
+//		if (dataShownNow==DataShownNow.BREWERY){
+//			//Brewery b = (Brewery)tableModel.getSelectedObject(index);
+//			//return b;
+//			return breweryData.get(index);
+//		}
+//		else if(dataShownNow==DataShownNow.BREWERY_AVERAGE){
+//			getSelectedBreweryAverage(index);
+//		}
+//		else{
+//			throw new RuntimeException("Brewery is not in the table");
+//		}
+//			
+//		//return null;
+//	}
+//	
+//	public BreweryAverage getSelectedBreweryAverage(int index){
+//		if (dataShownNow==DataShownNow.BREWERY_AVERAGE){
+//			//Brewery b = (Brewery)tableModel.getSelectedObject(index);
+//			//return b;
+//			return breweryData.get(index);
+//		}
+//		else
+//			throw new RuntimeException("Brewery is not in the table");
+//	}
 
-	@Deprecated
 	/**
 	 * @return the beerDialog
 	 */
-	public Beer getBeerDialog() {
-		return beerDialog;
+	public Beer getBeerShown() {
+		return beerShown;
 	}
 
-	@Deprecated
 	/**
 	 * @param beerDialog the beerDialog to set
 	 */
-	public void setBeerDialog(Beer beerDialog) {
-		this.beerDialog = beerDialog;
+	public void setBeerShown(Beer beerDialog) {
+		this.beerShown = beerDialog;
 	}
 
-	@Deprecated
 	/**
 	 * @return the breweryDialog
 	 */
-	public Brewery getBreweryDialog() {
-		return breweryDialog;
+	public BreweryAverage getBreweryShown() {
+		return breweryShown;
 	}
 
-	@Deprecated
 	/**
 	 * @param breweryDialog the breweryDialog to set
 	 */
-	public void setBreweryDialog(Brewery breweryDialog) {
-		this.breweryDialog = breweryDialog;
+	public void setBreweryShown(BreweryAverage breweryDialog) {
+		this.breweryShown = breweryDialog;
 	}
 
-	@Deprecated
 	/**
 	 * @return the styleDialog
 	 */
-	public Style getStyleDialog() {
-		return styleDialog;
+	public Style getStyleShown() {
+		return styleShown;
 	}
 
-	@Deprecated
 	/**
 	 * @param styleDialog the styleDialog to set
 	 */
-	public void setStyleDialog(Style styleDialog) {
-		this.styleDialog = styleDialog;
+	public void setStyleShown(Style styleDialog) {
+		this.styleShown = styleDialog;
 	}
 
 	
@@ -387,9 +451,68 @@ public class Model {
 		filteredBeers=beerData;
 	}
 
+	public void styleSortedByFermentationThenCountry(){
+		styleData=QueryRunner.styleSortedByFermentationThenCountry(filteredStyles);
+		filteredStyles=styleData;
+	}
+	
+	public void styleSortedByCountryThenFermentationy(){
+		styleData=QueryRunner.styleSortedByCountryThenFermentationy(filteredStyles);
+		filteredStyles=styleData;
+	}
 	
 	
 	
+	
+	public void breweriesSortedByCountryThenName(){
+		breweryData=QueryRunner.breweriesSortedByCountryThenNameWithAverage(filteredBreweries);
+		filteredBreweries=breweryData;
+	}
+	
+	
+	public void breweriesSortedBynName(List<Brewery> breweries){
+		breweryData=QueryRunner.breweriesSortedByNameWithAverage(filteredBreweries);
+		filteredBreweries=breweryData;
+	}
+	
+	
+	public void breweriesSortedByAverageAscending(){
+		breweryData=QueryRunner.breweriesSortedByAverageAscending(filteredBreweries);
+		filteredBreweries=breweryData;
+	}
+	
+	
+	public void breweriesSortedByCountryThenAverageAscending(){
+		breweryData=QueryRunner.breweriesSortedByCountryThenAverageAscending(filteredBreweries);
+		filteredBreweries=breweryData;
+	}
+	
+	public void breweriesSortedByAverageDescending(){
+		breweryData=QueryRunner.breweriesSortedByAverageDescending(filteredBreweries);
+		filteredBreweries=breweryData;
+	}
+	
+	
+	public void breweriesSortedByCountryThenAverageDescending(){
+		breweryData=QueryRunner.breweriesSortedByCountryThenAverageDescending(filteredBreweries);
+		filteredBreweries=breweryData;
+	}
+	
+	
+	/**
+	 * @return the showAlsoAverage
+	 */
+	public boolean isShowAlsoAverage() {
+		return showAlsoAverage;
+	}
+
+	/**
+	 * @param showAlsoAverage the showAlsoAverage to set
+	 */
+	public void setShowAlsoAverage(boolean showAlsoAverage) {
+		this.showAlsoAverage = showAlsoAverage;
+	}
+
 	public void beersFilteredByStyle(Style style){
 		filteredBeers=QueryRunner.beersFilteredByStyle(filteredBeers, style);
 	}
@@ -541,7 +664,7 @@ public class Model {
 	
 	private void exportJSONBreweries(OutputStream out) throws Exception{
 		exporter = new JSONExporter();
-		exporter.writeBrewery(filteredBreweries, out);
+//		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
 	private void exportJSONStyles(OutputStream out) throws Exception{
@@ -557,7 +680,7 @@ public class Model {
 	
 	private void exportMsExcelNewBreweries(OutputStream out) throws Exception{
 		exporter = new MSExcelNewExporter();
-		exporter.writeBrewery(filteredBreweries, out);
+//		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
 	private void exportMsExcelNewStyles(OutputStream out) throws Exception{
@@ -573,7 +696,7 @@ public class Model {
 	
 	private void exportMsExcelOldBreweries(OutputStream out) throws Exception{
 		exporter = new MSExcelOldExporter();
-		exporter.writeBrewery(filteredBreweries, out);
+//		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
 	private void exportMsExcelOldStyles(OutputStream out) throws Exception{
@@ -603,7 +726,7 @@ public class Model {
 	
 	private void exportTXTBreweries(OutputStream out) throws Exception{
 		exporter = new TXTExporter();
-		exporter.writeBrewery(filteredBreweries, out);
+//		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
 	private void exportTXTStyles(OutputStream out) throws Exception{
@@ -614,6 +737,7 @@ public class Model {
 	public String getLastDirectory(){
 		return System.getProperty("user.home");
 	}
+	
 	
 	
 

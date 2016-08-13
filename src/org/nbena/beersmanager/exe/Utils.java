@@ -20,6 +20,8 @@ import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
 import org.nbena.beersmanager.json.BeerJSONSpecialClass;
 import org.nbena.beersmanager.json.Converter;
 import org.nbena.beersmanager.json.JSONExporter;
+import org.nbena.beersmanager.query.BreweryAverage;
+import org.nbena.beersmanager.query.QueryRunner;
 
 public class Utils {
 	
@@ -202,6 +204,17 @@ public class Utils {
 		return array;
 	}
 	
+	public static Object[] fromBreweryAverageToObjectArray(BreweryAverage b){
+		Object [] array=new Object[6];
+		array[0]=b.getName();
+		array[1]=b.getCountry();
+		array[2]=b.getTown();
+		array[3]=b.getDescription();
+		array[4]=b.getWebsite();
+		array[5]=b.getAverage();
+		return array;
+	}
+	
 	public static Object[][] fromStylesToObjectMatrix(List<Style> styles){
 		Object[][] array=new Object[styles.size()][5];
 		for(int i=0;i<styles.size();i++){
@@ -222,10 +235,20 @@ public class Utils {
 	}
 	
 	public static Object[][] fromBreweriesToObjectMatrix(List<Brewery> breweries){
-		Object [][] array=new Object[breweries.size()][10];
+		Object [][] array=new Object[breweries.size()][5];
 		for(int i=0;i<breweries.size();i++){
 			Brewery b=breweries.get(i);
 			array[i]=fromBreweryToObjectArray(b);
+		}
+		return array;
+	}
+	
+	
+	public static Object[][] fromBreweriesAverageToObjectMatrix(List<BreweryAverage> breweries){
+		Object [][] array=new Object[breweries.size()][6];
+		for(int i=0;i<breweries.size();i++){
+			BreweryAverage b=breweries.get(i);
+			array[i]=fromBreweryAverageToObjectArray(b);
 		}
 		return array;
 	}
@@ -283,6 +306,69 @@ public class Utils {
 		return s;
 	}
 	
+	public static BreweryAverage fromBreweryToBreweryAverage(Brewery b, List<Beer> itsBeers){
+		BreweryAverage av=new BreweryAverage();
+		av.setAuthenticTrappist(b.isAuthenticTrappist());
+		av.setCountry(b.getCountry());
+		av.setDescription(b.getDescription());
+		av.setName(b.getName());
+		av.setTown(b.getTown());
+		av.setWebsite(b.getWebsite());
+		av.setAverage(itsBeers);
+		return av;
+	}
+	
+	public static BreweryAverage fromBreweryToBreweryAverage(Brewery b){
+		BreweryAverage av=new BreweryAverage();
+		av.setAuthenticTrappist(b.isAuthenticTrappist());
+		av.setCountry(b.getCountry());
+		av.setDescription(b.getDescription());
+		av.setName(b.getName());
+		av.setTown(b.getTown());
+		av.setWebsite(b.getWebsite());
+		av.setAverage(0.0);
+		return av;
+	}
+	
+	public static List<BreweryAverage> fromBreweriesToBreweriesAverage(List<Brewery> breweries, List<Beer> beers){
+		List<BreweryAverage> breweriesAv=new LinkedList<BreweryAverage>();
+		for(Brewery b: breweries){
+			List<Beer> itsBeers=QueryRunner.beersFilteredByBrewery(beers, b);
+			BreweryAverage av=fromBreweryToBreweryAverage(b, itsBeers);
+			breweriesAv.add(av);
+		}
+		return breweriesAv;
+	}
+	
+	public static List<BreweryAverage> fromBreweriesToBreweriesAverage(List<Brewery> breweries){
+		List<BreweryAverage> breweriesAv=new LinkedList<BreweryAverage>();
+		for(Brewery b: breweries){
+			BreweryAverage av=fromBreweryToBreweryAverage(b);
+			breweriesAv.add(av);
+		}
+		return breweriesAv;
+	}
+	
+	public static Brewery fromBreweryAverageToBrewery(BreweryAverage brewery){
+		Brewery b=new Brewery();
+		b.setAuthenticTrappist(brewery.isAuthenticTrappist());
+		b.setCountry(brewery.getCountry());
+		b.setDescription(brewery.getDescription());
+		b.setName(brewery.getName());
+		b.setTown(brewery.getTown());
+		b.setWebsite(brewery.getWebsite());
+		return b;
+	}
+	
+	public static List<Brewery> fromBreweriesAverageToBrewery(List<BreweryAverage> breweries){
+		List<Brewery> normals=new LinkedList<Brewery>();
+		for(BreweryAverage b: breweries){
+			Brewery normal=fromBreweryAverageToBrewery(b);
+			normals.add(normal);
+		}
+		return normals;
+	}
+	
 	public static class Constants{
 		public static final Object[] TABLE_HEADER_BEERS = {
 				"Nome",
@@ -303,6 +389,15 @@ public class Utils {
 				"Città",
 				"Descizione",
 				"Web"
+		};
+		
+		public static final Object[] TABLE_HEADER_BREWERY_AVERAGE = {
+				"Nome",
+				"Nazione",
+				"Città",
+				"Descizione",
+				"Web",
+				"Media"
 		};
 		
 		public static final Object[] TABLE_HEADER_STYLE = {
@@ -388,5 +483,6 @@ public class Utils {
 		FileNameExtensionFilter filter=(FileNameExtensionFilter)chooser.getFileFilter();
 		return filter.getExtensions()[0];
 	}
+	
 
 }
