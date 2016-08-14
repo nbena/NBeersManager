@@ -16,6 +16,8 @@ public class QueryRunner {
 	
 	public static enum ORDER_BY_BEER{}
 	
+	
+	
 	//************************************************************************************************************************************
 	//LIST-RETURNED QUERY
 	//***********************************************************************************************************************************
@@ -24,6 +26,36 @@ public class QueryRunner {
 	// BEERS QUERY
 	//*****************************************************************
 	
+	public static enum BeerSortingAlgorithm{
+		COUNTRY_OF_BREWERY_STYLE,
+		FERMENTATION_COUNTRY_OF_STYLE_BREWERY,
+		FERMENTATIOM_STYLE_COUNTRY_OF_BREWERY,
+		MARK_STAR_ASCENDING,
+		STAR_MARK_ASCENDING,
+		MARK_STAR_DESCENDING,
+		STAR_MARK_DESCENDING
+	}
+
+
+
+	public static enum StyleSortingAlgorithm{
+		FERMENTATION_COUNTRY,
+		COUNTRY_FERMENTATION
+	}
+
+
+
+	public static enum BrewerySortingAlgorithm{
+		COUNTRY_NAME,
+		NAME,
+		AVERAGE_ASCENDING,
+		COUNTRY_AVERAGE_ASCENDING,
+		AVERAGE_DESCENDING,
+		COUNTRY_AVERAGE_DESCENDING
+	}
+
+
+
 	public static List<Beer> beersFilteredByStyle(List<Beer> beers, Style style){
 		return beers.stream().filter(b -> b.getStyle().compareTo(style)==0)
 				.collect(Collectors.toList());

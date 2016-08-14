@@ -4,12 +4,13 @@ import java.io.OutputStream;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
+import org.nbena.beersmanager.conf.Configuration;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
@@ -70,6 +71,21 @@ public class Model {
 	private DialogShownNow dialogShown;
 	
 	private Exporter exporter;
+	
+	private Configuration configuration;
+	
+	private Function<List<Beer>, List<Beer>> beerSortingDefaultAlgorithm;
+	private Function<List<BreweryAverage>, List<BreweryAverage>> brewerySortingDefaultAlgorithm;
+	private Function<List<Style>, List<Style>> styleSortingDefaultAlgorithm;
+	
+	private Function<List<Beer>, List<Beer>> beerSortingCurrentAlgorithm;
+	private Function<List<BreweryAverage>, List<BreweryAverage>> brewerySortingCurrentAlgorithm;
+	private Function<List<Style>, List<Style>> styleSortingCurrentAlgorithm;
+	
+//	private void setupSortingFunction(){
+//		Configuration.
+//	}
+	
 	
 	public Model(){
 		//tableModel=new MyModelAbstractTable();
@@ -159,13 +175,31 @@ public class Model {
 //		tableModel.setData(styleData); //it work||
 //	}
 	
+	private void clearFilter(boolean beer, boolean brewery, boolean style){
+		if(beer){
+			System.out.println("Cleared beer filter");
+			filteredBeers=beerData;
+		}
+		if(brewery){
+			filteredBreweries=breweryData;
+		}
+		if(style){
+			filteredStyles=styleData;
+		}
+	}
+	
 	public void showStyleData(){
 		dataShownNow=DataShownNow.STYLE;
 		tableModel.clear();
 		ModelStyleTable tableModelOld=(ModelStyleTable)tableModel;
 		tableModel=tableModelOld;
 //		tableModel.fireTableStructureChanged();
-		tableModel.setData(styleData); //it work||
+		
+		applySortingToStyles();
+		
+		clearFilter(true, true, false);
+		
+		tableModel.setData(filteredStyles); //it work||
 	}
 
 	/**
@@ -196,11 +230,20 @@ public class Model {
 	public void showBeerData(){
 		dataShownNow=DataShownNow.BEER;
 		tableModel.clear();
+//		tableModel.set
 		ModelBeerTable tableModelOld=(ModelBeerTable)tableModel;
 		tableModel=tableModelOld;
 //		tableModel.fireTableStructureChanged();
-		tableModel.setData(beerData); //it work||
+		
+		applySortingToBeers();
+		
+//		Utils.printBeers(filteredBeers, System.out);
+		
+		clearFilter(false, true, true);
+		
+		tableModel.setData(filteredBeers); //it work||
 	}
+
 
 	/**
 	 * @return the breweryData
@@ -248,8 +291,14 @@ public class Model {
 			ModelBreweryTable tableModelOld=(ModelBreweryTable)tableModel;
 			tableModel=tableModelOld;
 //			tableModel.fireTableStructureChanged();
-			tableModel.setData(breweryData); //it work||
+			
+			applySortingToBreweries();
+			
+			
+			tableModel.setData(filteredBreweries); //it work||
 		}
+		
+		clearFilter(true, false, true);
 	}
 	
 	public void showBreweryAverageData(){
@@ -258,7 +307,10 @@ public class Model {
 		ModelBreweryAverage tableModelOld=(ModelBreweryAverage)tableModel;
 		tableModel=tableModelOld;
 //		tableModel.fireTableStructureChanged();
-		tableModel.setData(breweryData); //it work||
+		
+		applySortingToBreweries();
+		
+		tableModel.setData(filteredBreweries); //it work||
 	}
 
 	/**
@@ -362,6 +414,27 @@ public class Model {
 //		else
 //			throw new RuntimeException("Brewery is not in the table");
 //	}
+
+	/**
+	 * @return the configuration
+	 */
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+
+	/**
+	 * @param configuration the configuration to set
+	 */
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+		beerSortingDefaultAlgorithm=Utils.getBeerSortingAlgorithm(configuration.getBeerSortingAlgorithm());
+		brewerySortingDefaultAlgorithm=Utils.getBreweriesSortingAlgorithm(configuration.getBrewerySortingAlgorithm());
+		styleSortingDefaultAlgorithm=Utils.getStylesSortingAlgorithm(configuration.getStyleSortingAlgorithm());
+		
+		beerSortingCurrentAlgorithm=beerSortingDefaultAlgorithm;
+		brewerySortingCurrentAlgorithm=brewerySortingDefaultAlgorithm;
+		styleSortingCurrentAlgorithm=styleSortingDefaultAlgorithm;
+	}
 
 	/**
 	 * @return the beerDialog
@@ -524,6 +597,8 @@ public class Model {
 
 	
 	public void beersFilteredByBrewery(Brewery brewery){
+//		System.out.println("brewery to work is: \n");
+//		Utils.printBrewery(brewery, System.out);
 		filteredBeers=QueryRunner.beersFilteredByBrewery(filteredBeers, brewery);
 	}
 	
@@ -739,6 +814,62 @@ public class Model {
 	}
 	
 	
+	public void applySortingToBeers(){
+		filteredBeers=this.beerSortingCurrentAlgorithm.apply(filteredBeers);
+//		filteredBeers=beerData;
+	}
 	
+	public void applySortingToBreweries(){
+		filteredBreweries=this.brewerySortingCurrentAlgorithm.apply(filteredBreweries);
+//		filteredBreweries=breweryData;
+	}
+	
+	public void applySortingToStyles(){
+		filteredStyles=this.styleSortingCurrentAlgorithm.apply(filteredStyles);
+//		filteredStyles=styleData;
+	}
+
+	/**
+	 * @return the beerSortingCurrentAlgorithm
+	 */
+	public Function<List<Beer>, List<Beer>> getBeerSortingCurrentAlgorithm() {
+		return beerSortingCurrentAlgorithm;
+	}
+
+	/**
+	 * @param beerSortingCurrentAlgorithm the beerSortingCurrentAlgorithm to set
+	 */
+	public void setBeerSortingCurrentAlgorithm(Function<List<Beer>, List<Beer>> beerSortingCurrentAlgorithm) {
+		this.beerSortingCurrentAlgorithm = beerSortingCurrentAlgorithm;
+	}
+
+	/**
+	 * @return the brewerySortingCurrentAlgorithm
+	 */
+	public Function<List<BreweryAverage>, List<BreweryAverage>> getBrewerySortingCurrentAlgorithm() {
+		return brewerySortingCurrentAlgorithm;
+	}
+
+	/**
+	 * @param brewerySortingCurrentAlgorithm the brewerySortingCurrentAlgorithm to set
+	 */
+	public void setBrewerySortingCurrentAlgorithm(
+			Function<List<BreweryAverage>, List<BreweryAverage>> brewerySortingCurrentAlgorithm) {
+		this.brewerySortingCurrentAlgorithm = brewerySortingCurrentAlgorithm;
+	}
+
+	/**
+	 * @return the styleSortingCurrentAlgorithm
+	 */
+	public Function<List<Style>, List<Style>> getStyleSortingCurrentAlgorithm() {
+		return styleSortingCurrentAlgorithm;
+	}
+
+	/**
+	 * @param styleSortingCurrentAlgorithm the styleSortingCurrentAlgorithm to set
+	 */
+	public void setStyleSortingCurrentAlgorithm(Function<List<Style>, List<Style>> styleSortingCurrentAlgorithm) {
+		this.styleSortingCurrentAlgorithm = styleSortingCurrentAlgorithm;
+	}
 
 }

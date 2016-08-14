@@ -9,6 +9,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 
+import org.nbena.beersmanager.conf.ConfigurationFactory;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
@@ -19,7 +20,7 @@ import org.nbena.beersmanager.exe.ui.models.ModelBeerTable;
 import org.nbena.beersmanager.exe.ui.models.ModelBreweryTable;
 import org.nbena.beersmanager.exe.ui.models.ModelStyleTable;
 import org.nbena.beersmanager.exe.ui.views.ViewMainGUI;
-import org.nbena.beersmanager.json.JSONExporter;
+import org.nbena.beersmanager.json.coreclasses.JSONExporter;
 import org.nbena.beersmanager.query.QueryRunner;
 
 public class Main {
@@ -148,7 +149,11 @@ public class Main {
 			Utils.printBeersComplete(m.getBeers(), System.out);
 
 
+
 			*/
+		
+			
+			
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -173,6 +178,7 @@ public class Main {
 //			model.setDataShownNow(Model.DataShownNow.STYLE);
 //			model.setDataShownNow(Model.DataShownNow.BEER);
 			
+			model.setConfiguration(ConfigurationFactory.getDefaultConfiguration());
 			
 			model.setCountries(StupidClass.someCountries());
 			

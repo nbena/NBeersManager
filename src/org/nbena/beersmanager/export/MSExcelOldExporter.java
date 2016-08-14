@@ -11,7 +11,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
-import org.nbena.beersmanager.json.BeerJSONSpecialClass;
+import org.nbena.beersmanager.json.coreclasses.BeerJSONSpecialClass;
 
 public class MSExcelOldExporter extends Exporter{
 	

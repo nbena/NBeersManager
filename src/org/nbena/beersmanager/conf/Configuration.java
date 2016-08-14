@@ -1,103 +1,79 @@
 package org.nbena.beersmanager.conf;
 
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-
+import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.query.QueryRunner;
 
 @XmlRootElement(name="configuration")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Configuration {
 	
-	public static enum BeerSortingAlgorithm{
-		COUNTRY_OF_BREWERY_STYLE,
-		FERMENTATION_COUNTRY_OF_STYLE_BREWERY,
-		FERMENTATIOM_STYLE_COUNTRY_OF_BREWERY,
-		MARK_STAR,
-		STAR_MARK
+	public static enum BeerFilterAlgorithm{
+		NONE,
+		BY_FERMENTATION_HIGH,
+		BY_FERMENTATION_LOW,
+		BY_FERMENTATION_SPONTANEOUS,
+		BY_COUNTRY,
+		BY_STYLE_PROVENIENCE,
+		BY_STARS,
+		BY_MARK,
+		BY_ABV,
+		IS_TRIED,
+		STYLE,
+		MAIN_STYLE
 	}
 	
-	public static enum StyleSortingAlgorithm{
-		FERMENTATION_COUNTRY,
-		COUNTRY_FERMENTATION
+	public static enum BreweryFilterAlgorithm{
+		NONE,
+		COUNTRY,
+		BEST_AVERAGES,
+		TRAPPIST_YES
 	}
 	
-	public static enum BrewerySortingAlgorithm{
-		COUNTRY_NAME,
-		NAME,
-		AVERAGE,
-		COUNTRY_AVERAGE
+	public static enum StyleFilterAlgorithm{
+		
+		NONE,
+		BY_FERMENTATION_HIGH,
+		BY_FERMENTATION_LOW,
+		BY_FERMENTATION_SPONTANEOUS,
+		BY_COUNTRY,
+		BY_MAIN_STYLE
 	}
-	
 
-//	public static enum ViewAllDefault{
-//		COUNTRY_BREWERY_FERMENTATION_STYLE,
-//		FERMENTATION_STYLE_COUNTRY_BREWERY,
-//		JUST_ALPHA_ORDER
-//	}
-//	
-//	public static enum BeersDefault{
-//		ALL_TRIED_BEERS,
-//		ALL_STAR_BEERS,
-//		ALL_NOT_TRIED_BEERS,
-//		ALL_AFTER_LIMIT_BEERS
-//	}
-//	
-//	public static enum StyleDefault{
-//		ALL_STYLES_GROUP_BY_COUNTRY_FERMENTATION,
-//		STYLES_ONLY_CERTAIN_COUNTRIES,
-//		STYLES_ONLY_CERTAIN_FERMENTATION
-//	}
-//	
-//	public static enum BreweriesDefault{
-//		ALL_BREWERIES_GROUP_COUNTRY,
-//		BREWERIES_WITH_MORE_STARRED_BEERS,
-//		BREWERIES_WITH_AVERAGE_AFTER_LIMIT
-//	}
 	
-	
-	public static  enum HighlightStarBeer{
-		YES,
-		NO
-	}
-	
-	public static enum WriteToFileWhen{
-		EVERY_UPDATE,
-		BEFORE_CLOSE
-	}
 	
 	public static enum ShowAlsoBreweriesAverage{
 		YES,
 		NO
 	}
 	
-//	private ViewAllDefault viewAllDefaultOption;
-//	private BeersDefault beersDefaultOption;
-//	private StyleDefault styleDeafultOption;
-//	private BreweriesDefault breweriesDeafultOption;
-	private WriteToFileWhen writeToFileWhenOption;
-	private BeerSortingAlgorithm beerSortingAlgorithm;
-	private BrewerySortingAlgorithm brewerySortingAlgorithm;
-	private StyleSortingAlgorithm styleSortingAlgorithm;
+	private QueryRunner.BeerSortingAlgorithm beerSortingAlgorithm;
+	private QueryRunner.BrewerySortingAlgorithm brewerySortingAlgorithm;
+	private QueryRunner.StyleSortingAlgorithm styleSortingAlgorithm;
 	
-	private int starMarkValue;
+	private BeerFilterAlgorithm beerFilterAlgorithm;
+	private BreweryFilterAlgorithm breweryFilterAlgorithm;
+	private StyleFilterAlgorithm styleFilterAlgorithm;
 	
-	//not write, program will search for them automatically
-	@XmlTransient
+	private String beerFilterValue;
+	private String breweryFilterValue;
+	private String styleFilterValue;
+	
+	
+	
 	private String styleFilePath;
-	@XmlTransient
 	private String breweryFilePath;
-	@XmlTransient
 	private String beerFilePath;
 	
-	private String styleFilePathBackup;
-	private String beweryFilePathBackup;
-	private String beerFilePathBackup;
+	private String pwd;
 	
 	
 	
+
+
 	public Configuration() {
 	}
 
@@ -137,108 +113,193 @@ public class Configuration {
 	/**
 	 * @return the brewerySortingAlgorithm
 	 */
-	public BrewerySortingAlgorithm getBrewerySortingAlgorithm() {
+	public QueryRunner.BrewerySortingAlgorithm getBrewerySortingAlgorithm() {
 		return brewerySortingAlgorithm;
 	}
 
 	/**
 	 * @param brewerySortingAlgorithm the brewerySortingAlgorithm to set
 	 */
-	public void setBrewerySortingAlgorithm(BrewerySortingAlgorithm brewerySortingAlgorithm) {
+	public void setBrewerySortingAlgorithm(QueryRunner.BrewerySortingAlgorithm brewerySortingAlgorithm) {
 		this.brewerySortingAlgorithm = brewerySortingAlgorithm;
 	}
 
 	/**
 	 * @return the styleSortingAlgorithm
 	 */
-	public StyleSortingAlgorithm getStyleSortingAlgorithm() {
+	public QueryRunner.StyleSortingAlgorithm getStyleSortingAlgorithm() {
 		return styleSortingAlgorithm;
 	}
 
 	/**
 	 * @param styleSortingAlgorithm the styleSortingAlgorithm to set
 	 */
-	public void setStyleSortingAlgorithm(StyleSortingAlgorithm styleSortingAlgorithm) {
+	public void setStyleSortingAlgorithm(QueryRunner.StyleSortingAlgorithm styleSortingAlgorithm) {
 		this.styleSortingAlgorithm = styleSortingAlgorithm;
 	}
 
-	public int getStarMarkValue() {
-		return starMarkValue;
+	
+	public void setPaths(String pwd){
+		this.pwd=pwd;
+		beerFilePath=Utils.jsonBeers(pwd);
+		breweryFilePath=Utils.jsonBreweries(pwd);
+		styleFilePath=Utils.jsonStyle(pwd);
 	}
 
-	public void setStarMarkValue(int starMarkValue) {
-		this.starMarkValue = starMarkValue;
-	}
 
 	public String getStyleFilePath() {
 		return styleFilePath;
 	}
 
-	public void setStyleFilePath(String styleFilePath) {
-		this.styleFilePath = styleFilePath;
-	}
+//	public void setStyleFilePath(String styleFilePath) {
+//		this.styleFilePath = styleFilePath;
+//	}
 
 	public String getBreweryFilePath() {
 		return breweryFilePath;
 	}
 
-	public void setBreweryFilePath(String breweryFilePath) {
-		this.breweryFilePath = breweryFilePath;
-	}
+//	public void setBreweryFilePath(String breweryFilePath) {
+//		this.breweryFilePath = breweryFilePath;
+//	}
 
 	public String getBeerFilePath() {
 		return beerFilePath;
 	}
 
-	public void setBeerFilePath(String beerFilePath) {
-		this.beerFilePath = beerFilePath;
-	}
+//	public void setBeerFilePath(String beerFilePath) {
+//		this.beerFilePath = beerFilePath;
+//	}
+//
+//	public String getStyleFilePathBackup() {
+//		return styleFilePathBackup;
+//	}
 
-	public String getStyleFilePathBackup() {
-		return styleFilePathBackup;
-	}
+//	public WriteToFileWhen getWriteToFileWhenOption() {
+//		return writeToFileWhenOption;
+//	}
+//
+//	public void setWriteToFileWhenOption(WriteToFileWhen writeToFileWhenOption) {
+//		this.writeToFileWhenOption = writeToFileWhenOption;
+//	}
 
-	public WriteToFileWhen getWriteToFileWhenOption() {
-		return writeToFileWhenOption;
-	}
-
-	public void setWriteToFileWhenOption(WriteToFileWhen writeToFileWhenOption) {
-		this.writeToFileWhenOption = writeToFileWhenOption;
-	}
-
-	public void setStyleFilePathBackup(String styleFilePathBackup) {
-		this.styleFilePathBackup = styleFilePathBackup;
-	}
-
-	public String getBeweryFilePathBackup() {
-		return beweryFilePathBackup;
-	}
+//	public void setStyleFilePathBackup(String styleFilePathBackup) {
+//		this.styleFilePathBackup = styleFilePathBackup;
+//	}
+//
+//	public String getBeweryFilePathBackup() {
+//		return beweryFilePathBackup;
+//	}
 
 	/**
 	 * @return the beerSortingAlgorithm
 	 */
-	public BeerSortingAlgorithm getBeerSortingAlgorithm() {
+	public QueryRunner.BeerSortingAlgorithm getBeerSortingAlgorithm() {
 		return beerSortingAlgorithm;
 	}
 
 	/**
 	 * @param beerSortingAlgorithm the beerSortingAlgorithm to set
 	 */
-	public void setBeerSortingAlgorithm(BeerSortingAlgorithm beerSortingAlgorithm) {
+	public void setBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm beerSortingAlgorithm) {
 		this.beerSortingAlgorithm = beerSortingAlgorithm;
 	}
 
-	public void setBeweryFilePathBackup(String beweryFilePathBackup) {
-		this.beweryFilePathBackup = beweryFilePathBackup;
+	/**
+	 * @return the beerFilterAlgorithm
+	 */
+	public BeerFilterAlgorithm getBeerFilterAlgorithm() {
+		return beerFilterAlgorithm;
 	}
 
-	public String getBeerFilePathBackup() {
-		return beerFilePathBackup;
+	/**
+	 * @param beerFilterAlgorithm the beerFilterAlgorithm to set
+	 */
+	public void setBeerFilterAlgorithm(BeerFilterAlgorithm beerFilterAlgorithm) {
+		this.beerFilterAlgorithm = beerFilterAlgorithm;
 	}
 
-	public void setBeerFilePathBackup(String beerFilePathBackup) {
-		this.beerFilePathBackup = beerFilePathBackup;
+	/**
+	 * @return the breweryFilterAlgorithm
+	 */
+	public BreweryFilterAlgorithm getBreweryFilterAlgorithm() {
+		return breweryFilterAlgorithm;
 	}
+
+	/**
+	 * @param breweryFilterAlgorithm the breweryFilterAlgorithm to set
+	 */
+	public void setBreweryFilterAlgorithm(BreweryFilterAlgorithm breweryFilterAlgorithm) {
+		this.breweryFilterAlgorithm = breweryFilterAlgorithm;
+	}
+
+	/**
+	 * @return the styleFilterAlgorithm
+	 */
+	public StyleFilterAlgorithm getStyleFilterAlgorithm() {
+		return styleFilterAlgorithm;
+	}
+
+	/**
+	 * @param styleFilterAlgorithm the styleFilterAlgorithm to set
+	 */
+	public void setStyleFilterAlgorithm(StyleFilterAlgorithm styleFilterAlgorithm) {
+		this.styleFilterAlgorithm = styleFilterAlgorithm;
+	}
+
+	/**
+	 * @return the beerFilterValue
+	 */
+	public String getBeerFilterValue() {
+		return beerFilterValue;
+	}
+
+	/**
+	 * @param beerFilterValue the beerFilterValue to set
+	 */
+	public void setBeerFilterValue(String beerFilterValue) {
+		this.beerFilterValue = beerFilterValue;
+	}
+
+	/**
+	 * @return the breweryFilterValue
+	 */
+	public String getBreweryFilterValue() {
+		return breweryFilterValue;
+	}
+
+	/**
+	 * @param breweryFilterValue the breweryFilterValue to set
+	 */
+	public void setBreweryFilterValue(String breweryFilterValue) {
+		this.breweryFilterValue = breweryFilterValue;
+	}
+
+	/**
+	 * @return the styleFilterValue
+	 */
+	public String getStyleFilterValue() {
+		return styleFilterValue;
+	}
+
+	/**
+	 * @param styleFilterValue the styleFilterValue to set
+	 */
+	public void setStyleFilterValue(String styleFilterValue) {
+		this.styleFilterValue = styleFilterValue;
+	}
+
+//	public void setBeweryFilePathBackup(String beweryFilePathBackup) {
+//		this.beweryFilePathBackup = beweryFilePathBackup;
+//	}
+//
+//	public String getBeerFilePathBackup() {
+//		return beerFilePathBackup;
+//	}
+//
+//	public void setBeerFilePathBackup(String beerFilePathBackup) {
+//		this.beerFilePathBackup = beerFilePathBackup;
+//	}
 	
 	
 //	public void beersSortedByCountryOfBreweryStyle(){
@@ -256,6 +317,20 @@ public class Configuration {
 //		beerData=QueryRunner.beersSortedByFermentationStyleCountryOfBrewery(beerData);
 //		filteredBeers=beerData;
 //	}
+	
+	/**
+	 * @return the pwd
+	 */
+	public String getPwd() {
+		return pwd;
+	}
+
+	/**
+	 * @param pwd the pwd to set
+	 */
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
 
 
 }

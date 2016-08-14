@@ -11,8 +11,8 @@ import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
-import org.nbena.beersmanager.json.BeerJSONSpecialClass;
-import org.nbena.beersmanager.json.Converter;
+import org.nbena.beersmanager.json.coreclasses.BeerJSONSpecialClass;
+import org.nbena.beersmanager.json.coreclasses.Converter;
 
 public class MainExporter {
 	
@@ -70,7 +70,7 @@ public class MainExporter {
 		
 //		MSExcelOldExporter o=new MSExcelOldExporter();
 //		MSExcelNewExporter oo=new MSExcelNewExporter();
-		org.nbena.beersmanager.json.JSONExporter j=new org.nbena.beersmanager.json.JSONExporter();
+		org.nbena.beersmanager.json.coreclasses.JSONExporter j=new org.nbena.beersmanager.json.coreclasses.JSONExporter();
 		/*
 		oo.writeBrewery(brewery, new FileOutputStream(new File("C:\\Users\\nicola\\Desktop\\breweryx.xlss")));
 		oo.writeStyle(style, new FileOutputStream(new File("C:\\Users\\nicola\\Desktop\\stylex.xlsx")));

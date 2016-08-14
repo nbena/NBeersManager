@@ -1,4 +1,4 @@
-package org.nbena.beersmanager.json;
+package org.nbena.beersmanager.json.coreclasses;
 
 /*
 import javax.xml.bind.annotation.XmlAccessType;

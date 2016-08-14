@@ -1,15 +1,19 @@
 package org.nbena.beersmanager.exe.ui.controllers;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 import javax.swing.JFileChooser;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -38,6 +42,7 @@ import org.nbena.beersmanager.exe.ui.views.ViewViewBeer;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBrewery;
 import org.nbena.beersmanager.exe.ui.views.ViewViewStyle;
 import org.nbena.beersmanager.query.BreweryAverage;
+import org.nbena.beersmanager.query.QueryRunner;
 
 public class ControllerMainGUI {
 	
@@ -73,6 +78,7 @@ public class ControllerMainGUI {
 		addSortBreweriesListeners();
 		addFilterBeersListeners();
 		addSearchMenuListeners();
+		addOptionsMenuListeners();
 
 	}
 	
@@ -143,7 +149,7 @@ public class ControllerMainGUI {
 	}
 	
 	public void beersFilteredByBrewery(Brewery b){
-		model.beersFilteredByBrewery(null);
+		model.beersFilteredByBrewery(b);
 		showBeers();
 	}
 	
@@ -188,7 +194,8 @@ public class ControllerMainGUI {
 	}
 	
 	public void beersFilteredByStyle(Style s){
-		
+		model.beersFilteredByStyle(s);
+		showBeers();
 	}
 	
 	public void beersFilteredByMainStyle(Style s){
@@ -464,37 +471,44 @@ public class ControllerMainGUI {
 	//order function are public because I need to call them at the start of the program.
 	
 	public void beersSortedByCountryOfBreweryStyle(){
-		model.beersSortedByCountryOfBreweryStyle();
+//		model.beersSortedByCountryOfBreweryStyle();
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.COUNTRY_OF_BREWERY_STYLE));
 		showBeers();
 	}
 	
 	public void beersSortedByFermentationCountryOfStyleBrewery(){
-		model.beersSortedByFermentationCountryOfStyleBrewery();
+//		model.beersSortedByFermentationCountryOfStyleBrewery();
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.FERMENTATION_COUNTRY_OF_STYLE_BREWERY));
 		showBeers();	
 	}
 	
 	public void beersSortedByFermentationStyleCountryOfBrewery(){
-		model.beersSortedByFermentationStyleCountryOfBrewery();
+//		model.beersSortedByFermentationStyleCountryOfBrewery();
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.FERMENTATIOM_STYLE_COUNTRY_OF_BREWERY));
 		showBeers();
 	}
 	
 	public void beersSortedByMarkStarAscending(){
-		model.beersSortedByMarkStarAscending();
+//		model.beersSortedByMarkStarAscending();
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.MARK_STAR_ASCENDING));
 		showBeers();
 	}
 	
 	public void beersSortedByMarkStarDescending(){
-		model.beersSortedByMarkStarDescending();
+//		model.beersSortedByMarkStarDescending();
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.MARK_STAR_DESCENDING));
 		showBeers();
 	}
 	
 	public void beersSortedByStarMarkAscending(){
-		model.beersSortedByStarMarkAsending();
+//		model.beersSortedByStarMarkAsending();
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.STAR_MARK_ASCENDING));
 		showBeers();
 	}
 	
 	public void beersSortedByStarMarkDescending(){
-		model.beersSortedByStarMarkDesending();
+//		model.beersSortedByStarMarkDesending();
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.STAR_MARK_DESCENDING));
 		showBeers();
 	}
 	
@@ -928,6 +942,7 @@ public class ControllerMainGUI {
 			
 		setOkCancelViewDialog(viewStyleDialog);
 		setStyleDialogModifyButtonListener();
+		setStyleViewBeersButtonListener();
 		
 		viewStyleDialog.setVisible(true);
 	}
@@ -940,6 +955,7 @@ public class ControllerMainGUI {
 		
 		setOkCancelViewDialog(viewBreweryDialog);
 		setBreweryModifyButtonListener();
+		setBreweryViewBeersButtonListener();
 		
 		viewBreweryDialog.setVisible(true);	
 	}
@@ -987,6 +1003,7 @@ public class ControllerMainGUI {
 		dialog.setBreweryWebsite(b.getWebsite());
 		dialog.setBreweryAverage(Double.toString(b.getAverage()));
 	}
+	
 	
 	private void setStyleDialogModifyButtonListener(){
 		viewStyleDialog.addActionListenerModifyButton(new ActionListener(){
@@ -1041,38 +1058,80 @@ public class ControllerMainGUI {
 		});
 	}
 	
-	private void addListSelectionListener(){
-		gui.addTableListSelectionListener(new ListSelectionListener(){
+	private void setBreweryViewBeersButtonListener(){
+		viewBreweryDialog.addActionListenerViewBeersButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				viewBreweryDialog.setVisible(false);
+				viewBreweryDialog.dispose();
+				
+				BreweryAverage b = model.getBreweryShown();
+				
+				
+				
+				beersFilteredByBrewery(b);
+//				gui.noRowSelected();
+			}
+			
+		});
+	}
+	
+	private void setStyleViewBeersButtonListener(){
+		viewStyleDialog.addActionListenerViewBeersButton(new ActionListener(){
 			
 			@Override
-			public void valueChanged(ListSelectionEvent event){
+			public void actionPerformed(ActionEvent arg0){
 				
-				if(event.getValueIsAdjusting()){ //if not do this, the event is fired twice.
-					
-					int row=gui.getTableSelectedRow();
-					if(model.getDataShownNow()==DataShownNow.BEER){
-//						Beer b=model.getSelectedBeer(row);
-						//Utils.printBeer(b, System.out);
+				viewStyleDialog.setVisible(false);
+				viewStyleDialog.dispose();
+				
+				Style s = model.getStyleShown();
+				
+				beersFilteredByStyle(s);
+			}
+			
+		});
+	}
+	
+
+	
+	private void addListSelectionListener(){
+		gui.addMouseListener(new MouseListener(){
+			
+			
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				JTable t =(JTable)arg0.getSource();
+				int row=t.getSelectedRow();
+				if(model.getDataShownNow()==DataShownNow.BEER){
 						openBeerDialog(row);
-						
-					}else if(model.getDataShownNow()==DataShownNow.BREWERY || model.getDataShownNow()==DataShownNow.BREWERY_AVERAGE){
-//						Brewery b=model.getSelectedBrewery(row);
-//						model.setBreweryDialog(b); //call then
-//						viewBreweryDialog=new ViewViewBrewery();
-//						viewBreweryDialog.setBrewery(b);
-//						viewBreweryDialog.setVisible(true);
+			
+				}else if(model.getDataShownNow()==DataShownNow.BREWERY || model.getDataShownNow()==DataShownNow.BREWERY_AVERAGE){
 						openBreweryDialog(row);
-					}
-					else{
-//						Style s=model.getSelectedStyle(row);
-//						model.setStyleDialog(s);
-//						viewStyleDialog=new ViewViewStyle();
-//						viewStyleDialog.setStyle(s);
-//						viewStyleDialog.setVisible(true);
-						openStyleDialog(row);
-					}
 				}
-				
+				else{
+					openStyleDialog(row);
+				}
+			}
+			
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
 			}
 			
 		});
@@ -1109,6 +1168,19 @@ public class ControllerMainGUI {
 			}
 			
 		});
+	}
+	
+	public void showPreferencesDialog(){
+		
+	}
+	
+	public void showAboutDialog(){
+		
+	}
+	
+	private void addOptionsMenuListeners(){
+		showPreferencesDialog();
+		showAboutDialog();
 	}
 	
 	

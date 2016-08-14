@@ -1,4 +1,4 @@
-package org.nbena.beersmanager.json;
+package org.nbena.beersmanager.json.coreclasses;
 
 import java.io.InputStream;
 import java.io.OutputStream;

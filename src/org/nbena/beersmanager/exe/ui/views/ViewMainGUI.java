@@ -21,6 +21,7 @@ import javax.swing.JMenuItem;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.io.File;
 import javax.swing.JTable;
 import java.awt.GridBagConstraints;
@@ -113,6 +114,17 @@ public class ViewMainGUI extends JFrame {
 	private JMenuItem mntmBreweriesSortedByAverageAscending;
 	private JMenuItem mntmBreweriesSortedByCountryThenAverageDescending;
 	private JMenuItem mntmBreweriesSortedByCountryThenAverageAscending;
+	
+	private JMenuItem mntmPreferences;
+	private JMenuItem mntmAbout;
+	
+	public void addActionMenuPreferences(ActionListener listener){
+		mntmPreferences.addActionListener(listener);
+	}
+	
+	public void addActionMenuAbout(ActionListener listener){
+		mntmAbout.addActionListener(listener);
+	}
 	
 	
 	public void addActionMenuSearchBeer(ActionListener listener){
@@ -273,6 +285,10 @@ public class ViewMainGUI extends JFrame {
 		table.setModel(model);
 	}
 	
+	public void addMouseListener(MouseListener listener){
+		table.addMouseListener(listener);
+	}
+	
 	
 	public void addActionMenuNewStyleFromFile(ActionListener listener){
 		mntmNewStyleFromFile.addActionListener(listener);
@@ -332,6 +348,10 @@ public class ViewMainGUI extends JFrame {
 	
 	public int getTableSelectedRow(){
 		return table.getSelectedRow();
+	}
+	
+	public void noRowSelected(){
+		table.clearSelection();
 	}
 	
 	
@@ -457,12 +477,6 @@ public class ViewMainGUI extends JFrame {
 		
 		mntmViewStyles = new JMenuItem("Styles");
 		mnQuery.add(mntmViewStyles);
-		
-		JMenu mnOptions = new JMenu("Options");
-		menuBar.add(mnOptions);
-		
-		JMenuItem mntmPreferences = new JMenuItem("Preferences");
-		mnOptions.add(mntmPreferences);
 		
 		JMenu mnOrder = new JMenu("Order");
 		menuBar.add(mnOrder);
@@ -628,6 +642,15 @@ public class ViewMainGUI extends JFrame {
 		
 		mntmSearchStyle = new JMenuItem("Stile");
 		mnSearch.add(mntmSearchStyle);
+		
+		JMenu mnOptions = new JMenu("Options");
+		menuBar.add(mnOptions);
+		
+		mntmPreferences = new JMenuItem("Preferenze");
+		mnOptions.add(mntmPreferences);
+		
+		mntmAbout = new JMenuItem("A proposito");
+		mnOptions.add(mntmAbout);
 		
 		
 		

@@ -36,6 +36,7 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 	private JButton cancelButton; 
 	private JButton btnModify;
 	private JButton btnDelete;
+	private JButton btnViewBeers;
 	
 	
 //	public String getBreweryName(){
@@ -100,6 +101,10 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 	@Override
 	public void addActionListenerDeleteButton(ActionListener listener){
 		btnDelete.addActionListener(listener);
+	}
+	
+	public void addActionListenerViewBeersButton(ActionListener listener){
+		btnViewBeers.addActionListener(listener);
 	}
 	
 	
@@ -349,6 +354,15 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 				buttonPane.add(btnDelete, gbc_btnDelete);
 			}
 			
+			{
+				btnViewBeers=new JButton("Vedi birre");
+				GridBagConstraints gbc_btnViewBeers = new GridBagConstraints();
+				gbc_btnViewBeers.gridx = 2;
+				gbc_btnViewBeers.gridy = 0;
+				gbc_btnViewBeers.weightx = 0;
+				buttonPane.add(btnViewBeers, gbc_btnViewBeers);
+			}
+			
 			
 			
 			
@@ -356,7 +370,8 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 				okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
 				GridBagConstraints gbc_okButton = new GridBagConstraints();
-				gbc_okButton.gridx = 2;
+//				gbc_okButton.gridx = 2;
+				gbc_okButton.gridx = 3;
 				gbc_okButton.gridy = 0;
 				gbc_okButton.weightx = 0;
 				buttonPane.add(okButton, gbc_okButton);
@@ -366,7 +381,8 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 				GridBagConstraints gbc_cancelButton = new GridBagConstraints();
-				gbc_cancelButton.gridx = 3;
+//				gbc_cancelButton.gridx = 3;
+				gbc_cancelButton.gridx = 4;
 				gbc_cancelButton.gridy = 0;
 				gbc_cancelButton.weightx = 0;
 				buttonPane.add(cancelButton, gbc_cancelButton);

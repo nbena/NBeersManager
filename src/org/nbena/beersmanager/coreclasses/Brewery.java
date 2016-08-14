@@ -129,7 +129,8 @@ public class Brewery implements Comparable<Brewery> {
 					ret=getName().codePointAt(o.getName());
 				}
 			}*/
-		
+//		System.out.println(name+"\n");
+//		System.out.println(o.getName()+"\n");
 		return getName().compareTo(o.getName());
 	}
 	

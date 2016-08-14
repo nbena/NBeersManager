@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -17,9 +18,9 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
-import org.nbena.beersmanager.json.BeerJSONSpecialClass;
-import org.nbena.beersmanager.json.Converter;
-import org.nbena.beersmanager.json.JSONExporter;
+import org.nbena.beersmanager.json.coreclasses.BeerJSONSpecialClass;
+import org.nbena.beersmanager.json.coreclasses.Converter;
+import org.nbena.beersmanager.json.coreclasses.JSONExporter;
 import org.nbena.beersmanager.query.BreweryAverage;
 import org.nbena.beersmanager.query.QueryRunner;
 
@@ -136,6 +137,10 @@ public class Utils {
 	
 	public static String jsonBeers(String directory){
 		return directory.concat("beers.json");
+	}
+	
+	public static String jsonConfiguration(String directory){
+		return directory.concat("config.json");
 	}
 	
 	
@@ -482,6 +487,73 @@ public class Utils {
 	public static String getJFileChooserSelectedExtension(JFileChooser chooser){
 		FileNameExtensionFilter filter=(FileNameExtensionFilter)chooser.getFileFilter();
 		return filter.getExtensions()[0];
+	}
+	
+	public static Function<List<Beer>, List<Beer>> getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm algorithm){
+		Function<List<Beer>, List<Beer>> function=null;
+		switch(algorithm){
+		case COUNTRY_OF_BREWERY_STYLE:
+			function=QueryRunner::beersSortedByCountryOfBreweryStyle;
+			break;
+		case FERMENTATIOM_STYLE_COUNTRY_OF_BREWERY:
+			function=QueryRunner::beersSortedByFermentationStyleCountryOfBrewery;
+			break;
+		case FERMENTATION_COUNTRY_OF_STYLE_BREWERY:
+			function=QueryRunner::beersSortedByFermentationCountryOfStyleBrewery;
+			break;
+		case MARK_STAR_ASCENDING:
+			function=QueryRunner::beersSortedByMarkStarAscending;
+			break;
+		case STAR_MARK_ASCENDING:
+			function=QueryRunner::beersSortedByStarMarkAscending;
+			break;
+		case MARK_STAR_DESCENDING:
+			function=QueryRunner::beersSortedByMarkStarDescending;
+			break;
+		case STAR_MARK_DESCENDING:
+			function=QueryRunner::beersSortedByStarMarkDescending;
+			break;
+		}
+		return function;
+	}
+	
+	
+	public static Function<List<BreweryAverage>, List<BreweryAverage>> getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm algorithm){
+		Function<List<BreweryAverage>, List<BreweryAverage>> function=null;
+		switch(algorithm){
+		case AVERAGE_ASCENDING:
+			function=QueryRunner::breweriesSortedByAverageAscending;
+			break;
+		case COUNTRY_AVERAGE_ASCENDING:
+			function=QueryRunner::breweriesSortedByCountryThenAverageAscending;
+			break;
+		case AVERAGE_DESCENDING:
+			function=QueryRunner::breweriesSortedByAverageDescending;
+			break;
+		case COUNTRY_AVERAGE_DESCENDING:
+			function=QueryRunner::breweriesSortedByCountryThenAverageDescending;
+			break;
+		case COUNTRY_NAME:
+			function=QueryRunner::breweriesSortedByCountryThenNameWithAverage;
+			break;
+		case NAME:
+			function=QueryRunner::breweriesSortedByNameWithAverage;
+			break;
+		}
+		return function;
+	}
+	
+	public static Function<List<Style>, List<Style>> getStylesSortingAlgorithm(QueryRunner.StyleSortingAlgorithm algorithm){
+		Function<List<Style>, List<Style>> function=null;
+		switch(algorithm){
+		case COUNTRY_FERMENTATION:
+			function=QueryRunner::styleSortedByCountryThenFermentationy;
+			break;
+		case FERMENTATION_COUNTRY:
+			function=QueryRunner::styleSortedByFermentationThenCountry;
+			break;
+		}
+		return function;
 	}
 	
 
