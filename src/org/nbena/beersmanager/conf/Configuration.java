@@ -6,53 +6,26 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.query.QueryRunner;
+import org.nbena.beersmanager.query.QueryRunner.BeerFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.BeerSortingAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.BrewerySortingAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.StyleSortingAlgorithm;
 
 @XmlRootElement(name="configuration")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Configuration {
-	
-	public static enum BeerFilterAlgorithm{
-		NONE,
-		BY_FERMENTATION_HIGH,
-		BY_FERMENTATION_LOW,
-		BY_FERMENTATION_SPONTANEOUS,
-		BY_COUNTRY,
-		BY_STYLE_PROVENIENCE,
-		BY_STARS,
-		BY_MARK,
-		BY_ABV,
-		IS_TRIED,
-		STYLE,
-		MAIN_STYLE
-	}
-	
-	public static enum BreweryFilterAlgorithm{
-		NONE,
-		COUNTRY,
-		BEST_AVERAGES,
-		TRAPPIST_YES
-	}
-	
-	public static enum StyleFilterAlgorithm{
 		
-		NONE,
-		BY_FERMENTATION_HIGH,
-		BY_FERMENTATION_LOW,
-		BY_FERMENTATION_SPONTANEOUS,
-		BY_COUNTRY,
-		BY_MAIN_STYLE
-	}
-
-	
 	
 	public static enum ShowAlsoBreweriesAverage{
 		YES,
 		NO
 	}
 	
-	private QueryRunner.BeerSortingAlgorithm beerSortingAlgorithm;
-	private QueryRunner.BrewerySortingAlgorithm brewerySortingAlgorithm;
-	private QueryRunner.StyleSortingAlgorithm styleSortingAlgorithm;
+	private BeerSortingAlgorithm beerSortingAlgorithm;
+	private BrewerySortingAlgorithm brewerySortingAlgorithm;
+	private StyleSortingAlgorithm styleSortingAlgorithm;
 	
 	private BeerFilterAlgorithm beerFilterAlgorithm;
 	private BreweryFilterAlgorithm breweryFilterAlgorithm;
@@ -331,6 +304,69 @@ public class Configuration {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((beerFilterAlgorithm == null) ? 0 : beerFilterAlgorithm.hashCode());
+		result = prime * result + ((beerFilterValue == null) ? 0 : beerFilterValue.hashCode());
+		result = prime * result + ((beerSortingAlgorithm == null) ? 0 : beerSortingAlgorithm.hashCode());
+		result = prime * result + ((breweryFilterAlgorithm == null) ? 0 : breweryFilterAlgorithm.hashCode());
+		result = prime * result + ((breweryFilterValue == null) ? 0 : breweryFilterValue.hashCode());
+		result = prime * result + ((brewerySortingAlgorithm == null) ? 0 : brewerySortingAlgorithm.hashCode());
+		result = prime * result + ((styleFilterAlgorithm == null) ? 0 : styleFilterAlgorithm.hashCode());
+		result = prime * result + ((styleFilterValue == null) ? 0 : styleFilterValue.hashCode());
+		result = prime * result + ((styleSortingAlgorithm == null) ? 0 : styleSortingAlgorithm.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Configuration other = (Configuration) obj;
+		if (beerFilterAlgorithm != other.beerFilterAlgorithm)
+			return false;
+		if (beerFilterValue == null) {
+			if (other.beerFilterValue != null)
+				return false;
+		} else if (!beerFilterValue.equals(other.beerFilterValue))
+			return false;
+		if (beerSortingAlgorithm != other.beerSortingAlgorithm)
+			return false;
+		if (breweryFilterAlgorithm != other.breweryFilterAlgorithm)
+			return false;
+		if (breweryFilterValue == null) {
+			if (other.breweryFilterValue != null)
+				return false;
+		} else if (!breweryFilterValue.equals(other.breweryFilterValue))
+			return false;
+		if (brewerySortingAlgorithm != other.brewerySortingAlgorithm)
+			return false;
+		if (styleFilterAlgorithm != other.styleFilterAlgorithm)
+			return false;
+		if (styleFilterValue == null) {
+			if (other.styleFilterValue != null)
+				return false;
+		} else if (!styleFilterValue.equals(other.styleFilterValue))
+			return false;
+		if (styleSortingAlgorithm != other.styleSortingAlgorithm)
+			return false;
+		return true;
+	}
+	
+	
 
 
 }

@@ -18,6 +18,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.nbena.beersmanager.conf.Configuration;
+import org.nbena.beersmanager.conf.ConfigurationFactory;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
@@ -38,6 +40,7 @@ import org.nbena.beersmanager.exe.ui.views.ViewAddNewBeer;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewBrewery;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewStyle;
 import org.nbena.beersmanager.exe.ui.views.ViewMainGUI;
+import org.nbena.beersmanager.exe.ui.views.ViewPreferences;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBeer;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBrewery;
 import org.nbena.beersmanager.exe.ui.views.ViewViewStyle;
@@ -56,6 +59,8 @@ public class ControllerMainGUI {
 	private ViewViewBeer viewBeerDialog;
 	private ViewViewBrewery viewBreweryDialog;
 	private ViewViewStyle viewStyleDialog;
+	
+	private ViewPreferences preferencesDialog;
 
 	
 
@@ -79,6 +84,7 @@ public class ControllerMainGUI {
 		addFilterBeersListeners();
 		addSearchMenuListeners();
 		addOptionsMenuListeners();
+		addActionMenuPreferencesListener();
 
 	}
 	
@@ -758,81 +764,6 @@ public class ControllerMainGUI {
 	}
 	
 	private void addFileExporterListeners(){
-//		gui.addActionMenuExportAsExcelNew(new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-////				exporter=new MSExcelNewExporter();
-//				//exporter.writeBeer(beers, out);
-//				try {
-//					export(ExportType.EXCEL_NEW);
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//			
-//		});
-//		
-//		gui.addActionMenuExportAsExcelOld(new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-////				exporter=new MSExcelOldExporter();
-//				try {
-//					export(ExportType.EXCEL_OLD);
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//			
-//		});
-//		
-//		gui.addActionMenuExportAsJSON(new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-////				exporter=new JSONExporter();
-//				try {
-//					export(ExportType.JSON);
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//			
-//		});
-//		
-//		gui.addActionMenuExportAsPdf(new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				//exporter=new PDFExporter();
-//				try {
-//					export(ExportType.PDF);
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//			
-//		});
-//		
-//		gui.addActionMenuExportAsTXT(new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				// TODO Auto-generated method stub
-//				try {
-//					export(ExportType.TXT);
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//			
-//		});
 		
 		gui.addActionMenuExport(new ActionListener(){
 
@@ -934,9 +865,15 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	/**
+	 * 
+	 * @param row, the selected row in the table. If -1, the current style is already in the model.
+	 */
 	private void openStyleDialog(int row){
-		Style s=model.getSelectedStyle(row);
-		model.setStyleShown(s);
+		if(row!=-1){
+			Style s=model.getSelectedStyle(row);
+			model.setStyleShown(s);
+		}
 		viewStyleDialog=new ViewViewStyle();
 		setStyleInDialog(viewStyleDialog);
 			
@@ -947,9 +884,15 @@ public class ControllerMainGUI {
 		viewStyleDialog.setVisible(true);
 	}
 	
+	/**
+	 * 
+	 * @param row, the selected row in the table. If -1, the current brewery is already in the model.
+	 */
 	private void openBreweryDialog(int row){
-		BreweryAverage b=model.getSelectedBrewery(row);
-		model.setBreweryShown(b); //call then
+		if(row!=-1){
+			BreweryAverage b=model.getSelectedBrewery(row);
+			model.setBreweryShown(b); //call then
+		}
 		viewBreweryDialog=new ViewViewBrewery();
 		setBreweryInDialog(viewBreweryDialog);
 		
@@ -968,6 +911,8 @@ public class ControllerMainGUI {
 				
 		setOkCancelViewDialog(viewBeerDialog);
 		setBeerModifyButtonListener();
+		
+		setBeerViewStyleBreweryListener();
 		
 		viewBeerDialog.setVisible(true);
 	}
@@ -1095,6 +1040,48 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	private void setBeerViewStyleBreweryListener(){
+		setBeerViewStyleButtonListener();
+		setBeerViewBreweryButtonListener();
+	}
+	
+	private void setBeerViewStyleButtonListener(){
+		viewBeerDialog.addActionListenerViewStyleButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				viewBeerDialog.setVisible(false);
+				viewBeerDialog.dispose();
+				
+				Style s = model.getBeerShown().getStyle();
+				
+				model.setStyleShown(s);
+				openStyleDialog(-1);
+			}
+			
+		});
+	}
+	
+	
+	private void setBeerViewBreweryButtonListener(){
+		viewBeerDialog.addActionListenerViewBreweryButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				viewBeerDialog.setVisible(false);
+				viewBeerDialog.dispose();
+				
+				Brewery b =  model.getBeerShown().getBrewery();
+				
+				model.setBreweryShown(b);
+				openBreweryDialog(-1);
+			}
+			
+		});
+	}
+	
 
 	
 	private void addListSelectionListener(){
@@ -1104,22 +1091,37 @@ public class ControllerMainGUI {
 			
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				JTable t =(JTable)arg0.getSource();
-				int row=t.getSelectedRow();
-				if(model.getDataShownNow()==DataShownNow.BEER){
-						openBeerDialog(row);
-			
-				}else if(model.getDataShownNow()==DataShownNow.BREWERY || model.getDataShownNow()==DataShownNow.BREWERY_AVERAGE){
-						openBreweryDialog(row);
-				}
-				else{
-					openStyleDialog(row);
+				if(arg0.getClickCount()==2){
+					JTable t =(JTable)arg0.getSource();
+					int row=t.getSelectedRow();
+					if(model.getDataShownNow()==DataShownNow.BEER){
+							openBeerDialog(row);
+				
+					}else if(model.getDataShownNow()==DataShownNow.BREWERY || model.getDataShownNow()==DataShownNow.BREWERY_AVERAGE){
+							openBreweryDialog(row);
+					}
+					else{
+						openStyleDialog(row);
+					}
 				}
 			}
 			
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if(arg0.getClickCount()==2){
+//					JTable t =(JTable)arg0.getSource();
+//					int row=t.getSelectedRow();
+//					if(model.getDataShownNow()==DataShownNow.BEER){
+//							openBeerDialog(row);
+//				
+//					}else if(model.getDataShownNow()==DataShownNow.BREWERY || model.getDataShownNow()==DataShownNow.BREWERY_AVERAGE){
+//							openBreweryDialog(row);
+//					}
+//					else{
+//						openStyleDialog(row);
+//					}
+				}
 			}
 
 			@Override
@@ -1170,8 +1172,147 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	
+	private void addActionMenuPreferencesListener(){
+		gui.addActionMenuPreferences(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				showPreferencesDialog();
+			}
+			
+		});
+	}
+	
+	
+	private void addPreferencesOkButtonListener(){
+		preferencesDialog.addActionListenerOkButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				preferencesDialog.setVisible(false);
+				
+				
+				Configuration newConf = new Configuration();
+				
+				newConf.setBeerSortingAlgorithm(Utils.getBeerSortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingBeerSelectedItem()));
+				newConf.setBrewerySortingAlgorithm(Utils.getBrewerySortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingBrewerySelectedItem()));
+				newConf.setStyleSortingAlgorithm(Utils.getStyleSortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingStyleSelectedItem()));
+				
+//				newConf.setBeerFilterAlgorithm(QueryRunner.BeerFilterAlgorithm.NONE);
+//				newConf.setBeerFilterValue("");
+//				newConf.setBreweryFilterAlgorithm(QueryRunner.BreweryFilterAlgorithm.NONE);
+//				newConf.setBreweryFilterValue("");
+//				newConf.setStyleFilterAlgorithm(QueryRunner.StyleFilterAlgorithm.NONE);
+//				newConf.setStyleFilterValue("");
+				
+				newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
+				
+				if(!model.getConfiguration().equals(newConf)){
+					System.out.println("Configuration has changed");
+					model.setConfiguration(newConf);
+				}
+			}
+			
+		});
+	}
+	
+	private void addPreferencesCancelButtonListener(){
+		preferencesDialog.addActionListenerCancelButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				preferencesDialog.setVisible(false);
+				preferencesDialog.dispose();
+			}
+			
+		});
+	}
+	
+	private void addPreferencesDefaultSortingButtonListener(){
+		preferencesDialog.addActionListenerDefaultSortingButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Configuration newConf = model.getConfiguration();			
+				newConf = ConfigurationFactory.getDefaultSortingConfiguration(newConf);
+				
+				fillPreferencesSortingAlgorithm(newConf);
+			}
+			
+		});
+	}
+	
+	private void addPreferencesDefaultFilteringButtonListener(){
+		preferencesDialog.addActionListenerDefaultFilteringButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Configuration newConf = model.getConfiguration();			
+				newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
+				
+				fillPreferencesFilteringAlgorithm(newConf);
+				
+			}
+			
+		});
+	}
+	
+	private void addPreferencesDeafultButtonListener(){
+		preferencesDialog.addActionListenerDefaultButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				fillPreferences(ConfigurationFactory.getDefaultConfiguration());
+				
+			}
+			
+		});
+	}
+	
+	private void fillPreferencesSortingAlgorithm(Configuration conf){
+		preferencesDialog.fillComboBoxSortingBeer(Utils.getBeerSortingAlgorithmDescriptionList());
+		preferencesDialog.setComboBoxSortingBeerSelectedItem(Utils.getBeerSortingAlgorithmDescription(conf.getBeerSortingAlgorithm()));
+		
+		preferencesDialog.fillComboBoxSortingBrewery(Utils.getBrewerySortingAlgorithmDescriptionList());
+		preferencesDialog.setComboBoxSortingBrewerySelectedItem(Utils.getBrewerySortingAlgorithmDescription(conf.getBrewerySortingAlgorithm()));
+		
+		preferencesDialog.fillComboBoxSortingStyle(Utils.getStyleSortingAlgorithmDescriptionList());
+		preferencesDialog.setComboBoxSortingStyleSelectedItem(Utils.getStyleSortingAlgorithmDescription(conf.getStyleSortingAlgorithm()));
+	}
+	
+	private void fillPreferencesFilteringAlgorithm(Configuration conf){
+		preferencesDialog.fillComboBoxFilteringBeer(Utils.getBeerFilterAlgorithmDescriptionList());
+		preferencesDialog.setComboBoxFilteringBeerSelectedItem(Utils.getBeerFilterAlgorithmDescription(conf.getBeerFilterAlgorithm()));
+		
+		preferencesDialog.fillComboBoxFilteringBrewery(Utils.getBreweryFilterAlgorithmDescriptionList());
+		preferencesDialog.setComboBoxFilteringBrewerySelectedItem(Utils.getBreweryFilterAlgorithmDescription(conf.getBreweryFilterAlgorithm()));
+		
+		preferencesDialog.fillComboBoxFilteringStyle(Utils.getStyleFilterAlgorithmDescriptionList());
+		preferencesDialog.setComboBoxFilteringStyleSelectedItem(Utils.getStyleFilterAlgorithmDescription(conf.getStyleFilterAlgorithm()));
+	}
+	
+	private void fillPreferences(Configuration conf){
+		fillPreferencesSortingAlgorithm(conf);
+		fillPreferencesFilteringAlgorithm(conf);
+	}
+	
 	public void showPreferencesDialog(){
 		
+		preferencesDialog = new ViewPreferences();
+		fillPreferences(model.getConfiguration());
+		
+		addPreferencesOkButtonListener();
+		addPreferencesCancelButtonListener();
+		addPreferencesDefaultSortingButtonListener();
+		addPreferencesDefaultFilteringButtonListener();
+		addPreferencesDeafultButtonListener();
+		
+		preferencesDialog.setVisible(true);
 	}
 	
 	public void showAboutDialog(){

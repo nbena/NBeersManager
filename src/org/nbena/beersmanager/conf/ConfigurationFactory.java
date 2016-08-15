@@ -9,6 +9,9 @@ import org.json.JSONException;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.json.conf.JSONExporter;
 import org.nbena.beersmanager.query.QueryRunner;
+import org.nbena.beersmanager.query.QueryRunner.BeerFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
 
 public class ConfigurationFactory {
 	
@@ -20,17 +23,36 @@ public class ConfigurationFactory {
 	
 	public static Configuration getDefaultConfiguration(){
 		Configuration conf=new Configuration();
-		conf.setBeerFilterAlgorithm(Configuration.BeerFilterAlgorithm.NONE);
-		conf.setBeerFilterValue("");
+//		conf.setBeerFilterAlgorithm(BeerFilterAlgorithm.NONE);
+//		conf.setBeerFilterValue("");
+//		conf.setBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.MARK_STAR_DESCENDING);
+//		
+//		conf.setBreweryFilterAlgorithm(BreweryFilterAlgorithm.NONE);
+//		conf.setBreweryFilterValue("");
+//		conf.setBrewerySortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.AVERAGE_DESCENDING);
+//		
+//		conf.setStyleFilterAlgorithm(StyleFilterAlgorithm.NONE);
+//		conf.setStyleFilterValue("");
+//		conf.setStyleSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.FERMENTATION_COUNTRY);
+		conf = getDefaultSortingConfiguration(conf);
+		conf = getDefaultFilteringConfiguration(conf);
+		return conf;
+	}
+	
+	public static Configuration getDefaultSortingConfiguration(Configuration conf){
 		conf.setBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.MARK_STAR_DESCENDING);
-		
-		conf.setBreweryFilterAlgorithm(Configuration.BreweryFilterAlgorithm.NONE);
-		conf.setBreweryFilterValue("");
 		conf.setBrewerySortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.AVERAGE_DESCENDING);
-		
-		conf.setStyleFilterAlgorithm(Configuration.StyleFilterAlgorithm.NONE);
-		conf.setStyleFilterValue("");
 		conf.setStyleSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.FERMENTATION_COUNTRY);
+		return conf;
+	}
+	
+	public static Configuration getDefaultFilteringConfiguration(Configuration conf){
+		conf.setBeerFilterAlgorithm(BeerFilterAlgorithm.NONE);
+		conf.setBeerFilterValue("");
+		conf.setBreweryFilterAlgorithm(BreweryFilterAlgorithm.NONE);
+		conf.setBreweryFilterValue("");		
+		conf.setStyleFilterAlgorithm(StyleFilterAlgorithm.NONE);
+		conf.setStyleFilterValue("");
 		return conf;
 	}
 	

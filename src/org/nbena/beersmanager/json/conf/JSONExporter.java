@@ -76,15 +76,15 @@ public class JSONExporter {
 	public Configuration readConfiguration(){
 		Configuration c=new Configuration();
 		json=new JSONObject(new JSONTokener(in));
-		c.setBeerFilterAlgorithm(Configuration.BeerFilterAlgorithm.valueOf(json.getString(JSON_BEER_FILTER_ALGORITHM)));
+		c.setBeerFilterAlgorithm(QueryRunner.BeerFilterAlgorithm.valueOf(json.getString(JSON_BEER_FILTER_ALGORITHM)));
 		c.setBeerFilterValue(json.getString(JSON_BEER_FILTER_VALUE));
 		c.setBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.valueOf(json.getString(JSON_BEER_SORTING_ALGORITHM)));
 		
-		c.setBreweryFilterAlgorithm(Configuration.BreweryFilterAlgorithm.valueOf(json.getString(JSON_BREWERY_FILTER_ALGORITHM)));
+		c.setBreweryFilterAlgorithm(QueryRunner.BreweryFilterAlgorithm.valueOf(json.getString(JSON_BREWERY_FILTER_ALGORITHM)));
 		c.setBreweryFilterValue(json.getString(JSON_BREWERY_FILTER_VALUE));
 		c.setBrewerySortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.valueOf(json.getString(JSON_BREWERY_SORTING_ALGORITHM)));
 		
-		c.setStyleFilterAlgorithm(Configuration.StyleFilterAlgorithm.valueOf(json.getString(JSON_STYLE_FILTER_ALGORITHM)));
+		c.setStyleFilterAlgorithm(QueryRunner.StyleFilterAlgorithm.valueOf(json.getString(JSON_STYLE_FILTER_ALGORITHM)));
 		c.setStyleFilterValue(json.getString(JSON_STYLE_FILTER_VALUE));
 		c.setStyleSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.valueOf(json.getString(JSON_STYLE_SORTING_ALGORITHM)));
 		return c;

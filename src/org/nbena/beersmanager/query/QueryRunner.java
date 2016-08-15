@@ -53,6 +53,40 @@ public class QueryRunner {
 		AVERAGE_DESCENDING,
 		COUNTRY_AVERAGE_DESCENDING
 	}
+	
+	
+	public static enum BeerFilterAlgorithm{
+		NONE,
+		BY_FERMENTATION_HIGH,
+		BY_FERMENTATION_LOW,
+		BY_FERMENTATION_SPONTANEOUS,
+		BY_COUNTRY,
+		BY_STYLE_PROVENIENCE,
+		BY_STARS,
+		BY_MARK,
+		BY_ABV,
+		IS_TRIED,
+		STYLE,
+		MAIN_STYLE
+	}
+	
+	public static enum BreweryFilterAlgorithm{
+		NONE,
+		COUNTRY,
+		BEST_AVERAGES,
+		BEST_AVERAGES_LIST,
+		TRAPPIST_YES
+	}
+	
+	public static enum StyleFilterAlgorithm{
+		
+		NONE,
+		BY_FERMENTATION_HIGH,
+		BY_FERMENTATION_LOW,
+		BY_FERMENTATION_SPONTANEOUS,
+		BY_COUNTRY,
+		BY_MAIN_STYLE
+	}
 
 
 

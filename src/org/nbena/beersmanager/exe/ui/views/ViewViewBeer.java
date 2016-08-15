@@ -36,6 +36,8 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 	private JButton btnDelete;
 	
 	private JTextArea textAreaDescription;
+	private JButton btnViewStyle;
+	private JButton btnViewBrewery;
 
 	
 	
@@ -60,6 +62,13 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 		btnDelete.addActionListener(listener);
 	}
 	
+	public void addActionListenerViewBreweryButton(ActionListener listener){
+		btnViewBrewery.addActionListener(listener);
+	}
+	
+	public void addActionListenerViewStyleButton(ActionListener listener){
+		btnViewStyle.addActionListener(listener);
+	}
 	
 	private void setEditable(){
 		textFieldBeerName.setEditable(false);
@@ -133,9 +142,9 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblTitle = new JLabel("");
@@ -158,7 +167,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			GridBagConstraints gbc_textFieldBeerName = new GridBagConstraints();
 			gbc_textFieldBeerName.gridwidth = 5;
 			gbc_textFieldBeerName.anchor = GridBagConstraints.BELOW_BASELINE;
-			gbc_textFieldBeerName.insets = new Insets(0, 0, 5, 5);
+			gbc_textFieldBeerName.insets = new Insets(0, 0, 5, 0);
 			gbc_textFieldBeerName.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldBeerName.gridx = 3;
 			gbc_textFieldBeerName.gridy = 2;
@@ -176,7 +185,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 		{
 			textFieldBreweryName = new JTextField();
 			GridBagConstraints gbc_textFieldBreweryName = new GridBagConstraints();
-			gbc_textFieldBreweryName.gridwidth = 5;
+			gbc_textFieldBreweryName.gridwidth = 4;
 			gbc_textFieldBreweryName.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldBreweryName.anchor = GridBagConstraints.BELOW_BASELINE;
 			gbc_textFieldBreweryName.insets = new Insets(0, 0, 5, 5);
@@ -184,6 +193,14 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			gbc_textFieldBreweryName.gridy = 4;
 			contentPanel.add(textFieldBreweryName, gbc_textFieldBreweryName);
 			textFieldBreweryName.setColumns(10);
+		}
+		{
+			btnViewBrewery = new JButton("Vedi");
+			GridBagConstraints gbc_btnViewBrewery = new GridBagConstraints();
+			gbc_btnViewBrewery.insets = new Insets(0, 0, 5, 0);
+			gbc_btnViewBrewery.gridx = 7;
+			gbc_btnViewBrewery.gridy = 4;
+			contentPanel.add(btnViewBrewery, gbc_btnViewBrewery);
 		}
 		{
 			JLabel lblStile = new JLabel("Stile:");
@@ -196,12 +213,21 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 		{
 			textFieldStyle = new JTextField();
 			GridBagConstraints gbc_textFieldStyle = new GridBagConstraints();
+			gbc_textFieldStyle.gridwidth = 4;
 			gbc_textFieldStyle.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldStyle.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldStyle.gridx = 3;
 			gbc_textFieldStyle.gridy = 6;
 			contentPanel.add(textFieldStyle, gbc_textFieldStyle);
 			textFieldStyle.setColumns(10);
+		}
+		{
+			btnViewStyle = new JButton("Vedi");
+			GridBagConstraints gbc_btnViewStyle = new GridBagConstraints();
+			gbc_btnViewStyle.insets = new Insets(0, 0, 5, 0);
+			gbc_btnViewStyle.gridx = 7;
+			gbc_btnViewStyle.gridy = 6;
+			contentPanel.add(btnViewStyle, gbc_btnViewStyle);
 		}
 		{
 			JLabel lblAbv = new JLabel("ABV%:");
@@ -263,6 +289,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			contentPanel.add(textFieldMark, gbc_textFieldMark);
 			textFieldMark.setColumns(10);
 		}
+		textFieldMark.setColumns(10);
 		
 		{
 			JLabel lblProvata = new JLabel("Provata:");
@@ -281,7 +308,6 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			gbc_textFieldTried.gridx = 7;
 			gbc_textFieldTried.gridy = 10;
 			contentPanel.add(textFieldTried, gbc_textFieldTried);
-			textFieldMark.setColumns(10);
 		}
 		
 		{
@@ -289,7 +315,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			GridBagConstraints gbc_lblPrezzo = new GridBagConstraints();
 			gbc_lblPrezzo.insets = new Insets(0, 0, 5, 5);
 			gbc_lblPrezzo.gridx = 1;
-			gbc_lblPrezzo.gridy = 14;
+			gbc_lblPrezzo.gridy = 12;
 			contentPanel.add(lblPrezzo, gbc_lblPrezzo);
 		}
 		{
@@ -298,7 +324,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			gbc_textFieldPrice.anchor = GridBagConstraints.WEST;
 			gbc_textFieldPrice.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldPrice.gridx = 3;
-			gbc_textFieldPrice.gridy = 14;
+			gbc_textFieldPrice.gridy = 12;
 			contentPanel.add(textFieldPrice, gbc_textFieldPrice);
 			textFieldPrice.setColumns(10);
 		}
@@ -307,7 +333,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			GridBagConstraints gbc_lblDescrizione = new GridBagConstraints();
 			gbc_lblDescrizione.insets = new Insets(0, 0, 0, 5);
 			gbc_lblDescrizione.gridx = 1;
-			gbc_lblDescrizione.gridy = 16;
+			gbc_lblDescrizione.gridy = 14;
 			contentPanel.add(lblDescrizione, gbc_lblDescrizione);
 		}
 		{
@@ -316,7 +342,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			gbc_textAreaDescription.gridwidth = 5;
 			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
 			gbc_textAreaDescription.gridx = 3;
-			gbc_textAreaDescription.gridy = 16;
+			gbc_textAreaDescription.gridy = 14;
 			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
 		}
 		{

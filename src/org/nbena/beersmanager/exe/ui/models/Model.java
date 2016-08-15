@@ -463,6 +463,11 @@ public class Model {
 	public void setBreweryShown(BreweryAverage breweryDialog) {
 		this.breweryShown = breweryDialog;
 	}
+	
+	public void setBreweryShown(Brewery brewery){
+		breweryShown=Utils.fromBreweryToBreweryAverage(brewery);
+		breweryShown.setAverage(QueryRunner.beersFilteredByBrewery(beerData, brewery));
+	}
 
 	/**
 	 * @return the styleDialog
