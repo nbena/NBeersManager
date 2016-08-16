@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -27,15 +28,23 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	private JTextField textFieldStars;
 	private JTextField textFieldMark;
 	private JTextField textFieldTried;
+	private JTextField textFieldPlace;
 	
 	private JButton okButton;
 	private JButton cancelButton;
-	private JButton btnModify;
-	private JButton btnDelete;
+
 	
 	private JTextArea textAreaDescription;
 	private JComboBox<String> comboBoxBrewery;
 	private JComboBox<String> comboBoxStyle;
+	
+	public void addActionListenerOkButton(ActionListener listener){
+		okButton.addActionListener(listener);
+	}
+	
+	public void addActionListenerCancelButton(ActionListener listener){
+		cancelButton.addActionListener(listener);
+	}
 	
 	
 	public void fillThings(List<String> breweries, List<String> styles){
@@ -86,6 +95,50 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	public void setDescription(String t){
 		textAreaDescription.setText(t);
 	}
+	
+	public void setPlace(String t){
+		textFieldPlace.setText(t);
+	}
+	
+	public String getBrewery(){
+		return (String)comboBoxBrewery.getSelectedItem();
+	}
+	
+	public String getStyle(){
+		return (String)comboBoxStyle.getSelectedItem();
+	}
+	
+	public String getBeerName(){
+		return textFieldBeerName.getText();
+	}
+	
+	public String getABV(){
+		return textFieldABV.getText();
+	}
+	
+	public String getStars(){
+		return textFieldStars.getText();
+	}
+	
+	public String getMark(){
+		return textFieldMark.getText();
+	}
+	
+	public String getTried(){
+		return textFieldTried.getText();
+	}
+	
+	public String getDescription(){
+		return textAreaDescription.getText();
+	}
+	
+	public String getPrice(){
+		return textFieldPrice.getText();
+	}
+	
+	public String getPlace(){
+		return textFieldPlace.getText();
+	}
 
 	/**
 	 * Launch the application.
@@ -111,9 +164,9 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblTitle = new JLabel("");
@@ -264,7 +317,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			GridBagConstraints gbc_lblPrezzo = new GridBagConstraints();
 			gbc_lblPrezzo.insets = new Insets(0, 0, 5, 5);
 			gbc_lblPrezzo.gridx = 1;
-			gbc_lblPrezzo.gridy = 14;
+			gbc_lblPrezzo.gridy = 12;
 			contentPanel.add(lblPrezzo, gbc_lblPrezzo);
 		}
 		{
@@ -273,16 +326,34 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			gbc_textFieldPrice.anchor = GridBagConstraints.WEST;
 			gbc_textFieldPrice.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldPrice.gridx = 3;
-			gbc_textFieldPrice.gridy = 14;
+			gbc_textFieldPrice.gridy = 12;
 			contentPanel.add(textFieldPrice, gbc_textFieldPrice);
 			textFieldPrice.setColumns(10);
+		}
+		{
+			JLabel lblLuogo = new JLabel("Luogo:");
+			GridBagConstraints gbc_lblLuogo = new GridBagConstraints();
+			gbc_lblLuogo.insets = new Insets(0, 0, 5, 5);
+			gbc_lblLuogo.gridx = 5;
+			gbc_lblLuogo.gridy = 12;
+			contentPanel.add(lblLuogo, gbc_lblLuogo);
+		}
+		{
+			textFieldPlace = new JTextField();
+			GridBagConstraints gbc_textFieldPlace = new GridBagConstraints();
+			gbc_textFieldPlace.anchor = GridBagConstraints.WEST;
+			gbc_textFieldPlace.insets = new Insets(0, 0, 5, 5);
+			gbc_textFieldPlace.gridx = 7;
+			gbc_textFieldPlace.gridy = 12;
+			contentPanel.add(textFieldPlace, gbc_textFieldPlace);
+			textFieldPlace.setColumns(10);
 		}
 		{
 			JLabel lblDescrizione = new JLabel("Descrizione:");
 			GridBagConstraints gbc_lblDescrizione = new GridBagConstraints();
 			gbc_lblDescrizione.insets = new Insets(0, 0, 0, 5);
 			gbc_lblDescrizione.gridx = 1;
-			gbc_lblDescrizione.gridy = 16;
+			gbc_lblDescrizione.gridy = 14;
 			contentPanel.add(lblDescrizione, gbc_lblDescrizione);
 		}
 		{
@@ -291,7 +362,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			gbc_textAreaDescription.gridwidth = 5;
 			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
 			gbc_textAreaDescription.gridx = 3;
-			gbc_textAreaDescription.gridy = 16;
+			gbc_textAreaDescription.gridy = 14;
 			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
 		}
 		{

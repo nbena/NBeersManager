@@ -1,9 +1,13 @@
 package org.nbena.beersmanager.exe;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -131,26 +135,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		try {
-			/*
-			Main m = new Main();
 
-			
-			m.saveStyles();
-			m.saveBreweries();
-			
-			m.loadBreweriesStyles();
-			
-			m.saveBeers();
-			
-			m.loadListsComplete();
-			
-			Utils.printStylesComplete(m.getStyles(),System.out);
-			Utils.printBreweriesComplete(m.getBreweries(), System.out);
-			Utils.printBeersComplete(m.getBeers(), System.out);
-
-
-
-			*/
 		
 			
 			
@@ -164,19 +149,6 @@ public class Main {
 			
 			Model model =new Model();
 			
-//			ModelStyleTable tableModelStyle=new ModelStyleTable();
-//			model.setTableModel(tableModelStyle);
-			
-//			ModelBreweryTable tableModelBrewery=new ModelBreweryTable();
-//			model.setTableModel(tableModelBrewery);
-			
-//			ModelBeerTable tableModelBeer = new ModelBeerTable();
-//			model.setTableModel(tableModelBeer);
-				
-			
-//			model.setDataShownNow(Model.DataShownNow.BREWERY);
-//			model.setDataShownNow(Model.DataShownNow.STYLE);
-//			model.setDataShownNow(Model.DataShownNow.BEER);
 			
 			model.setConfiguration(ConfigurationFactory.getDefaultConfiguration());
 			
@@ -196,19 +168,20 @@ public class Main {
 			model.setAverages(StupidClass.someBeers(StupidClass.someBreweries(), StupidClass.someStyle()));
 			
 			
-//			controller.showBeers();
+			controller.showBeers();
 			controller.showBreweries();
-//			controller.showStyles();
+			controller.showStyles();
 			
 			
-			//ModelStyleTable t=(ModelStyleTable)model.getTableModel();
-			//t.setData(StupidClass.someStyle());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		
+		
+
 		
 		
 		/*

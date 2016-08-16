@@ -25,6 +25,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import javax.swing.JTable;
 import java.awt.GridBagConstraints;
+import javax.swing.JButton;
 
 public class ViewMainGUI extends JFrame {
 
@@ -117,6 +118,17 @@ public class ViewMainGUI extends JFrame {
 	
 	private JMenuItem mntmPreferences;
 	private JMenuItem mntmAbout;
+	private JButton btnSave;
+	private JMenuItem mntmSave;
+	
+	
+	
+	
+	public void addActionMenuSaveAndSaveButton(ActionListener listener){
+		mntmSave.addActionListener(listener);
+		btnSave.addActionListener(listener);
+	}
+	
 	
 	public void addActionMenuPreferences(ActionListener listener){
 		mntmPreferences.addActionListener(listener);
@@ -434,6 +446,9 @@ public class ViewMainGUI extends JFrame {
 		
 		
 		JMenu mnImport = new JMenu("Import");
+		
+		mntmSave = new JMenuItem("Salva");
+		mnFile.add(mntmSave);
 		JMenu mnNew = new JMenu("New");
 		
 		mnFile.add(mnNew);	
@@ -462,6 +477,9 @@ public class ViewMainGUI extends JFrame {
 		
 		mntmExport = new JMenuItem("Export");
 		mnFile.add(mntmExport);
+		
+		btnSave = new JButton("Salva");
+		menuBar.add(btnSave);
 		
 		
 		

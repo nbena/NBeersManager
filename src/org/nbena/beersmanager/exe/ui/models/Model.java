@@ -1,5 +1,7 @@
 package org.nbena.beersmanager.exe.ui.models;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -10,18 +12,22 @@ import java.util.stream.Collectors;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
+import org.json.JSONException;
 import org.nbena.beersmanager.conf.Configuration;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.exceptions.ObjectNotFoundException;
+import org.nbena.beersmanager.exceptions.UpdateException;
 import org.nbena.beersmanager.exe.Utils;
-import org.nbena.beersmanager.export.Exporter;
-import org.nbena.beersmanager.export.JSONExporter;
-import org.nbena.beersmanager.export.PDFExporter;
-import org.nbena.beersmanager.export.TXTExporter;
-import org.nbena.beersmanager.export.MSExcelOldExporter;
-import org.nbena.beersmanager.export.MSExcelNewExporter;
+import org.nbena.beersmanager.export.OutExporter;
+import org.nbena.beersmanager.export.JSONOutExporter;
+import org.nbena.beersmanager.export.PDFOutExporter;
+import org.nbena.beersmanager.export.TXTOutExporter;
+import org.nbena.beersmanager.json.coreclasses.JSONExporter;
+import org.nbena.beersmanager.export.MSExcelOldOutExporter;
+import org.nbena.beersmanager.export.MSExcelNewOutExporter;
 import org.nbena.beersmanager.query.BreweryAverage;
 import org.nbena.beersmanager.query.Comparators;
 import org.nbena.beersmanager.query.QueryRunner;
@@ -70,8 +76,7 @@ public class Model {
 	private DataShownNow dataShownNow;
 	private DialogShownNow dialogShown;
 	
-	private Exporter exporter;
-	
+	private OutExporter exporter;
 	private Configuration configuration;
 	
 	private Function<List<Beer>, List<Beer>> beerSortingDefaultAlgorithm;
@@ -81,6 +86,10 @@ public class Model {
 	private Function<List<Beer>, List<Beer>> beerSortingCurrentAlgorithm;
 	private Function<List<BreweryAverage>, List<BreweryAverage>> brewerySortingCurrentAlgorithm;
 	private Function<List<Style>, List<Style>> styleSortingCurrentAlgorithm;
+	
+	private boolean isAddNewBeerOrModifyBeer;
+	private boolean isAddNewBreweryOrModifyBrewery;
+	private boolean isAddNewStyleOrModifyStyle;
 	
 //	private void setupSortingFunction(){
 //		Configuration.
@@ -123,6 +132,62 @@ public class Model {
 	
 	
 	
+	/**
+	 * @return the styleSortingDefaultAlgorithm
+	 */
+	public Function<List<Style>, List<Style>> getStyleSortingDefaultAlgorithm() {
+		return styleSortingDefaultAlgorithm;
+	}
+
+	/**
+	 * @param styleSortingDefaultAlgorithm the styleSortingDefaultAlgorithm to set
+	 */
+	public void setStyleSortingDefaultAlgorithm(Function<List<Style>, List<Style>> styleSortingDefaultAlgorithm) {
+		this.styleSortingDefaultAlgorithm = styleSortingDefaultAlgorithm;
+	}
+
+	/**
+	 * @return the isAddNewBeerOrModifyBeer
+	 */
+	public boolean isAddNewBeerOrModifyBeer() {
+		return isAddNewBeerOrModifyBeer;
+	}
+
+	/**
+	 * @param isAddNewBeerOrModifyBeer the isAddNewBeerOrModifyBeer to set
+	 */
+	public void setAddNewBeerOrModifyBeer(boolean isAddNewBeerOrModifyBeer) {
+		this.isAddNewBeerOrModifyBeer = isAddNewBeerOrModifyBeer;
+	}
+
+	/**
+	 * @return the isAddNewBreweryOrModifyBrewery
+	 */
+	public boolean isAddNewBreweryOrModifyBrewery() {
+		return isAddNewBreweryOrModifyBrewery;
+	}
+
+	/**
+	 * @param isAddNewBreweryOrModifyBrewery the isAddNewBreweryOrModifyBrewery to set
+	 */
+	public void setAddNewBreweryOrModifyBrewery(boolean isAddNewBreweryOrModifyBrewery) {
+		this.isAddNewBreweryOrModifyBrewery = isAddNewBreweryOrModifyBrewery;
+	}
+
+	/**
+	 * @return the isAddNewStyleOrModifyStyle
+	 */
+	public boolean isAddNewStyleOrModifyStyle() {
+		return isAddNewStyleOrModifyStyle;
+	}
+
+	/**
+	 * @param isAddNewStyleOrModifyStyle the isAddNewStyleOrModifyStyle to set
+	 */
+	public void setAddNewStyleOrModifyStyle(boolean isAddNewStyleOrModifyStyle) {
+		this.isAddNewStyleOrModifyStyle = isAddNewStyleOrModifyStyle;
+	}
+
 	/**
 	 * @return the dialogModel
 	 */
@@ -738,49 +803,49 @@ public class Model {
 	}
 	
 	private void exportJSONBeers(OutputStream out) throws Exception{
-		exporter = new JSONExporter();
+		exporter = new JSONOutExporter();
 		exporter.writeBeer(filteredBeers, out);
 	}
 	
 	private void exportJSONBreweries(OutputStream out) throws Exception{
-		exporter = new JSONExporter();
+		exporter = new JSONOutExporter();
 //		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
 	private void exportJSONStyles(OutputStream out) throws Exception{
-		exporter = new JSONExporter();
+		exporter = new JSONOutExporter();
 		exporter.writeStyle(styleData, out);
 	}
 	
 	
 	private void exportMsExcelNewBeers(OutputStream out) throws Exception{
-		exporter = new MSExcelNewExporter();
+		exporter = new MSExcelNewOutExporter();
 		exporter.writeBeer(filteredBeers, out);
 	}
 	
 	private void exportMsExcelNewBreweries(OutputStream out) throws Exception{
-		exporter = new MSExcelNewExporter();
+		exporter = new MSExcelNewOutExporter();
 //		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
 	private void exportMsExcelNewStyles(OutputStream out) throws Exception{
-		exporter = new MSExcelNewExporter();
+		exporter = new MSExcelNewOutExporter();
 		exporter.writeStyle(styleData, out);
 	}
 	
 	
 	private void exportMsExcelOldBeers(OutputStream out) throws Exception{
-		exporter = new  MSExcelOldExporter();
+		exporter = new  MSExcelOldOutExporter();
 		exporter.writeBeer(filteredBeers, out);
 	}
 	
 	private void exportMsExcelOldBreweries(OutputStream out) throws Exception{
-		exporter = new MSExcelOldExporter();
+		exporter = new MSExcelOldOutExporter();
 //		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
 	private void exportMsExcelOldStyles(OutputStream out) throws Exception{
-		exporter = new MSExcelOldExporter();
+		exporter = new MSExcelOldOutExporter();
 		exporter.writeStyle(styleData, out);
 	}
 	
@@ -800,17 +865,17 @@ public class Model {
 	}
 	
 	private void exportTXTBeers(OutputStream out) throws Exception{
-		exporter = new TXTExporter();
+		exporter = new TXTOutExporter();
 		exporter.writeBeer(filteredBeers, out);
 	}
 	
 	private void exportTXTBreweries(OutputStream out) throws Exception{
-		exporter = new TXTExporter();
+		exporter = new TXTOutExporter();
 //		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
 	private void exportTXTStyles(OutputStream out) throws Exception{
-		exporter = new TXTExporter();
+		exporter = new TXTOutExporter();
 		exporter.writeStyle(styleData, out);
 	}
 	
@@ -875,6 +940,119 @@ public class Model {
 	 */
 	public void setStyleSortingCurrentAlgorithm(Function<List<Style>, List<Style>> styleSortingCurrentAlgorithm) {
 		this.styleSortingCurrentAlgorithm = styleSortingCurrentAlgorithm;
+	}
+	
+	public Brewery getBreweryBinarySearch(Brewery key) throws ObjectNotFoundException{
+		List<BreweryAverage> tempBrewerySortedList = QueryRunner.BinarySearch.breweriesAverageSortedForBinarySearch(breweryData);
+		int pos = QueryRunner.BinarySearch.breweryAverageSearch(tempBrewerySortedList, Utils.fromBreweryToBreweryAverage(key), true);
+		if (pos>=0){
+			return Utils.fromBreweryAverageToBrewery(tempBrewerySortedList.get(pos));
+		}
+		else{
+			throw new ObjectNotFoundException(key);
+		}
+	}
+	
+	public Style getStyleBinarySearch(Style key) throws ObjectNotFoundException{
+		List<Style> tempStyleSortedList = QueryRunner.BinarySearch.stylesSortedForBinarySearch(styleData);
+		int pos = QueryRunner.BinarySearch.styleSearch(tempStyleSortedList, key, true);
+		if(pos >=0){
+			return tempStyleSortedList.get(pos);
+		}
+		else{
+			throw new ObjectNotFoundException(key);
+		}
+	}
+	
+	
+	public void updateBeer(Beer newBeer) throws UpdateException{
+		if(beerData.remove(beerShown)){
+			beerData.add(newBeer);
+			filteredBeers = beerData;
+			
+			showBeerData();
+		}
+		else{
+			throw new UpdateException(newBeer);
+		}
+
+	}
+	
+	public void updateBrewery(BreweryAverage newBrewery) throws UpdateException{
+		if(breweryData.remove(breweryShown)){
+			breweryData.add(newBrewery);
+			filteredBreweries = breweryData;
+			
+			showBreweryData();
+		}
+		else{
+			throw new UpdateException(newBrewery);
+		}
+
+	}
+	
+	
+	public void updateStyle(Style newStyle) throws UpdateException{
+		if(styleData.remove(styleShown)){
+			styleData.add(newStyle);
+			filteredStyles = styleData;
+			
+			showStyleData();
+		}
+		else{
+			throw new UpdateException(newStyle);
+		}
+
+	}
+	
+	
+	public void saveBeers() throws JSONException, FileNotFoundException{
+		JSONExporter.writeBeerSpecial(beerData, new FileOutputStream(configuration.getBeerFilePath()));
+	}
+	
+	public void saveBreweries() throws FileNotFoundException, FileNotFoundException{
+		JSONExporter.writeBrewery(Utils.fromBreweriesAverageToBrewery(breweryData), new FileOutputStream(configuration.getBreweryFilePath()));
+	}
+	
+	public void saveStyles() throws JSONException, FileNotFoundException{
+		JSONExporter.writeStyleSpecial(styleData, new FileOutputStream(configuration.getStyleFilePath()));
+	}
+	
+	public boolean addNewBeer(Beer beer){
+		boolean ret = true;
+		if(!QueryRunner.BinarySearch.isBeerExists(beerData, beer, false)){
+			beerData.add(beer);
+		}
+		else
+			ret = false;
+		return ret;
+	}
+	
+	public boolean addNewBrewery(Brewery brewery){
+		boolean ret = true;
+		if(!QueryRunner.BinarySearch.isBreweryExists(Utils.fromBreweriesAverageToBrewery(breweryData), brewery, false)){
+			breweryData.add(Utils.fromBreweryToBreweryAverage(brewery));
+		}
+		else
+			ret = false;
+		return ret;
+	}
+	
+	
+	public boolean addNewStyle(Style style){
+		boolean ret = true;
+		if(!QueryRunner.BinarySearch.isStyleExists(styleData, style, false)){
+			styleData.add(style);
+		}
+		else
+			ret = false;
+		return ret;
+	}
+	
+	public void saveThings() throws JSONException, FileNotFoundException {
+		saveBeers();
+		saveBreweries();
+		saveStyles();
 	}
 
 }

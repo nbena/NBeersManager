@@ -18,12 +18,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.json.JSONException;
 import org.nbena.beersmanager.conf.Configuration;
 import org.nbena.beersmanager.conf.ConfigurationFactory;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.exceptions.ObjectNotFoundException;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.models.Model.DataShownNow;
@@ -85,6 +87,7 @@ public class ControllerMainGUI {
 		addSearchMenuListeners();
 		addOptionsMenuListeners();
 		addActionMenuPreferencesListener();
+		addSaveMenuAndButtonListeners();
 
 	}
 	
@@ -781,6 +784,210 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	private void setBeerInDialog(BeerDialog dialog){
+		Beer b=model.getBeerShown();
+		dialog.setBeerName(b.getName());
+		dialog.setBreweryName(Utils.getBreweryString(b.getBrewery()));
+		dialog.setStyle(Utils.getStyleString(b.getStyle()));
+		dialog.setABV(Double.toString(b.getAlcool()));
+		dialog.setStars(Integer.toString(b.getNumberOfStars()));
+		dialog.setMark(Integer.toString(b.getMark()));
+		dialog.setTried(Utils.getBooleanItalian(b.isTried()));
+		dialog.setDescription(b.getDescription());
+		dialog.setPlace(b.getPlaceTried());
+	}
+	
+	private void setStyleInDialog(StyleDialog dialog){
+		Style s=model.getStyleShown();
+		dialog.setStyleMainName(s.getStyleMainName());
+		dialog.setStyleSubcategory(s.getStyleSubCategory());
+		dialog.setFermentation(Utils.getFermentationString(s.getFermentation()));
+		dialog.setStyleCountry(s.getStyleCountryOrigin());
+		dialog.setDescription(s.getDescription());
+	}
+	
+	public void setBreweryInDialog(BreweryDialog dialog){
+		BreweryAverage b=model.getBreweryShown();
+		dialog.setBreweryName(b.getName());
+		dialog.setBreweryTown(b.getTown());
+		dialog.setBreweryCountry(b.getCountry());
+		dialog.setBreweryDescription(b.getDescription());
+		dialog.setBreweryWebsite(b.getWebsite());
+		dialog.setBreweryAverage(Double.toString(b.getAverage()));
+	}
+	
+	private Beer getBeerFromAddNewBeerDialog() throws ObjectNotFoundException{
+		Beer b = new Beer();
+		Brewery brewery = Utils.getBreweryFromString(addBeerDialog.getBrewery());
+		Style style = Utils.getStyleFromString(addBeerDialog.getStyle());
+		
+		brewery = model.getBreweryBinarySearch(brewery);	
+		style = model.getStyleBinarySearch(style);
+		
+		b.setStyle(style);
+		b.setBrewery(brewery);
+		b.setAlcool(Double.parseDouble(addBeerDialog.getABV()));
+		b.setMark(Integer.parseInt(addBeerDialog.getMark()));
+		b.setNumberOfStars(Integer.parseInt(addBeerDialog.getStars()));
+		b.setTried(Utils.getBooleanFromItalianString(addBeerDialog.getTried()));
+		b.setPlaceTried(addBeerDialog.getPlace());
+		b.setPrice(Double.parseDouble(addBeerDialog.getPrice()));
+		
+//		brewery.setName(addBeerDialog.getName());
+//		brewery.setCountry(addBeerDialog.get);
+		
+		return b;
+	}
+	
+	private Brewery getBreweryInAddNewBreweryDialog(){
+		Brewery b = new Brewery();
+		b.setName(addBreweryDialog.getBreweryName());
+		b.setCountry(addBreweryDialog.getBreweryCountry());
+		b.setTown(addBreweryDialog.getBreweryTown());
+		b.setDescription(addBreweryDialog.getBreweryWebsite());
+		
+		b.setAuthenticTrappist(false);  //tomorrow!!!
+		return b;
+	}
+	
+	private Style getStyleInAddNewStyleDialog(){
+		Style s = new Style();
+		s.setStyleMainName(addStyleDialog.getStyleMainName());
+		s.setStyleSubCategory(addStyleDialog.getStyleSubcategory());
+		s.setStyleCountryOrigin(addStyleDialog.getStyleCountry());
+		s.setDescription(addStyleDialog.getFermentation());
+		s.setFermentation(Utils.getFermentationFromString(addStyleDialog.getFermentation()));
+		return s;
+	}
+	
+	private void setAddNewBeerOkButton(){
+		addBeerDialog.addActionListenerOkButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				addBeerDialog.setVisible(false);
+				Beer b=null;
+				
+				try {
+					b=getBeerFromAddNewBeerDialog();
+				} catch (ObjectNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				addBeerDialog.dispose();
+			}
+			
+		});
+		
+		
+	}
+	
+	private void setAddNewBreweryOkButton(){
+		addBreweryDialog.addActionListenerOkButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				addBreweryDialog.setVisible(false);
+				
+				Brewery b=getBreweryInAddNewBreweryDialog();
+				
+				addBreweryDialog.dispose();
+			}
+			
+		});
+		
+		setAddNewBeerOkButton();
+	}
+	
+	private void setAddNewStyleOkButton(){
+		addStyleDialog.addActionListenerOkButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				addStyleDialog.setVisible(false);
+				
+				Style s=getStyleInAddNewStyleDialog();
+				
+				addStyleDialog.dispose();
+			}
+			
+		});
+	}
+	
+	
+	private void setAddNewBeerOkCancelButton(){
+		addBeerDialog.addActionListenerCancelButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				addBeerDialog.setVisible(false);
+				addBeerDialog.dispose();
+			}
+			
+		});
+		
+
+	}
+	
+	private void setAddNewBreweryOkCancelButton(){
+		addBreweryDialog.addActionListenerCancelButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				addBreweryDialog.setVisible(false);
+				addBreweryDialog.dispose();
+			}
+			
+		});
+		
+		setAddNewBreweryOkButton();
+
+	}
+	
+	private void setAddNewStyleOkCancelButton(){
+		addStyleDialog.addActionListenerCancelButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				addStyleDialog.setVisible(false);
+				addStyleDialog.dispose();
+			}
+			
+		});
+		setAddNewStyleOkButton();
+
+	}
+	
+	public void addNewBeer(){
+		addBeerDialog = new ViewAddNewBeer();
+		addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryData()), Utils.getStylesString(model.getStyleData()));
+		setAddNewBeerOkCancelButton();
+		
+		addBeerDialog.setVisible(true);
+	}
+	
+	public void addNewBrewery(){
+		addBreweryDialog = new ViewAddNewBrewery();
+		addBreweryDialog.fillThings(model.getCountries());
+		setAddNewBreweryOkCancelButton();
+		
+		addBreweryDialog.setVisible(true);
+	}
+	
+	public void addNewStyle(){
+		addStyleDialog = new ViewAddNewStyle();
+//		addStyleDialog.fillThings(model.getCountries());
+		setAddNewBreweryOkCancelButton();
+		
+		addStyleDialog.setVisible(true);
+	}
 	
 	private void addAddNewThingsListeners(){
 		gui.addActionMenuAddNewBeer(new ActionListener(){
@@ -788,6 +995,7 @@ public class ControllerMainGUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
+				addNewBeer();
 				
 			}
 			
@@ -918,36 +1126,7 @@ public class ControllerMainGUI {
 	}
 	
 	//this stupid method, we can make it static
-	private void setBeerInDialog(BeerDialog dialog){
-		Beer b=model.getBeerShown();
-		dialog.setBeerName(b.getName());
-		dialog.setBreweryName(Utils.getBreweryString(b.getBrewery()));
-		dialog.setStyle(Utils.getStyleString(b.getStyle()));
-		dialog.setABV(Double.toString(b.getAlcool()));
-		dialog.setStars(Integer.toString(b.getNumberOfStars()));
-		dialog.setMark(Integer.toString(b.getMark()));
-		dialog.setTried(Utils.getBooleanItalian(b.isTried()));
-		dialog.setDescription(b.getDescription());
-	}
-	
-	private void setStyleInDialog(StyleDialog dialog){
-		Style s=model.getStyleShown();
-		dialog.setStyleMainName(s.getStyleMainName());
-		dialog.setStyleSubcategory(s.getStyleSubCategory());
-		dialog.setFermentation(Utils.getFermentationString(s.getFermentation()));
-		dialog.setStyleCountry(s.getStyleCountryOrigin());
-		dialog.setDescription(s.getDescription());
-	}
-	
-	public void setBreweryInDialog(BreweryDialog dialog){
-		BreweryAverage b=model.getBreweryShown();
-		dialog.setBreweryName(b.getName());
-		dialog.setBreweryTown(b.getTown());
-		dialog.setBreweryCountry(b.getCountry());
-		dialog.setBreweryDescription(b.getDescription());
-		dialog.setBreweryWebsite(b.getWebsite());
-		dialog.setBreweryAverage(Double.toString(b.getAverage()));
-	}
+
 	
 	
 	private void setStyleDialogModifyButtonListener(){
@@ -960,9 +1139,14 @@ public class ControllerMainGUI {
 				
 				addStyleDialog=new ViewAddNewStyle();
 				addStyleDialog.fillThings(Utils.getMainStyleString(model.getOnlyMainStyle()), model.getCountries());
-//				addStyleDialog.setStyle(model.getStyleDialog());
 				setStyleInDialog(addStyleDialog);
+				setAddNewStyleOkCancelButton();
+				
+				model.setAddNewStyleOrModifyStyle(false);
+				
 				addStyleDialog.setVisible(true);
+							
+				
 			}
 			
 		});
@@ -979,7 +1163,12 @@ public class ControllerMainGUI {
 				addBreweryDialog=new ViewAddNewBrewery();
 				addBreweryDialog.fillThings(model.getCountries());
 				setBreweryInDialog(addBreweryDialog);
+				setAddNewBreweryOkCancelButton();
+				
+				model.setAddNewBreweryOrModifyBrewery(false);
+				
 				addBreweryDialog.setVisible(true);
+							
 				
 			}
 			
@@ -997,7 +1186,12 @@ public class ControllerMainGUI {
 				addBeerDialog = new ViewAddNewBeer();
 				addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryData()), Utils.getStylesString(model.getStyleData()));
 				setBeerInDialog(addBeerDialog);
+				setAddNewBeerOkCancelButton();
+				
+				model.setAddNewBeerOrModifyBeer(false);
+				
 				addBeerDialog.setVisible(true);
+							
 			}
 			
 		});
@@ -1207,7 +1401,18 @@ public class ControllerMainGUI {
 //				newConf.setStyleFilterAlgorithm(QueryRunner.StyleFilterAlgorithm.NONE);
 //				newConf.setStyleFilterValue("");
 				
-				newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
+//				newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
+				
+				newConf.setBeerFilterAlgorithm(Utils.getBeerFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringBeerSelectedItem()));
+//				newConf.setBeerFilterValue(preferencesDialog.getBeerFilteringValue());
+				newConf.setBreweryFilterAlgorithm(Utils.getBreweryFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringBrewerySelectedItem()));
+//				newConf.setBeerFilterValue(preferencesDialog.getBreweryFilteringValue());
+				newConf.setStyleFilterAlgorithm(Utils.getStyleFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringStyleSelectedItem()));
+//				newConf.setBeerFilterValue(preferencesDialog.getStyleFilteringValue());
+				
+				newConf.setBeerFilterValue("");
+				newConf.setBreweryFilterValue("");
+				newConf.setStyleFilterValue("");
 				
 				if(!model.getConfiguration().equals(newConf)){
 					System.out.println("Configuration has changed");
@@ -1322,6 +1527,26 @@ public class ControllerMainGUI {
 	private void addOptionsMenuListeners(){
 		showPreferencesDialog();
 		showAboutDialog();
+	}
+	
+	
+	
+	private void addSaveMenuAndButtonListeners(){
+		gui.addActionMenuSaveAndSaveButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					model.saveThings();
+				} catch (JSONException | FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+		});
 	}
 	
 	

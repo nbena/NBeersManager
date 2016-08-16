@@ -37,6 +37,13 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 	
 	private JComboBox<String> comboBoxCountry;
 	
+	public void addActionListenerOkButton(ActionListener listener){
+		okButton.addActionListener(listener);
+	}
+	
+	public void addActionListenerCancelButton(ActionListener listener){
+		cancelButton.addActionListener(listener);
+	}
 	
 	public void fillThings(List<String> countries){
 		for(String s: countries){
@@ -92,13 +99,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 		textFieldAverage.setText(t);
 	}
 	
-	public void addActionListenerOkButton(ActionListener listener){
-		okButton.addActionListener(listener);
-	}
-	
-	public void addActionListenerCancelButton(ActionListener listener){
-		cancelButton.addActionListener(listener);
-	}
+
 	
 	/**
 	public void setEditable(boolean editable){

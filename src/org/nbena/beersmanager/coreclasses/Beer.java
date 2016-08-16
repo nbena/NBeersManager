@@ -2,6 +2,8 @@ package org.nbena.beersmanager.coreclasses;
 
 
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -9,6 +11,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="beer")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Beer {
+
+
 	private String name;
 	private Brewery brewery;
 	private Style style;
@@ -290,6 +294,106 @@ public class Beer {
 		
 		b.append("Color: "+color+"\n");
 		return b.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((alcool == null) ? 0 : alcool.hashCode());
+		result = prime * result + ((brewery == null) ? 0 : brewery.hashCode());
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + Arrays.hashCode(image);
+		result = prime * result + ((imageFilePath == null) ? 0 : imageFilePath.hashCode());
+		result = prime * result + ((isTried == null) ? 0 : isTried.hashCode());
+		result = prime * result + ((mark == null) ? 0 : mark.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((numberOfStars == null) ? 0 : numberOfStars.hashCode());
+		result = prime * result + ((placeTried == null) ? 0 : placeTried.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + ((style == null) ? 0 : style.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Beer other = (Beer) obj;
+		if (alcool == null) {
+			if (other.alcool != null)
+				return false;
+		} else if (!alcool.equals(other.alcool))
+			return false;
+		if (brewery == null) {
+			if (other.brewery != null)
+				return false;
+		} else if (!brewery.equals(other.brewery))
+			return false;
+		if (color == null) {
+			if (other.color != null)
+				return false;
+		} else if (!color.equals(other.color))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (!Arrays.equals(image, other.image))
+			return false;
+		if (imageFilePath == null) {
+			if (other.imageFilePath != null)
+				return false;
+		} else if (!imageFilePath.equals(other.imageFilePath))
+			return false;
+		if (isTried == null) {
+			if (other.isTried != null)
+				return false;
+		} else if (!isTried.equals(other.isTried))
+			return false;
+		if (mark == null) {
+			if (other.mark != null)
+				return false;
+		} else if (!mark.equals(other.mark))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (numberOfStars == null) {
+			if (other.numberOfStars != null)
+				return false;
+		} else if (!numberOfStars.equals(other.numberOfStars))
+			return false;
+		if (placeTried == null) {
+			if (other.placeTried != null)
+				return false;
+		} else if (!placeTried.equals(other.placeTried))
+			return false;
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
+			return false;
+		if (style == null) {
+			if (other.style != null)
+				return false;
+		} else if (!style.equals(other.style))
+			return false;
+		return true;
 	}
 
 }

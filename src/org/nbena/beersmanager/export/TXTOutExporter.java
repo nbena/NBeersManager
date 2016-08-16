@@ -9,9 +9,9 @@ import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.json.coreclasses.BeerJSONSpecialClass;
 
-public class TXTExporter extends Exporter {
+public class TXTOutExporter extends OutExporter {
 
-	public TXTExporter() {
+	public TXTOutExporter() {
 	}
 
 	@Override

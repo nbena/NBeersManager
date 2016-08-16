@@ -25,5 +25,7 @@ public interface BeerDialog {
 	
 	public abstract void setDescription(String t);
 	
+	public abstract void setPlace(String t);
+	
 
 }

@@ -80,7 +80,7 @@ public class ConfigurationFactory {
 //	}
 	
 	public static Configuration setupPath(Configuration c){
-		c.setPwd(Utils.currentDirectory());
+		c.setPaths(Utils.currentDirectory());
 		return c;
 	}
 	

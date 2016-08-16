@@ -10,7 +10,7 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.json.coreclasses.BeerJSONSpecialClass;
 
-public class JSONExporter extends Exporter{
+public class JSONOutExporter extends OutExporter{
 	
 	public void writeBrewery(List<Brewery> breweries, OutputStream out) throws Exception{
 		JSONArray array=new JSONArray(breweries);

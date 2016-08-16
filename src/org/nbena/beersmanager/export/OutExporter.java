@@ -9,7 +9,7 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.json.coreclasses.BeerJSONSpecialClass;
 
-public abstract class Exporter {
+public abstract class OutExporter {
 	
 	//public static enum 
 	/*
@@ -47,7 +47,7 @@ public abstract class Exporter {
 	public static final String STYLE_FERMENTATION = "Fermentation";
 	public static final String STYLE_DESCRIPTION = "Description";
 	
-	protected Exporter(){
+	protected OutExporter(){
 		
 		/*
 		beerIntestationMap=new HashMap<String, String>();

@@ -40,6 +40,7 @@ public class Configuration {
 	private String styleFilePath;
 	private String breweryFilePath;
 	private String beerFilePath;
+	private String countriesFilePath;
 	
 	private String pwd;
 	
@@ -117,6 +118,7 @@ public class Configuration {
 		beerFilePath=Utils.jsonBeers(pwd);
 		breweryFilePath=Utils.jsonBreweries(pwd);
 		styleFilePath=Utils.jsonStyle(pwd);
+		countriesFilePath = Utils.jsonCountries(pwd);
 	}
 
 
@@ -135,6 +137,20 @@ public class Configuration {
 //	public void setBreweryFilePath(String breweryFilePath) {
 //		this.breweryFilePath = breweryFilePath;
 //	}
+
+	/**
+	 * @return the countriesFilePath
+	 */
+	public String getCountriesFilePath() {
+		return countriesFilePath;
+	}
+
+	/**
+	 * @param countriesFilePath the countriesFilePath to set
+	 */
+	public void setCountriesFilePath(String countriesFilePath) {
+		this.countriesFilePath = countriesFilePath;
+	}
 
 	public String getBeerFilePath() {
 		return beerFilePath;
@@ -299,10 +315,16 @@ public class Configuration {
 	}
 
 	/**
+	 * @deprecated use insted setPaths.
 	 * @param pwd the pwd to set
 	 */
+	@Deprecated
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+//		beerFilePath = Utils.jsonBeers(pwd);
+//		breweryFilePath = Utils.jsonBreweries(pwd);
+//		styleFilePath = Utils.jsonStyle(pwd);
+//		countriesFilePath = Utils.jsonCountries(pwd);
 	}
 
 	/* (non-Javadoc)

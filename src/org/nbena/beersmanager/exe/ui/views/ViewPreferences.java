@@ -154,6 +154,19 @@ public class ViewPreferences extends JDialog {
 	
 	
 	
+	public String getBeerFilteringValue(){
+		return null;
+	}
+	
+	public String getBreweryFilteringValue(){
+		return null;
+	}
+	
+	public String getStyleFilteringValue(){
+		return null;
+	}
+	
+	
 	public void addActionListenerOkButton(ActionListener listener){
 		okButton.addActionListener(listener);
 	}

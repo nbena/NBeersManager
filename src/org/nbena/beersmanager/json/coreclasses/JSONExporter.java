@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.nbena.beersmanager.coreclasses.*;
@@ -46,21 +47,21 @@ public class JSONExporter {
 	
 
 	
-	public static void writeBrewery(List<Brewery> breweries, OutputStream out) throws Exception{
+	public static void writeBrewery(List<Brewery> breweries, OutputStream out) throws JSONException{
 		JSONArray array=new JSONArray(breweries);
 		PrintStream ps=new PrintStream(out);
 		ps.print(array.toString());
 	}
 	
-	public static void writeStyle(List<Style> styles, OutputStream out) throws Exception{
-		/*
-		JSONArray array=new JSONArray();
-		array.put(styles);
-		PrintStream ps=new PrintStream(out);
-		ps.print(array.toString());
-		*/
-		throw new Exception("Invalid method");
-	}
+//	public static void writeStyle(List<Style> styles, OutputStream out) throws Exception{
+//		/*
+//		JSONArray array=new JSONArray();
+//		array.put(styles);
+//		PrintStream ps=new PrintStream(out);
+//		ps.print(array.toString());
+//		*/
+//		throw new Exception("Invalid method");
+//	}
 	
 	/*
 	public  void writeBeerSpecialClass(List<Beer> beers, OutputStream out) throws Exception{
@@ -71,7 +72,7 @@ public class JSONExporter {
 	}
 	*/
 	
-	public static void writeBeer(List<Beer> beers, OutputStream out) throws Exception{
+	public static void writeBeer(List<Beer> beers, OutputStream out) throws JSONException{
 		JSONArray array=new JSONArray(beers);
 		PrintStream ps=new PrintStream(out);
 		ps.print(array.toString());
@@ -79,14 +80,14 @@ public class JSONExporter {
 		
 	}
 	
-	public static void writeBeerSpecial(List<Beer> beers, OutputStream out)throws Exception{
+	public static void writeBeerSpecial(List<Beer> beers, OutputStream out)throws JSONException{
 		List<BeerJSONSpecialClass> beerSpecial = Converter.toSpecialBeerList(beers);
 		JSONArray array= new JSONArray(beerSpecial);
 		PrintStream ps=new PrintStream(out);
 		ps.print(array.toString());
 	}
 	
-	public static void writeStyleSpecial(List<Style> styles, OutputStream out)throws Exception{
+	public static void writeStyleSpecial(List<Style> styles, OutputStream out)throws JSONException{
 		List<StyleJSONSpecialClass> styleSpecial = Converter.toSpecialStyleList(styles);
 		JSONArray array= new JSONArray(styleSpecial);
 		PrintStream ps=new PrintStream(out);

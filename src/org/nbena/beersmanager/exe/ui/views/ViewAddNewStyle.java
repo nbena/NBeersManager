@@ -120,6 +120,26 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 	public void setDescription(String t){
 		textAreaDescription.setText(t);
 	}
+	
+	public String getStyleMainName(){
+		return (String)comboBoxMainStyle.getSelectedItem();
+	}
+	
+	public String getStyleSubcategory(){
+		return textFieldStyleSubcategory.getText();
+	}
+	
+	public String getStyleCountry(){
+		return (String)comboBoxCountry.getSelectedItem();
+	}
+	
+	public String getDescription(){
+		return textAreaDescription.getText();
+	}
+	
+	public String getFermentation(){
+		return (String)comboBoxFermentation.getSelectedItem();
+	}
 
 	/**
 	 * Launch the application.

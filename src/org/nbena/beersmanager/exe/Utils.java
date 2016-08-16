@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.function.Function;
 
 import javax.swing.JFileChooser;
@@ -147,6 +148,10 @@ public class Utils {
 		return directory.concat("config.json");
 	}
 	
+	public static String jsonCountries(String directory){
+		return directory.concat("country_list_it.json");
+	}
+	
 	
 	public static List<Style> readStyles(File file) throws FileNotFoundException, Exception{
 		 return Converter.toNormalStyleList(JSONExporter.readStylesSpecial(new FileInputStream(file)));  
@@ -269,11 +274,31 @@ public class Utils {
 	}
 	
 	public static String getStyleString(Style s){
-		return s.getStyleSubCategory()+" "+s.getStyleMainName();
+		return s.getStyleSubCategory()+" - "+s.getStyleMainName();
+	}
+	
+	public static Style getStyleFromString(String s){
+		Style style = new Style();
+		String name = s.substring(0, s.lastIndexOf(" - "));
+		String sub = s.substring(s.lastIndexOf(" - "), s.length());
+		style.setStyleMainName(name);
+		style.setStyleSubCategory(sub);
+		return style;
 	}
 	
 	public static String getBreweryString(Brewery b){
 		return b.getName()+", "+b.getTown()+" ("+b.getCountry()+")";
+	}
+	
+	public static Brewery getBreweryFromString(String s){
+		Brewery b=new Brewery();
+		String name = s.substring(0, s.indexOf(","));
+		String town = s.substring(s.indexOf(", "), s.lastIndexOf(" (") );
+		String country = s.substring(s.lastIndexOf("("), s.lastIndexOf(")"));
+		b.setName(name);
+		b.setTown(town);
+		b.setCountry(country);
+		return b;
 	}
 	
 	public static List<String> getBreweriesString(List<Brewery> breweries){
@@ -296,6 +321,14 @@ public class Utils {
 		return b==true ? "Sì" : "No";
 	}
 	
+	public static boolean getBooleanFromItalianString(String s){
+		boolean b=true;
+		if(s.equals("No")){
+			b=false;
+		}
+		return b;
+	}
+	
 	public static List<String> getMainStyleString(List<Style> styles){
 		List<String> strings=new LinkedList<String>();
 		for(Style s: styles){
@@ -313,6 +346,19 @@ public class Utils {
 		else
 			s="Spontanea";
 		return s;
+	}
+	
+	public static Fermentation getFermentationFromString(String s){
+		Fermentation f = null;
+		if(s.equals("Spontanea")){
+			f = Fermentation.HIGH;
+		}
+		else if(s.equals("Bassa")){
+			f= Fermentation.LOW;
+		}else{
+			f= Fermentation.HIGH;
+		}
+		return f;
 	}
 	
 	public static BreweryAverage fromBreweryToBreweryAverage(Brewery b, List<Beer> itsBeers){
@@ -1046,6 +1092,41 @@ public class Utils {
 			values[i]=value;
 		}
 		return values;
+	}
+	
+	/**
+	 * Transform a country list made so:
+	 * Country-Name (COUNTRY-ACRONIM) 
+	 * to a JSON array:
+	 * [
+	 * "Country-Name",...]
+	 * @param input the file where the file input is
+	 * @param output the file where the output will be written
+	 * @throws FileNotFoundException while trying to open Scanner object (reading) and PrintStream (output)
+	 */
+	public static void fromTxtCountryListToJSONArray(File input, File output) throws FileNotFoundException{
+		Scanner sc=new Scanner(new FileInputStream(input));
+		PrintStream out = new PrintStream(new FileOutputStream(output));
+		
+		while(sc.hasNext()){
+			String s = sc.nextLine();
+			String r = s;
+			String a = "\"";
+			String av = "\",";
+			
+			int l = s.lastIndexOf(" ");
+			if(l!=-1){
+				r=a.substring(0, l);
+				r = a.concat(r).concat(av);
+			}
+						
+			
+			out.println(r);
+		}
+		
+
+		out.close();
+		sc.close();
 	}
 
 }

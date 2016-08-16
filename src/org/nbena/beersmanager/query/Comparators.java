@@ -49,6 +49,17 @@ public class Comparators {
 		
 	}
 	
+	private static int compareStyleByStyleMainStyleSub(Style arg0, Style arg1){
+		int ret;
+		if(arg0.getStyleMainName().equals(arg1.getStyleMainName())){
+			ret=0;
+		}
+		else{
+			ret=arg0.getStyleSubCategory().compareTo(arg1.getStyleSubCategory());
+		}
+		return ret;	
+	}
+	
 	/**
 	 * Comparator class that is used to compare styles.
 	 * The algorithm check in order:<ol>
@@ -62,14 +73,15 @@ public class Comparators {
 
 		@Override
 		public int compare(Style arg0, Style arg1) {
-			int ret;
-			if(arg0.getStyleMainName().equals(arg1.getStyleMainName())){
-				ret=0;
-			}
-			else{
-				ret=arg0.getStyleSubCategory().compareTo(arg1.getStyleSubCategory());
-			}
-			return ret;	
+//			int ret;
+//			if(arg0.getStyleMainName().equals(arg1.getStyleMainName())){
+//				ret=0;
+//			}
+//			else{
+//				ret=arg0.getStyleSubCategory().compareTo(arg1.getStyleSubCategory());
+//			}
+//			return ret;	
+			return compareStyleByStyleMainStyleSub(arg0, arg1);
 		}
 		
 	}
@@ -136,6 +148,26 @@ public class Comparators {
 	}
 	*/
 	
+	private static int compareStyleByFermentationComplete(Style o1, Style o2){
+		int ret;
+		if(o1.getFermentation()==o2.getFermentation()){
+			if(o1.getStyleCountryOrigin().equalsIgnoreCase(o2.getStyleCountryOrigin())){
+				if(o1.getStyleMainName().equalsIgnoreCase(o2.getStyleMainName())){
+						ret=o1.getStyleSubCategory().compareTo(o2.getStyleSubCategory());				
+				}
+				else{
+					ret=o1.getStyleMainName().compareTo(o2.getStyleMainName());
+				}
+			}
+			else{
+				ret=o1.getStyleCountryOrigin().compareTo(o2.getStyleCountryOrigin());
+			}
+		}
+		else{
+			ret=o1.getFermentation().toString().compareTo(o2.getFermentation().toString());
+		}
+		return ret;
+	}
 	
 	/**
 	 * Comparator class that is used to compare styles.
@@ -152,24 +184,25 @@ public class Comparators {
 
 		@Override
 		public int compare(Style o1, Style o2) {
-			int ret;
-			if(o1.getFermentation()==o2.getFermentation()){
-				if(o1.getStyleCountryOrigin().equalsIgnoreCase(o2.getStyleCountryOrigin())){
-					if(o1.getStyleMainName().equalsIgnoreCase(o2.getStyleMainName())){
-							ret=o1.getStyleSubCategory().compareTo(o2.getStyleSubCategory());				
-					}
-					else{
-						ret=o1.getStyleMainName().compareTo(o2.getStyleMainName());
-					}
-				}
-				else{
-					ret=o1.getStyleCountryOrigin().compareTo(o2.getStyleCountryOrigin());
-				}
-			}
-			else{
-				ret=o1.getFermentation().toString().compareTo(o2.getFermentation().toString());
-			}
-			return ret;
+//			int ret;
+//			if(o1.getFermentation()==o2.getFermentation()){
+//				if(o1.getStyleCountryOrigin().equalsIgnoreCase(o2.getStyleCountryOrigin())){
+//					if(o1.getStyleMainName().equalsIgnoreCase(o2.getStyleMainName())){
+//							ret=o1.getStyleSubCategory().compareTo(o2.getStyleSubCategory());				
+//					}
+//					else{
+//						ret=o1.getStyleMainName().compareTo(o2.getStyleMainName());
+//					}
+//				}
+//				else{
+//					ret=o1.getStyleCountryOrigin().compareTo(o2.getStyleCountryOrigin());
+//				}
+//			}
+//			else{
+//				ret=o1.getFermentation().toString().compareTo(o2.getFermentation().toString());
+//			}
+//			return ret;
+			return compareStyleByFermentationComplete(o1, o2);
 		}
 		
 	}
@@ -376,27 +409,46 @@ public class Comparators {
 		
 	}
 	
+	private static int  compareBeerByNameStyleBrewery(Beer o1, Beer o2){
+		int rBrewery = o1.getBrewery().compareTo(o2.getBrewery());
+		int ret, rStyle, rName;
+		if (rBrewery !=0){
+			ret=rBrewery;
+		}else{
+			rStyle= o1.getStyle().compareTo(o2.getStyle());
+			if(rStyle!=0){
+				ret=rStyle;
+			}
+			else{
+				rName=o1.getName().compareToIgnoreCase(o2.getName());
+				ret=rName;
+			}
+		}
+		return ret;
+	}
+	
 	
 	//Comparator for binary search of beers.
 	public static class ComparatorBeerByNameStyleBrewery implements Comparator<Beer>{
 
 		@Override
 		public int compare(Beer o1, Beer o2) {
-			int rBrewery = o1.getBrewery().compareTo(o2.getBrewery());
-			int ret, rStyle, rName;
-			if (rBrewery !=0){
-				ret=rBrewery;
-			}else{
-				rStyle= o1.getStyle().compareTo(o2.getStyle());
-				if(rStyle!=0){
-					ret=rStyle;
-				}
-				else{
-					rName=o1.getName().compareToIgnoreCase(o2.getName());
-					ret=rName;
-				}
-			}
-			return ret;
+//			int rBrewery = o1.getBrewery().compareTo(o2.getBrewery());
+//			int ret, rStyle, rName;
+//			if (rBrewery !=0){
+//				ret=rBrewery;
+//			}else{
+//				rStyle= o1.getStyle().compareTo(o2.getStyle());
+//				if(rStyle!=0){
+//					ret=rStyle;
+//				}
+//				else{
+//					rName=o1.getName().compareToIgnoreCase(o2.getName());
+//					ret=rName;
+//				}
+//			}
+//			return ret;
+			return compareBeerByNameStyleBrewery(o1, o2);
 		}
 		
 	}
@@ -528,6 +580,16 @@ public class Comparators {
 //	AVERAGE,
 //	COUNTRY_AVERAGE
 	
+	private static int compareBreweryByCountryName(Brewery o1, Brewery o2){
+		int ret;
+		if(o1.getCountry().equals(o2.getCountry())){
+			ret=o1.getName().compareToIgnoreCase(o2.getName());
+		}else{
+			ret=o1.getCountry().compareToIgnoreCase(o2.getCountry());
+		}
+		return ret;
+	}
+	
 	/**
 	 * Comparator that compares Brewery, in order:<ol>
 	 * <li>Brewery country</li>
@@ -540,13 +602,14 @@ public class Comparators {
 
 	@Override
 	public int compare(Brewery arg0, Brewery arg1) {
-		int ret;
-		if(arg0.getCountry().equals(arg1.getCountry())){
-			ret=arg0.getName().compareToIgnoreCase(arg1.getName());
-		}else{
-			ret=arg0.getCountry().compareToIgnoreCase(arg1.getCountry());
-		}
-		return ret;
+//		int ret;
+//		if(arg0.getCountry().equals(arg1.getCountry())){
+//			ret=arg0.getName().compareToIgnoreCase(arg1.getName());
+//		}else{
+//			ret=arg0.getCountry().compareToIgnoreCase(arg1.getCountry());
+//		}
+//		return ret;
+		return compareBreweryByCountryName(arg0, arg1);
 	}
 		
 	}
@@ -640,6 +703,85 @@ public class Comparators {
 			}
 			else{
 				ret=arg0.getCountry().compareToIgnoreCase(arg1.getCountry());
+			}
+			return ret;
+		}
+		
+	}
+	
+	
+	public static class ComparatorBreweryForBinarySearch implements Comparator<Brewery>{
+
+		@Override
+		public int compare(Brewery arg0, Brewery arg1) {
+			int ret;
+			if (arg0.equals(arg1)){
+				ret = 0;
+			}
+			else{
+//				if (arg0.getCountry().equalsIgnoreCase(arg1.getCountry())){
+//					ret = arg0.getName().compareToIgnoreCase(arg1.getName());
+//				}
+//				else{
+//					ret = arg0.getCountry().compareTo(arg1.getCountry());
+//				}
+				return compareBreweryByCountryName(arg0, arg1);
+			}
+			return ret;
+		}
+		
+	}
+	
+	
+	public static class ComparatorBreweryAverageForBinarySearch implements Comparator<BreweryAverage>{
+
+		@Override
+		public int compare(BreweryAverage arg0, BreweryAverage arg1) {
+			int ret;
+			if (arg0.equals(arg1)){
+				ret = 0;
+			}
+			else{
+//				if (arg0.getCountry().equalsIgnoreCase(arg1.getCountry())){
+//					ret = arg0.getName().compareToIgnoreCase(arg1.getName());
+//				}
+//				else{
+//					ret = arg0.getCountry().compareTo(arg1.getCountry());
+//				}
+				return compareBreweryByCountryName(arg0, arg1);
+			}
+			return ret;
+		}
+		
+	}
+	
+	
+	public static class ComparatorBeerForBinarySearch implements Comparator<Beer>{
+
+		@Override
+		public int compare(Beer o1, Beer o2) {
+			int ret;
+			if(o1.equals(o2)){
+				ret = 0;
+			}else{
+				ret = compareBeerByNameStyleBrewery(o1, o2);
+			}
+			return ret;
+		}
+		
+	}
+	
+	
+	public static class ComparatorStyleForBinarySearch implements Comparator<Style>{
+
+		@Override
+		public int compare(Style o1, Style o2) {
+			int ret;
+			if(o1.equals(o2)){
+				ret = 0;
+			}else{
+//				ret = compareStyleByFermentationComplete(o1, o2);
+				ret = compareStyleByStyleMainStyleSub(o1, o2);
 			}
 			return ret;
 		}

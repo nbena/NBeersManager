@@ -29,6 +29,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 	private JTextField textFieldStars;
 	private JTextField textFieldMark;
 	private JTextField textFieldTried;
+	private JTextField textFieldPlace;
 	
 	private JButton okButton;
 	private JButton cancelButton;
@@ -38,6 +39,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 	private JTextArea textAreaDescription;
 	private JButton btnViewStyle;
 	private JButton btnViewBrewery;
+	private JLabel lblLuogo;
 
 	
 	
@@ -116,6 +118,10 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 	
 	public void setBeer(Beer b){
 		
+	}
+	
+	public void setPlace(String t){
+		textFieldPlace.setText(t);
 	}
 	
 	/**
@@ -327,6 +333,25 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			gbc_textFieldPrice.gridy = 12;
 			contentPanel.add(textFieldPrice, gbc_textFieldPrice);
 			textFieldPrice.setColumns(10);
+		}
+		{
+			lblLuogo = new JLabel("Luogo:");
+			GridBagConstraints gbc_lblLuogo = new GridBagConstraints();
+			gbc_lblLuogo.insets = new Insets(0, 0, 5, 5);
+			gbc_lblLuogo.gridx = 5;
+			gbc_lblLuogo.gridy = 12;
+			contentPanel.add(lblLuogo, gbc_lblLuogo);
+		}
+		
+		{
+			textFieldPlace = new JTextField();
+			GridBagConstraints gbc_textFieldPlace = new GridBagConstraints();
+			gbc_textFieldPlace.anchor = GridBagConstraints.WEST;
+			gbc_textFieldPlace.insets = new Insets(0, 0, 5, 5);
+			gbc_textFieldPlace.gridx = 7;
+			gbc_textFieldPlace.gridy = 12;
+			contentPanel.add(textFieldPlace, gbc_textFieldPlace);
+			textFieldPlace.setColumns(10);
 		}
 		{
 			JLabel lblDescrizione = new JLabel("Descrizione:");

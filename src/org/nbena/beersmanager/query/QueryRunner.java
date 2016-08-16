@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.nbena.beersmanager.coreclasses.*;
 import org.nbena.beersmanager.exe.Utils;
+import org.nbena.beersmanager.query.Comparators.ComparatorBeerForBinarySearch;
 import org.nbena.beersmanager.query.Comparators.ComparatorBreweryByAverageAscending;
 import org.nbena.beersmanager.query.Comparators.ComparatorBreweryByCountryThenAverageAscending;
 public class QueryRunner {
@@ -477,6 +478,7 @@ public class QueryRunner {
 	
 	
 	
+	
 	public static HashMap<Brewery, Double> breweriesAverage(List<Beer> beers, List<Brewery> breweries, boolean beersAlreadyFiltered){
 		HashMap<Brewery, Double> map=new HashMap<Brewery, Double>();
 		for(Brewery b: breweries){
@@ -539,20 +541,106 @@ public class QueryRunner {
 		return sortedBreweries;
 	}
 	
-	
-	
-	//exist function
-	public static boolean isStyleExists(List<Style> styles, Style style){
-		return Collections.binarySearch(styles, style) >= 0 ? true : false;
+	public static class Sorting{
+		
 	}
 	
-	public static boolean isBreweryExists(List<Brewery> breweries, Brewery brewery){
-		return Collections.binarySearch(breweries, brewery) >= 0 ? true : false;
+	
+	public static class BinarySearch{
+		
+		
+		public static List<Beer> beersSortedForBinarySearch(List<Beer> beers){
+			List<Beer> orderedBeers = new LinkedList<Beer>(beers);
+			Collections.sort(orderedBeers, new Comparators.ComparatorBeerForBinarySearch());
+			return orderedBeers;
+		}
+		
+		public static int beerSearch(List<Beer> beers, Beer beer, boolean sorted){
+			int ret;
+			if(!sorted){
+				beers = beersSortedForBinarySearch(beers);		
+			}
+			ret = Collections.binarySearch(beers, beer, new ComparatorBeerForBinarySearch());
+			return ret;
+		}
+		
+		public static boolean isBeerExists(List<Beer> beers, Beer beer, boolean sorted){
+			return beerSearch(beers, beer, sorted) > 0 ? true : false;
+		}
+		
+		
+		
+		public static List<Brewery> breweriesSortedForBinarySearch(List<Brewery> breweries){
+			List<Brewery> orderedBreweries = new LinkedList<Brewery>(breweries);
+			Collections.sort(orderedBreweries, new Comparators.ComparatorBreweryForBinarySearch());
+			return orderedBreweries;
+		}
+		
+		public static int brewerySearch(List<Brewery> breweries, Brewery brewery, boolean sorted){
+			int ret;
+			if(!sorted){
+				breweries = breweriesSortedForBinarySearch(breweries);		
+			}
+			ret = Collections.binarySearch(breweries, brewery, new Comparators.ComparatorBreweryForBinarySearch());
+			return ret;
+		}
+		
+		public static boolean isBreweryExists(List<Brewery> beers, Brewery beer, boolean sorted){
+			return brewerySearch(beers, beer, sorted) > 0 ? true : false;
+		}
+		
+		
+		public static List<BreweryAverage> breweriesAverageSortedForBinarySearch(List<BreweryAverage> breweries){
+			List<BreweryAverage> orderedBreweries = new LinkedList<BreweryAverage>(breweries);
+			Collections.sort(orderedBreweries, new Comparators.ComparatorBreweryAverageForBinarySearch());
+			return orderedBreweries;
+		}
+		
+		public static int breweryAverageSearch(List<BreweryAverage> breweries, BreweryAverage brewery, boolean sorted){
+			int ret;
+			if(!sorted){
+				breweries = breweriesAverageSortedForBinarySearch(breweries);		
+			}
+			ret = Collections.binarySearch(breweries, brewery, new Comparators.ComparatorBreweryAverageForBinarySearch());
+			return ret;
+		}
+		
+		public static boolean isBreweryAverageExists(List<BreweryAverage> beers, BreweryAverage beer, boolean sorted){
+			return breweryAverageSearch(beers, beer, sorted) > 0 ? true : false;
+		}
+		
+		
+		public static List<Style> stylesSortedForBinarySearch(List<Style> styles){
+			List<Style> orderedStyles = new LinkedList<Style>(styles);
+			Collections.sort(orderedStyles, new Comparators.ComparatorStyleForBinarySearch());
+			return orderedStyles;
+		}
+		
+		
+		public static int styleSearch(List<Style> styles, Style style, boolean sorted){
+			int ret;
+			if(!sorted){
+				styles = stylesSortedForBinarySearch(styles);		
+			}
+			ret = Collections.binarySearch(styles, style, new Comparators.ComparatorStyleForBinarySearch());
+			return ret;
+		}
+
+		public static boolean isStyleExists(List<Style> styles, Style style, boolean sorted){
+			return styleSearch(styles, style, sorted) > 0 ? true : false;
+		}
+		
 	}
 	
-	public static boolean isBeerExists(List<Beer> beers, Beer beer){
-		return Collections.binarySearch(beers, beer, new Comparators.ComparatorBeerByNameStyleBrewery()) >=0 ? true: false;
-	}
+	
+
+	
+	
+
+	
+	
+	
+	
 	
 
 }

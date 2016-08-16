@@ -16,7 +16,7 @@ package org.nbena.beersmanager.export;
 //import be.quodlibet.boxable.Cell;
 //import be.quodlibet.boxable.Row;
 //
-public class PDFExporter /*extends Exporter */{
+public class PDFOutExporter{
 //	
 //	private PDDocument doc;
 //	private float margin;
