@@ -13,6 +13,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 
+import org.json.JSONException;
+import org.nbena.beersmanager.conf.Configuration;
 import org.nbena.beersmanager.conf.ConfigurationFactory;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
@@ -134,9 +136,61 @@ public class Main {
 
 	
 	public static void main(String[] args) {
-		try {
-
+//		try {
+//
+//		
+//			
+//			
+//			try {
+//				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+//					| UnsupportedLookAndFeelException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			Model model =new Model();
+//			
+//			
+//			model.setConfiguration(ConfigurationFactory.getDefaultConfiguration());
+//			
+//			model.setCountries(StupidClass.someCountries());
+//			
+//			ViewMainGUI gui = new ViewMainGUI(model);
+//			ControllerMainGUI controller=new ControllerMainGUI(gui, model);
+//			
+//			
+//			controller.setShowBreweriesAverages(true);
+//			
+//			
+//			model.setStyleData(StupidClass.someStyle());
+//			model.setBreweryData(StupidClass.someBreweries());
+//			model.setBeerData(StupidClass.someBeers(StupidClass.someBreweries(), StupidClass.someStyle()));
+//			
+//			model.setAverages(StupidClass.someBeers(StupidClass.someBreweries(), StupidClass.someStyle()));
+//			
+//			
+//			controller.showBeers();
+////			controller.showBreweries();
+////			controller.showStyles();
+			
+			
+//			
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
+		
+
+//		ConfigurationFactory c=new ConfigurationFactory();
+//		Configuration config = c.getDefaultConfiguration();
+//		try {
+//			c.writeConfiguration(config);
+//		} catch (FileNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 			
 			
 			try {
@@ -149,10 +203,22 @@ public class Main {
 			
 			Model model =new Model();
 			
+			ConfigurationFactory factory = new ConfigurationFactory();
+			try {
+				Configuration conf = factory.readConfiguration(ConfigurationFactory.getConfigurationPath());
+				conf = ConfigurationFactory.setupPath(conf);
+				model.setConfiguration(conf);
+			} catch (JSONException | FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			model.setConfiguration(ConfigurationFactory.getDefaultConfiguration());
-			
-			model.setCountries(StupidClass.someCountries());
+			try {
+				model.setCountries(Utils.getCountries(model.getConfiguration().getCountriesFilePath()));
+			} catch (JSONException | FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			ViewMainGUI gui = new ViewMainGUI(model);
 			ControllerMainGUI controller=new ControllerMainGUI(gui, model);
@@ -161,39 +227,21 @@ public class Main {
 			controller.setShowBreweriesAverages(true);
 			
 			
-			model.setStyleData(StupidClass.someStyle());
-			model.setBreweryData(StupidClass.someBreweries());
-			model.setBeerData(StupidClass.someBeers(StupidClass.someBreweries(), StupidClass.someStyle()));
+			try {
+				model.readThings();
+			} catch (FileNotFoundException | JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			model.setAverages(StupidClass.someBeers(StupidClass.someBreweries(), StupidClass.someStyle()));
+			model.setAverages();
 			
 			
 			controller.showBeers();
-			controller.showBreweries();
-			controller.showStyles();
-			
-			
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
+//			controller.showBreweries();
+//			controller.showStyles();
 
-		
-		
-		/*
-		if(args.length>0){
-			if(args[0].equals(GUI)){
-				
-			}
-			else{
-				System.out.println(Utils.currentDirectory());
-			}
-		}
-		*/
+
 
 
 	}

@@ -140,6 +140,14 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 	public String getFermentation(){
 		return (String)comboBoxFermentation.getSelectedItem();
 	}
+	
+	public void addActionComboBoxSelectedItem(ActionListener listener){
+		comboBoxMainStyle.addActionListener(listener);
+	}
+	
+	public void addComboBoxItem(String t){
+		comboBoxMainStyle.addItem(t);
+	}
 
 	/**
 	 * Launch the application.

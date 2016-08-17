@@ -120,9 +120,12 @@ public class ViewMainGUI extends JFrame {
 	private JMenuItem mntmAbout;
 	private JButton btnSave;
 	private JMenuItem mntmSave;
+	private JButton btnReferesh;
 	
 	
-	
+	public void addActionRefreshButton(ActionListener listener){
+		btnReferesh.addActionListener(listener);
+	}
 	
 	public void addActionMenuSaveAndSaveButton(ActionListener listener){
 		mntmSave.addActionListener(listener);
@@ -480,6 +483,9 @@ public class ViewMainGUI extends JFrame {
 		
 		btnSave = new JButton("Salva");
 		menuBar.add(btnSave);
+		
+		btnReferesh = new JButton("Referesh");
+		menuBar.add(btnReferesh);
 		
 		
 		

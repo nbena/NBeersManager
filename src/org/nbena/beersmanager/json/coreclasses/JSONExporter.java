@@ -132,7 +132,7 @@ public class JSONExporter {
 		return brewery;
 	}
 	
-	public static List<BeerJSONSpecialClass> readBeersSpecial(InputStream in)throws Exception{
+	public static List<BeerJSONSpecialClass> readBeersSpecial(InputStream in)throws JSONException{
 		JSONArray array =new JSONArray(new JSONTokener(in));
 		LinkedList<BeerJSONSpecialClass> beers=new LinkedList<BeerJSONSpecialClass>();
 		for (int i=0;i<array.length();i++){
@@ -142,7 +142,7 @@ public class JSONExporter {
 		return beers;
 	}
 	
-	public static List<StyleJSONSpecialClass> readStylesSpecial(InputStream in)throws Exception{
+	public static List<StyleJSONSpecialClass> readStylesSpecial(InputStream in)throws JSONException{
 		JSONArray array =new JSONArray(new JSONTokener(in));
 		LinkedList<StyleJSONSpecialClass> styles=new LinkedList<StyleJSONSpecialClass>();
 		for (int i=0;i<array.length();i++){
@@ -152,7 +152,7 @@ public class JSONExporter {
 		return styles;
 	}
 	
-	public static List<Brewery> readBreweries(InputStream in)throws Exception{
+	public static List<Brewery> readBreweries(InputStream in)throws JSONException{
 		JSONArray array =new JSONArray(new JSONTokener(in));
 		LinkedList<Brewery> breweries=new LinkedList<Brewery>();
 		for (int i=0;i<array.length();i++){

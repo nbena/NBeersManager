@@ -2,6 +2,8 @@ package org.nbena.beersmanager.exe;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,6 +16,9 @@ import java.util.function.Function;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONTokener;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
@@ -153,15 +158,15 @@ public class Utils {
 	}
 	
 	
-	public static List<Style> readStyles(File file) throws FileNotFoundException, Exception{
+	public static List<Style> readStyles(File file) throws FileNotFoundException, JSONException{
 		 return Converter.toNormalStyleList(JSONExporter.readStylesSpecial(new FileInputStream(file)));  
 	}
 	
-	public static List<Brewery> readBreweries(File file) throws FileNotFoundException, Exception{
+	public static List<Brewery> readBreweries(File file) throws FileNotFoundException, JSONException{
 		return JSONExporter.readBreweries(new FileInputStream(file));
 	}
 	
-	public static List<Beer> readBeers(File file, List<Brewery> breweries, List<Style> styles) throws FileNotFoundException, Exception{
+	public static List<Beer> readBeers(File file, List<Brewery> breweries, List<Style> styles) throws FileNotFoundException, JSONException{
 		List<Beer> beersRead=new LinkedList<Beer>();
 		List<BeerJSONSpecialClass> beersSpecial;	  
 		beersSpecial = JSONExporter.readBeersSpecial( new FileInputStream(file));
@@ -169,15 +174,15 @@ public class Utils {
 		return beersRead;
 	}
 	
-	public static void saveStyles(List<Style> styles, File file) throws FileNotFoundException, Exception{
+	public static void saveStyles(List<Style> styles, File file) throws FileNotFoundException, JSONException{
 		JSONExporter.writeStyleSpecial(styles, new FileOutputStream(file));
 	}
 	
-	public static void saveBreweries(List<Brewery> breweries, File file) throws FileNotFoundException, Exception{
+	public static void saveBreweries(List<Brewery> breweries, File file) throws FileNotFoundException, JSONException{
 		JSONExporter.writeBrewery(breweries, new FileOutputStream(file));
 	}
 	
-	public static void saveBeers(List<Beer> beers, File file) throws FileNotFoundException, Exception{
+	public static void saveBeers(List<Beer> beers, File file) throws FileNotFoundException, JSONException{
 		//List<BeerJSONSpecialClass> beersSpecial = Converter.toSpecialBeerList(beers);
 		JSONExporter.writeBeerSpecial(beers, new FileOutputStream(file)); //already done by json
 	}
@@ -1094,6 +1099,13 @@ public class Utils {
 		return values;
 	}
 	
+	
+	public String getStackTrace(Exception e){
+		StringWriter w = new StringWriter();
+		e.printStackTrace(new PrintWriter(w));
+		return w.toString();
+	}
+	
 	/**
 	 * Transform a country list made so:
 	 * Country-Name (COUNTRY-ACRONIM) 
@@ -1127,6 +1139,15 @@ public class Utils {
 
 		out.close();
 		sc.close();
+	}
+	
+	public static List<String> getCountries(String fileName) throws JSONException, FileNotFoundException{
+		JSONArray array = new JSONArray(new JSONTokener(new FileInputStream(new File(fileName))));
+		List<String> countries = new LinkedList<String>();
+		for(int i=0;i<array.length();i++){
+			countries.add(array.getString(i));
+		}
+		return countries;
 	}
 
 }

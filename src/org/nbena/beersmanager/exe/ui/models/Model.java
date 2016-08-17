@@ -1,5 +1,6 @@
 package org.nbena.beersmanager.exe.ui.models;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -14,12 +15,13 @@ import javax.swing.table.DefaultTableModel;
 
 import org.json.JSONException;
 import org.nbena.beersmanager.conf.Configuration;
+import org.nbena.beersmanager.conf.ConfigurationFactory;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exceptions.ObjectNotFoundException;
-import org.nbena.beersmanager.exceptions.UpdateException;
+import org.nbena.beersmanager.exceptions.UpdateSavingException;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.export.OutExporter;
 import org.nbena.beersmanager.export.JSONOutExporter;
@@ -329,9 +331,18 @@ public class Model {
 		filteredBreweries=this.breweryData;
 	}
 	
+	@Deprecated
 	public void setAverages(List<Beer> beers){
 		for(BreweryAverage av: breweryData){
 			List<Beer> itsBeers=QueryRunner.beersFilteredByBrewery(beers, (Brewery)av);
+			av.setAverage(itsBeers);
+		}
+		filteredBreweries=this.breweryData;
+	}
+	
+	public void setAverages(){
+		for(BreweryAverage av: breweryData){
+			List<Beer> itsBeers=QueryRunner.beersFilteredByBrewery(beerData, (Brewery)av);
 			av.setAverage(itsBeers);
 		}
 		filteredBreweries=this.breweryData;
@@ -965,7 +976,44 @@ public class Model {
 	}
 	
 	
-	public void updateBeer(Beer newBeer) throws UpdateException{
+	
+	
+
+	
+	public void addNewBeer(Beer beer) throws UpdateSavingException{
+		if(!QueryRunner.BinarySearch.isBeerExists(beerData, beer, false)){
+			beerData.add(beer);
+			filteredBeers = beerData;
+		}
+		else{
+			throw new UpdateSavingException(beer, UpdateSavingException.ErrorWhile.ADDING);
+		}
+	}
+	
+	public void addNewBrewery(Brewery brewery) throws UpdateSavingException{
+		if(!QueryRunner.BinarySearch.isBreweryExists(Utils.fromBreweriesAverageToBrewery(breweryData), brewery, false)){
+			breweryData.add(Utils.fromBreweryToBreweryAverage(brewery));
+			filteredBreweries = breweryData;
+		}
+		else{
+			throw new UpdateSavingException(brewery, UpdateSavingException.ErrorWhile.ADDING);
+		}
+
+	}
+	
+	
+	public void addNewStyle(Style style) throws UpdateSavingException{
+		if(!QueryRunner.BinarySearch.isStyleExists(styleData, style, false)){
+			styleData.add(style);
+			filteredStyles = styleData;
+		}
+		else{
+			throw new UpdateSavingException(style, UpdateSavingException.ErrorWhile.ADDING);
+		}
+
+	}
+	
+	public void updateBeer(Beer newBeer) throws UpdateSavingException{
 		if(beerData.remove(beerShown)){
 			beerData.add(newBeer);
 			filteredBeers = beerData;
@@ -973,12 +1021,12 @@ public class Model {
 			showBeerData();
 		}
 		else{
-			throw new UpdateException(newBeer);
+			throw new UpdateSavingException(newBeer, UpdateSavingException.ErrorWhile.UPDATING);
 		}
 
 	}
 	
-	public void updateBrewery(BreweryAverage newBrewery) throws UpdateException{
+	public void updateBrewery(BreweryAverage newBrewery) throws UpdateSavingException{
 		if(breweryData.remove(breweryShown)){
 			breweryData.add(newBrewery);
 			filteredBreweries = breweryData;
@@ -986,13 +1034,13 @@ public class Model {
 			showBreweryData();
 		}
 		else{
-			throw new UpdateException(newBrewery);
+			throw new UpdateSavingException(newBrewery, UpdateSavingException.ErrorWhile.UPDATING);
 		}
 
 	}
 	
 	
-	public void updateStyle(Style newStyle) throws UpdateException{
+	public void updateStyle(Style newStyle) throws UpdateSavingException{
 		if(styleData.remove(styleShown)){
 			styleData.add(newStyle);
 			filteredStyles = styleData;
@@ -1000,7 +1048,7 @@ public class Model {
 			showStyleData();
 		}
 		else{
-			throw new UpdateException(newStyle);
+			throw new UpdateSavingException(newStyle, UpdateSavingException.ErrorWhile.UPDATING);
 		}
 
 	}
@@ -1018,41 +1066,41 @@ public class Model {
 		JSONExporter.writeStyleSpecial(styleData, new FileOutputStream(configuration.getStyleFilePath()));
 	}
 	
-	public boolean addNewBeer(Beer beer){
-		boolean ret = true;
-		if(!QueryRunner.BinarySearch.isBeerExists(beerData, beer, false)){
-			beerData.add(beer);
-		}
-		else
-			ret = false;
-		return ret;
+	private List<Brewery> readBreweries() throws FileNotFoundException, JSONException{
+		List<Brewery> breweries = Utils.readBreweries(new File(configuration.getBreweryFilePath()));
+		setBreweryData(breweries);
+		return breweries;
 	}
 	
-	public boolean addNewBrewery(Brewery brewery){
-		boolean ret = true;
-		if(!QueryRunner.BinarySearch.isBreweryExists(Utils.fromBreweriesAverageToBrewery(breweryData), brewery, false)){
-			breweryData.add(Utils.fromBreweryToBreweryAverage(brewery));
-		}
-		else
-			ret = false;
-		return ret;
+	private void readStyles() throws FileNotFoundException, JSONException{
+		List<Style> styles = Utils.readStyles(new File(configuration.getStyleFilePath()));
+		setStyleData(styles);
 	}
 	
+	private void readBeers(List<Brewery> breweries) throws FileNotFoundException, JSONException{
+//		List<Brewery> breweries = Utils.readBreweries(new File(configuration.getBreweryFilePath()));
+//		List<Style> styles = Utils.readStyles(new File(configuration.getStyleFilePath()));
+		List<Beer> beers=Utils.readBeers(new File(configuration.getBeerFilePath()), breweries, styleData);
+		setBeerData(beers);
+//		setBreweryData(breweries);
+//		setStyleData(styles);
+	}
 	
-	public boolean addNewStyle(Style style){
-		boolean ret = true;
-		if(!QueryRunner.BinarySearch.isStyleExists(styleData, style, false)){
-			styleData.add(style);
-		}
-		else
-			ret = false;
-		return ret;
+	public void readThings() throws FileNotFoundException, JSONException{
+		List<Brewery> breweries=readBreweries();
+		readStyles();
+		readBeers(breweries); //so I do not need to convert.
 	}
 	
 	public void saveThings() throws JSONException, FileNotFoundException {
 		saveBeers();
 		saveBreweries();
 		saveStyles();
+		System.out.println("Things saved");
+	}
+	
+	public void saveConfiguration() throws FileNotFoundException{
+		ConfigurationFactory.writeConfiguration(configuration, ConfigurationFactory.getConfigurationPath());
 	}
 
 }

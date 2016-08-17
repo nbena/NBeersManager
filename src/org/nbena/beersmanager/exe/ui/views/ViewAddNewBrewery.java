@@ -62,8 +62,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 	}
 	
 	public String getBreweryCountry(){
-		//return textFieldCountry.getText();
-		return null;
+		return (String)comboBoxCountry.getSelectedItem();
 	}
 	
 	public String getBreweryWebsite(){

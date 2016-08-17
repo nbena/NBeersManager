@@ -34,6 +34,8 @@ public class JSONExporter {
 		this.out = out;
 		this.in = in;
 	}
+	
+	public JSONExporter(){}
 
 
 

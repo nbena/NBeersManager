@@ -6,20 +6,42 @@ import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.query.BreweryAverage;
 
-public class UpdateException extends Exception {
+public class UpdateSavingException extends Exception {
 
-	public UpdateException() {
+	public UpdateSavingException() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UpdateException(String arg0) {
+	public UpdateSavingException(String arg0) {
 		super(arg0);
 		// TODO Auto-generated constructor stub
 	}
 	
-	public static String createMessage(Object o){
+	public static enum ErrorWhile{
+		SAVING,
+		UPDATING,
+		ADDING
+	}
+	
+	public static String createMessage(Object o, ErrorWhile error){
 		
-		String up = "Error while updating ";
+		String up = "Error while ";
+		
+		switch(error){
+		case ADDING:
+			up += ErrorWhile.ADDING.toString().toLowerCase();
+			break;
+		case SAVING:
+			up += ErrorWhile.SAVING.toString().toLowerCase();
+			break;
+		case UPDATING:
+			up += ErrorWhile.UPDATING.toString().toLowerCase();
+			break;
+		
+		}
+		
+		
+
 		if (o instanceof Beer) {
 			Beer cause = (Beer)o;
 			up.concat("Beer "+cause.getBrewery().getName() +" "+cause.getName());
@@ -38,21 +60,21 @@ public class UpdateException extends Exception {
 		return up;
 	}
 	
-	public UpdateException(Object o){	
-		super(createMessage(o));
+	public UpdateSavingException(Object o, ErrorWhile error){	
+		super(createMessage(o, error));
 	}
 
-	public UpdateException(Throwable arg0) {
+	public UpdateSavingException(Throwable arg0) {
 		super(arg0);
 		// TODO Auto-generated constructor stub
 	}
 
-	public UpdateException(String arg0, Throwable arg1) {
+	public UpdateSavingException(String arg0, Throwable arg1) {
 		super(arg0, arg1);
 		// TODO Auto-generated constructor stub
 	}
 
-	public UpdateException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
+	public UpdateSavingException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
 		super(arg0, arg1, arg2, arg3);
 		// TODO Auto-generated constructor stub
 	}
