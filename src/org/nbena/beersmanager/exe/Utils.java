@@ -366,6 +366,14 @@ public class Utils {
 		return f;
 	}
 	
+	public static List<String> getFermentationsItalianString(){
+		List<String> strings = new LinkedList<String>();
+		for(Fermentation fermentation: Fermentation.values()){
+			strings.add(getFermentationString(fermentation));
+		}
+		return strings;
+	}
+	
 	public static BreweryAverage fromBreweryToBreweryAverage(Brewery b, List<Beer> itsBeers){
 		BreweryAverage av=new BreweryAverage();
 		av.setAuthenticTrappist(b.isAuthenticTrappist());
@@ -940,6 +948,15 @@ public class Utils {
 				"Text file (txt)",
 				"txt"
 		};
+		
+		
+		public static final String NEW_STYLE_STRING = "Nuovo";
+		public static final String NEW_STYLE_TITLE = "Nuovo stile";
+		public static final String NEW_STYLE_MESSAGE = "Inserisci il nome del nuovo stile:";
+		
+		public static final String QUESTION = "Domanda";
+		public static final String CONFIRMATION_BEFORE_EXIT = "Ci sono dei dati da salvare. Uscire comunque?";
+		
 	}
 	
 	public static String getFileExtension(File f){
@@ -1100,7 +1117,7 @@ public class Utils {
 	}
 	
 	
-	public String getStackTrace(Exception e){
+	public static String getStackTrace(Exception e){
 		StringWriter w = new StringWriter();
 		e.printStackTrace(new PrintWriter(w));
 		return w.toString();

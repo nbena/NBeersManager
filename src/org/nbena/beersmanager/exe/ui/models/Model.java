@@ -97,6 +97,8 @@ public class Model {
 //		Configuration.
 //	}
 	
+	private boolean somethingToSave = false;
+	
 	
 	public Model(){
 		//tableModel=new MyModelAbstractTable();
@@ -122,6 +124,20 @@ public class Model {
 	 */
 	public DefaultTableModel getTableModel() {
 		return tableModel;
+	}
+
+	/**
+	 * @return the somethingToSave
+	 */
+	public boolean isSomethingToSave() {
+		return somethingToSave;
+	}
+
+	/**
+	 * @param somethingToSave the somethingToSave to set
+	 */
+	public void setSomethingToSave(boolean somethingToSave) {
+		this.somethingToSave = somethingToSave;
 	}
 
 	/**
@@ -244,7 +260,6 @@ public class Model {
 	
 	private void clearFilter(boolean beer, boolean brewery, boolean style){
 		if(beer){
-			System.out.println("Cleared beer filter");
 			filteredBeers=beerData;
 		}
 		if(brewery){
@@ -1003,7 +1018,13 @@ public class Model {
 	
 	
 	public void addNewStyle(Style style) throws UpdateSavingException{
-		if(!QueryRunner.BinarySearch.isStyleExists(styleData, style, false)){
+		
+//		System.out.println("Lo stile da cercare");
+//		Utils.printStyle(style, System.out);
+//		System.out.println("Gli stili: ");
+//		Utils.printStyles(styleData, System.out);
+		boolean res = QueryRunner.BinarySearch.isStyleExists(styleData, style, false);
+		if(!res){
 			styleData.add(style);
 			filteredStyles = styleData;
 		}
@@ -1039,11 +1060,13 @@ public class Model {
 
 	}
 	
-	
 	public void updateStyle(Style newStyle) throws UpdateSavingException{
 		if(styleData.remove(styleShown)){
 			styleData.add(newStyle);
 			filteredStyles = styleData;
+			
+//			System.out.println("Gli stili: ");
+//			Utils.printStyles(styleData, System.out);
 			
 			showStyleData();
 		}
@@ -1052,6 +1075,60 @@ public class Model {
 		}
 
 	}
+	
+	public void deleteBeer(Beer b) throws UpdateSavingException{
+		Beer toDelete;
+		if(b==null){
+			toDelete = beerShown;
+		}
+		else{
+			toDelete = b;
+		}
+		if(beerData.remove(toDelete)){
+			filteredBeers = beerData;
+			
+			showBeerData();
+		}
+		else{
+			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
+		}
+	}
+	
+	public void deleteBrewery(BreweryAverage av) throws UpdateSavingException{
+		BreweryAverage toDelete;
+		if(av==null){
+			toDelete = breweryShown;
+		}else{
+			toDelete = av;
+		}
+		
+		if(breweryData.remove(toDelete)){
+			filteredBreweries = breweryData;
+			
+			showBreweryData();
+		}
+		else{
+			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
+		}
+	}
+	
+	public void deleteStyle(Style s) throws UpdateSavingException{
+		Style toDelete;
+		if(s==null){
+			toDelete = styleShown;
+		}else{
+			toDelete= s;
+		}
+		if(styleData.remove(toDelete)){
+			filteredStyles = styleData;
+			
+			showStyleData();
+		}
+		else{
+			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
+		}
+	}
+	
 	
 	
 	public void saveBeers() throws JSONException, FileNotFoundException{
@@ -1096,7 +1173,6 @@ public class Model {
 		saveBeers();
 		saveBreweries();
 		saveStyles();
-		System.out.println("Things saved");
 	}
 	
 	public void saveConfiguration() throws FileNotFoundException{

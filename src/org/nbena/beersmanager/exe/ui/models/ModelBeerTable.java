@@ -35,9 +35,12 @@ public class ModelBeerTable extends /*DefaultTableModel*/MyModelAbstractTable {
 
 	@Override
 	public void clear() {
-		int max=this.getRowCount();
-		for(int i=0;i<max;i++){
-			this.removeRow(i);
+//		int max=this.getRowCount();
+//		for(int i=0;i<max;i++){
+//			this.removeRow(i);
+//		}
+		for(int i=0;i<getRowCount();i++){
+			removeRow(i);
 		}
 	}
 

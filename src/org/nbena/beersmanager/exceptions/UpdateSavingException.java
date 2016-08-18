@@ -1,6 +1,7 @@
 package org.nbena.beersmanager.exceptions;
 
 import org.nbena.beersmanager.coreclasses.Beer;
+
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.Utils;
@@ -20,7 +21,8 @@ public class UpdateSavingException extends Exception {
 	public static enum ErrorWhile{
 		SAVING,
 		UPDATING,
-		ADDING
+		ADDING,
+		DELETING
 	}
 	
 	public static String createMessage(Object o, ErrorWhile error){
@@ -37,11 +39,16 @@ public class UpdateSavingException extends Exception {
 		case UPDATING:
 			up += ErrorWhile.UPDATING.toString().toLowerCase();
 			break;
+		case DELETING:
+			up += ErrorWhile.DELETING.toString().toLowerCase();
+			break;
+			
 		
 		}
 		
+	
+		System.out.println(o.getClass());
 		
-
 		if (o instanceof Beer) {
 			Beer cause = (Beer)o;
 			up.concat("Beer "+cause.getBrewery().getName() +" "+cause.getName());
@@ -57,6 +64,7 @@ public class UpdateSavingException extends Exception {
 			Style cause =(Style)o;
 			up.concat("Style "+Utils.getStyleString(cause));
 		}
+		System.out.println(up);
 		return up;
 	}
 	
@@ -64,19 +72,19 @@ public class UpdateSavingException extends Exception {
 		super(createMessage(o, error));
 	}
 
-	public UpdateSavingException(Throwable arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
-	}
-
-	public UpdateSavingException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
-	}
-
-	public UpdateSavingException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
-		// TODO Auto-generated constructor stub
-	}
+//	public UpdateSavingException(Throwable arg0) {
+//		super(arg0);
+//		// TODO Auto-generated constructor stub
+//	}
+//
+//	public UpdateSavingException(String arg0, Throwable arg1) {
+//		super(arg0, arg1);
+//		// TODO Auto-generated constructor stub
+//	}
+//
+//	public UpdateSavingException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
+//		super(arg0, arg1, arg2, arg3);
+//		// TODO Auto-generated constructor stub
+//	}
 
 }

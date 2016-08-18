@@ -66,6 +66,7 @@ public class ViewException extends JDialog {
 	 */
 	public ViewException() {
 		setBounds(100, 100, 450, 442);
+		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

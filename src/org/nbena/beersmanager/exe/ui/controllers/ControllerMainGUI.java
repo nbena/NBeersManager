@@ -7,9 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
@@ -40,6 +44,7 @@ import org.nbena.beersmanager.exe.ui.views.ViewAddNewBeer;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewBrewery;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewStyle;
 import org.nbena.beersmanager.exe.ui.views.ViewException;
+import org.nbena.beersmanager.exe.ui.views.ViewJOptionPane;
 import org.nbena.beersmanager.exe.ui.views.ViewMainGUI;
 import org.nbena.beersmanager.exe.ui.views.ViewPreferences;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBeer;
@@ -64,12 +69,16 @@ public class ControllerMainGUI {
 	private ViewPreferences preferencesDialog;
 	
 	private ViewException exceptionDialog;
+	
+	private ViewJOptionPane optionPane;
 
 	
 
 	public ControllerMainGUI(ViewMainGUI gui, Model model) {
 		this.gui=gui;
 		this.model=model;
+		
+		optionPane = new ViewJOptionPane(gui);
 		
 		addListeners();
 		
@@ -90,6 +99,7 @@ public class ControllerMainGUI {
 		addActionMenuPreferencesListener();
 		addSaveMenuAndButtonListeners();
 		addRefreshButtonListener();
+		addOperationOnClose();
 
 	}
 	
@@ -857,37 +867,73 @@ public class ControllerMainGUI {
 		s.setStyleMainName(addStyleDialog.getStyleMainName());
 		s.setStyleSubCategory(addStyleDialog.getStyleSubcategory());
 		s.setStyleCountryOrigin(addStyleDialog.getStyleCountry());
-		s.setDescription(addStyleDialog.getFermentation());
+		s.setDescription(addStyleDialog.getDescription());
 		s.setFermentation(Utils.getFermentationFromString(addStyleDialog.getFermentation()));
 		return s;
 	}
 	
+	/**
+	 * Delete the given beer.
+	 * @param b  the beer to delete. If null, the beerShown (private field in model) will be deleted.
+	 * @throws UpdateSavingException 
+	 */
+	private void deleteBeerLogic(Beer b) throws UpdateSavingException{
+		model.deleteBeer(b);
+		refreshData();
+	}
+	
+	/**
+	 * Delete the given brewery.
+	 * @param b the brewery to delete. If null, the breweryShown (private field in model) will be deleted.
+	 * @throws UpdateSavingException 
+	 */
+	private void deleteBreweryLogic(BreweryAverage b) throws UpdateSavingException{
+		model.deleteBrewery(b);
+		refreshData();
+	}
+	
+	/**
+	 * Delete the given style.
+	 * @param s  the style to delete. If null, the styleShown (private field in model) will be deleted.
+	 * @throws UpdateSavingException 
+	 */
+	private void deleteStyleLogic(Style s) throws UpdateSavingException{
+		model.deleteStyle(s);
+		refreshData();
+	}
+	
 	private void addNewBeerLogic(Beer b) throws UpdateSavingException{
 		model.addNewBeer(b);
+		refreshData();
 
 	}
 	
 	private void updateBeerLogic(Beer b) throws UpdateSavingException{
 		model.updateBeer(b);
+		refreshData();
 
 	}
 	
 	private void addNewBreweryLogic(Brewery b) throws UpdateSavingException{
 		model.addNewBrewery(b);
+		refreshData();
 
 	}
 	
 	private void updateBreweryLogic(Brewery b)throws UpdateSavingException{
-		
+		model.updateBrewery(Utils.fromBreweryToBreweryAverage(b));
+		refreshData();
 	}
 	
 	private void addNewStyleLogic(Style s) throws UpdateSavingException{
 		model.addNewStyle(s);
+		refreshData();
 
 	}
 	
 	private void updateStyleLogic(Style s) throws UpdateSavingException{
 		model.updateStyle(s);
+		refreshData();
 
 	}
 	
@@ -964,6 +1010,9 @@ public class ControllerMainGUI {
 				
 				Style s=getStyleInAddNewStyleDialog();
 				
+				System.out.println("Lo stile ottenuto è: \n");
+				Utils.printStyle(s, System.out);
+				
 
 				try{
 					if(model.isAddNewStyleOrModifyStyle()){
@@ -1024,32 +1073,32 @@ public class ControllerMainGUI {
 	
 	public void showAddOrModifyBeer(boolean addNewBeerOrModify){
 		if(addNewBeerOrModify){
-			showAddBeerDialog();
 			model.setAddNewBeerOrModifyBeer(true);
+			showAddBeerDialog();
 		}
 		else{
-			showModifyBeerDialog();
 			model.setAddNewBeerOrModifyBeer(false);
+			showModifyBeerDialog();
 		}
 	}
 	
 	public void showAddOrModifyBrewery(boolean addNewBreweryOrModify){
 		if(addNewBreweryOrModify){
-			showAddBreweryDialog();
 			model.setAddNewBreweryOrModifyBrewery(true);
+			showAddBreweryDialog();
 		}else{
-			showModifyBreweryDialog();
 			model.setAddNewBreweryOrModifyBrewery(false);
+			showModifyBreweryDialog();
 		}
 	}
 	
 	public void showAddOrModifyStyle(boolean addNewStyleOrModify){
 		if(addNewStyleOrModify){
-			showAddStyleDialog();
 			model.setAddNewStyleOrModifyStyle(true);
+			showAddStyleDialog();
 		}else{
-			showModifyStyleDialog();
 			model.setAddNewStyleOrModifyStyle(false);
+			showModifyStyleDialog();
 		}
 	}
 	
@@ -1075,25 +1124,44 @@ public class ControllerMainGUI {
 		addBreweryDialog.setVisible(true);
 	}
 	
-	private String getMainStyle(){
-		return null;
-	}
 	
 	private void addAddStyleComboBoxStyleListener(){
 		addStyleDialog.addActionComboBoxSelectedItem(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String mainStyle = getMainStyle();
-				addStyleDialog.addComboBoxItem(mainStyle);
+						
+				String mainStyle = addStyleDialog.getStyleMainName();
+				if(mainStyle.equals(Utils.Constants.NEW_STYLE_STRING)){
+					
+					addStyleDialog.removeComboBoxSelection();
+					addStyleDialog.closeComboBox();
+					
+					mainStyle = askNewMainStyleName();
+					
+					if(mainStyle!=null && mainStyle.length()>0){
+						addStyleDialog.addComboBoxItem(mainStyle);
+					}
+				}
 			}
 			
 		});
 	}
 	
+	/**
+	 * From the model's list of main style as string, it adds a new String 'New style'. (User will select and it will have the possibilility to add a new style).
+	 * @return the string list of main styles plus 'New Style'. 
+	 */
+	private List<String> getStylesListToAddToAddNewStyle(){
+		List<String> styles = new LinkedList<String>(model.getOnlyMainStyles());
+		styles.add(Utils.Constants.NEW_STYLE_STRING);
+		return styles;
+	}
+	
 	public void showAddStyleDialog(){
 		addStyleDialog = new ViewAddNewStyle();
-//		addStyleDialog.fillThings(model.getCountries());
+		
+		addStyleDialog.fillThings(getStylesListToAddToAddNewStyle(), Utils.getFermentationsItalianString(), model.getCountries());
 		
 		setAddNewStyleOkButton();
 		setAddNewStyleCancelButton();
@@ -1187,6 +1255,63 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	
+	private void setDeleteBeerButtonListener(){
+		viewBeerDialog.addActionListenerDeleteButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					deleteBeerLogic(null);
+				} catch (UpdateSavingException e) {
+					showExceptionDialog(e);
+				}
+			}
+			
+		});
+		
+		viewBeerDialog.setVisible(false);
+		viewBeerDialog.dispose();
+	}
+	
+	private void setDeleteBreweryButtonListener(){
+		viewBreweryDialog.addActionListenerDeleteButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					deleteBreweryLogic(null);
+				} catch (UpdateSavingException e1) {
+					showExceptionDialog(e1);
+				}
+			}
+			
+		});
+		
+		viewBreweryDialog.setVisible(false);
+		viewBreweryDialog.dispose();
+	}
+	
+	private void setDeleteStyleButtonListener(){
+		viewStyleDialog.addActionListenerDeleteButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					deleteStyleLogic(null);
+				} catch (UpdateSavingException e1) {
+					showExceptionDialog(e1);
+				}
+			}
+			
+		});
+		
+		viewStyleDialog.setVisible(false);
+		viewStyleDialog.dispose();
+	}
 
 	
 
@@ -1198,9 +1323,9 @@ public class ControllerMainGUI {
 		setBeerInDialog(viewBeerDialog);
 				
 		setOkCancelViewDialog(viewBeerDialog);
-		setBeerModifyButtonListener();
-		
+		setBeerModifyButtonListener();	
 		setBeerViewStyleBreweryListener();
+		setDeleteBeerButtonListener();
 		
 		viewBeerDialog.setVisible(true);
 	}
@@ -1220,6 +1345,7 @@ public class ControllerMainGUI {
 		setOkCancelViewDialog(viewBreweryDialog);
 		setBreweryModifyButtonListener();
 		setBreweryViewBeersButtonListener();
+		setDeleteBreweryButtonListener();
 		
 		viewBreweryDialog.setVisible(true);	
 	}
@@ -1241,6 +1367,7 @@ public class ControllerMainGUI {
 		setOkCancelViewDialog(viewStyleDialog);
 		setStyleDialogModifyButtonListener();
 		setStyleViewBeersButtonListener();
+		setDeleteStyleButtonListener();
 		
 		viewStyleDialog.setVisible(true);
 	}
@@ -1256,7 +1383,7 @@ public class ControllerMainGUI {
 		setAddNewBeerOkButton();
 		setAddNewBeerCancelButton();
 		
-		model.setAddNewBeerOrModifyBeer(false);
+//		model.setAddNewBeerOrModifyBeer(false);  already done.
 		
 		addBeerDialog.setVisible(true);
 	}
@@ -1272,7 +1399,7 @@ public class ControllerMainGUI {
 		setAddNewBreweryOkButton();
 		setAddNewBreweryCancelButton();;
 		
-		model.setAddNewBreweryOrModifyBrewery(false);
+//		model.setAddNewBreweryOrModifyBrewery(false); already done.
 		
 		addBreweryDialog.setVisible(true);
 	}
@@ -1282,13 +1409,13 @@ public class ControllerMainGUI {
 		viewStyleDialog.dispose();
 		
 		addStyleDialog=new ViewAddNewStyle();
-		addStyleDialog.fillThings(Utils.getMainStyleString(model.getOnlyMainStyle()), model.getCountries());
+		addStyleDialog.fillThings(Utils.getMainStyleString(model.getOnlyMainStyle()), Utils.getFermentationsItalianString(), model.getCountries());
 		setStyleInDialog(addStyleDialog);
 		
 		setAddNewStyleOkButton();
 		setAddNewStyleCancelButton();
 		
-		model.setAddNewStyleOrModifyStyle(false);
+//		model.setAddNewStyleOrModifyStyle(false); already done.
 		
 		addStyleDialog.setVisible(true);
 	}
@@ -1312,7 +1439,7 @@ public class ControllerMainGUI {
 //				
 //				addStyleDialog.setVisible(true);
 							
-				showAddOrModifyBeer(false);
+				showAddOrModifyStyle(false);
 			}
 			
 		});
@@ -1358,7 +1485,7 @@ public class ControllerMainGUI {
 //				
 //				addBeerDialog.setVisible(true);
 				
-				showAddOrModifyStyle(false);
+				showAddOrModifyBeer(false);
 			}
 			
 		});
@@ -1458,11 +1585,10 @@ public class ControllerMainGUI {
 					if(model.getDataShownNow()==DataShownNow.BEER){
 							openBeerDialog(row);
 				
-					}else if(model.getDataShownNow()==DataShownNow.BREWERY || model.getDataShownNow()==DataShownNow.BREWERY_AVERAGE){
-							openBreweryDialog(row);
-					}
-					else{
+					}else if(model.getDataShownNow()==DataShownNow.STYLE){
 						openStyleDialog(row);
+					}else{
+						openBreweryDialog(row);
 					}
 				}
 			}
@@ -1759,7 +1885,7 @@ public class ControllerMainGUI {
 		exceptionDialog.initEditorPane();
 		exceptionDialog.setErrorType(e.getClass().getSimpleName());
 		exceptionDialog.setErrorMessage(e.getMessage());
-		exceptionDialog.setStackTrace("<html><body style=\"color: red;\">", e.getMessage(), "</body></html>");
+		exceptionDialog.setStackTrace("<html><body style=\"color: red;\">", Utils.getStackTrace(e), "</body></html>");
 		
 		exceptionDialog.setVisible(true);
 	}
@@ -1785,6 +1911,78 @@ public class ControllerMainGUI {
 			public void actionPerformed(ActionEvent arg0) {
 
 				refreshData();
+			}
+			
+		});
+	}
+	
+	private String askNewMainStyleName(){
+		optionPane.setParent(addStyleDialog);
+		String mainStyleName = optionPane.showBlankTextInput(Utils.Constants.NEW_STYLE_TITLE, Utils.Constants.NEW_STYLE_MESSAGE,Utils.Constants.NEW_STYLE_TITLE);
+		return mainStyleName;
+	}
+	
+	private void close(){
+		gui.setVisible(false);
+		gui.dispose();
+		System.exit(0);
+	}
+	
+	private void setAskOnClose(){
+		if(model.isSomethingToSave()){
+			int res = optionPane.showOkCancel(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_BEFORE_EXIT);
+			if(ViewJOptionPane.isOkOption(res)){
+				close();
+			}
+		}else{
+			close();
+		}
+	}
+	
+	private void addOperationOnClose(){
+		gui.setDoNothingOnClose();
+		gui.addActionListenerOnClosing(new WindowListener(){
+
+			@Override
+			public void windowActivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				
+				setAskOnClose();
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
 			}
 			
 		});

@@ -22,6 +22,7 @@ import javax.swing.JMenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowListener;
 import java.io.File;
 import javax.swing.JTable;
 import java.awt.GridBagConstraints;
@@ -417,6 +418,15 @@ public class ViewMainGUI extends JFrame {
 		chooser.setCurrentDirectory(directory);
 		chooser.setAcceptAllFileFilterUsed(false);
 		chooser.setMultiSelectionEnabled(false);
+	}
+	
+	
+	public void addActionListenerOnClosing(WindowListener listener){
+		addWindowListener(listener);
+	}
+	
+	public void setDoNothingOnClose(){
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
 	/**

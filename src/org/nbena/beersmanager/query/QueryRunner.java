@@ -586,7 +586,7 @@ public class QueryRunner {
 		}
 		
 		public static boolean isBreweryExists(List<Brewery> beers, Brewery beer, boolean sorted){
-			return brewerySearch(beers, beer, sorted) > 0 ? true : false;
+			return brewerySearch(beers, beer, sorted) >=0 ? true : false;
 		}
 		
 		
@@ -606,7 +606,7 @@ public class QueryRunner {
 		}
 		
 		public static boolean isBreweryAverageExists(List<BreweryAverage> beers, BreweryAverage beer, boolean sorted){
-			return breweryAverageSearch(beers, beer, sorted) > 0 ? true : false;
+			return breweryAverageSearch(beers, beer, sorted) >=0 ? true : false;
 		}
 		
 		
@@ -627,7 +627,7 @@ public class QueryRunner {
 		}
 
 		public static boolean isStyleExists(List<Style> styles, Style style, boolean sorted){
-			return styleSearch(styles, style, sorted) > 0 ? true : false;
+			return styleSearch(styles, style, sorted) >=0 ? true : false;
 		}
 		
 	}

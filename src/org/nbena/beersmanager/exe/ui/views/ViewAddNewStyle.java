@@ -44,40 +44,21 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 	}
 	
 	
-	private void fillComboFermentation(/*String[] items*/){
+	public void fillComboFermentation(List<String> items){
 		//do it here because index of items must be always the same.
-		for(int i=0;i<3;i++){
-			comboBoxFermentation.addItem(Fermentation.HIGH.toFirstUpperCase());
-			comboBoxFermentation.addItem(Fermentation.LOW.toFirstUpperCase());
-			comboBoxFermentation.addItem(Fermentation.SPONTANEOUS.toFirstUpperCase());
+		for(String item: items){
+			comboBoxFermentation.addItem(item);
 		}
 	}
 	
-	private void setCurrentFermentation(Style s){
-		if(s.getFermentation()==Fermentation.HIGH){
-			comboBoxFermentation.setSelectedIndex(0);
-		}else if(s.getFermentation()==Fermentation.LOW){
-			comboBoxFermentation.setSelectedIndex(1);
-		}else if(s.getFermentation()==Fermentation.SPONTANEOUS){
-			comboBoxFermentation.setSelectedIndex(2);
-		}
-	}
-	
+
 	
 	private void fillComboStyle(List<String> styles){
 		for(String s: styles){
 			comboBoxMainStyle.addItem(s);
 		}
 	}
-	@Deprecated
-	public void setCurrentStyle(Style s){
-		comboBoxMainStyle.setSelectedItem(s.getStyleMainName());
-	}
-	
-	@Deprecated
-	public void setCurrentCountry(Style s){
-		comboBoxCountry.setSelectedItem(s.getStyleCountryOrigin());
-	}
+
 	
 	private void fillComboCountry(List<String> countries){
 		for(String c: countries){
@@ -85,21 +66,12 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 		}
 	}
 	
-	public void fillThings(List<String> styles, List<String> countries){
+	public void fillThings(List<String> styles, List<String> fermentations, List<String> countries){
 		fillComboStyle(styles);
 		fillComboCountry(countries);
-		fillComboFermentation();
+		fillComboFermentation(fermentations);
 	}
 	
-	@Deprecated
-	public void setStyle(Style s){
-		textFieldStyleSubcategory.setText(s.getStyleSubCategory());
-		textAreaDescription.setText(s.getDescription());
-		setCurrentFermentation(s);
-		setCurrentStyle(s);
-		setCurrentCountry(s);
-		
-	}
 	
 	public void setStyleMainName(String t){
 		comboBoxMainStyle.setSelectedItem(t);
@@ -147,6 +119,22 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 	
 	public void addComboBoxItem(String t){
 		comboBoxMainStyle.addItem(t);
+		comboBoxMainStyle.setSelectedItem(t);
+	}
+	
+	public void removeComboBoxSelection(){
+		comboBoxMainStyle.setSelectedIndex(-1);
+	}
+	
+	public void closeComboBox(){
+		comboBoxMainStyle.setPopupVisible(false);
+	}
+	
+	@Deprecated
+	public void addComboBoxItem(String oldS,String newS){
+//		comboBoxMainStyle.removeItem(oldS);
+		comboBoxMainStyle.addItem(newS);
+		comboBoxMainStyle.setSelectedItem(newS);
 	}
 
 	/**

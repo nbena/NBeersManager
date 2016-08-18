@@ -69,7 +69,7 @@ public class Comparators {
 	 * @author nb
 	 *
 	 */
-	public static class ComparatorStyleMainStyleSub implements Comparator<Style>{
+	public static class ComparatorStyleMainStyleSub implements Comparator<Style>{ //not work on binary search.
 
 		@Override
 		public int compare(Style arg0, Style arg1) {
@@ -781,7 +781,7 @@ public class Comparators {
 				ret = 0;
 			}else{
 //				ret = compareStyleByFermentationComplete(o1, o2);
-				ret = compareStyleByStyleMainStyleSub(o1, o2);
+				ret = compareStyleByFermentationComplete(o1, o2);
 			}
 			return ret;
 		}
