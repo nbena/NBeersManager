@@ -43,16 +43,26 @@ public class ViewPreferences extends JDialog {
 	private JComboBox<String> comboBoxFilteringBrewery;
 	private JComboBox<String> comboBoxFilteringStyle;
 	
+	private JComboBox<String> comboBoxDefaultView;
+	
 	private JButton okButton;
 	private JButton cancelButton;
 	
 	private JButton btnDefaultSorting;
 	private JButton btnDefaultFiltering;
+	private JButton btnDefaultView;
 	
 	private JButton btnDefault;
 	private JTextField textFieldFilteringBeer;
 	private JTextField textFieldFilteringBrewery;
 	private JTextField textFieldFilteringStyle;
+	
+	
+	public void fillComboBoxDefaultView(String[] values){
+		for(String s: values){
+			comboBoxDefaultView.addItem(s);
+		}
+	}
 	
 	public void fillComboBoxSortingBeer(String[]  values){
 		for(String s: values){
@@ -96,6 +106,9 @@ public class ViewPreferences extends JDialog {
 		return (String)comboBoxSortingStyle.getSelectedItem();
 	}
 	
+	public String getComboBoxDeafultViewSelectedItem(){
+		return (String)comboBoxDefaultView.getSelectedItem();
+	}
 	
 	
 	public void fillComboBoxFilteringBeer(String[]  values){
@@ -126,6 +139,10 @@ public class ViewPreferences extends JDialog {
 	
 	public void setComboBoxFilteringStyleSelectedItem(String t){
 		comboBoxFilteringStyle.setSelectedItem(t);
+	}
+	
+	public void setComboBoxDefaultViewSelectedItem(String t){
+		comboBoxDefaultView.setSelectedItem(t);
 	}
 	
 	public String getComboBoxFilteringBeerSelectedItem(){
@@ -186,6 +203,10 @@ public class ViewPreferences extends JDialog {
 	public void addActionListenerDefaultFilteringButton(ActionListener listener){
 		btnDefaultFiltering.addActionListener(listener);
 	}
+	
+	public void addActionListenerDefaultViewButton(ActionListener listener){
+		btnDefaultView.addActionListener(listener);
+	}
 
 	/**
 	 * Create the dialog.
@@ -213,9 +234,9 @@ public class ViewPreferences extends JDialog {
 				tabbedPane.addTab("New tab", null, panelSorting, null);
 				GridBagLayout gbl_panelSorting = new GridBagLayout();
 				gbl_panelSorting.columnWidths = new int[]{0, 0, 0, 0};
-				gbl_panelSorting.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+				gbl_panelSorting.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 				gbl_panelSorting.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
-				gbl_panelSorting.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+				gbl_panelSorting.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 				panelSorting.setLayout(gbl_panelSorting);
 				{
 					JLabel lblImpostazioniPerLordinamento = new JLabel("Impostazioni per l'ordinamento dei dati");
@@ -415,6 +436,49 @@ public class ViewPreferences extends JDialog {
 					gbc_btnDefault_1.gridx = 0;
 					gbc_btnDefault_1.gridy = 11;
 					panelFiltering.add(btnDefaultFiltering, gbc_btnDefault_1);
+				}
+			}
+			{
+				JPanel panelDefault = new JPanel();
+				tabbedPane.addTab("New tab", null, panelDefault, null);
+				GridBagLayout gbl_panelDefault = new GridBagLayout();
+				gbl_panelDefault.columnWidths = new int[]{0, 0, 0, 0, 0};
+				gbl_panelDefault.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+				gbl_panelDefault.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+				gbl_panelDefault.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+				panelDefault.setLayout(gbl_panelDefault);
+				{
+					JLabel lblImpostazioniPerLa = new JLabel("Impostazioni per la vista di default");
+					GridBagConstraints gbc_lblImpostazioniPerLa = new GridBagConstraints();
+					gbc_lblImpostazioniPerLa.insets = new Insets(0, 0, 5, 5);
+					gbc_lblImpostazioniPerLa.gridx = 0;
+					gbc_lblImpostazioniPerLa.gridy = 0;
+					panelDefault.add(lblImpostazioniPerLa, gbc_lblImpostazioniPerLa);
+				}
+				{
+					JLabel lblDiDefaultMostra = new JLabel("Di default mostra:");
+					GridBagConstraints gbc_lblDiDefaultMostra = new GridBagConstraints();
+					gbc_lblDiDefaultMostra.insets = new Insets(0, 0, 5, 5);
+					gbc_lblDiDefaultMostra.gridx = 0;
+					gbc_lblDiDefaultMostra.gridy = 2;
+					panelDefault.add(lblDiDefaultMostra, gbc_lblDiDefaultMostra);
+				}
+				{
+					comboBoxDefaultView = new JComboBox();
+					GridBagConstraints gbc_comboBoxDefaultView = new GridBagConstraints();
+					gbc_comboBoxDefaultView.insets = new Insets(0, 0, 5, 0);
+					gbc_comboBoxDefaultView.fill = GridBagConstraints.HORIZONTAL;
+					gbc_comboBoxDefaultView.gridx = 3;
+					gbc_comboBoxDefaultView.gridy = 2;
+					panelDefault.add(comboBoxDefaultView, gbc_comboBoxDefaultView);
+				}
+				{
+					btnDefaultView = new JButton("Default");
+					GridBagConstraints gbc_btnDefaultView = new GridBagConstraints();
+					gbc_btnDefaultView.insets = new Insets(0, 0, 0, 5);
+					gbc_btnDefaultView.gridx = 0;
+					gbc_btnDefaultView.gridy = 4;
+					panelDefault.add(btnDefaultView, gbc_btnDefaultView);
 				}
 			}
 		}

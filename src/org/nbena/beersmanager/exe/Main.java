@@ -26,8 +26,11 @@ import org.nbena.beersmanager.exe.ui.models.ModelBeerTable;
 import org.nbena.beersmanager.exe.ui.models.ModelBreweryTable;
 import org.nbena.beersmanager.exe.ui.models.ModelStyleTable;
 import org.nbena.beersmanager.exe.ui.views.ViewMainGUI;
-import org.nbena.beersmanager.json.coreclasses.JSONExporter;
+import org.nbena.beersmanager.json.coreclasses.JSONExporterCoreClasses;
 import org.nbena.beersmanager.query.QueryRunner;
+import org.nbena.beersmanager.query.QueryRunner.BeerFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
 
 public class Main {
 	
@@ -183,63 +186,79 @@ public class Main {
 		
 		
 
-//		ConfigurationFactory c=new ConfigurationFactory();
-//		Configuration config = c.getDefaultConfiguration();
+		Configuration config = ConfigurationFactory.getDefaultConfiguration();
+		
+		config.setBeerFilterAlgorithm(BeerFilterAlgorithm.BY_MARK);
+		config.setBeerFilterValue(60);
+		
+		config.setBreweryFilterAlgorithm(BreweryFilterAlgorithm.COUNTRY);
+		config.setBreweryFilterValue("Belgio");
+		
+		config.setStyleFilterAlgorithm(StyleFilterAlgorithm.BY_MAIN_STYLE);
+		config.setStyleFilterValue(new Style("Stout", "Imperial", "ciao", "Eire", Fermentation.HIGH));
+		try {
+			ConfigurationFactory.writeConfiguration(config, "C:\\Users\\nicola\\Documents\\BeerDb\\config.json");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 //		try {
-//			c.writeConfiguration(config);
-//		} catch (FileNotFoundException e1) {
+//			Configuration read = ConfigurationFactory.readConfiguration("C:\\Users\\nicola\\Documents\\BeerDb\\config.json");
+//			Utils.printConfiguration(read, System.out);
+//		} catch (JSONException | FileNotFoundException e) {
 //			// TODO Auto-generated catch block
-//			e1.printStackTrace();
+//			e.printStackTrace();
 //		}
 			
 			
-			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-					| UnsupportedLookAndFeelException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			Model model =new Model();
-			
-			ConfigurationFactory factory = new ConfigurationFactory();
-			try {
-				Configuration conf = factory.readConfiguration(ConfigurationFactory.getConfigurationPath());
-				conf = ConfigurationFactory.setupPath(conf);
-				model.setConfiguration(conf);
-			} catch (JSONException | FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			try {
-				model.setCountries(Utils.getCountries(model.getConfiguration().getCountriesFilePath()));
-			} catch (JSONException | FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			ViewMainGUI gui = new ViewMainGUI(model);
-			ControllerMainGUI controller=new ControllerMainGUI(gui, model);
-			
-			
-			controller.setShowBreweriesAverages(true);
-			
-			
-			try {
-				model.readThings();
-			} catch (FileNotFoundException | JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			model.setAverages();
-			
-			
-			controller.showBeers();
-//			controller.showBreweries();
-//			controller.showStyles();
+//			try {
+//				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+//					| UnsupportedLookAndFeelException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			Model model =new Model();
+//			
+//			ConfigurationFactory factory = new ConfigurationFactory();
+//			try {
+//				Configuration conf = factory.readConfiguration(ConfigurationFactory.getConfigurationPath());
+//				conf = ConfigurationFactory.setupPath(conf);
+//				model.setConfiguration(conf);
+//			} catch (JSONException | FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			try {
+//				model.setCountries(Utils.getCountries(model.getConfiguration().getCountriesFilePath()));
+//			} catch (JSONException | FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			ViewMainGUI gui = new ViewMainGUI(model);
+//			ControllerMainGUI controller=new ControllerMainGUI(gui, model);
+//			
+//			
+//			controller.setShowBreweriesAverages(true);
+//			
+//			
+//			try {
+//				model.readThings();
+//			} catch (FileNotFoundException | JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			model.setAverages();
+//			
+//			
+//			controller.showBeers();
+////			controller.showBreweries();
+////			controller.showStyles();
 
 
 

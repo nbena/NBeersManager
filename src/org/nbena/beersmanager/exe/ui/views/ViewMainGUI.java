@@ -122,6 +122,16 @@ public class ViewMainGUI extends JFrame {
 	private JButton btnSave;
 	private JMenuItem mntmSave;
 	private JButton btnReferesh;
+	private JMenu mnTrappista_1;
+	private JMenuItem mntmBreweriesFilteredByTrappistYes;
+	private JMenuItem mntmBreweriesFilteredByTrappistNo;
+	private JMenuItem mntmNazione;
+	private JMenu mnFermentazione_1;
+	private JMenuItem mntmStylesFilteredByFermentationHigh;
+	private JMenuItem mntmStylesFilteredByFermentationLow;
+	private JMenuItem mntmStylesFilteredByFermentationSpontaneous;
+	private JMenuItem mntmStylesFilteredByMainStyle;
+	private JMenuItem mntmStylesFilteredByCountryOrigin;
 	
 	
 	public void addActionRefreshButton(ActionListener listener){
@@ -154,6 +164,43 @@ public class ViewMainGUI extends JFrame {
 	public void addActionMenuSearchStyle(ActionListener listener){
 		mntmSearchStyle.addActionListener(listener);
 	}
+	
+	
+	
+	public void addActionMenuBreweriesFilteredByNation(ActionListener listener){
+		mntmNazione.addActionListener(listener);
+	}
+	
+	public void addActionMenuBreweriesFilteredByTrappistYes(ActionListener listener){
+		mntmBreweriesFilteredByTrappistYes.addActionListener(listener);
+	}
+	
+	public void addActionMenuBreweriesFilteredByTrappistNo(ActionListener listener){
+		mntmBreweriesFilteredByTrappistNo.addActionListener(listener);
+	}
+	
+	
+	
+	public void addActionMenuStylesFilteredByFermentationHigh(ActionListener listener){
+		mntmStylesFilteredByFermentationHigh.addActionListener(listener);
+	}
+	
+	public void addActionMenuStylesFilteredByFermentationLow(ActionListener listener){
+		mntmStylesFilteredByFermentationLow.addActionListener(listener);
+	}
+	
+	public void addActionMenuStylesFilteredByFermentationSpontaneous(ActionListener listener){
+		mntmStylesFilteredByFermentationSpontaneous.addActionListener(listener);
+	}
+	
+	public void addActionMenuStylesFilteredByCountryOrigin(ActionListener listener){
+		mntmStylesFilteredByCountryOrigin.addActionListener(listener);
+	}
+	
+	public void addActionMenuStylesFilteredByMainStyle(ActionListener listener){
+		mntmStylesFilteredByMainStyle.addActionListener(listener);
+	}
+	
 	
 	
 	public void addActionMenuBeersFilteredByCountryOfBreweryStyle(ActionListener listener){
@@ -662,8 +709,38 @@ public class ViewMainGUI extends JFrame {
 		mnFilterBrewery = new JMenu("Brewery");
 		mnFilter.add(mnFilterBrewery);
 		
+		mnTrappista_1 = new JMenu("Trappista");
+		mnFilterBrewery.add(mnTrappista_1);
+		
+		mntmBreweriesFilteredByTrappistYes = new JMenuItem("S\u00EC");
+		mnTrappista_1.add(mntmBreweriesFilteredByTrappistYes);
+		
+		mntmBreweriesFilteredByTrappistNo = new JMenuItem("No");
+		mnTrappista_1.add(mntmBreweriesFilteredByTrappistNo);
+		
+		mntmNazione = new JMenuItem("Nazione");
+		mnFilterBrewery.add(mntmNazione);
+		
 		mnFilterStyle = new JMenu("Style");
 		mnFilter.add(mnFilterStyle);
+		
+		mnFermentazione_1 = new JMenu("Fermentazione");
+		mnFilterStyle.add(mnFermentazione_1);
+		
+		mntmStylesFilteredByFermentationHigh = new JMenuItem("Alta");
+		mnFermentazione_1.add(mntmStylesFilteredByFermentationHigh);
+		
+		mntmStylesFilteredByFermentationLow = new JMenuItem("Bassa");
+		mnFermentazione_1.add(mntmStylesFilteredByFermentationLow);
+		
+		mntmStylesFilteredByFermentationSpontaneous = new JMenuItem("Spontanea");
+		mnFermentazione_1.add(mntmStylesFilteredByFermentationSpontaneous);
+		
+		mntmStylesFilteredByMainStyle = new JMenuItem("Stile principale");
+		mnFilterStyle.add(mntmStylesFilteredByMainStyle);
+		
+		mntmStylesFilteredByCountryOrigin = new JMenuItem("Nazione origine");
+		mnFilterStyle.add(mntmStylesFilteredByCountryOrigin);
 		
 		mnSearch = new JMenu("Search");
 		menuBar.add(mnSearch);

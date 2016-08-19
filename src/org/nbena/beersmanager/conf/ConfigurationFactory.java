@@ -7,7 +7,7 @@ import java.io.FileOutputStream;
 
 import org.json.JSONException;
 import org.nbena.beersmanager.exe.Utils;
-import org.nbena.beersmanager.json.conf.JSONExporter;
+import org.nbena.beersmanager.json.conf.JSONExporterConfiguration;
 import org.nbena.beersmanager.query.QueryRunner;
 import org.nbena.beersmanager.query.QueryRunner.BeerFilterAlgorithm;
 import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
@@ -32,6 +32,7 @@ public class ConfigurationFactory {
 //		conf.setStyleFilterAlgorithm(StyleFilterAlgorithm.NONE);
 //		conf.setStyleFilterValue("");
 //		conf.setStyleSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.FERMENTATION_COUNTRY);
+		conf = getDefaultView(conf);
 		conf = getDefaultSortingConfiguration(conf);
 		conf = getDefaultFilteringConfiguration(conf);
 		conf.setPaths(Utils.jsonConfiguration(Utils.currentDirectory()));
@@ -52,6 +53,11 @@ public class ConfigurationFactory {
 		conf.setBreweryFilterValue("");		
 		conf.setStyleFilterAlgorithm(StyleFilterAlgorithm.NONE);
 		conf.setStyleFilterValue("");
+		return conf;
+	}
+	
+	public static Configuration getDefaultView(Configuration conf){
+		conf.setDefaultView(Configuration.ShowDefault.BEER);
 		return conf;
 	}
 	
@@ -88,13 +94,13 @@ public class ConfigurationFactory {
 	}
 	
 	public static Configuration readConfiguration(String configurationPath) throws JSONException, FileNotFoundException{
-		JSONExporter exporter=new JSONExporter();
+		JSONExporterConfiguration exporter=new JSONExporterConfiguration();
 		exporter.setIn(new FileInputStream(new File(configurationPath)));
 		return exporter.readConfiguration();
 	}
 	
 	public static void writeConfiguration(Configuration c, String configurationPath) throws FileNotFoundException{
-		JSONExporter exporter=new JSONExporter();
+		JSONExporterConfiguration exporter=new JSONExporterConfiguration();
 		exporter.setOut(new FileOutputStream(new File(configurationPath)));
 		exporter.writeConfiguration(c);
 	}

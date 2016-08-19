@@ -23,6 +23,12 @@ public class Configuration {
 		NO
 	}
 	
+	public static enum ShowDefault{
+		BEER,
+		BREWERY,
+		STYLE;
+	}
+	
 	private BeerSortingAlgorithm beerSortingAlgorithm;
 	private BrewerySortingAlgorithm brewerySortingAlgorithm;
 	private StyleSortingAlgorithm styleSortingAlgorithm;
@@ -31,16 +37,18 @@ public class Configuration {
 	private BreweryFilterAlgorithm breweryFilterAlgorithm;
 	private StyleFilterAlgorithm styleFilterAlgorithm;
 	
-	private String beerFilterValue;
-	private String breweryFilterValue;
-	private String styleFilterValue;
+	private ShowDefault defaultView;
 	
 	
+	private Object beerFilterValue;
+	private Object breweryFilterValue;
+	private Object styleFilterValue;
 	
 	private String styleFilePath;
 	private String breweryFilePath;
 	private String beerFilePath;
 	private String countriesFilePath;
+	
 	
 	private String pwd;
 	
@@ -236,47 +244,7 @@ public class Configuration {
 		this.styleFilterAlgorithm = styleFilterAlgorithm;
 	}
 
-	/**
-	 * @return the beerFilterValue
-	 */
-	public String getBeerFilterValue() {
-		return beerFilterValue;
-	}
 
-	/**
-	 * @param beerFilterValue the beerFilterValue to set
-	 */
-	public void setBeerFilterValue(String beerFilterValue) {
-		this.beerFilterValue = beerFilterValue;
-	}
-
-	/**
-	 * @return the breweryFilterValue
-	 */
-	public String getBreweryFilterValue() {
-		return breweryFilterValue;
-	}
-
-	/**
-	 * @param breweryFilterValue the breweryFilterValue to set
-	 */
-	public void setBreweryFilterValue(String breweryFilterValue) {
-		this.breweryFilterValue = breweryFilterValue;
-	}
-
-	/**
-	 * @return the styleFilterValue
-	 */
-	public String getStyleFilterValue() {
-		return styleFilterValue;
-	}
-
-	/**
-	 * @param styleFilterValue the styleFilterValue to set
-	 */
-	public void setStyleFilterValue(String styleFilterValue) {
-		this.styleFilterValue = styleFilterValue;
-	}
 
 //	public void setBeweryFilePathBackup(String beweryFilePathBackup) {
 //		this.beweryFilePathBackup = beweryFilePathBackup;
@@ -325,6 +293,62 @@ public class Configuration {
 //		breweryFilePath = Utils.jsonBreweries(pwd);
 //		styleFilePath = Utils.jsonStyle(pwd);
 //		countriesFilePath = Utils.jsonCountries(pwd);
+	}
+
+	/**
+	 * @return the defaultView
+	 */
+	public ShowDefault getDefaultView() {
+		return defaultView;
+	}
+
+	/**
+	 * @param defaultView the defaultView to set
+	 */
+	public void setDefaultView(ShowDefault defaultView) {
+		this.defaultView = defaultView;
+	}
+
+	/**
+	 * @return the beerFilterValue
+	 */
+	public Object getBeerFilterValue() {
+		return beerFilterValue;
+	}
+
+	/**
+	 * @param beerFilterValue the beerFilterValue to set
+	 */
+	public void setBeerFilterValue(Object beerFilterValue) {
+		this.beerFilterValue = beerFilterValue;
+	}
+
+	/**
+	 * @return the breweryFilterValue
+	 */
+	public Object getBreweryFilterValue() {
+		return breweryFilterValue;
+	}
+
+	/**
+	 * @param breweryFilterValue the breweryFilterValue to set
+	 */
+	public void setBreweryFilterValue(Object breweryFilterValue) {
+		this.breweryFilterValue = breweryFilterValue;
+	}
+
+	/**
+	 * @return the styleFilterValue
+	 */
+	public Object getStyleFilterValue() {
+		return styleFilterValue;
+	}
+
+	/**
+	 * @param styleFilterValue the styleFilterValue to set
+	 */
+	public void setStyleFilterValue(Object styleFilterValue) {
+		this.styleFilterValue = styleFilterValue;
 	}
 
 	/* (non-Javadoc)

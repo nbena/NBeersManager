@@ -16,7 +16,7 @@ import org.nbena.beersmanager.coreclasses.*;
 
 
 
-public class JSONExporter {
+public class JSONExporterCoreClasses {
 	
 	private static final String JSON_BEER_STYLE_MAIN_NAME = "styleMainName";
 	private static final String JSON_BEER_ALCOOL = "alcool";
@@ -53,6 +53,8 @@ public class JSONExporter {
 		ps.print(array.toString());
 	}
 	
+
+	
 //	public static void writeStyle(List<Style> styles, OutputStream out) throws Exception{
 //		/*
 //		JSONArray array=new JSONArray();
@@ -87,12 +89,53 @@ public class JSONExporter {
 		ps.print(array.toString());
 	}
 	
+	
 	public static void writeStyleSpecial(List<Style> styles, OutputStream out)throws JSONException{
 		List<StyleJSONSpecialClass> styleSpecial = Converter.toSpecialStyleList(styles);
 		JSONArray array= new JSONArray(styleSpecial);
 		PrintStream ps=new PrintStream(out);
 		ps.print(array.toString());
 	}
+	
+	
+	public static String writeBeers(List<Beer> beers){
+		return new JSONArray(beers).toString();
+	}
+	
+	public static String writeBeersSpecial(List<Beer> beers){
+		List<BeerJSONSpecialClass> beerSpecial = Converter.toSpecialBeerList(beers);
+		return new JSONArray(beerSpecial).toString();
+	}
+		
+	public static String writeBreweries(List<Brewery> breweries){
+		return new JSONArray(breweries).toString();
+	}
+	
+	public static String writeStyles(List<Style> styles){
+		return new JSONArray(styles).toString();
+	}
+	
+	public static String writeStylesSpecial(List<Style> styles){
+		List<StyleJSONSpecialClass> styleSpecial = Converter.toSpecialStyleList(styles);
+		return new JSONArray(styleSpecial).toString();
+	}
+	
+	public static String writeBeer(Beer b){
+		return new JSONObject(b).toString();
+	}
+	
+	public static String writeBrewery(Brewery b){
+		return new JSONObject(b).toString();
+	}
+	
+	public static String writeStyle(Style s){
+		return new JSONObject(s).toString();
+	}
+	
+	public static String writeStyleSpecial(Style s){
+		return new JSONObject(Converter.toStyleSpecialClass(s)).toString();
+	}
+	
 	
 	public static BeerJSONSpecialClass toBeerSpecialClass(JSONObject obj){
 		BeerJSONSpecialClass beer=new BeerJSONSpecialClass();
@@ -140,6 +183,17 @@ public class JSONExporter {
 			beers.add(b);
 		}
 		return beers;
+	}
+	
+	
+	public static Brewery readBrewery(String in){
+		JSONObject json = new JSONObject(new JSONTokener(in));
+		return toBrewery(json);
+	}
+	
+	public static Style readStyle(String in){
+		JSONObject json = new JSONObject(new JSONTokener(in));
+		return Converter.toStyleNormalClass(toStyleSpecialClass(json));
 	}
 	
 	public static List<StyleJSONSpecialClass> readStylesSpecial(InputStream in)throws JSONException{

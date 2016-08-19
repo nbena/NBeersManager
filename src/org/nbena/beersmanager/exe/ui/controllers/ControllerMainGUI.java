@@ -1765,6 +1765,22 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	private void addPreferencesDefaultViewButtonListener(){
+		preferencesDialog.addActionListenerDefaultViewButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Configuration newConf = model.getConfiguration();
+				newConf = ConfigurationFactory.getDefaultView(newConf);
+				
+				fillPreferencesDefaultView(newConf);
+				
+			}
+			
+		});
+	}
+	
 	private void addPreferencesDeafultButtonListener(){
 		preferencesDialog.addActionListenerDefaultButton(new ActionListener(){
 
@@ -1776,6 +1792,13 @@ public class ControllerMainGUI {
 			}
 			
 		});
+	}
+	
+
+	
+	private void fillPreferencesDefaultView(Configuration conf){
+		preferencesDialog.fillComboBoxDefaultView(Utils.getDefaultViewDescriptionList());
+		preferencesDialog.setComboBoxDefaultViewSelectedItem(Utils.getViewDefaultDescription(conf.getDefaultView()));
 	}
 	
 	private void fillPreferencesSortingAlgorithm(Configuration conf){
@@ -1803,6 +1826,7 @@ public class ControllerMainGUI {
 	private void fillPreferences(Configuration conf){
 		fillPreferencesSortingAlgorithm(conf);
 		fillPreferencesFilteringAlgorithm(conf);
+		fillPreferencesDefaultView(conf);
 	}
 	
 	public void showPreferencesDialog(){
@@ -1814,6 +1838,7 @@ public class ControllerMainGUI {
 		addPreferencesCancelButtonListener();
 		addPreferencesDefaultSortingButtonListener();
 		addPreferencesDefaultFilteringButtonListener();
+		addPreferencesDefaultViewButtonListener();
 		addPreferencesDeafultButtonListener();
 		
 		preferencesDialog.setVisible(true);

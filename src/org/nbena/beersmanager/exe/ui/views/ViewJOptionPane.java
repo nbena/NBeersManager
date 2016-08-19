@@ -44,6 +44,7 @@ public class ViewJOptionPane {
 		return (String) JOptionPane.showInputDialog(parent, message, title, JOptionPane.PLAIN_MESSAGE, null, items, items[0]);
 	}
 	
+	
 	public int showOkCancel(String title, String message){
 		return JOptionPane.showConfirmDialog(parent, message, title,JOptionPane.YES_NO_OPTION);
 	}

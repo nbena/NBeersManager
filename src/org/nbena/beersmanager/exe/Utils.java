@@ -1,6 +1,7 @@
 package org.nbena.beersmanager.exe;
 
 import java.io.OutputStream;
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -11,6 +12,7 @@ import java.io.FileOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import javax.swing.JFileChooser;
@@ -19,6 +21,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
+import org.nbena.beersmanager.conf.Configuration;
+import org.nbena.beersmanager.conf.Configuration.ShowDefault;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
@@ -26,7 +30,7 @@ import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
 import org.nbena.beersmanager.json.coreclasses.BeerJSONSpecialClass;
 import org.nbena.beersmanager.json.coreclasses.Converter;
-import org.nbena.beersmanager.json.coreclasses.JSONExporter;
+import org.nbena.beersmanager.json.coreclasses.JSONExporterCoreClasses;
 import org.nbena.beersmanager.query.BreweryAverage;
 import org.nbena.beersmanager.query.QueryRunner;
 import org.nbena.beersmanager.query.QueryRunner.BeerFilterAlgorithm;
@@ -132,6 +136,22 @@ public class Utils {
 		}
 	}
 	
+	public static void printConfiguration(Configuration c, OutputStream output){
+		PrintStream out = new PrintStream(output);
+		out.println("Beer sorting algorithm: "+ c.getBeerSortingAlgorithm().toString());
+		out.println("Brewery sorting algorithm: "+ c.getBrewerySortingAlgorithm().toString());
+		out.println("Style sorting algorithm: "+ c.getStyleSortingAlgorithm().toString());
+		
+		out.println("Beer filtering algorithm: "+ c.getBeerFilterAlgorithm().toString());
+		out.println("\tBeer filtering value: "+c.getBeerFilterValue());
+		out.println("Brewery filtering algorithm: "+ c.getBreweryFilterAlgorithm().toString());
+		out.println("\tBrewery filtering value: "+c.getBreweryFilterValue());
+		out.println("Style filtering algorithm: "+ c.getStyleFilterAlgorithm().toString());
+		out.println("\tStyle filtering value: "+c.getStyleFilterValue());
+		
+		out.print("Default view: "+c.getDefaultView().toString());
+	}
+	
 	public static String currentDirectory(){
 		String path=new File(".").getAbsolutePath();
 		return path.substring(0, path.length()-1);
@@ -159,32 +179,78 @@ public class Utils {
 	
 	
 	public static List<Style> readStyles(File file) throws FileNotFoundException, JSONException{
-		 return Converter.toNormalStyleList(JSONExporter.readStylesSpecial(new FileInputStream(file)));  
+		 return Converter.toNormalStyleList(JSONExporterCoreClasses.readStylesSpecial(new FileInputStream(file)));  
 	}
 	
 	public static List<Brewery> readBreweries(File file) throws FileNotFoundException, JSONException{
-		return JSONExporter.readBreweries(new FileInputStream(file));
+		return JSONExporterCoreClasses.readBreweries(new FileInputStream(file));
+	}
+	
+	public static String getStyleStringForExport(Style style){
+		
+		String s = 
+				(style.getStyleMainName()+":::::")+
+				(style.getStyleSubCategory()+":::::")+
+				(style.getDescription()+":::::")+
+				(style.getStyleCountryOrigin()+":::::")+
+				(style.getFermentation().toString());
+		
+		return s;
+	}
+	
+	public static String getBreweryStringForExport(Brewery b){
+		String s =
+				b.getName()+":::::"+
+				b.getTown()+":::::"+
+				b.getCountry()+":::::"+
+				b.getDescription()+":::::"+
+				b.getWebsite()+":::::"+
+				Boolean.toString(b.isAuthenticTrappist());
+		return s;
+	}
+	
+	public static Style getStyleFromStringExport(String s){
+		String[] array = s.split(":::::");
+		Style style = new Style();
+		style.setStyleMainName(array[0]);
+		style.setStyleSubCategory(array[1]);
+		style.setDescription(array[2]);
+		style.setStyleCountryOrigin(array[3]);
+		style.setFermentation(Fermentation.valueOf(array[4]));
+		return style;
+	}
+	
+	public static Brewery getBreweryFromStringExport(String s){
+		String[] array = s.split(":::::");
+		Brewery b = new Brewery();
+		b.setName(array[0]);
+		b.setTown(array[1]);
+		b.setCountry(array[2]);
+		b.setDescription(array[3]);
+		b.setWebsite(array[4]);
+		b.setAuthenticTrappist(Boolean.parseBoolean(array[5]));
+		return b;
 	}
 	
 	public static List<Beer> readBeers(File file, List<Brewery> breweries, List<Style> styles) throws FileNotFoundException, JSONException{
 		List<Beer> beersRead=new LinkedList<Beer>();
 		List<BeerJSONSpecialClass> beersSpecial;	  
-		beersSpecial = JSONExporter.readBeersSpecial( new FileInputStream(file));
+		beersSpecial = JSONExporterCoreClasses.readBeersSpecial( new FileInputStream(file));
 		beersRead = Converter.recompose(beersSpecial, breweries, styles);
 		return beersRead;
 	}
 	
 	public static void saveStyles(List<Style> styles, File file) throws FileNotFoundException, JSONException{
-		JSONExporter.writeStyleSpecial(styles, new FileOutputStream(file));
+		JSONExporterCoreClasses.writeStyleSpecial(styles, new FileOutputStream(file));
 	}
 	
 	public static void saveBreweries(List<Brewery> breweries, File file) throws FileNotFoundException, JSONException{
-		JSONExporter.writeBrewery(breweries, new FileOutputStream(file));
+		JSONExporterCoreClasses.writeBrewery(breweries, new FileOutputStream(file));
 	}
 	
 	public static void saveBeers(List<Beer> beers, File file) throws FileNotFoundException, JSONException{
 		//List<BeerJSONSpecialClass> beersSpecial = Converter.toSpecialBeerList(beers);
-		JSONExporter.writeBeerSpecial(beers, new FileOutputStream(file)); //already done by json
+		JSONExporterCoreClasses.writeBeerSpecial(beers, new FileOutputStream(file)); //already done by json
 	}
 	
 	public static Object[] fromStyleToObjectArray(Style s){
@@ -645,7 +711,8 @@ public class Utils {
 	private static final String BEER_FILTERING_ALGORITHM_BY_STARS = "Stelle (minime)";
 	private static final String BEER_FILTERING_ALGORITHM_BY_MARK = "Voto (minimo)";
 	private static final String BEER_FILTERING_ALGORITHM_BY_ABV = "ABV (minimo)";
-	private static final String BEER_FILTERING_ALGORITHM_BY_IS_TRIED = "Provate";
+	private static final String BEER_FILTERING_ALGORITHM_BY_IS_TRIED_YES = "Provate";
+	private static final String BEER_FILTERING_ALGORITHM_BY_IS_TRIED_NO = "Non provate";
 	private static final String BEER_FILTERING_ALGORITHM_BY_STYLE = "Stile e sottostile";
 	private static final String BEER_FILTERING_ALGORITHM_BY_MAIN_STYLE = "Stile (solo principale)";
 	
@@ -677,16 +744,19 @@ public class Utils {
 		case BY_STYLE_PROVENIENCE:
 			value = BEER_FILTERING_ALGORITHM_BY_STYLE_PROVENIENCE;
 			break;
-		case IS_TRIED:
-			value = BEER_FILTERING_ALGORITHM_BY_IS_TRIED;
+		case BY_IS_TRIED_YES:
+			value = BEER_FILTERING_ALGORITHM_BY_IS_TRIED_YES;
 			break;
-		case MAIN_STYLE:
+		case BY_IS_TRIED_NO:
+			value = BEER_FILTERING_ALGORITHM_BY_IS_TRIED_NO;
+			break;
+		case BY_MAIN_STYLE:
 			value = BEER_FILTERING_ALGORITHM_BY_MAIN_STYLE;
 			break;
 		case NONE:
 			value = BEER_FILTERING_ALGORITHM_NONE;
 			break;
-		case STYLE:
+		case BY_STYLE:
 			value = BEER_FILTERING_ALGORITHM_BY_STYLE;
 			break;
 		
@@ -730,17 +800,20 @@ public class Utils {
 		case BEER_FILTERING_ALGORITHM_BY_STYLE_PROVENIENCE:
 			value = BeerFilterAlgorithm.BY_STYLE_PROVENIENCE;
 			break;
-		case BEER_FILTERING_ALGORITHM_BY_IS_TRIED:
-			value =BeerFilterAlgorithm.IS_TRIED;
+		case BEER_FILTERING_ALGORITHM_BY_IS_TRIED_YES:
+			value =BeerFilterAlgorithm.BY_IS_TRIED_YES;
+			break;
+		case BEER_FILTERING_ALGORITHM_BY_IS_TRIED_NO:
+			value =BeerFilterAlgorithm.BY_IS_TRIED_NO;
 			break;
 		case BEER_FILTERING_ALGORITHM_BY_MAIN_STYLE:
-			value = BeerFilterAlgorithm.MAIN_STYLE;
+			value = BeerFilterAlgorithm.BY_MAIN_STYLE;
 			break;
 		case BEER_FILTERING_ALGORITHM_NONE:
 			value = BeerFilterAlgorithm.NONE;
 			break;
 		case BEER_FILTERING_ALGORITHM_BY_STYLE:
-			value = BeerFilterAlgorithm.STYLE;
+			value = BeerFilterAlgorithm.BY_STYLE;
 			break;
 		default:
 			value = null;
@@ -753,17 +826,15 @@ public class Utils {
 	
 	private static final String BREWERY_FILTERING_ALGORITHM_NONE = "Nessuno";
 	private static final String BREWERY_FILTERING_ALGORITHM_BY_COUNTRY = "Nazione";
-	private static final String BREWERY_FILTERING_ALGORITHM_BY_BEST_AVERAGES = "Media (minima)";
-	private static final String BREWERY_FILTERING_ALGORITHM_BY_BEST_AVERAGE_LIST= "I primi 20 con media maggiore di";
+//	private static final String BREWERY_FILTERING_ALGORITHM_BY_BEST_AVERAGES = "Media (minima)";
+//	private static final String BREWERY_FILTERING_ALGORITHM_BY_BEST_AVERAGE_LIST= "I primi 20 con media maggiore di";
 	private static final String BREWERY_FILTERING_ALGORITHM_BY_TRAPPIST_YES = "Trappista";
+	private static final String BREWERY_FILTERING_ALGORITHM_BY_TRAPPIST_NO = "Non trappista";
 
 	
 	public static String getBreweryFilterAlgorithmDescription(BreweryFilterAlgorithm algorithm){
 		String value = null;;
 		switch(algorithm){
-		case BEST_AVERAGES:
-			value = BREWERY_FILTERING_ALGORITHM_BY_BEST_AVERAGES;
-			break;
 		case COUNTRY:
 			value = BREWERY_FILTERING_ALGORITHM_BY_COUNTRY;
 			break;
@@ -773,9 +844,10 @@ public class Utils {
 		case TRAPPIST_YES:
 			value = BREWERY_FILTERING_ALGORITHM_BY_TRAPPIST_YES;
 			break;
-		case BEST_AVERAGES_LIST:
-			value = BREWERY_FILTERING_ALGORITHM_BY_BEST_AVERAGE_LIST;
+		case TRAPPIST_NO:
+			value = BREWERY_FILTERING_ALGORITHM_BY_TRAPPIST_NO;
 			break;
+
 		}
 		return value;
 	}
@@ -792,9 +864,6 @@ public class Utils {
 	public static BreweryFilterAlgorithm getBreweryFilterAlgorithmFromDescription(String descriptionString){
 		BreweryFilterAlgorithm value;
 		switch(descriptionString){
-		case BREWERY_FILTERING_ALGORITHM_BY_BEST_AVERAGES:
-			value = BreweryFilterAlgorithm.BEST_AVERAGES;
-			break;
 		case BREWERY_FILTERING_ALGORITHM_BY_COUNTRY:
 			value = BreweryFilterAlgorithm.COUNTRY;
 			break;
@@ -804,9 +873,8 @@ public class Utils {
 		case BREWERY_FILTERING_ALGORITHM_BY_TRAPPIST_YES:
 			value = BreweryFilterAlgorithm.TRAPPIST_YES;
 			break;
-		case BREWERY_FILTERING_ALGORITHM_BY_BEST_AVERAGE_LIST:
-			value = BreweryFilterAlgorithm.BEST_AVERAGES_LIST;
-			break;
+		case BREWERY_FILTERING_ALGORITHM_BY_TRAPPIST_NO:
+			value = BreweryFilterAlgorithm.TRAPPIST_NO;
 		default:
 			value=null;
 			break;
@@ -883,6 +951,58 @@ public class Utils {
 		}
 		return value;
 	}
+	
+	
+	
+	
+	private static final String BEER = "Birre";
+	private static final String BREWERY = "Birrifici";
+	private static final String STYLE = "Stili";
+	
+	public static String getViewDefaultDescription(ShowDefault view){
+		String value = null;
+		switch(view){
+		case BEER:
+			value = BEER;
+			break;
+		case BREWERY:
+			value = BREWERY;
+			break;
+		case STYLE:
+			value = STYLE;
+			break;
+		}
+		return value;
+		
+	}
+	
+	public static String[] getDefaultViewDescriptionList(){
+		ShowDefault[] values = ShowDefault.values();
+		String[] strings = new String[values.length];
+		int i=0;
+		for(ShowDefault value: values){
+			strings[i]=getViewDefaultDescription(value);
+		}
+		return strings;
+	}
+	
+	public static ShowDefault getViewDefaultFromDescription(String description){
+		ShowDefault value = null;
+		switch(description){
+
+		case BEER:
+			value = ShowDefault.BEER;
+			break;
+		case BREWERY:
+			value = ShowDefault.BREWERY;
+			break;
+		case STYLE:
+			value = ShowDefault.STYLE;
+			break;
+		}
+		
+		return value;
+	}
 
 	
 	public static class Constants{
@@ -956,6 +1076,17 @@ public class Utils {
 		
 		public static final String QUESTION = "Domanda";
 		public static final String CONFIRMATION_BEFORE_EXIT = "Ci sono dei dati da salvare. Uscire comunque?";
+		
+		public static final String FILTER_BY_TITLE = "Filtra";
+		
+		public static final String BEER_FILTER_BY_STYLE_AND_SUB = "Scegli lo stile:";
+		public static final String BEER_FILTER_BY_NATION = "Scegli la nazione di produzione:";
+		public static final String BEER_FILTER_BY_ORIGIN_STYLE = "Scegli la nazione di origine dello stile:";
+		public static final String BEER_FILTER_BY_BREWERY = "Scegli il birrificio";
+		
+		public static final String BREWERY_FILTER_BY_COUNTRY = "Scegli la nazione:";
+		
+		public static final String STYLE_FILTER_BY_ORIGIN_COUNTRY = "Scegli la nazione di origine dello stile";
 		
 	}
 	
@@ -1165,6 +1296,98 @@ public class Utils {
 			countries.add(array.getString(i));
 		}
 		return countries;
+	}
+	
+	public static BiFunction <List<Style>, Object, List<Style>> getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm algorithm){
+		BiFunction <List<Style>, Object, List<Style>> function = null;
+		switch(algorithm){
+		case BY_COUNTRY:
+			function = (List<Style> styles, Object o) -> QueryRunner.stylesFilteredByCountryOrigin(styles, (String)o);
+			break;
+		case BY_FERMENTATION_HIGH:
+			function = (List<Style> styles, Object o) -> QueryRunner.stylesFilteredByFermentation(styles, Fermentation.HIGH);
+			break;
+		case BY_FERMENTATION_LOW:
+			function = (List<Style> styles, Object o) -> QueryRunner.stylesFilteredByFermentation(styles, Fermentation.LOW);
+			break;
+		case BY_FERMENTATION_SPONTANEOUS:
+			function = (List<Style> styles, Object o) -> QueryRunner.stylesFilteredByFermentation(styles, Fermentation.SPONTANEOUS);
+			break;
+		case BY_MAIN_STYLE:
+			function = (List<Style> styles, Object o) -> QueryRunner.stylesFilteredByMainStyle(styles, (Style)o);
+			break;
+		case NONE:
+			function = (List<Style> styles, Object o) -> styles;
+			break;
+		
+		}
+		return function;
+	}
+	
+	public static BiFunction<List<Brewery>,Object,  List<Brewery>> getBreweryFilteringAlgorithm(QueryRunner.BreweryFilterAlgorithm algorithm){
+		BiFunction<List<Brewery>, Object, List<Brewery>> function = null;
+		switch(algorithm){
+		case COUNTRY:
+			function = (List<Brewery> breweries, Object o) -> QueryRunner.breweriesFilteredByCountry(breweries, (String)o);
+			break;
+		case NONE:
+			function = (List<Brewery> breweries, Object o) -> breweries;
+			break;
+		case TRAPPIST_NO:
+			function = (List<Brewery> breweries, Object o) -> QueryRunner.breweriesFilteredByTrappist(breweries, false);
+			break;
+		case TRAPPIST_YES:
+			function = (List<Brewery> breweries, Object o) -> QueryRunner.breweriesFilteredByTrappist(breweries, true);
+			break;		
+		}
+		return function;
+	}
+	
+	
+	public static BiFunction<List<Beer>, Object, List<Beer>> getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm algorithm){
+		BiFunction<List<Beer>, Object, List<Beer>> function = null;
+		switch(algorithm){
+		case BY_ABV:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByMinimumAlcool(beers,(Double)o);
+			break;
+		case BY_COUNTRY:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByBreweryCountry(beers, (String)o);
+			break;
+		case BY_FERMENTATION_HIGH:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByFermentation(beers, Fermentation.HIGH);
+			break;
+		case BY_FERMENTATION_LOW:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByFermentation(beers, Fermentation.LOW);
+			break;
+		case BY_FERMENTATION_SPONTANEOUS:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByFermentation(beers, Fermentation.SPONTANEOUS);
+			break;
+		case BY_MARK:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByMiminumMark(beers, (Integer)o);
+			break;
+		case BY_STARS:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByMinimumNumberOfStars(beers, (Integer)o);
+			break;
+		case BY_STYLE_PROVENIENCE:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByStyleProvenience(beers, (String)o);
+			break;
+		case BY_IS_TRIED_NO:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByIsTried(beers, false);
+			break;
+		case BY_IS_TRIED_YES:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByIsTried(beers, true);
+			break;
+		case BY_MAIN_STYLE:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByMainStyle(beers, (Style)o);
+			break;
+		case NONE:
+			function = (List<Beer> beers, Object o) -> beers;
+			break;
+		case BY_STYLE:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByStyle(beers, (Style)o);
+			break;
+		}
+		return function;
 	}
 
 }

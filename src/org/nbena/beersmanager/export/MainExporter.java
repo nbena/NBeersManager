@@ -70,7 +70,7 @@ public class MainExporter {
 		
 //		MSExcelOldExporter o=new MSExcelOldExporter();
 //		MSExcelNewExporter oo=new MSExcelNewExporter();
-		org.nbena.beersmanager.json.coreclasses.JSONExporter j=new org.nbena.beersmanager.json.coreclasses.JSONExporter();
+		org.nbena.beersmanager.json.coreclasses.JSONExporterCoreClasses j=new org.nbena.beersmanager.json.coreclasses.JSONExporterCoreClasses();
 		/*
 		oo.writeBrewery(brewery, new FileOutputStream(new File("C:\\Users\\nicola\\Desktop\\breweryx.xlss")));
 		oo.writeStyle(style, new FileOutputStream(new File("C:\\Users\\nicola\\Desktop\\stylex.xlsx")));

@@ -27,7 +27,7 @@ import org.nbena.beersmanager.export.OutExporter;
 import org.nbena.beersmanager.export.JSONOutExporter;
 import org.nbena.beersmanager.export.PDFOutExporter;
 import org.nbena.beersmanager.export.TXTOutExporter;
-import org.nbena.beersmanager.json.coreclasses.JSONExporter;
+import org.nbena.beersmanager.json.coreclasses.JSONExporterCoreClasses;
 import org.nbena.beersmanager.export.MSExcelOldOutExporter;
 import org.nbena.beersmanager.export.MSExcelNewOutExporter;
 import org.nbena.beersmanager.query.BreweryAverage;
@@ -1132,15 +1132,15 @@ public class Model {
 	
 	
 	public void saveBeers() throws JSONException, FileNotFoundException{
-		JSONExporter.writeBeerSpecial(beerData, new FileOutputStream(configuration.getBeerFilePath()));
+		JSONExporterCoreClasses.writeBeerSpecial(beerData, new FileOutputStream(configuration.getBeerFilePath()));
 	}
 	
 	public void saveBreweries() throws FileNotFoundException, FileNotFoundException{
-		JSONExporter.writeBrewery(Utils.fromBreweriesAverageToBrewery(breweryData), new FileOutputStream(configuration.getBreweryFilePath()));
+		JSONExporterCoreClasses.writeBrewery(Utils.fromBreweriesAverageToBrewery(breweryData), new FileOutputStream(configuration.getBreweryFilePath()));
 	}
 	
 	public void saveStyles() throws JSONException, FileNotFoundException{
-		JSONExporter.writeStyleSpecial(styleData, new FileOutputStream(configuration.getStyleFilePath()));
+		JSONExporterCoreClasses.writeStyleSpecial(styleData, new FileOutputStream(configuration.getStyleFilePath()));
 	}
 	
 	private List<Brewery> readBreweries() throws FileNotFoundException, JSONException{
