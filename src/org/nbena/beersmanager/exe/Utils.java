@@ -57,7 +57,8 @@ public class Utils {
 		out.println("-------");
 		out.println(" "+beer.getBrewery().getName()+": "+beer.getName());
 		out.println(" "+beer.getStyle().getStyleMainName()+"  "+beer.getStyle().getStyleSubCategory());
-		out.println(" "+beer.getColor()+" - Fermentation: "+beer.getFermentation());
+//		out.println(" "+beer.getColor()+" - Fermentation: "+beer.getFermentation());
+		out.print("Fermentation "+beer.getFermentation().toFirstUpperCase());
 		out.println(" Alcool: "+beer.getAlcool()+"% ");
 		out.println(" Description: "+beer.getDescription());
 		out.println(" Mark: "+beer.getMark());
@@ -186,6 +187,7 @@ public class Utils {
 		return JSONExporterCoreClasses.readBreweries(new FileInputStream(file));
 	}
 	
+	@Deprecated
 	public static String getStyleStringForExport(Style style){
 		
 		String s = 
@@ -198,6 +200,7 @@ public class Utils {
 		return s;
 	}
 	
+	@Deprecated
 	public static String getBreweryStringForExport(Brewery b){
 		String s =
 				b.getName()+":::::"+
@@ -209,6 +212,7 @@ public class Utils {
 		return s;
 	}
 	
+	@Deprecated
 	public static Style getStyleFromStringExport(String s){
 		String[] array = s.split(":::::");
 		Style style = new Style();
@@ -220,6 +224,7 @@ public class Utils {
 		return style;
 	}
 	
+	@Deprecated
 	public static Brewery getBreweryFromStringExport(String s){
 		String[] array = s.split(":::::");
 		Brewery b = new Brewery();
@@ -345,15 +350,36 @@ public class Utils {
 	}
 	
 	public static String getStyleString(Style s){
-		return s.getStyleSubCategory()+" - "+s.getStyleMainName();
+		String returned = s.getStyleMainName();
+		if(!s.getStyleSubCategory().equals("")){
+			String sub= s.getStyleSubCategory();
+			returned = sub.concat(" - ").concat(returned);
+		}
+		return returned;
 	}
 	
 	public static Style getStyleFromString(String s){
 		Style style = new Style();
-		String name = s.substring(0, s.lastIndexOf(" - "));
-		String sub = s.substring(s.lastIndexOf(" - "), s.length());
-		style.setStyleMainName(name);
-		style.setStyleSubCategory(sub);
+//		String name = s.substring(0, s.lastIndexOf("-"));
+//		name = removeInitialEndingBlankSpaces(name);
+//		String sub = s.substring(s.lastIndexOf("-"), s.length());
+//		sub = removeInitialEndingBlankSpaces(sub);
+//		style.setStyleMainName(name);
+//		style.setStyleSubCategory(sub);
+		if(s.indexOf("-")==-1){
+			style.setStyleMainName(s);
+			style.setStyleSubCategory("");
+		}else{
+			String sub = s.substring(0, s.lastIndexOf("-"));
+			sub = removeInitialEndingBlankSpaces(sub);
+			style.setStyleSubCategory(sub);
+			
+			String main = s.substring(s.lastIndexOf("-")+1, s.length());
+			main = removeInitialEndingBlankSpaces(main);
+			style.setStyleMainName(main);
+		}
+		System.out.println("The style obtained is: ");
+		Utils.printStyle(style, System.out);
 		return style;
 	}
 	
@@ -361,14 +387,68 @@ public class Utils {
 		return b.getName()+", "+b.getTown()+" ("+b.getCountry()+")";
 	}
 	
+	public static List<String> getBreweryStringList(List<Brewery> breweries){
+		List<String> strings = new LinkedList<String>();
+		for(Brewery b: breweries){
+			strings.add(getBreweryString(b));
+		}
+		return strings;
+	}
+	
+	public static String[] getBreweryStringArray(List<Brewery> breweries){
+		String[] strings = new String[breweries.size()];
+		int i=0;
+		for(Brewery b: breweries){
+			strings[i]=getBreweryString(b);
+			i++;
+		}
+		return strings;
+	}
+	
+	
+	public static List<String> getStyleStringList(List<Style> styles){
+		List<String> strings = new LinkedList<String>();
+		for(Style s: styles){
+			strings.add(getStyleString(s));
+		}
+		return strings;
+	}
+	
+	public static String[] getStyleStringArray(List<Style> styles){
+		String[] strings = new String[styles.size()];
+		int i=0;
+		for(Style s: styles){
+			strings[i]=getStyleString(s);
+			i++;
+		}
+		return strings;
+	}
+	
+	public static String removeInitialEndingBlankSpaces(String s){
+		String replaced = s;
+		if(replaced.charAt(0)==' '){
+//			replaced = replaced.replaceFirst(" ", "");
+			replaced = replaced.substring(1, replaced.length());
+		}
+		if(replaced.charAt(replaced.length()-1)== ' '){
+			replaced.substring(0, replaced.length()-1);
+		}
+		return replaced;
+	}
+	
 	public static Brewery getBreweryFromString(String s){
 		Brewery b=new Brewery();
 		String name = s.substring(0, s.indexOf(","));
-		String town = s.substring(s.indexOf(", "), s.lastIndexOf(" (") );
-		String country = s.substring(s.lastIndexOf("("), s.lastIndexOf(")"));
+		String town = s.substring(s.indexOf(","), s.lastIndexOf("(") );
+		town = removeInitialEndingBlankSpaces(town);
+		String country = s.substring(s.lastIndexOf("(")+1, s.lastIndexOf(")"));
+		country = removeInitialEndingBlankSpaces(country);
 		b.setName(name);
 		b.setTown(town);
 		b.setCountry(country);
+		
+		System.out.println("Brewery is: ");
+		Utils.printBrewery(b, System.out);
 		return b;
 	}
 	
@@ -438,6 +518,13 @@ public class Utils {
 			strings.add(getFermentationString(fermentation));
 		}
 		return strings;
+	}
+	
+	public static double parseDouble(String s){
+		if(s.lastIndexOf(".")==-1){
+			s=s.concat(".0");
+		}
+		return Double.parseDouble(s);
 	}
 	
 	public static BreweryAverage fromBreweryToBreweryAverage(Brewery b, List<Beer> itsBeers){
@@ -982,6 +1069,7 @@ public class Utils {
 		int i=0;
 		for(ShowDefault value: values){
 			strings[i]=getViewDefaultDescription(value);
+			i++;
 		}
 		return strings;
 	}
@@ -1079,6 +1167,7 @@ public class Utils {
 		
 		public static final String FILTER_BY_TITLE = "Filtra";
 		
+		public static final String BEER_FILTER_BY_STYLE = "Scegli lo stile principale";
 		public static final String BEER_FILTER_BY_STYLE_AND_SUB = "Scegli lo stile:";
 		public static final String BEER_FILTER_BY_NATION = "Scegli la nazione di produzione:";
 		public static final String BEER_FILTER_BY_ORIGIN_STYLE = "Scegli la nazione di origine dello stile:";
@@ -1087,6 +1176,9 @@ public class Utils {
 		public static final String BREWERY_FILTER_BY_COUNTRY = "Scegli la nazione:";
 		
 		public static final String STYLE_FILTER_BY_ORIGIN_COUNTRY = "Scegli la nazione di origine dello stile";
+		
+		public static final String DEFAULT_PRICE = "0.0";
+		public static final String DEFAULT_MARK = "0";
 		
 	}
 	
@@ -1388,6 +1480,15 @@ public class Utils {
 			break;
 		}
 		return function;
+	}
+	
+	
+	public static String[] toArray(List<String> list){
+		String[] array = new String[list.size()];
+		for(int i=0;i<list.size();i++){
+			array[i]=list.get(i);
+		}
+		return array;
 	}
 
 }

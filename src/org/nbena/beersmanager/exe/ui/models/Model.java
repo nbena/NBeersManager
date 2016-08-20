@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.json.JSONException;
 import org.nbena.beersmanager.conf.Configuration;
+import org.nbena.beersmanager.conf.Configuration.ShowDefault;
 import org.nbena.beersmanager.conf.ConfigurationFactory;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
@@ -205,6 +206,17 @@ public class Model {
 	public void setAddNewStyleOrModifyStyle(boolean isAddNewStyleOrModifyStyle) {
 		this.isAddNewStyleOrModifyStyle = isAddNewStyleOrModifyStyle;
 	}
+	
+	
+	
+	public List<String> getCountriesWithStyle(){
+		return QueryRunner.getAllCountriesWithAStyle(styleData);
+	}
+	
+	public List<String> getCountriesWithBrewery(){
+		return QueryRunner.getAllCountriesWithABrewery(Utils.fromBreweriesAverageToBrewery(breweryData));
+	}
+	
 
 	/**
 	 * @return the dialogModel
@@ -738,10 +750,10 @@ public class Model {
 	}
 	
 	
-	public void beersFilteredByColour(String color){
-		filteredBeers=QueryRunner.beersFilteredByColour(filteredBeers, color);
-	}
-	
+//	public void beersFilteredByColour(String color){
+//		filteredBeers=QueryRunner.beersFilteredByColour(filteredBeers, color);
+//	}
+//	
 		
 	
 	public void beersFilteredByFermentation(Fermentation fermentation){
@@ -999,6 +1011,7 @@ public class Model {
 		if(!QueryRunner.BinarySearch.isBeerExists(beerData, beer, false)){
 			beerData.add(beer);
 			filteredBeers = beerData;
+			somethingToSave = true;
 		}
 		else{
 			throw new UpdateSavingException(beer, UpdateSavingException.ErrorWhile.ADDING);
@@ -1009,6 +1022,7 @@ public class Model {
 		if(!QueryRunner.BinarySearch.isBreweryExists(Utils.fromBreweriesAverageToBrewery(breweryData), brewery, false)){
 			breweryData.add(Utils.fromBreweryToBreweryAverage(brewery));
 			filteredBreweries = breweryData;
+			somethingToSave = true;
 		}
 		else{
 			throw new UpdateSavingException(brewery, UpdateSavingException.ErrorWhile.ADDING);
@@ -1027,6 +1041,7 @@ public class Model {
 		if(!res){
 			styleData.add(style);
 			filteredStyles = styleData;
+			somethingToSave = true;
 		}
 		else{
 			throw new UpdateSavingException(style, UpdateSavingException.ErrorWhile.ADDING);
@@ -1038,8 +1053,6 @@ public class Model {
 		if(beerData.remove(beerShown)){
 			beerData.add(newBeer);
 			filteredBeers = beerData;
-			
-			showBeerData();
 		}
 		else{
 			throw new UpdateSavingException(newBeer, UpdateSavingException.ErrorWhile.UPDATING);
@@ -1051,8 +1064,7 @@ public class Model {
 		if(breweryData.remove(breweryShown)){
 			breweryData.add(newBrewery);
 			filteredBreweries = breweryData;
-			
-			showBreweryData();
+			somethingToSave = true;
 		}
 		else{
 			throw new UpdateSavingException(newBrewery, UpdateSavingException.ErrorWhile.UPDATING);
@@ -1064,11 +1076,7 @@ public class Model {
 		if(styleData.remove(styleShown)){
 			styleData.add(newStyle);
 			filteredStyles = styleData;
-			
-//			System.out.println("Gli stili: ");
-//			Utils.printStyles(styleData, System.out);
-			
-			showStyleData();
+			somethingToSave = true;
 		}
 		else{
 			throw new UpdateSavingException(newStyle, UpdateSavingException.ErrorWhile.UPDATING);
@@ -1087,7 +1095,7 @@ public class Model {
 		if(beerData.remove(toDelete)){
 			filteredBeers = beerData;
 			
-			showBeerData();
+			somethingToSave = true;
 		}
 		else{
 			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
@@ -1105,7 +1113,7 @@ public class Model {
 		if(breweryData.remove(toDelete)){
 			filteredBreweries = breweryData;
 			
-			showBreweryData();
+			somethingToSave = true;
 		}
 		else{
 			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
@@ -1122,7 +1130,7 @@ public class Model {
 		if(styleData.remove(toDelete)){
 			filteredStyles = styleData;
 			
-			showStyleData();
+			somethingToSave = true;
 		}
 		else{
 			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
@@ -1173,10 +1181,34 @@ public class Model {
 		saveBeers();
 		saveBreweries();
 		saveStyles();
+		somethingToSave = false;
 	}
 	
 	public void saveConfiguration() throws FileNotFoundException{
-		ConfigurationFactory.writeConfiguration(configuration, ConfigurationFactory.getConfigurationPath());
+		ConfigurationFactory.writeConfiguration(configuration, ConfigurationFactory.getDefaultConfigurationPath());
+	}
+	
+	@Deprecated
+	/**
+	 * Use instead the ControllerMainGUI.showDefault();
+	 */
+	public void applyDefaultView(){
+		switch(configuration.getDefaultView()){
+		case BEER:
+			showBeerData();
+			break;
+		case BREWERY:
+			showBreweryData();
+			break;
+		case STYLE:
+			showStyleData();
+			break;
+		
+		}
+	}
+	
+	public ShowDefault getDefaultView(){
+		return configuration.getDefaultView();
 	}
 
 }

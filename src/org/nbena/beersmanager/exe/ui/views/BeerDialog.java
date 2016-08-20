@@ -20,7 +20,7 @@ public interface BeerDialog {
 	public abstract void setMark(String t);
 	
 	
-	public abstract void setTried(String t);
+	public abstract void setTried(boolean tried);
 	
 	
 	public abstract void setDescription(String t);

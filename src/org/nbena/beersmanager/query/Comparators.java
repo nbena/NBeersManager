@@ -148,6 +148,28 @@ public class Comparators {
 	}
 	*/
 	
+	private static int compareStyleByCategoryAndSubcategory(Style o1, Style o2){
+		int ret;
+		if(o1.getStyleMainName().equalsIgnoreCase(o2.getStyleMainName())){
+			ret = o1.getStyleSubCategory().compareToIgnoreCase(o2.getStyleSubCategory());
+		}
+		else {
+			ret = o1.getStyleMainName().compareToIgnoreCase(o2.getStyleMainName());
+		}
+		return ret;
+	}
+	
+	public static class ComparatorStyleByCategoryAndSubcategory implements Comparator<Style>{
+
+		@Override
+		public int compare(Style arg0, Style arg1) {
+
+			return compareStyleByCategoryAndSubcategory(arg0, arg1);
+		}
+		
+	}
+	
+	
 	private static int compareStyleByFermentationComplete(Style o1, Style o2){
 		int ret;
 		if(o1.getFermentation()==o2.getFermentation()){

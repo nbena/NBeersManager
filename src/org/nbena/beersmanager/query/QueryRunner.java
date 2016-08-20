@@ -165,11 +165,11 @@ public class QueryRunner {
 	
 	
 	
-	public static List<Beer> beersFilteredByColour(List<Beer> beers, String color){
-		return beers.stream().filter(b -> b.getColor().equalsIgnoreCase(color))
-				.collect(Collectors.toList());
-	}
-	
+//	public static List<Beer> beersFilteredByColour(List<Beer> beers, String color){
+//		return beers.stream().filter(b -> b.getColor().equalsIgnoreCase(color))
+//				.collect(Collectors.toList());
+//	}
+//	
 	
 	
 	
@@ -617,7 +617,8 @@ public class QueryRunner {
 		
 		public static List<Style> stylesSortedForBinarySearch(List<Style> styles){
 			List<Style> orderedStyles = new LinkedList<Style>(styles);
-			Collections.sort(orderedStyles, new Comparators.ComparatorStyleForBinarySearch());
+//			Collections.sort(orderedStyles, new Comparators.ComparatorStyleForBinarySearch());
+			Collections.sort(orderedStyles, new Comparators.ComparatorStyleByCategoryAndSubcategory());
 			return orderedStyles;
 		}
 		
@@ -627,7 +628,8 @@ public class QueryRunner {
 			if(!sorted){
 				styles = stylesSortedForBinarySearch(styles);		
 			}
-			ret = Collections.binarySearch(styles, style, new Comparators.ComparatorStyleForBinarySearch());
+//			ret = Collections.binarySearch(styles, style, new Comparators.ComparatorStyleForBinarySearch());
+			ret = Collections.binarySearch(styles, style, new Comparators.ComparatorStyleByCategoryAndSubcategory());
 			return ret;
 		}
 
@@ -638,12 +640,17 @@ public class QueryRunner {
 	}
 	
 	
-
+		public static List<String> getAllCountriesWithAStyle(List<Style> styles){
+			List<String>  countries = new LinkedList<String>();
+			styles.stream().filter(s -> countries.contains(s.getStyleCountryOrigin()) ? countries.add(s.getStyleCountryOrigin()) : null);
+			return countries;
+		}
 	
-	
-
-	
-	
+		public static List<String> getAllCountriesWithABrewery(List<Brewery> breweries){
+			List<String>  countries = new LinkedList<String>();
+			breweries.stream().filter(b -> countries.contains(b.getCountry()) ? countries.add(b.getCountry()) : null);
+			return countries;
+		}
 	
 	
 	

@@ -38,7 +38,7 @@ public class MainExporter {
 		b.setName("O'Hara's Irish Stout");
 		b.setAlcool(5.6);
 		b.setBrewery(br);
-		b.setColor("Black");
+//		b.setColor("Black");
 		b.setMark(90);
 		b.setNumberOfStars(5);
 		b.setPlaceTried("The Duke - Dublin");
@@ -50,7 +50,7 @@ public class MainExporter {
 		b1.setName("O'Hara's Leann Follain");
 		b1.setAlcool(5.6);
 		b1.setBrewery(br);
-		b1.setColor("Black");
+//		b1.setColor("Black");
 		b1.setMark(90);
 		b1.setNumberOfStars(5);
 		b1.setPlaceTried("The Duke - Dublin");

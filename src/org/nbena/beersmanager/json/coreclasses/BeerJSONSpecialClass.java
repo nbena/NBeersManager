@@ -24,7 +24,7 @@ public class BeerJSONSpecialClass {
 	private int mark;
 	private int numberOfStars;
 	private String description;
-	private String color;
+//	private String color;
 	//private byte[] image; //tell to xml to ignore
 	private String imageFilePath;
 	
@@ -67,33 +67,33 @@ public class BeerJSONSpecialClass {
 	
 	
 
-	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description) {
-		this.placeTried = placeTried;
-		this.price = price;
-		this.alcool = alcool;
-		this.mark = mark;
-		this.numberOfStars = numberOfStars;
-		this.description = description;
-	}
-	
-	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description, String color) {
-		this.placeTried = placeTried;
-		this.price = price;
-		this.alcool = alcool;
-		this.mark = mark;
-		this.numberOfStars = numberOfStars;
-		this.description = description;
-		this.color=color;
-	}
-	
-	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description, byte[] image) {
-		this.placeTried = placeTried;
-		this.price = price;
-		this.alcool = alcool;
-		this.mark = mark;
-		this.numberOfStars = numberOfStars;
-		this.description = description;
-	}
+//	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description) {
+//		this.placeTried = placeTried;
+//		this.price = price;
+//		this.alcool = alcool;
+//		this.mark = mark;
+//		this.numberOfStars = numberOfStars;
+//		this.description = description;
+//	}
+//	
+//	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description, String color) {
+//		this.placeTried = placeTried;
+//		this.price = price;
+//		this.alcool = alcool;
+//		this.mark = mark;
+//		this.numberOfStars = numberOfStars;
+//		this.description = description;
+//		this.color=color;
+//	}
+//	
+//	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description, byte[] image) {
+//		this.placeTried = placeTried;
+//		this.price = price;
+//		this.alcool = alcool;
+//		this.mark = mark;
+//		this.numberOfStars = numberOfStars;
+//		this.description = description;
+//	}
 
 	public BeerJSONSpecialClass() {
 	}
@@ -241,19 +241,19 @@ public class BeerJSONSpecialClass {
 	}
 
 	
-	/**
-	 * @return the color
-	 */
-	public String getColor() {
-		return color;
-	}
-
-	/**
-	 * @param color the color to set
-	 */
-	public void setColor(String color) {
-		this.color = color;
-	}
+//	/**
+//	 * @return the color
+//	 */
+//	public String getColor() {
+//		return color;
+//	}
+//
+//	/**
+//	 * @param color the color to set
+//	 */
+//	public void setColor(String color) {
+//		this.color = color;
+//	}
 
 
 

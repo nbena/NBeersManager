@@ -22,7 +22,7 @@ public class Converter {
 		*/
 		BeerJSONSpecialClass beerSpecial=new BeerJSONSpecialClass(beer.getName(), beer.getBrewery().getName(), beer.getStyle().getStyleMainName(), beer.getStyle().getStyleSubCategory(), beer.getNumberOfStars());
 		beerSpecial.setAlcool(beer.getAlcool());
-		beerSpecial.setColor(beer.getColor());
+//		beerSpecial.setColor(beer.getColor());
 		beerSpecial.setDescription(beer.getDescription());
 		beerSpecial.setImageFilePath(beer.getImageFilePath()); //absolute path is get by working directory
 		beerSpecial.setMark(beer.getMark());
@@ -50,7 +50,7 @@ public class Converter {
 		
 		Beer beer=new Beer(specialClassBeer.getName(), brewery, style);
 		beer.setAlcool(specialClassBeer.getAlcool());
-		beer.setColor(specialClassBeer.getColor());
+//		beer.setColor(specialClassBeer.getColor());
 		beer.setDescription(specialClassBeer.getDescription());
 		beer.setImageFilePath(specialClassBeer.getImageFilePath()); //absolute path is get by working directory
 		beer.setMark(specialClassBeer.getMark());

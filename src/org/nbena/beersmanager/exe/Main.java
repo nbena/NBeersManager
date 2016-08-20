@@ -186,23 +186,23 @@ public class Main {
 		
 		
 
-		Configuration config = ConfigurationFactory.getDefaultConfiguration();
-		
-		config.setBeerFilterAlgorithm(BeerFilterAlgorithm.BY_MARK);
-		config.setBeerFilterValue(60);
-		
-		config.setBreweryFilterAlgorithm(BreweryFilterAlgorithm.COUNTRY);
-		config.setBreweryFilterValue("Belgio");
-		
-		config.setStyleFilterAlgorithm(StyleFilterAlgorithm.BY_MAIN_STYLE);
-		config.setStyleFilterValue(new Style("Stout", "Imperial", "ciao", "Eire", Fermentation.HIGH));
-		try {
-			ConfigurationFactory.writeConfiguration(config, "C:\\Users\\nicola\\Documents\\BeerDb\\config.json");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
+//		Configuration config = ConfigurationFactory.getDefaultConfiguration();
+//		
+//		config.setBeerFilterAlgorithm(BeerFilterAlgorithm.BY_MARK);
+//		config.setBeerFilterValue(60);
+//		
+//		config.setBreweryFilterAlgorithm(BreweryFilterAlgorithm.COUNTRY);
+//		config.setBreweryFilterValue("Belgio");
+//		
+//		config.setStyleFilterAlgorithm(StyleFilterAlgorithm.BY_MAIN_STYLE);
+//		config.setStyleFilterValue(new Style("Stout", "Imperial", "ciao", "Eire", Fermentation.HIGH));
+//		try {
+//			ConfigurationFactory.writeConfiguration(config, "C:\\Users\\nicola\\Documents\\BeerDb\\config.json");
+//		} catch (FileNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
 //		try {
 //			Configuration read = ConfigurationFactory.readConfiguration("C:\\Users\\nicola\\Documents\\BeerDb\\config.json");
 //			Utils.printConfiguration(read, System.out);
@@ -210,55 +210,56 @@ public class Main {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+//			
+			
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			Model model =new Model();
+			
+			try {
+				Configuration conf = ConfigurationFactory.readConfiguration(ConfigurationFactory.getDefaultConfigurationPath());
+				conf = ConfigurationFactory.setupPath(conf);
+				model.setConfiguration(conf);
+			} catch (JSONException | FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				model.setCountries(Utils.getCountries(model.getConfiguration().getCountriesFilePath()));
+			} catch (JSONException | FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			ViewMainGUI gui = new ViewMainGUI(model);
+			ControllerMainGUI controller=new ControllerMainGUI(gui, model);
 			
 			
-//			try {
-//				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-//					| UnsupportedLookAndFeelException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//			Model model =new Model();
-//			
-//			ConfigurationFactory factory = new ConfigurationFactory();
-//			try {
-//				Configuration conf = factory.readConfiguration(ConfigurationFactory.getConfigurationPath());
-//				conf = ConfigurationFactory.setupPath(conf);
-//				model.setConfiguration(conf);
-//			} catch (JSONException | FileNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//			try {
-//				model.setCountries(Utils.getCountries(model.getConfiguration().getCountriesFilePath()));
-//			} catch (JSONException | FileNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//			ViewMainGUI gui = new ViewMainGUI(model);
-//			ControllerMainGUI controller=new ControllerMainGUI(gui, model);
-//			
-//			
-//			controller.setShowBreweriesAverages(true);
-//			
-//			
-//			try {
-//				model.readThings();
-//			} catch (FileNotFoundException | JSONException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//			model.setAverages();
-//			
-//			
+			controller.setShowBreweriesAverages(true);
+			
+			
+			try {
+				model.readThings();
+			} catch (FileNotFoundException | JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			model.setAverages();
+			
+			
 //			controller.showBeers();
-////			controller.showBreweries();
-////			controller.showStyles();
+//			controller.showBreweries();
+//			controller.showStyles();
+			
+			controller.showDefault();
 
 
 

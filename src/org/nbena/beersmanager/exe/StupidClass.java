@@ -70,7 +70,7 @@ public class StupidClass {
 		Beer b1=new Beer();
 		b1.setName("Trappistes Westvleteren 12");
 		b1.setBrewery(breweries.get(0));
-		b1.setColor("Marrone scuro");
+//		b1.setColor("Marrone scuro");
 		b1.setDescription("La migliore in assoluto.");
 		b1.setMark(100);
 		b1.setNumberOfStars(5);
@@ -84,7 +84,7 @@ public class StupidClass {
 		Beer b2=new Beer();
 		b2.setName("Trappistes Rochefort 10");
 		b2.setBrewery(breweries.get(1));
-		b2.setColor("Marrone scuro");
+//		b2.setColor("Marrone scuro");
 		b2.setDescription("Nella top 3 delle mie migliori birre");
 		b2.setMark(99);
 		b2.setNumberOfStars(5);

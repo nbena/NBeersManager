@@ -141,7 +141,7 @@ public class JSONExporterCoreClasses {
 		BeerJSONSpecialClass beer=new BeerJSONSpecialClass();
 		beer.setAlcool(obj.getDouble(JSON_BEER_ALCOOL));
 		beer.setBreweryName(obj.getString(JSON_BEER_BREWERY_NAME));
-		beer.setColor(obj.getString(JSON_BEER_COLOR));
+//		beer.setColor(obj.getString(JSON_BEER_COLOR));
 		beer.setDescription(obj.getString(JSON_BEER_DESCRIPTION));
 		beer.setMark(obj.getInt(JSON_BEER_MARK));
 		beer.setName(obj.getString(JSON_BEER_NAME));

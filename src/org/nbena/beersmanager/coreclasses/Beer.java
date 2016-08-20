@@ -23,7 +23,7 @@ public class Beer {
 	private Integer mark;
 	private Integer numberOfStars; /*primitive types declared os object so I can check if they are null*/
 	private String description;
-	private String color;
+//	private String color;
 	private byte[] image; //tell to xml to ignore
 	private String imageFilePath;
 
@@ -52,15 +52,15 @@ public class Beer {
 		this.description = description;
 	}
 	
-	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description, String color) {
-		this.placeTried = placeTried;
-		this.price = price;
-		this.alcool = alcool;
-		this.mark = mark;
-		this.numberOfStars = numberOfStars;
-		this.description = description;
-		this.color=color;
-	}
+//	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description, String color) {
+//		this.placeTried = placeTried;
+//		this.price = price;
+//		this.alcool = alcool;
+//		this.mark = mark;
+//		this.numberOfStars = numberOfStars;
+//		this.description = description;
+//		this.color=color;
+//	}
 	
 	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description, byte[] image) {
 		this.placeTried = placeTried;
@@ -247,19 +247,19 @@ public class Beer {
 		this.imageFilePath = imagePath;
 	}
 
-	/**
-	 * @return the color
-	 */
-	public String getColor() {
-		return color;
-	}
-
-	/**
-	 * @param color the color to set
-	 */
-	public void setColor(String color) {
-		this.color = color;
-	}
+//	/**
+//	 * @return the color
+//	 */
+//	public String getColor() {
+//		return color;
+//	}
+//
+//	/**
+//	 * @param color the color to set
+//	 */
+//	public void setColor(String color) {
+//		this.color = color;
+//	}
 
 	/*
 	public boolean isComplete(){
@@ -284,7 +284,7 @@ public class Beer {
 		b.append(brewery.getName()+" "+name+"\n");
 		b.append(style.getStyleMainName()+" "+style.getStyleSubCategory()+", "+alcool+" %\n");
 		b.append("Stars: "+numberOfStars+", mark: "+mark+"\n");
-		b.append("Color: "+color+"\n");
+//		b.append("Color: "+color+"\n");
 		if(isTried){
 			b.append("Tried at: "+placeTried+", paied: "+price+"\n");
 		}
@@ -292,7 +292,7 @@ public class Beer {
 			b.append("Not yet tried\n");
 		}
 		
-		b.append("Color: "+color+"\n");
+//		b.append("Color: "+color+"\n");
 		return b.toString();
 	}
 
@@ -305,7 +305,7 @@ public class Beer {
 		int result = 1;
 		result = prime * result + ((alcool == null) ? 0 : alcool.hashCode());
 		result = prime * result + ((brewery == null) ? 0 : brewery.hashCode());
-		result = prime * result + ((color == null) ? 0 : color.hashCode());
+//		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + Arrays.hashCode(image);
 		result = prime * result + ((imageFilePath == null) ? 0 : imageFilePath.hashCode());
@@ -341,11 +341,11 @@ public class Beer {
 				return false;
 		} else if (!brewery.equals(other.brewery))
 			return false;
-		if (color == null) {
-			if (other.color != null)
-				return false;
-		} else if (!color.equals(other.color))
-			return false;
+//		if (color == null) {
+//			if (other.color != null)
+//				return false;
+//		} else if (!color.equals(other.color))
+//			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;

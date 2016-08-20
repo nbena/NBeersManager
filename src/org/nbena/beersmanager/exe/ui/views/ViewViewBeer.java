@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.nbena.beersmanager.coreclasses.Beer;
+import org.nbena.beersmanager.exe.Utils;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -108,8 +109,8 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 		textFieldMark.setText(t);
 	}
 	
-	public void setTried(String t){
-		textFieldTried.setText(t);
+	public void setTried(boolean tried){
+		textFieldTried.setText(Utils.getBooleanItalian(tried));
 	}
 	
 	public void setDescription(String t){

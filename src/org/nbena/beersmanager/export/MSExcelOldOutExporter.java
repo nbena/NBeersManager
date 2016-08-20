@@ -8,6 +8,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
@@ -38,26 +40,68 @@ public class MSExcelOldOutExporter extends OutExporter{
 		
 		//intestation
 		Row rowIntestation=sheet.createRow(0);
+//		cellIntestation=new Cell[15];
+//		for(int j=0;j<15;j++){
+//			cellIntestation[j]=rowIntestation.createCell(j);
+//		}
+//		
+//		
+//		
+//		cellIntestation[0].setCellValue(OutExporter.BEER_BREWERY_NAME);
+//		cellIntestation[1].setCellValue(OutExporter.BEER_BREWERY_COUNTRY);
+//		cellIntestation[2].setCellValue(OutExporter.BEER_BREWERY_TOWN);		
+//		cellIntestation[3].setCellValue(OutExporter.BEER_NAME);
+//		cellIntestation[4].setCellValue(OutExporter.BEER_FERMENTATION);
+//		cellIntestation[5].setCellValue(OutExporter.BEER_STYLE_MAIN);
+//		cellIntestation[6].setCellValue(OutExporter.BEER_STYLE_SUBCATEGORY);
+//		cellIntestation[7].setCellValue(OutExporter.BEER_STYLE_COUNTRY);
+//		cellIntestation[8].setCellValue(OutExporter.BEER_BREWERY_TRAPPIST);	
+//		cellIntestation[9].setCellValue(OutExporter.BEER_COLOR);
+//		cellIntestation[10].setCellValue(OutExporter.BEER_MARK);
+//		cellIntestation[11].setCellValue(OutExporter.BEER_ALCOOL);
+//		cellIntestation[12].setCellValue(OutExporter.BEER_PLACE_TRIED);
+//		cellIntestation[13].setCellValue(OutExporter.BEER_STARS);
+//		cellIntestation[14].setCellValue(OutExporter.BEER_DESCRIPTION);
+//		
+//		
+//		
+//		//content
+//		cells=new Cell[15];
+//		int i=1;
+//		//for(int i=0/*, j=0*/;i<=beers.size();i++){
+//		for(Beer beer: beers){
+//			XSSFRow row=sheet.createRow(i);
+//			
+//			for(int f=0;f<15;f++){
+//				cells[f]=row.createCell(f);
+//			}
+//			
+//			cells[0].setCellValue(beer.getBrewery().getName());
+//			cells[1].setCellValue(beer.getBrewery().getCountry());
+//			cells[2].setCellValue(beer.getBrewery().getTown());
+//			cells[3].setCellValue(beer.getName());
+//			cells[4].setCellValue(beer.getFermentation().toFirstUpperCase());
+//			cells[5].setCellValue(beer.getStyle().getStyleMainName());
+//			cells[6].setCellValue(beer.getStyle().getStyleSubCategory());
+//			cells[7].setCellValue(beer.getStyle().getStyleCountryOrigin());
+//			cells[8].setCellValue(beer.getBrewery().isAuthenticTrappist());
+////			cells[9].setCellValue(beer.getColor());
+//			cells[10].setCellValue(beer.getMark());
+//			cells[11].setCellValue(beer.getAlcool());
+//			cells[12].setCellValue(beer.getPlaceTried());
+//			cells[13].setCellValue(beer.getNumberOfStars());
+//			cells[14].setCellValue(beer.getDescription());
+//			
+//			i++;
+//		}
+		
+		
 		cellIntestation=new Cell[15];
 		for(int j=0;j<15;j++){
 			cellIntestation[j]=rowIntestation.createCell(j);
 		}
 		
-//		cellIntestation[0].setCellValue(beerIntestationMap.get("Brewery name"));
-//		cellIntestation[1].setCellValue(beerIntestationMap.get("Brewery country"));
-//		cellIntestation[2].setCellValue(beerIntestationMap.get("Brewery town"));		
-//		cellIntestation[3].setCellValue(beerIntestationMap.get("Beer name"));
-//		cellIntestation[4].setCellValue(beerIntestationMap.get("Fermentation"));
-//		cellIntestation[5].setCellValue(beerIntestationMap.get("Style"));
-//		cellIntestation[6].setCellValue(beerIntestationMap.get("Style sub category"));
-//		cellIntestation[7].setCellValue(beerIntestationMap.get("Style country"));
-//		cellIntestation[8].setCellValue(beerIntestationMap.get("Trappist"));	
-//		cellIntestation[9].setCellValue(beerIntestationMap.get("Color"));
-//		cellIntestation[10].setCellValue(beerIntestationMap.get("Mark"));
-//		cellIntestation[11].setCellValue(beerIntestationMap.get("Alcool"));
-//		cellIntestation[12].setCellValue(beerIntestationMap.get("Place tried"));
-//		cellIntestation[13].setCellValue(beerIntestationMap.get("Stars"));
-//		cellIntestation[14].setCellValue(beerIntestationMap.get("Description"));
+		
 		
 		cellIntestation[0].setCellValue(OutExporter.BEER_BREWERY_NAME);
 		cellIntestation[1].setCellValue(OutExporter.BEER_BREWERY_COUNTRY);
@@ -68,23 +112,24 @@ public class MSExcelOldOutExporter extends OutExporter{
 		cellIntestation[6].setCellValue(OutExporter.BEER_STYLE_SUBCATEGORY);
 		cellIntestation[7].setCellValue(OutExporter.BEER_STYLE_COUNTRY);
 		cellIntestation[8].setCellValue(OutExporter.BEER_BREWERY_TRAPPIST);	
-		cellIntestation[9].setCellValue(OutExporter.BEER_COLOR);
-		cellIntestation[10].setCellValue(OutExporter.BEER_MARK);
-		cellIntestation[11].setCellValue(OutExporter.BEER_ALCOOL);
-		cellIntestation[12].setCellValue(OutExporter.BEER_PLACE_TRIED);
-		cellIntestation[13].setCellValue(OutExporter.BEER_STARS);
-		cellIntestation[14].setCellValue(OutExporter.BEER_DESCRIPTION);
+//		cellIntestation[9].setCellValue(OutExporter.BEER_COLOR);
+		cellIntestation[9].setCellValue(OutExporter.BEER_MARK);
+		cellIntestation[10].setCellValue(OutExporter.BEER_ALCOOL);
+		cellIntestation[11].setCellValue(OutExporter.BEER_PLACE_TRIED);
+		cellIntestation[12].setCellValue(OutExporter.BEER_STARS);
+		cellIntestation[13].setCellValue(OutExporter.BEER_DESCRIPTION);
 		
 		
 		
 		//content
-		cells=new Cell[15];
+		cells=new Cell[14];
 		int i=1;
 		//for(int i=0/*, j=0*/;i<=beers.size();i++){
 		for(Beer beer: beers){
-			Row row=sheet.createRow(i);
 			
-			for(int f=0;f<15;f++){
+		Row row=sheet.createRow(i);
+			
+			for(int f=0;f<14;f++){
 				cells[f]=row.createCell(f);
 			}
 			
@@ -97,12 +142,12 @@ public class MSExcelOldOutExporter extends OutExporter{
 			cells[6].setCellValue(beer.getStyle().getStyleSubCategory());
 			cells[7].setCellValue(beer.getStyle().getStyleCountryOrigin());
 			cells[8].setCellValue(beer.getBrewery().isAuthenticTrappist());
-			cells[9].setCellValue(beer.getColor());
-			cells[10].setCellValue(beer.getMark());
-			cells[11].setCellValue(beer.getAlcool());
-			cells[12].setCellValue(beer.getPlaceTried());
-			cells[13].setCellValue(beer.getNumberOfStars());
-			cells[14].setCellValue(beer.getDescription());
+//			cells[9].setCellValue(beer.getColor());
+			cells[9].setCellValue(beer.getMark());
+			cells[10].setCellValue(beer.getAlcool());
+			cells[11].setCellValue(beer.getPlaceTried());
+			cells[12].setCellValue(beer.getNumberOfStars());
+			cells[13].setCellValue(beer.getDescription());
 			
 			i++;
 		}
@@ -121,8 +166,50 @@ public class MSExcelOldOutExporter extends OutExporter{
 		
 		//intestation
 		Row rowIntestation=sheet.createRow(0);
-		cellIntestation=new Cell[15];
-		for(int j=0;j<15;j++){
+//		cellIntestation=new Cell[15];
+		cellIntestation=new Cell[9];
+//		for(int j=0;j<15;j++){
+//			cellIntestation[j]=rowIntestation.createCell(j);
+//		}
+//		
+//		cellIntestation[0].setCellValue(OutExporter.BEER_BREWERY_NAME);			
+//		cellIntestation[1].setCellValue(OutExporter.BEER_NAME);
+//		cellIntestation[2].setCellValue(OutExporter.BEER_STYLE_MAIN);
+//		cellIntestation[3].setCellValue(OutExporter.BEER_STYLE_SUBCATEGORY);
+//		cellIntestation[4].setCellValue(OutExporter.BEER_COLOR);
+//		cellIntestation[5].setCellValue(OutExporter.BEER_MARK);
+//		cellIntestation[6].setCellValue(OutExporter.BEER_ALCOOL);
+//		cellIntestation[7].setCellValue(OutExporter.BEER_PLACE_TRIED);
+//		cellIntestation[8].setCellValue(OutExporter.BEER_STARS);
+//		cellIntestation[9].setCellValue(OutExporter.BEER_DESCRIPTION);	
+//
+//		
+//		//content
+//		cells=new Cell[15];
+//		int i=1;
+//		for(BeerJSONSpecialClass beer: beers){
+//			Row row=sheet.createRow(i);
+//			
+//			for(int f=0;f<15;f++){
+//				cells[f]=row.createCell(f);
+//			}
+//			
+//			cells[0].setCellValue(beer.getBreweryName());
+//			cells[1].setCellValue(beer.getName());
+//			cells[2].setCellValue(beer.getStyleMainName());
+//			cells[3].setCellValue(beer.getStyleSubcategory());
+//			cells[4].setCellValue(beer.getColor());
+//			cells[5].setCellValue(beer.getMark());
+//			cells[6].setCellValue(beer.getAlcool());
+//			cells[7].setCellValue(beer.getPlaceTried());
+//			cells[8].setCellValue(beer.getNumberOfStars());
+//			cells[9].setCellValue(beer.getDescription());
+//			
+//			
+//			i++;
+//		}
+		
+		for(int j=0;j<9;j++){
 			cellIntestation[j]=rowIntestation.createCell(j);
 		}
 		
@@ -130,21 +217,20 @@ public class MSExcelOldOutExporter extends OutExporter{
 		cellIntestation[1].setCellValue(OutExporter.BEER_NAME);
 		cellIntestation[2].setCellValue(OutExporter.BEER_STYLE_MAIN);
 		cellIntestation[3].setCellValue(OutExporter.BEER_STYLE_SUBCATEGORY);
-		cellIntestation[4].setCellValue(OutExporter.BEER_COLOR);
-		cellIntestation[5].setCellValue(OutExporter.BEER_MARK);
-		cellIntestation[6].setCellValue(OutExporter.BEER_ALCOOL);
-		cellIntestation[7].setCellValue(OutExporter.BEER_PLACE_TRIED);
-		cellIntestation[8].setCellValue(OutExporter.BEER_STARS);
-		cellIntestation[9].setCellValue(OutExporter.BEER_DESCRIPTION);	
+		cellIntestation[4].setCellValue(OutExporter.BEER_MARK);
+		cellIntestation[5].setCellValue(OutExporter.BEER_ALCOOL);
+		cellIntestation[6].setCellValue(OutExporter.BEER_PLACE_TRIED);
+		cellIntestation[7].setCellValue(OutExporter.BEER_STARS);
+		cellIntestation[8].setCellValue(OutExporter.BEER_DESCRIPTION);	
 
 		
 		//content
-		cells=new Cell[15];
+		cells=new Cell[9];
 		int i=1;
 		for(BeerJSONSpecialClass beer: beers){
 			Row row=sheet.createRow(i);
 			
-			for(int f=0;f<15;f++){
+			for(int f=0;f<14;f++){
 				cells[f]=row.createCell(f);
 			}
 			
@@ -152,19 +238,19 @@ public class MSExcelOldOutExporter extends OutExporter{
 			cells[1].setCellValue(beer.getName());
 			cells[2].setCellValue(beer.getStyleMainName());
 			cells[3].setCellValue(beer.getStyleSubcategory());
-			cells[4].setCellValue(beer.getColor());
-			cells[5].setCellValue(beer.getMark());
-			cells[6].setCellValue(beer.getAlcool());
-			cells[7].setCellValue(beer.getPlaceTried());
-			cells[8].setCellValue(beer.getNumberOfStars());
-			cells[9].setCellValue(beer.getDescription());
+			cells[4].setCellValue(beer.getMark());
+			cells[5].setCellValue(beer.getAlcool());
+			cells[6].setCellValue(beer.getPlaceTried());
+			cells[7].setCellValue(beer.getNumberOfStars());
+			cells[8].setCellValue(beer.getDescription());
 			
 			
 			i++;
 		}
 		
 		workbook.write(out);
-		out.close();	
+		out.close();
+	
 	}
 
 	@Override
@@ -236,13 +322,12 @@ public class MSExcelOldOutExporter extends OutExporter{
 //		cellIntestation[2].setCellValue(breweryIntestationMap.get("Brewery country"));
 //		cellIntestation[3].setCellValue(breweryIntestationMap.get("Brewery website"));
 //		cellIntestation[4].setCellValue(breweryIntestationMap.get("Brewery description"));
-		
+
 		cellIntestation[0].setCellValue(OutExporter.BREWERY_NAME);
 		cellIntestation[1].setCellValue(OutExporter.BREWERY_TOWN);
 		cellIntestation[2].setCellValue(OutExporter.BREWERY_COUNTRY);
 		cellIntestation[3].setCellValue(OutExporter.BREWERY_WEBSITE);
 		cellIntestation[4].setCellValue(OutExporter.BREWERY_DESCRIPTION);
-		
 		cells=new Cell[5];
 		int i=1;
 		for(Brewery brewery: breweries){

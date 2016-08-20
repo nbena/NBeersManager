@@ -84,7 +84,7 @@ public class ConfigurationFactory {
 //		marshaller.marshal(conf, file);
 //	}
 	
-	public static String getConfigurationPath(){
+	public static String getDefaultConfigurationPath(){
 		return Utils.jsonConfiguration(Utils.currentDirectory());
 	}
 	
@@ -99,10 +99,18 @@ public class ConfigurationFactory {
 		return exporter.readConfiguration();
 	}
 	
+	public static Configuration readConfiguration() throws JSONException, FileNotFoundException{
+		return readConfiguration(getDefaultConfigurationPath());
+	}
+	
 	public static void writeConfiguration(Configuration c, String configurationPath) throws FileNotFoundException{
 		JSONExporterConfiguration exporter=new JSONExporterConfiguration();
 		exporter.setOut(new FileOutputStream(new File(configurationPath)));
 		exporter.writeConfiguration(c);
+	}
+	
+	public static void writeConfiguration(Configuration c) throws FileNotFoundException{
+		writeConfiguration(c, getDefaultConfigurationPath());
 	}
 
 }

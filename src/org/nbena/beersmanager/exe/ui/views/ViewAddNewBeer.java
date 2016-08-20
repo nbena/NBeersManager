@@ -18,6 +18,10 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ViewAddNewBeer extends JDialog implements BeerDialog{
 
@@ -27,7 +31,6 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	private JTextField textFieldPrice;
 	private JTextField textFieldStars;
 	private JTextField textFieldMark;
-	private JTextField textFieldTried;
 	private JTextField textFieldPlace;
 	
 	private JButton okButton;
@@ -37,6 +40,9 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	private JTextArea textAreaDescription;
 	private JComboBox<String> comboBoxBrewery;
 	private JComboBox<String> comboBoxStyle;
+	private JRadioButton rdbtnTriedYes;
+	private JRadioButton rdbtnTriedNo;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	public void addActionListenerOkButton(ActionListener listener){
 		okButton.addActionListener(listener);
@@ -88,8 +94,26 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		textFieldMark.setText(t);
 	}
 	
-	public void setTried(String t){
-		textFieldTried.setText(t);
+//	public void setTried(String t){
+//		textFieldTried.setText(t);
+//	}
+
+	
+	public void setTriedButtonDefault(boolean tried){
+		setTried(tried);
+	}
+	
+	public void setTried(boolean tried){
+		if(tried){
+			rdbtnTriedYes.setSelected(true);
+		}
+		else{
+			rdbtnTriedNo.setSelected(true);
+		}
+	}
+	
+	public boolean isTried(){
+		return rdbtnTriedYes.isSelected();
 	}
 	
 	public void setDescription(String t){
@@ -124,9 +148,9 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		return textFieldMark.getText();
 	}
 	
-	public String getTried(){
-		return textFieldTried.getText();
-	}
+//	public String getTried(){
+//		return textFieldTried.getText();
+//	}
 	
 	public String getDescription(){
 		return textAreaDescription.getText();
@@ -139,6 +163,35 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	public String getPlace(){
 		return textFieldPlace.getText();
 	}
+	
+//	public void addActionListenerTriedYesRadioButton(ActionListener listener){
+//		rdbtnTriedYes.addActionListener(listener);
+//	}
+//	
+//	public void addActionListenerTriedNoRadioButton(ActionListener listener){
+//		rdbtnTriedNo.addActionListener(listener);
+//	}
+	
+	public void addActionListenerTriedYesRadioButton(MouseAdapter listener){
+		rdbtnTriedYes.addMouseListener(listener);
+	}
+	
+	public void addActionListenerTriedNoRadioButton(MouseAdapter listener){
+		rdbtnTriedNo.addMouseListener(listener);
+	}
+	
+	public void setTextFieldPriceEditable(boolean enabled){
+		textFieldPrice.setEditable(enabled);
+	}
+	
+	public void setTextFieldMarkEditable(boolean enabled){
+		textFieldMark.setEditable(enabled);
+	}
+	
+	public void setPrice(String t){
+		textFieldPrice.setText(t);
+	}
+	
 
 	/**
 	 * Launch the application.
@@ -242,7 +295,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		{
 			textFieldABV = new JTextField();
 			GridBagConstraints gbc_textFieldABV = new GridBagConstraints();
-			gbc_textFieldABV.anchor = GridBagConstraints.WEST;
+			gbc_textFieldABV.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldABV.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldABV.gridx = 3;
 			gbc_textFieldABV.gridy = 8;
@@ -262,7 +315,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		{
 			textFieldStars = new JTextField();
 			GridBagConstraints gbc_textFieldStars = new GridBagConstraints();
-			gbc_textFieldStars.anchor = GridBagConstraints.WEST;
+			gbc_textFieldStars.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldStars.insets = new Insets(0, 0, 5, 0);
 			gbc_textFieldStars.gridx = 7;
 			gbc_textFieldStars.gridy = 8;
@@ -284,7 +337,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		{
 			textFieldMark = new JTextField();
 			GridBagConstraints gbc_textFieldMark = new GridBagConstraints();
-			gbc_textFieldMark.anchor = GridBagConstraints.WEST;
+			gbc_textFieldMark.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldMark.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldMark.gridx = 3;
 			gbc_textFieldMark.gridy = 10;
@@ -293,23 +346,42 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		}
 		
 		{
+			textFieldMark.setColumns(10);
+		}
+		
+		{
 			JLabel lblProvata = new JLabel("Provata:");
 			GridBagConstraints gbc_lblProvata = new GridBagConstraints();
 			gbc_lblProvata.insets = new Insets(0, 0, 5, 5);
+//			gbc_lblProvata.gridx = 4;
 			gbc_lblProvata.gridx = 5;
 			gbc_lblProvata.gridy = 10;
 			contentPanel.add(lblProvata, gbc_lblProvata);
 		}	
-		
 		{
-			textFieldTried = new JTextField();
-			GridBagConstraints gbc_textFieldTried = new GridBagConstraints();
-			gbc_textFieldTried.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldTried.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldTried.gridx = 7;
-			gbc_textFieldTried.gridy = 10;
-			contentPanel.add(textFieldTried, gbc_textFieldTried);
-			textFieldMark.setColumns(10);
+			rdbtnTriedYes = new JRadioButton("S\u00EC");
+			rdbtnTriedYes.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+				}
+			});
+			buttonGroup.add(rdbtnTriedYes);
+			GridBagConstraints gbc_rdbtnTriedYes = new GridBagConstraints();
+			gbc_rdbtnTriedYes.insets = new Insets(0, 0, 5, 5);
+//			gbc_rdbtnTriedYes.gridx = 5;
+			gbc_rdbtnTriedYes.gridx = 6;
+			gbc_rdbtnTriedYes.gridy = 10;
+			contentPanel.add(rdbtnTriedYes, gbc_rdbtnTriedYes);
+		}
+		{
+			rdbtnTriedNo = new JRadioButton("No");
+			buttonGroup.add(rdbtnTriedNo);
+			GridBagConstraints gbc_rdbtnTriedNo = new GridBagConstraints();
+			gbc_rdbtnTriedNo.insets = new Insets(0, 0, 5, 5);
+//			gbc_rdbtnTriedNo.gridx = 6;
+			gbc_rdbtnTriedNo.gridx = 7;
+			gbc_rdbtnTriedNo.gridy = 10;
+			contentPanel.add(rdbtnTriedNo, gbc_rdbtnTriedNo);
 		}
 		
 		{
@@ -323,7 +395,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		{
 			textFieldPrice = new JTextField();
 			GridBagConstraints gbc_textFieldPrice = new GridBagConstraints();
-			gbc_textFieldPrice.anchor = GridBagConstraints.WEST;
+			gbc_textFieldPrice.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldPrice.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldPrice.gridx = 3;
 			gbc_textFieldPrice.gridy = 12;
@@ -341,8 +413,8 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		{
 			textFieldPlace = new JTextField();
 			GridBagConstraints gbc_textFieldPlace = new GridBagConstraints();
-			gbc_textFieldPlace.anchor = GridBagConstraints.WEST;
-			gbc_textFieldPlace.insets = new Insets(0, 0, 5, 5);
+			gbc_textFieldPlace.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldPlace.insets = new Insets(0, 0, 5, 0);
 			gbc_textFieldPlace.gridx = 7;
 			gbc_textFieldPlace.gridy = 12;
 			contentPanel.add(textFieldPlace, gbc_textFieldPlace);
