@@ -358,6 +358,12 @@ public class Utils {
 		return returned;
 	}
 	
+	public static Style getMainStyleFromString(String s){
+		Style style = new Style();
+		style.setStyleMainName(s);
+		return style;
+	}
+	
 	public static Style getStyleFromString(String s){
 		Style style = new Style();
 //		String name = s.substring(0, s.lastIndexOf("-"));
@@ -795,20 +801,26 @@ public class Utils {
 	private static final String BEER_FILTERING_ALGORITHM_BY_FERMENTATION_SPONTANEOUS = "Fermentazione spontanea";
 	private static final String BEER_FILTERING_ALGORITHM_BY_COUNTRY = "Nazione";
 	private static final String BEER_FILTERING_ALGORITHM_BY_STYLE_PROVENIENCE = "Nazione origine stile";
-	private static final String BEER_FILTERING_ALGORITHM_BY_STARS = "Stelle (minime)";
-	private static final String BEER_FILTERING_ALGORITHM_BY_MARK = "Voto (minimo)";
-	private static final String BEER_FILTERING_ALGORITHM_BY_ABV = "ABV (minimo)";
+	private static final String BEER_FILTERING_ALGORITHM_BY_MINIMUM_STARS = "Stelle (minime)";
+	private static final String BEER_FILTERING_ALGORITHM_BY_MINIMUM_MARK = "Voto (minimo)";
+	private static final String BEER_FILTERING_ALGORITHM_BY_MINIMUM_ABV = "ABV (minimo)";
 	private static final String BEER_FILTERING_ALGORITHM_BY_IS_TRIED_YES = "Provate";
 	private static final String BEER_FILTERING_ALGORITHM_BY_IS_TRIED_NO = "Non provate";
 	private static final String BEER_FILTERING_ALGORITHM_BY_STYLE = "Stile e sottostile";
 	private static final String BEER_FILTERING_ALGORITHM_BY_MAIN_STYLE = "Stile (solo principale)";
+	private static final String BEER_FILTERING_ALGORITHM_BY_BREWERY = "Birrificio";
+	private static final String BEER_FILTERING_ALGORITHM_BY_EXACT_ABV = "(ABV (esatto))";
+	private static final String BEER_FILTERING_ALGORITHM_BY_EXACT_STARS = "Stelle (esatte)";
+	private static final String BEER_FILTERING_ALGORITHM_BY_TRAPPIST_YES = "Trappiste";
+	private static final String BEER_FILTERING_ALGORITHM_BY_TRAPPIST_NO = "Non trappiste";
+	private static final String BEER_FILTERING_ALGORITHM_BY_EXACT_MARK = "Voto (esatto)";
 	
 	
 	public static String getBeerFilterAlgorithmDescription(BeerFilterAlgorithm algorithm){
 		String value = null;
 		switch(algorithm){
-		case BY_ABV:
-			value = BEER_FILTERING_ALGORITHM_BY_ABV;
+		case BY_MINIMUM_ABV:
+			value = BEER_FILTERING_ALGORITHM_BY_MINIMUM_ABV;
 			break;
 		case BY_COUNTRY:
 			value = BEER_FILTERING_ALGORITHM_BY_COUNTRY;
@@ -822,11 +834,11 @@ public class Utils {
 		case BY_FERMENTATION_SPONTANEOUS:
 			value = BEER_FILTERING_ALGORITHM_BY_FERMENTATION_SPONTANEOUS;
 			break;
-		case BY_MARK:
-			value = BEER_FILTERING_ALGORITHM_BY_MARK;
+		case BY_MINIMUM_MARK:
+			value = BEER_FILTERING_ALGORITHM_BY_MINIMUM_MARK;
 			break;
-		case BY_STARS:
-			value = BEER_FILTERING_ALGORITHM_BY_STARS;
+		case BY_MINIMUM_STARS:
+			value = BEER_FILTERING_ALGORITHM_BY_MINIMUM_STARS;
 			break;
 		case BY_STYLE_PROVENIENCE:
 			value = BEER_FILTERING_ALGORITHM_BY_STYLE_PROVENIENCE;
@@ -846,6 +858,26 @@ public class Utils {
 		case BY_STYLE:
 			value = BEER_FILTERING_ALGORITHM_BY_STYLE;
 			break;
+		case BY_BREWERY:
+			value = BEER_FILTERING_ALGORITHM_BY_BREWERY;
+			break;
+		case BY_EXACT_ABV:
+			value = BEER_FILTERING_ALGORITHM_BY_EXACT_ABV;
+			break;
+		case BY_EXACT_MARK:
+			value = BEER_FILTERING_ALGORITHM_BY_EXACT_MARK;
+			break;
+		case BY_EXACT_STAR:
+			value = BEER_FILTERING_ALGORITHM_BY_EXACT_STARS;
+			break;
+		case BY_TRAPPIST_NO:
+			value = BEER_FILTERING_ALGORITHM_BY_TRAPPIST_NO;
+			break;
+		case BY_TRAPPIST_YES:
+			value = BEER_FILTERING_ALGORITHM_BY_TRAPPIST_YES;
+			break;
+		default:
+			break;
 		
 		}
 		return value;
@@ -863,8 +895,8 @@ public class Utils {
 	public static BeerFilterAlgorithm getBeerFilterAlgorithmFromDescription(String descriptionString){
 		BeerFilterAlgorithm value;
 		switch(descriptionString){
-		case BEER_FILTERING_ALGORITHM_BY_ABV:
-			value = BeerFilterAlgorithm.BY_ABV;
+		case BEER_FILTERING_ALGORITHM_BY_MINIMUM_ABV:
+			value = BeerFilterAlgorithm.BY_MINIMUM_ABV;
 			break;
 		case BEER_FILTERING_ALGORITHM_BY_COUNTRY:
 			value = BeerFilterAlgorithm.BY_COUNTRY;
@@ -878,11 +910,11 @@ public class Utils {
 		case BEER_FILTERING_ALGORITHM_BY_FERMENTATION_SPONTANEOUS:
 			value = BeerFilterAlgorithm.BY_FERMENTATION_SPONTANEOUS;
 			break;
-		case BEER_FILTERING_ALGORITHM_BY_MARK:
-			value = BeerFilterAlgorithm.BY_MARK;
+		case BEER_FILTERING_ALGORITHM_BY_MINIMUM_MARK:
+			value = BeerFilterAlgorithm.BY_MINIMUM_MARK;
 			break;
-		case BEER_FILTERING_ALGORITHM_BY_STARS:
-			value = BeerFilterAlgorithm.BY_STARS;
+		case BEER_FILTERING_ALGORITHM_BY_MINIMUM_STARS:
+			value = BeerFilterAlgorithm.BY_MINIMUM_STARS;
 			break;
 		case BEER_FILTERING_ALGORITHM_BY_STYLE_PROVENIENCE:
 			value = BeerFilterAlgorithm.BY_STYLE_PROVENIENCE;
@@ -902,6 +934,24 @@ public class Utils {
 		case BEER_FILTERING_ALGORITHM_BY_STYLE:
 			value = BeerFilterAlgorithm.BY_STYLE;
 			break;
+		case BEER_FILTERING_ALGORITHM_BY_BREWERY:
+			value = BeerFilterAlgorithm.BY_BREWERY;
+			break;
+		case BEER_FILTERING_ALGORITHM_BY_EXACT_STARS:
+			value = BeerFilterAlgorithm.BY_EXACT_STAR;
+			break;
+		case BEER_FILTERING_ALGORITHM_BY_EXACT_MARK:
+			value = BeerFilterAlgorithm.BY_EXACT_MARK;
+			break;
+		case BEER_FILTERING_ALGORITHM_BY_EXACT_ABV:
+			value = BeerFilterAlgorithm.BY_EXACT_ABV;
+			break;
+		case BEER_FILTERING_ALGORITHM_BY_TRAPPIST_YES:
+			value = BeerFilterAlgorithm.BY_TRAPPIST_YES;
+			break;
+		case BEER_FILTERING_ALGORITHM_BY_TRAPPIST_NO:
+			value = BeerFilterAlgorithm.BY_TRAPPIST_NO;
+			break;	
 		default:
 			value = null;
 			break;
@@ -1167,18 +1217,26 @@ public class Utils {
 		
 		public static final String FILTER_BY_TITLE = "Filtra";
 		
-		public static final String BEER_FILTER_BY_STYLE = "Scegli lo stile principale";
+		public static final String BEERS_FILTER_BY_STYLE = "Scegli lo stile principale";
 		public static final String BEER_FILTER_BY_STYLE_AND_SUB = "Scegli lo stile:";
-		public static final String BEER_FILTER_BY_NATION = "Scegli la nazione di produzione:";
-		public static final String BEER_FILTER_BY_ORIGIN_STYLE = "Scegli la nazione di origine dello stile:";
-		public static final String BEER_FILTER_BY_BREWERY = "Scegli il birrificio";
+		public static final String BEERS_FILTER_BY_NATION = "Scegli la nazione di produzione:";
+		public static final String BEERS_FILTER_BY_ORIGIN_STYLE = "Scegli la nazione di origine dello stile:";
+		public static final String BEERS_FILTER_BY_BREWERY = "Scegli il birrificio";
+		public static final String BEERS_FILTER_BY_MINIMUM_MARK = "Scegli il voto minimo:";
+		public static final String BEERS_FILTER_BY_EXACT_MARK = "Scegli il voto esatto:";
+		public static final String BEERS_FILTER_BY_MINIMUM_STAR = "Scegli le stelle minime:";
+		public static final String BEERS_FILTER_BY_EXACT_STAR = "Scegli le stelle esatte:";
+		public static final String BEERS_FILTER_BY_MINIMUM_ABV = "Scegli l'ABV minimo:";
+		public static final String BEERS_FILTER_BY_EXACT_ABV = "Scegli l'ABV esatto:";
 		
-		public static final String BREWERY_FILTER_BY_COUNTRY = "Scegli la nazione:";
-		
-		public static final String STYLE_FILTER_BY_ORIGIN_COUNTRY = "Scegli la nazione di origine dello stile";
+		public static final String BREWERIES_FILTER_BY_COUNTRY = "Scegli la nazione:";
+			
+		public static final String STYLES_FILTER_BY_ORIGIN_COUNTRY = "Scegli la nazione di origine dello stile";
 		
 		public static final String DEFAULT_PRICE = "0.0";
 		public static final String DEFAULT_MARK = "0";
+		public static final String DEFAULT_ABV = "0.0";
+		public static final String DEFAULT_STAR = "0";
 		
 	}
 	
@@ -1435,11 +1493,31 @@ public class Utils {
 		return function;
 	}
 	
+	public static BiFunction<List<BreweryAverage>,Object,  List<BreweryAverage>> getBreweryAverageFilteringAlgorithm(QueryRunner.BreweryFilterAlgorithm algorithm){
+		BiFunction<List<BreweryAverage>, Object, List<BreweryAverage>> function = null;
+		switch(algorithm){
+		case COUNTRY:
+			function = (List<BreweryAverage> breweries, Object o) -> QueryRunner.breweriesAverageFilteredByCountry(breweries, (String)o);
+			break;
+		case NONE:
+			function = (List<BreweryAverage> breweries, Object o) -> breweries;
+			break;
+		case TRAPPIST_NO:
+			function = (List<BreweryAverage> breweries, Object o) -> QueryRunner.breweriesAverageFilteredByTrappist(breweries, false);
+			break;
+		case TRAPPIST_YES:
+			function = (List<BreweryAverage> breweries, Object o) -> QueryRunner.breweriesAverageFilteredByTrappist(breweries, true);
+			break;		
+		}
+		return function;
+	}
+	
+	
 	
 	public static BiFunction<List<Beer>, Object, List<Beer>> getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm algorithm){
 		BiFunction<List<Beer>, Object, List<Beer>> function = null;
 		switch(algorithm){
-		case BY_ABV:
+		case BY_MINIMUM_ABV:
 			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByMinimumAlcool(beers,(Double)o);
 			break;
 		case BY_COUNTRY:
@@ -1454,10 +1532,10 @@ public class Utils {
 		case BY_FERMENTATION_SPONTANEOUS:
 			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByFermentation(beers, Fermentation.SPONTANEOUS);
 			break;
-		case BY_MARK:
+		case BY_MINIMUM_MARK:
 			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByMiminumMark(beers, (Integer)o);
 			break;
-		case BY_STARS:
+		case BY_MINIMUM_STARS:
 			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByMinimumNumberOfStars(beers, (Integer)o);
 			break;
 		case BY_STYLE_PROVENIENCE:
@@ -1477,6 +1555,24 @@ public class Utils {
 			break;
 		case BY_STYLE:
 			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByStyle(beers, (Style)o);
+			break;
+		case BY_BREWERY:
+			function =  (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByBrewery(beers, (Brewery)o);
+			break;
+		case BY_EXACT_ABV:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByExatcAlcool(beers, (Double)o);
+			break;
+		case BY_EXACT_MARK:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByExactMark(beers, (Integer)o);
+			break;
+		case BY_EXACT_STAR:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByExactNumberOfStars(beers, (Integer)o);
+			break;
+		case BY_TRAPPIST_NO:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByTrappist(beers, false);
+			break;
+		case BY_TRAPPIST_YES:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByTrappist(beers, true);
 			break;
 		}
 		return function;

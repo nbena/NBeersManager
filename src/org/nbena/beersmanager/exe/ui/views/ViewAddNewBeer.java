@@ -22,6 +22,7 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollPane;
 
 public class ViewAddNewBeer extends JDialog implements BeerDialog{
 
@@ -43,6 +44,8 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	private JRadioButton rdbtnTriedYes;
 	private JRadioButton rdbtnTriedNo;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	
+	private JScrollPane scrollPane;
 	
 	public void addActionListenerOkButton(ActionListener listener){
 		okButton.addActionListener(listener);
@@ -360,11 +363,6 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		}	
 		{
 			rdbtnTriedYes = new JRadioButton("S\u00EC");
-			rdbtnTriedYes.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-				}
-			});
 			buttonGroup.add(rdbtnTriedYes);
 			GridBagConstraints gbc_rdbtnTriedYes = new GridBagConstraints();
 			gbc_rdbtnTriedYes.insets = new Insets(0, 0, 5, 5);
@@ -377,7 +375,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			rdbtnTriedNo = new JRadioButton("No");
 			buttonGroup.add(rdbtnTriedNo);
 			GridBagConstraints gbc_rdbtnTriedNo = new GridBagConstraints();
-			gbc_rdbtnTriedNo.insets = new Insets(0, 0, 5, 5);
+			gbc_rdbtnTriedNo.insets = new Insets(0, 0, 5, 0);
 //			gbc_rdbtnTriedNo.gridx = 6;
 			gbc_rdbtnTriedNo.gridx = 7;
 			gbc_rdbtnTriedNo.gridy = 10;
@@ -429,13 +427,25 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			contentPanel.add(lblDescrizione, gbc_lblDescrizione);
 		}
 		{
+			scrollPane = new JScrollPane();
+			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+			gbc_scrollPane.gridwidth = 5;
+			gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
+			gbc_scrollPane.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane.gridx = 3;
+			gbc_scrollPane.gridy = 14;
+			contentPanel.add(scrollPane, gbc_scrollPane);
+		}
+		{
 			textAreaDescription = new JTextArea();
 			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
 			gbc_textAreaDescription.gridwidth = 5;
 			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
 			gbc_textAreaDescription.gridx = 3;
 			gbc_textAreaDescription.gridy = 14;
-			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
+//			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
+			textAreaDescription.setLineWrap(true);
+			scrollPane.setViewportView(textAreaDescription);
 		}
 		{
 			JPanel buttonPane = new JPanel();

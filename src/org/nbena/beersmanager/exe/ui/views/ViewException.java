@@ -38,10 +38,12 @@ public class ViewException extends JDialog {
 		editorPaneException.setText(start+text+end);
 	}
 	
-	public void initEditorPane(){
+	public void init(){
 		editorPaneException.setContentType("text/html");
 		editorPaneException.setCaretPosition(0);
 		editorPaneException.setEditable(false);
+		textFieldErrorMessage.setEditable(false);
+		textFieldErrorType.setEditable(false);
 	}
 	
 	public void addActionListenerOkButton(ActionListener listener){

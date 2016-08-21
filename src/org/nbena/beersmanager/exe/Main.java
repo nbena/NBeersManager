@@ -188,8 +188,8 @@ public class Main {
 
 //		Configuration config = ConfigurationFactory.getDefaultConfiguration();
 //		
-//		config.setBeerFilterAlgorithm(BeerFilterAlgorithm.BY_MARK);
-//		config.setBeerFilterValue(60);
+//		config.setBeerFilterAlgorithm(BeerFilterAlgorithm.BY_MINIMUM_MARK);
+//		config.setBeerFilterValue(100);
 //		
 //		config.setBreweryFilterAlgorithm(BreweryFilterAlgorithm.COUNTRY);
 //		config.setBreweryFilterValue("Belgio");

@@ -21,6 +21,7 @@ import java.util.List;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.JScrollPane;
 
 public class ViewAddNewStyle extends JDialog implements StyleDialog{
 
@@ -31,6 +32,8 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 	private JComboBox<String> comboBoxCountry;
 	private JComboBox<String> comboBoxMainStyle;
 	private JComboBox<String> comboBoxFermentation;
+	
+	private JScrollPane scrollPane;
 	
 	private JButton okButton;
 	private JButton cancelButton;
@@ -250,12 +253,22 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 			contentPanel.add(lblDescrizione, gbc_lblDescrizione);
 		}
 		{
+			scrollPane = new JScrollPane();
+			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+			gbc_scrollPane.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane.gridx = 3;
+			gbc_scrollPane.gridy = 10;
+			contentPanel.add(scrollPane, gbc_scrollPane);
+		}
+		{
 			textAreaDescription = new JTextArea();
 			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
 			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
 			gbc_textAreaDescription.gridx = 3;
 			gbc_textAreaDescription.gridy = 10;
-			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
+//			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
+			scrollPane.setViewportView(textAreaDescription);
+			textAreaDescription.setLineWrap(true);
 		}
 		{
 			JPanel buttonPane = new JPanel();

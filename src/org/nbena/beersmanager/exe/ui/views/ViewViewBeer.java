@@ -18,6 +18,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 
@@ -41,6 +42,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 	private JButton btnViewStyle;
 	private JButton btnViewBrewery;
 	private JLabel lblLuogo;
+	private JScrollPane scrollPane;
 
 	
 	
@@ -117,12 +119,12 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 		textAreaDescription.setText(t);
 	}
 	
-	public void setBeer(Beer b){
-		
-	}
-	
 	public void setPlace(String t){
 		textFieldPlace.setText(t);
+	}
+	
+	public void setPrice(String t){
+		textFieldPrice.setText(t);
 	}
 	
 	/**
@@ -348,7 +350,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			textFieldPlace = new JTextField();
 			GridBagConstraints gbc_textFieldPlace = new GridBagConstraints();
 			gbc_textFieldPlace.anchor = GridBagConstraints.WEST;
-			gbc_textFieldPlace.insets = new Insets(0, 0, 5, 5);
+			gbc_textFieldPlace.insets = new Insets(0, 0, 5, 0);
 			gbc_textFieldPlace.gridx = 7;
 			gbc_textFieldPlace.gridy = 12;
 			contentPanel.add(textFieldPlace, gbc_textFieldPlace);
@@ -363,13 +365,25 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			contentPanel.add(lblDescrizione, gbc_lblDescrizione);
 		}
 		{
+			scrollPane = new JScrollPane();
+			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+			gbc_scrollPane.gridwidth = 5;
+			gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
+			gbc_scrollPane.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane.gridx = 3;
+			gbc_scrollPane.gridy = 14;
+			contentPanel.add(scrollPane, gbc_scrollPane);
+		}
+		{
 			textAreaDescription = new JTextArea();
 			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
 			gbc_textAreaDescription.gridwidth = 5;
 			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
 			gbc_textAreaDescription.gridx = 3;
 			gbc_textAreaDescription.gridy = 14;
-			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
+//			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
+			scrollPane.setViewportView(textAreaDescription);
+			textAreaDescription.setLineWrap(true);
 		}
 		{
 			JPanel buttonPane = new JPanel();

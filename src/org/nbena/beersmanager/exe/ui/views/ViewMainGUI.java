@@ -203,7 +203,7 @@ public class ViewMainGUI extends JFrame {
 	
 	
 	
-	public void addActionMenuBeersFilteredByCountryOfBreweryStyle(ActionListener listener){
+	public void addActionMenuBeersFilteredByStyle(ActionListener listener){
 		mntmBeersFilteredByStyle.addActionListener(listener);
 	}
 	

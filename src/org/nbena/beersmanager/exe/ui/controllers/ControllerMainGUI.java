@@ -99,7 +99,6 @@ public class ControllerMainGUI {
 		addFilterBeersListeners();
 		addSearchMenuListeners();
 		addOptionsMenuListeners();
-		addActionMenuPreferencesListener();
 		addSaveMenuAndButtonListeners();
 		addRefreshButtonListener();
 		addOperationOnClose();
@@ -190,72 +189,130 @@ public class ControllerMainGUI {
 	}
 	
 	public void beersFilteredByBrewery(Brewery b){
-		model.beersFilteredByBrewery(b);
+//		model.beersFilteredByBrewery(b);
+		model.setBeerFilteringCurrentValue(b);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_BREWERY));
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByBreweryCountry(String country){
-		model.beersFilteredByBreweryCountry(null);
+//		model.beersFilteredByBreweryCountry(country);
+		model.setBeerFilteringCurrentValue(country);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_COUNTRY));
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByExactABV(double abv){
-		model.beersFilteredByExatcAlcool(abv);
+//		model.beersFilteredByExatcAlcool(abv);
+		model.setBeerFilteringCurrentValue((Double)abv);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_MINIMUM_ABV));
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByMinimumABV(double abv){
-		model.beersFilteredByMinimumAlcool(abv);
+//		model.beersFilteredByMinimumAlcool(abv);
+		model.setBeerFilteringCurrentValue((Double)abv);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_MINIMUM_ABV));
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
-	public void beersFilteredByMinimumMaek(int mark){
-		model.beersFilteredByMiminumMark(mark);
+	public void beersFilteredByMinimumMark(int mark){
+//		model.beersFilteredByMiminumMark(mark);
+		model.setBeerFilteringCurrentValue((Integer)mark);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_MINIMUM_MARK));
+		model.applyFilteringToBeers();
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByExactMark(int mark){
-		model.beersFilteredByExactMark(mark);
+//		model.beersFilteredByExactMark(mark);
+		model.setBeerFilteringCurrentValue((Integer)mark);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_EXACT_MARK));
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByMinimumNumberOfStars(int number){
-		model.beersFilteredByMinimumNumberOfStars(number);
+//		model.beersFilteredByMinimumNumberOfStars(number);
+		model.setBeerFilteringCurrentValue((Integer)number);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_MINIMUM_STARS));
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByExactNumberOfStars(int number){
-		model.beersFilteredByExactNumberOfStars(number);
+//		model.beersFilteredByExactNumberOfStars(number);
+		model.setBeerFilteringCurrentValue((Integer)number);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_EXACT_STAR));
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByFermentation(Fermentation f){
-		model.beersFilteredByFermentation(f);
+//		model.beersFilteredByFermentation(f);
+		model.setBeerFilteringCurrentValue(f);
+		if(f==Fermentation.HIGH){
+			model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_FERMENTATION_HIGH));
+		}
+		else if(f==Fermentation.LOW){
+			model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_FERMENTATION_LOW));
+		}else{
+			model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_FERMENTATION_SPONTANEOUS));
+		}
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByStyle(Style s){
-		model.beersFilteredByStyle(s);
+//		model.beersFilteredByStyle(s);
+		model.setBeerFilteringCurrentValue(s);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_STYLE));
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByMainStyle(Style s){
-		model.beersFilteredByMainStyle(s);
+//		model.beersFilteredByMainStyle(s);
+		model.setBeerFilteringCurrentValue(s);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_MAIN_STYLE));
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByStyleProvenience(String s){
-		model.beersFilteredByStyleProvenience(s);
+//		model.beersFilteredByStyleProvenience(s);
+		model.setBeerFilteringCurrentValue(s);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_STYLE_PROVENIENCE));
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByTrappist(boolean trappist){
-		model.beersFilteredByTrappist(trappist);
+//		model.beersFilteredByTrappist(trappist);
+		model.setBeerFilteringCurrentValue((Boolean)trappist);
+		if(trappist){
+			model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_TRAPPIST_YES));
+		}else{
+			model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_TRAPPIST_NO));
+		}
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
 	public void beersFilteredByIsTried(boolean tried){
-		model.beersFilteredByIsTried(tried);
+//		model.beersFilteredByIsTried(tried);
+		model.setBeerFilteringCurrentValue(tried);
+		if(tried){
+			model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_IS_TRIED_YES));
+		}else{
+			model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_IS_TRIED_NO));
+		}
+		model.applyFilteringToBeers();
 		showBeers();
 	}
 	
@@ -288,8 +345,7 @@ public class ControllerMainGUI {
 				if(string!=null && string!=""){
 					
 					
-//					beersFilteredByBreweryCountry(b);
-					//beersFilteredByCountry(string);
+					beersFilteredByBreweryCountry(string);
 				}
 				
 				
@@ -303,7 +359,12 @@ public class ControllerMainGUI {
 			public void actionPerformed(ActionEvent e) {
 //				model.beersFilteredByExatcAlcool(0.0);
 //				showBeers();
-				beersFilteredByExactABV(0.0);
+				String string = askExactABVBeersFilteredByExactABV();
+				if(string!=null && string!=""){
+					double value = Utils.parseDouble(string);
+					beersFilteredByExactABV(value);
+				}
+				
 			}
 			
 		});
@@ -314,7 +375,11 @@ public class ControllerMainGUI {
 			public void actionPerformed(ActionEvent e) {
 //				model.beersFilteredByExactMark(0);
 //				showBeers();
-				beersFilteredByExactMark(0);
+				String string = askExactMarkBeersFilteredByExactMark();
+				if(string!=null && string!=""){
+					int value = Integer.parseInt(string);
+					beersFilteredByExactMark(value);
+				}
 			}
 			
 		});
@@ -402,7 +467,12 @@ public class ControllerMainGUI {
 			public void actionPerformed(ActionEvent e) {
 //				model.beersFilteredByMainStyle(null);
 //				showBeers();
-				beersFilteredByMainStyle(null);
+				String string = askStyleBeersFilteredByStyleMain();
+				if(string!=null && string!=""){
+					Style s = Utils.getMainStyleFromString(string); //!!!!!!!!!!!!!!!!1
+					beersFilteredByMainStyle(s);
+				}
+				
 			}
 			
 		});
@@ -413,7 +483,11 @@ public class ControllerMainGUI {
 			public void actionPerformed(ActionEvent e) {
 //				model.beersFilteredByMinimumAlcool(0.0);
 //				showBeers();
-				beersFilteredByMinimumABV(0);
+				String string = askMinimumABVBeersFilteredByMinimumABV();
+				if(string!=null && string!=""){
+					double value = Utils.parseDouble(string);
+					beersFilteredByMinimumABV(value);
+				}
 			}
 			
 		});
@@ -424,7 +498,11 @@ public class ControllerMainGUI {
 			public void actionPerformed(ActionEvent e) {
 //				model.beersFilteredByMiminumMark(0);
 //				showBeers();
-				beersFilteredByMinimumMaek(0);
+				String string = askMinimumMarkBeersFilteredByMinimumMark();
+				if(string!=null && string!=""){
+					int value = Integer.parseInt(string);
+					beersFilteredByMinimumMark(value);
+				}
 			}
 			
 		});
@@ -435,7 +513,7 @@ public class ControllerMainGUI {
 			public void actionPerformed(ActionEvent e) {
 //				model.beersFilteredByStyleProvenience(null);
 //				showBeers();
-				String country = askBreweryBeersFilteredByBrewery();
+				String country = askCountryBeersFiltererdByStyleProvenience();
 				if(country!=null && country!=""){
 					
 					beersFilteredByStyleProvenience(country);
@@ -450,7 +528,11 @@ public class ControllerMainGUI {
 			public void actionPerformed(ActionEvent e) {
 //				model.beersFilteredByExactNumberOfStars(0);
 //				showBeers();
-				beersFilteredByExactNumberOfStars(0);
+				String string = askExactStarsBeersFilteredByExactStars();
+				if(string!=null && string!=""){
+					int value = Integer.parseInt(string);
+					beersFilteredByExactNumberOfStars(value);
+				}
 			}
 			
 		});
@@ -461,7 +543,26 @@ public class ControllerMainGUI {
 			public void actionPerformed(ActionEvent e) {
 //				model.beersFilteredByMinimumNumberOfStars(0);
 //				showBeers();
-				beersFilteredByMinimumNumberOfStars(0);
+				String string = askMinimumStarsBeersFilteredByMinimumStars();
+				if(string!=null && string!=""){
+					int value = Integer.parseInt(string);
+					beersFilteredByMinimumNumberOfStars(value);
+				}
+			}
+			
+		});
+		
+		gui.addActionMenuBeersFilteredByStyle(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String string = askStyleBeersFilteredByStyle();
+				if(string!=null && string!=""){
+					Style s= Utils.getStyleFromString(string);
+					beersFilteredByStyle(s);
+				}
+				
 			}
 			
 		});
@@ -483,6 +584,8 @@ public class ControllerMainGUI {
 //				
 //				gui.setTableModel(model.getTableModel());
 				
+				model.resetBeerFilter();
+				
 				showBeers();
 			
 			}
@@ -501,6 +604,8 @@ public class ControllerMainGUI {
 //				
 //				gui.setTableModel(model.getTableModel());
 				
+				model.resetBreweryFilter();
+				
 				showBreweries();
 				
 			}
@@ -518,6 +623,8 @@ public class ControllerMainGUI {
 //				model.showStyleData();
 //				
 //				gui.setTableModel(model.getTableModel());
+				
+				model.resetStyleFilter();
 				
 				showStyles();
 			}
@@ -843,9 +950,10 @@ public class ControllerMainGUI {
 		dialog.setTried(b.isTried());
 		dialog.setDescription(b.getDescription());
 		dialog.setPlace(b.getPlaceTried());
+		dialog.setPrice(Double.toString(b.getPrice()));
 		
 	
-		addBeerDialogPriceMarkEditable(b.isTried());
+//		addBeerDialogPriceMarkEditable(dialog, b.isTried());
 		
 	}
 	
@@ -866,6 +974,7 @@ public class ControllerMainGUI {
 		dialog.setBreweryDescription(b.getDescription());
 		dialog.setBreweryWebsite(b.getWebsite());
 		dialog.setBreweryAverage(Double.toString(b.getAverage()));
+		dialog.setBreweryTrappist(b.isAuthenticTrappist());
 	}
 	
 	private Beer getBeerFromAddNewBeerDialog() throws ObjectNotFoundException{
@@ -891,7 +1000,7 @@ public class ControllerMainGUI {
 //		brewery.setName(addBeerDialog.getName());
 //		brewery.setCountry(addBeerDialog.get);
 		
-		Utils.printStyle(b.getStyle(), System.out);
+//		Utils.printStyle(b.getStyle(), System.out);
 		
 		return b;
 	}
@@ -902,9 +1011,8 @@ public class ControllerMainGUI {
 		b.setCountry(addBreweryDialog.getBreweryCountry());
 		b.setTown(addBreweryDialog.getBreweryTown());
 		b.setDescription(addBreweryDialog.getDescription());
-		b.setWebsite(addBreweryDialog.getBreweryWebsite());
-		
-		b.setAuthenticTrappist(false);  //tomorrow!!!
+		b.setWebsite(addBreweryDialog.getBreweryWebsite());	
+		b.setAuthenticTrappist(addBreweryDialog.isTrappist());  
 		return b;
 	}
 	
@@ -983,7 +1091,7 @@ public class ControllerMainGUI {
 
 	}
 	
-	private void addBeerDialogPriceMarkEditable(boolean editable){
+	private void addBeerDialogPriceMarkEditable( boolean editable){
 		addBeerDialog.setTextFieldMarkEditable(editable);
 		addBeerDialog.setTextFieldPriceEditable(editable);
 	}
@@ -1146,6 +1254,7 @@ public class ControllerMainGUI {
 		if(addNewBeerOrModify){
 			model.setAddNewBeerOrModifyBeer(true);
 			showAddBeerDialog();
+			addBeerDialogPriceMarkEditable(true);
 		}
 		else{
 			model.setAddNewBeerOrModifyBeer(false);
@@ -1463,7 +1572,7 @@ public class ControllerMainGUI {
 //		addBeerDialogPriceMarkEditable(true);
 		
 //		model.setAddNewBeerOrModifyBeer(false);  already done.
-		
+		addBeerDialogPriceMarkEditable(model.getBeerShown().isTried());
 		addBeerDialog.setVisible(true);
 	}
 	
@@ -1565,9 +1674,11 @@ public class ControllerMainGUI {
 //				addBeerDialog.setVisible(true);
 				
 				showAddOrModifyBeer(false);
+				
 			}
 			
 		});
+		
 	}
 	
 	private void setBreweryViewBeersButtonListener(){
@@ -1739,17 +1850,6 @@ public class ControllerMainGUI {
 	}
 	
 	
-	private void addActionMenuPreferencesListener(){
-		gui.addActionMenuPreferences(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				showPreferencesDialog();
-			}
-			
-		});
-	}
 	
 	
 	private void addPreferencesOkButtonListener(){
@@ -1986,7 +2086,7 @@ public class ControllerMainGUI {
 			
 		});
 		
-		exceptionDialog.initEditorPane();
+		exceptionDialog.init();
 		exceptionDialog.setErrorType(e.getClass().getSimpleName());
 		exceptionDialog.setErrorMessage(e.getMessage());
 		exceptionDialog.setStackTrace("<html><body style=\"color: red;\">", Utils.getStackTrace(e), "</body></html>");
@@ -2048,20 +2148,20 @@ public class ControllerMainGUI {
 	private String askCountryBeersFiltererdByStyleProvenience(){
 		optionPane.setParent(gui);
 		String[] countries = Utils.toArray(model.getCountriesWithStyle());
-		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEER_FILTER_BY_ORIGIN_STYLE, countries);
+		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_ORIGIN_STYLE, countries);
 	}
 	
 	
 	private String askBreweryBeersFilteredByBrewery(){
 		optionPane.setParent(gui);
 		String[] breweries = Utils.getBreweryStringArray(model.getBreweryData());
-		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEER_FILTER_BY_BREWERY, breweries);
+		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_BREWERY, breweries);
 	}
 	
 	private String askStyleBeersFilteredByStyleMain(){
 		optionPane.setParent(gui);
 		String[] styles = Utils.getStyleStringArray(model.getOnlyMainStyle());
-		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEER_FILTER_BY_STYLE, styles);
+		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_STYLE, styles);
 	}
 	
 	private String askStyleBeersFilteredByStyle(){
@@ -2073,7 +2173,37 @@ public class ControllerMainGUI {
 	private String askCountryBeersFilteredByCountry(){
 		optionPane.setParent(gui);
 		String[] countries = Utils.toArray(model.getCountriesWithBrewery());
-		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEER_FILTER_BY_ORIGIN_STYLE, countries);
+		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_ORIGIN_STYLE, countries);
+	}
+	
+	private String askExactMarkBeersFilteredByExactMark(){
+		optionPane.setParent(gui);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_EXACT_MARK, Utils.Constants.DEFAULT_MARK);
+	}
+	
+	private String askExactStarsBeersFilteredByExactStars(){
+		optionPane.setParent(gui);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_EXACT_STAR, Utils.Constants.DEFAULT_STAR);
+	}
+	
+	private String askMinimumMarkBeersFilteredByMinimumMark(){
+		optionPane.setParent(gui);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_MINIMUM_MARK, Utils.Constants.DEFAULT_MARK);
+	}
+	
+	private String askMinimumStarsBeersFilteredByMinimumStars(){
+		optionPane.setParent(gui);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_MINIMUM_STAR, Utils.Constants.DEFAULT_STAR);
+	}
+	
+	private String askMinimumABVBeersFilteredByMinimumABV(){
+		optionPane.setParent(gui);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_MINIMUM_ABV, Utils.Constants.DEFAULT_ABV);
+	}
+	
+	private String askExactABVBeersFilteredByExactABV(){
+		optionPane.setParent(gui);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_EXACT_ABV, Utils.Constants.DEFAULT_ABV);
 	}
 	
 	private void addOperationOnClose(){

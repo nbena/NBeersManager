@@ -231,6 +231,7 @@ public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
 			gbc_textAreaDescription.gridx = 3;
 			gbc_textAreaDescription.gridy = 10;
 			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
+			textAreaDescription.setLineWrap(true);
 		}
 //		{
 //			JPanel buttonPane = new JPanel();

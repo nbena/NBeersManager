@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -89,6 +90,22 @@ public class Model {
 	private Function<List<Beer>, List<Beer>> beerSortingCurrentAlgorithm;
 	private Function<List<BreweryAverage>, List<BreweryAverage>> brewerySortingCurrentAlgorithm;
 	private Function<List<Style>, List<Style>> styleSortingCurrentAlgorithm;
+	
+	private BiFunction<List<Beer>, Object, List<Beer>> beersFilteringDefaultAlgorithm;
+	private BiFunction<List<BreweryAverage>, Object, List<BreweryAverage>> breweryFilteringDefaultAlgorithm;
+	private BiFunction<List<Style>, Object, List<Style>> styleFilteringDefaultAlgorithm;
+	
+	private Object beerFilteringDefaultValue;
+	private Object breweryFilteringDefaultValue;
+	private Object styleFilteringDefaultValue;
+	
+	private BiFunction<List<Beer>, Object, List<Beer>> beersFilteringCurrentAlgorithm;
+	private BiFunction<List<BreweryAverage>, Object, List<BreweryAverage>> breweryFilteringCurrentAlgorithm;
+	private BiFunction<List<Style>, Object, List<Style>> styleFilteringCurrentAlgorithm;
+	
+	private Object beerFilteringCurrentValue;
+	private Object breweryFilteringCurrentValue;
+	private Object styleFilteringCurrentValue;
 	
 	private boolean isAddNewBeerOrModifyBeer;
 	private boolean isAddNewBreweryOrModifyBrewery;
@@ -524,19 +541,49 @@ public class Model {
 	public Configuration getConfiguration() {
 		return configuration;
 	}
+	
+	private void setSorting(){
+		beerSortingDefaultAlgorithm = Utils.getBeerSortingAlgorithm(configuration.getBeerSortingAlgorithm());
+		brewerySortingDefaultAlgorithm = Utils.getBreweriesSortingAlgorithm(configuration.getBrewerySortingAlgorithm());
+		styleSortingDefaultAlgorithm = Utils.getStylesSortingAlgorithm(configuration.getStyleSortingAlgorithm());
+		
+		beerSortingCurrentAlgorithm=beerSortingDefaultAlgorithm;
+		brewerySortingCurrentAlgorithm=brewerySortingDefaultAlgorithm;
+		styleSortingCurrentAlgorithm=styleSortingDefaultAlgorithm;
+	}
+	
+	private void setFiltering(){
+		beersFilteringDefaultAlgorithm = Utils.getBeerFilteringAlgorithm(configuration.getBeerFilterAlgorithm());
+		breweryFilteringDefaultAlgorithm = Utils.getBreweryAverageFilteringAlgorithm(configuration.getBreweryFilterAlgorithm());
+		styleFilteringDefaultAlgorithm = Utils.getStyleFilteringAlgorithm(configuration.getStyleFilterAlgorithm());
+		
+		beerFilteringDefaultValue = configuration.getBeerFilterValue();
+		breweryFilteringDefaultValue = configuration.getBreweryFilterValue();
+		styleFilteringDefaultValue = configuration.getStyleFilterValue();
+		
+		beersFilteringCurrentAlgorithm = beersFilteringDefaultAlgorithm;
+		breweryFilteringCurrentAlgorithm = breweryFilteringDefaultAlgorithm;
+		styleFilteringCurrentAlgorithm = styleFilteringDefaultAlgorithm;
+		
+		beerFilteringCurrentValue = beerFilteringDefaultValue;
+		breweryFilteringCurrentValue = breweryFilteringDefaultValue;
+		styleFilteringCurrentValue = styleFilteringDefaultValue;
+	}
 
 	/**
 	 * @param configuration the configuration to set
 	 */
 	public void setConfiguration(Configuration configuration) {
 		this.configuration = configuration;
-		beerSortingDefaultAlgorithm=Utils.getBeerSortingAlgorithm(configuration.getBeerSortingAlgorithm());
-		brewerySortingDefaultAlgorithm=Utils.getBreweriesSortingAlgorithm(configuration.getBrewerySortingAlgorithm());
-		styleSortingDefaultAlgorithm=Utils.getStylesSortingAlgorithm(configuration.getStyleSortingAlgorithm());
-		
-		beerSortingCurrentAlgorithm=beerSortingDefaultAlgorithm;
-		brewerySortingCurrentAlgorithm=brewerySortingDefaultAlgorithm;
-		styleSortingCurrentAlgorithm=styleSortingDefaultAlgorithm;
+//		beerSortingDefaultAlgorithm=Utils.getBeerSortingAlgorithm(configuration.getBeerSortingAlgorithm());
+//		brewerySortingDefaultAlgorithm=Utils.getBreweriesSortingAlgorithm(configuration.getBrewerySortingAlgorithm());
+//		styleSortingDefaultAlgorithm=Utils.getStylesSortingAlgorithm(configuration.getStyleSortingAlgorithm());
+//		
+//		beerSortingCurrentAlgorithm=beerSortingDefaultAlgorithm;
+//		brewerySortingCurrentAlgorithm=brewerySortingDefaultAlgorithm;
+//		styleSortingCurrentAlgorithm=styleSortingDefaultAlgorithm;
+		setSorting();
+		setFiltering();
 	}
 
 	/**
@@ -705,8 +752,6 @@ public class Model {
 
 	
 	public void beersFilteredByBrewery(Brewery brewery){
-//		System.out.println("brewery to work is: \n");
-//		Utils.printBrewery(brewery, System.out);
 		filteredBeers=QueryRunner.beersFilteredByBrewery(filteredBeers, brewery);
 	}
 	
@@ -922,6 +967,107 @@ public class Model {
 	}
 	
 	
+	/**
+	 * @return the beersFilteringCurrentAlgorithm
+	 */
+	public BiFunction<List<Beer>, Object, List<Beer>> getBeersFilteringCurrentAlgorithm() {
+		return beersFilteringCurrentAlgorithm;
+	}
+
+	/**
+	 * @param beersFilteringCurrentAlgorithm the beersFilteringCurrentAlgorithm to set
+	 */
+	public void setBeersFilteringCurrentAlgorithm(
+			BiFunction<List<Beer>, Object, List<Beer>> beersFilteringCurrentAlgorithm) {
+		this.beersFilteringCurrentAlgorithm = beersFilteringCurrentAlgorithm;
+	}
+
+	/**
+	 * @return the breweryFilteringCurrentAlgorithm
+	 */
+	public BiFunction<List<BreweryAverage>, Object, List<BreweryAverage>> getBreweryFilteringCurrentAlgorithm() {
+		return breweryFilteringCurrentAlgorithm;
+	}
+
+	/**
+	 * @param breweryFilteringCurrentAlgorithm the breweryFilteringCurrentAlgorithm to set
+	 */
+	public void setBreweryFilteringCurrentAlgorithm(
+			BiFunction<List<BreweryAverage>, Object, List<BreweryAverage>> breweryFilteringCurrentAlgorithm) {
+		this.breweryFilteringCurrentAlgorithm = breweryFilteringCurrentAlgorithm;
+	}
+
+	/**
+	 * @return the styleFilteringCurrentAlgorithm
+	 */
+	public BiFunction<List<Style>, Object, List<Style>> getStyleFilteringCurrentAlgorithm() {
+		return styleFilteringCurrentAlgorithm;
+	}
+
+	/**
+	 * @param styleFilteringCurrentAlgorithm the styleFilteringCurrentAlgorithm to set
+	 */
+	public void setStyleFilteringCurrentAlgorithm(
+			BiFunction<List<Style>, Object, List<Style>> styleFilteringCurrentAlgorithm) {
+		this.styleFilteringCurrentAlgorithm = styleFilteringCurrentAlgorithm;
+	}
+
+	/**
+	 * @return the beerFilteringCurrentValue
+	 */
+	public Object getBeerFilteringCurrentValue() {
+		return beerFilteringCurrentValue;
+	}
+
+	/**
+	 * @param beerFilteringCurrentValue the beerFilteringCurrentValue to set
+	 */
+	public void setBeerFilteringCurrentValue(Object beerFilteringCurrentValue) {
+		this.beerFilteringCurrentValue = beerFilteringCurrentValue;
+	}
+
+	/**
+	 * @return the breweryFilteringCurrentValue
+	 */
+	public Object getBreweryFilteringCurrentValue() {
+		return breweryFilteringCurrentValue;
+	}
+
+	/**
+	 * @param breweryFilteringCurrentValue the breweryFilteringCurrentValue to set
+	 */
+	public void setBreweryFilteringCurrentValue(Object breweryFilteringCurrentValue) {
+		this.breweryFilteringCurrentValue = breweryFilteringCurrentValue;
+	}
+
+	/**
+	 * @return the styleFilteringCurrentValue
+	 */
+	public Object getStyleFilteringCurrentValue() {
+		return styleFilteringCurrentValue;
+	}
+
+	/**
+	 * @param styleFilteringCurrentValue the styleFilteringCurrentValue to set
+	 */
+	public void setStyleFilteringCurrentValue(Object styleFilteringCurrentValue) {
+		this.styleFilteringCurrentValue = styleFilteringCurrentValue;
+	}
+
+	public void applyFilteringToBeers(){
+		filteredBeers = beersFilteringCurrentAlgorithm.apply(filteredBeers, beerFilteringCurrentValue);
+	}
+	
+	
+	public void applyFilteringToBreweries(){
+		filteredBreweries = breweryFilteringCurrentAlgorithm.apply(filteredBreweries, breweryFilteringCurrentValue);
+	}
+	
+	
+	public void applyFilteringTostyles(){
+		filteredStyles = styleFilteringCurrentAlgorithm.apply(filteredStyles, styleFilteringCurrentValue);
+	}
+	
 	public void applySortingToBeers(){
 		filteredBeers=this.beerSortingCurrentAlgorithm.apply(filteredBeers);
 //		filteredBeers=beerData;
@@ -1053,6 +1199,7 @@ public class Model {
 		if(beerData.remove(beerShown)){
 			beerData.add(newBeer);
 			filteredBeers = beerData;
+			somethingToSave = true;
 		}
 		else{
 			throw new UpdateSavingException(newBeer, UpdateSavingException.ErrorWhile.UPDATING);
@@ -1209,6 +1356,18 @@ public class Model {
 	
 	public ShowDefault getDefaultView(){
 		return configuration.getDefaultView();
+	}
+	
+	public void resetBeerFilter(){
+		clearFilter(true, false, false);
+	}
+	
+	public void resetBreweryFilter(){
+		clearFilter(false, true, false);
+	}
+	
+	public void resetStyleFilter(){
+		clearFilter(false, false, true);
 	}
 
 }

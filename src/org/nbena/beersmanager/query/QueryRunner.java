@@ -63,13 +63,19 @@ public class QueryRunner {
 		BY_FERMENTATION_SPONTANEOUS,
 		BY_COUNTRY,
 		BY_STYLE_PROVENIENCE,
-		BY_STARS,
-		BY_MARK,
-		BY_ABV,
+		BY_MINIMUM_STARS,
+		BY_MINIMUM_MARK,
+		BY_MINIMUM_ABV,
 		BY_IS_TRIED_YES,
 		BY_IS_TRIED_NO,
 		BY_STYLE,
-		BY_MAIN_STYLE
+		BY_MAIN_STYLE,
+		BY_BREWERY,
+		BY_EXACT_MARK,
+		BY_EXACT_STAR,
+		BY_EXACT_ABV,
+		BY_TRAPPIST_YES,
+		BY_TRAPPIST_NO
 	}
 	
 	public static enum BreweryFilterAlgorithm{
@@ -228,6 +234,17 @@ public class QueryRunner {
 	}
 	
 	public static List<Brewery> breweriesFilteredByTrappist(List<Brewery> breweries, Boolean trappist){
+		return breweries.stream().filter(b -> b.isAuthenticTrappist()==trappist)
+				.collect(Collectors.toList());
+	}
+	
+	
+	public static List<BreweryAverage> breweriesAverageFilteredByCountry(List<BreweryAverage> breweries, String country){
+		return breweries.stream().filter(br -> br.getCountry().equalsIgnoreCase(country))
+				.collect(Collectors.toList());
+	}
+	
+	public static List<BreweryAverage> breweriesAverageFilteredByTrappist(List<BreweryAverage> breweries, Boolean trappist){
 		return breweries.stream().filter(b -> b.isAuthenticTrappist()==trappist)
 				.collect(Collectors.toList());
 	}

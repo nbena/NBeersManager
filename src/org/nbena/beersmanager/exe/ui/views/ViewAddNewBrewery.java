@@ -3,9 +3,11 @@ package org.nbena.beersmanager.exe.ui.views;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
 import org.nbena.beersmanager.coreclasses.Brewery;
@@ -21,6 +23,7 @@ import java.util.List;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
 
 public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 
@@ -35,7 +38,14 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 	private JButton okButton;
 	private JButton cancelButton;
 	
+	private JRadioButton rdbtnTrappistYes;
+	private JRadioButton rdbtnTrappistNo;
+	
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	
 	private JComboBox<String> comboBoxCountry;
+	
+	private JScrollPane scrollPane;
 	
 	public void addActionListenerOkButton(ActionListener listener){
 		okButton.addActionListener(listener);
@@ -73,6 +83,10 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 		return textAreaDescription.getText();
 	}
 	
+	public boolean isTrappist(){
+		return rdbtnTrappistYes.isSelected();
+	}
+	
 	
 	public void setBreweryName(String text){
 		textFieldName.setText(text);
@@ -98,6 +112,18 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 		textFieldAverage.setText(t);
 	}
 	
+	public void setBreweryTrappistDefault(boolean trappist){
+		setBreweryTrappist(trappist);
+	}
+	
+	public void setBreweryTrappist(boolean trappist){
+		if(trappist){
+			rdbtnTrappistYes.setSelected(true);
+		}
+		else{
+			rdbtnTrappistNo.setSelected(false);
+		}
+	}
 
 	
 	/**
@@ -135,15 +161,15 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 	 * Create the dialog.
 	 */
 	public ViewAddNewBrewery() {
-		setBounds(100, 100, 509, 446);
+		setBounds(100, 100, 509, 559);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblTitleLabel = new JLabel("");
@@ -165,7 +191,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 			textFieldName = new JTextField();
 			GridBagConstraints gbc_textFieldName = new GridBagConstraints();
 			gbc_textFieldName.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldName.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldName.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldName.gridx = 3;
 			gbc_textFieldName.gridy = 2;
 			contentPanel.add(textFieldName, gbc_textFieldName);
@@ -182,7 +208,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 		{
 			textFieldTown = new JTextField();
 			GridBagConstraints gbc_textFieldTown = new GridBagConstraints();
-			gbc_textFieldTown.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldTown.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldTown.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldTown.gridx = 3;
 			gbc_textFieldTown.gridy = 4;
@@ -198,9 +224,9 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 			contentPanel.add(lblNazione, gbc_lblNazione);
 		}
 		{
-			comboBoxCountry = new JComboBox();
+			comboBoxCountry = new JComboBox<String>();
 			GridBagConstraints gbc_comboBoxCountry = new GridBagConstraints();
-			gbc_comboBoxCountry.insets = new Insets(0, 0, 5, 0);
+			gbc_comboBoxCountry.insets = new Insets(0, 0, 5, 5);
 			gbc_comboBoxCountry.fill = GridBagConstraints.HORIZONTAL;
 			gbc_comboBoxCountry.gridx = 3;
 			gbc_comboBoxCountry.gridy = 6;
@@ -217,7 +243,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 		{
 			textFieldWebsite = new JTextField();
 			GridBagConstraints gbc_textFieldWebsite = new GridBagConstraints();
-			gbc_textFieldWebsite.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldWebsite.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldWebsite.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldWebsite.gridx = 3;
 			gbc_textFieldWebsite.gridy = 8;
@@ -227,36 +253,80 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 		{
 			JLabel lblDescrizione = new JLabel("Descrizione:");
 			GridBagConstraints gbc_lblDescrizione = new GridBagConstraints();
-			gbc_lblDescrizione.insets = new Insets(0, 0, 0, 5);
+			gbc_lblDescrizione.insets = new Insets(0, 0, 5, 5);
 			gbc_lblDescrizione.gridx = 1;
-			gbc_lblDescrizione.gridy = 10;
+			gbc_lblDescrizione.gridy = 9;
 			contentPanel.add(lblDescrizione, gbc_lblDescrizione);
 		}
 		{
 			textAreaDescription = new JTextArea();
 			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
+			gbc_textAreaDescription.gridwidth = 3;
+			gbc_textAreaDescription.gridheight = 2;
+			gbc_textAreaDescription.insets = new Insets(0, 0, 5, 5);
 			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
 			gbc_textAreaDescription.gridx = 3;
-			gbc_textAreaDescription.gridy = 10;
-			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
+			gbc_textAreaDescription.gridy = 9;
+//			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
+			textAreaDescription.setLineWrap(true);
+		}
+		{
+			scrollPane = new JScrollPane();
+			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+			gbc_scrollPane.gridwidth = 3;
+			gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+			gbc_scrollPane.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane.gridx = 3;
+			gbc_scrollPane.gridy = 9;
+			contentPanel.add(scrollPane, gbc_scrollPane);
+			
+			scrollPane.setViewportView(textAreaDescription);
 		}
 		
 		
 		{
+			JLabel lblTrappist = new JLabel("Birrificio trappista:");
+			GridBagConstraints gbc_lblTrappist = new GridBagConstraints();
+			gbc_lblTrappist.insets = new Insets(0, 0, 5, 5);
+			gbc_lblTrappist.gridx = 1;
+			gbc_lblTrappist.gridy = 11;
+			contentPanel.add(lblTrappist, gbc_lblTrappist);
+		}		
+		{
+			rdbtnTrappistYes = new JRadioButton("S\u00EC");
+			GridBagConstraints gbc_rdbtnTrappistYes = new GridBagConstraints();
+			gbc_rdbtnTrappistYes.insets = new Insets(0, 0, 5, 5);
+			gbc_rdbtnTrappistYes.gridx = 3;
+			gbc_rdbtnTrappistYes.gridy = 11;
+			buttonGroup.add(rdbtnTrappistYes);
+			contentPanel.add(rdbtnTrappistYes, gbc_rdbtnTrappistYes);
+		}
+		
+		{
+			rdbtnTrappistNo = new JRadioButton("No");
+			GridBagConstraints gbc_rdbtnTrappistNo = new GridBagConstraints();
+			gbc_rdbtnTrappistNo.insets = new Insets(0, 0, 5, 0);
+			gbc_rdbtnTrappistNo.gridx = 5;
+			gbc_rdbtnTrappistNo.gridy = 11;
+			buttonGroup.add(rdbtnTrappistNo);
+			contentPanel.add(rdbtnTrappistNo, gbc_rdbtnTrappistNo);
+		}
+		
+		{
 			JLabel lblAverage = new JLabel("Media voti birre:");
 			GridBagConstraints gbc_lblAverage = new GridBagConstraints();
-			gbc_lblAverage.insets = new Insets(0, 0, 5, 5);
+			gbc_lblAverage.insets = new Insets(0, 0, 0, 5);
 			gbc_lblAverage.gridx = 1;
-			gbc_lblAverage.gridy = 12;
+			gbc_lblAverage.gridy = 13;
 			contentPanel.add(lblAverage, gbc_lblAverage);
 		}
 		{
 			textFieldAverage = new JTextField();
 			GridBagConstraints gbc_textFieldAverage = new GridBagConstraints();
-			gbc_textFieldAverage.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldAverage.insets = new Insets(0, 0, 0, 5);
 			gbc_textFieldAverage.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldAverage.gridx = 3;
-			gbc_textFieldAverage.gridy = 12;
+			gbc_textFieldAverage.gridy = 13;
 			contentPanel.add(textFieldAverage, gbc_textFieldAverage);
 			textFieldAverage.setColumns(7);
 			textFieldAverage.setEditable(false);
