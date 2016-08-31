@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.awt.Point;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,6 +17,9 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import javax.swing.JFileChooser;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.json.JSONArray;
@@ -814,6 +818,7 @@ public class Utils {
 	private static final String BEER_FILTERING_ALGORITHM_BY_TRAPPIST_YES = "Trappiste";
 	private static final String BEER_FILTERING_ALGORITHM_BY_TRAPPIST_NO = "Non trappiste";
 	private static final String BEER_FILTERING_ALGORITHM_BY_EXACT_MARK = "Voto (esatto)";
+	private static final String BEER_FILTERING_ALGORITHM_BY_PLACE_TRIED = "Luogo di bevuta";
 	
 	
 	public static String getBeerFilterAlgorithmDescription(BeerFilterAlgorithm algorithm){
@@ -876,8 +881,11 @@ public class Utils {
 		case BY_TRAPPIST_YES:
 			value = BEER_FILTERING_ALGORITHM_BY_TRAPPIST_YES;
 			break;
-		default:
+		case BY_PLACE_TRIED:
+			value = BEER_FILTERING_ALGORITHM_BY_PLACE_TRIED;
 			break;
+		default:
+				break;
 		
 		}
 		return value;
@@ -952,6 +960,9 @@ public class Utils {
 		case BEER_FILTERING_ALGORITHM_BY_TRAPPIST_NO:
 			value = BeerFilterAlgorithm.BY_TRAPPIST_NO;
 			break;	
+		case BEER_FILTERING_ALGORITHM_BY_PLACE_TRIED:
+			value = BeerFilterAlgorithm.BY_PLACE_TRIED;
+			break;
 		default:
 			value = null;
 			break;
@@ -1189,7 +1200,7 @@ public class Utils {
 		
 		public static final String[] EXCEL_NEW ={
 				"Microsoft excel 2010-2016 (xlsx)",
-				"xlss"
+				"xlsx"
 		};
 		
 		public static final String[] JSON ={
@@ -1214,6 +1225,7 @@ public class Utils {
 		
 		public static final String QUESTION = "Domanda";
 		public static final String CONFIRMATION_BEFORE_EXIT = "Ci sono dei dati da salvare. Uscire comunque?";
+		public static final String CONFIRMATION_BEFORE_DELETE = "Vuoi davvero eliminare questi dati?";
 		
 		public static final String FILTER_BY_TITLE = "Filtra";
 		
@@ -1228,6 +1240,7 @@ public class Utils {
 		public static final String BEERS_FILTER_BY_EXACT_STAR = "Scegli le stelle esatte:";
 		public static final String BEERS_FILTER_BY_MINIMUM_ABV = "Scegli l'ABV minimo:";
 		public static final String BEERS_FILTER_BY_EXACT_ABV = "Scegli l'ABV esatto:";
+		public static final String BEERS_FILTER_BY_PLACE_TRIED = "Scegli il luogo:";
 		
 		public static final String BREWERIES_FILTER_BY_COUNTRY = "Scegli la nazione:";
 			
@@ -1237,6 +1250,17 @@ public class Utils {
 		public static final String DEFAULT_MARK = "0";
 		public static final String DEFAULT_ABV = "0.0";
 		public static final String DEFAULT_STAR = "0";
+		
+		
+		
+		public static final String NO_PLACES = "Non ci sono luoghi su cui effettuare la ricerca";
+		public static final String NO_NATIONS = "Non ci sono nazioni su cui effettuare la ricerca";
+		public static final String NO_STYLES = "Non ci sono stili su cui effettuare la ricerca";
+		public static final String NO_BREWERY = "Non ci sono birrifici su cui effettuare la ricerca";
+		
+		public static final String ERROR = "Errore";
+		
+		
 		
 	}
 	
@@ -1574,6 +1598,9 @@ public class Utils {
 		case BY_TRAPPIST_YES:
 			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByTrappist(beers, true);
 			break;
+		case BY_PLACE_TRIED:
+			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByPlaceTried(beers, (String)o);
+			break;
 		}
 		return function;
 	}
@@ -1585,6 +1612,66 @@ public class Utils {
 			array[i]=list.get(i);
 		}
 		return array;
+	}
+	
+	
+	public static List<Beer> createList(Beer b){
+		List<Beer> beers = new LinkedList<Beer>();
+		beers.add(b);
+		return beers;
+	}
+	
+	public static List<BreweryAverage> createList(BreweryAverage b){
+		List<BreweryAverage> breweries = new LinkedList<BreweryAverage>();
+		breweries.add(b);
+		return breweries;
+	}
+	
+	public static List<Style> createList(Style s){
+		List<Style> styles = new LinkedList<Style>();
+		styles.add(s);
+		return styles;
+	}
+	
+	
+	public static List<Beer> subListBeer(List<Beer> beers, int [] position){
+		List<Beer> subBeers = new LinkedList<Beer>();
+//		for(int i: position){
+//			subBeers.add(beers.get(i));
+//		}
+		
+//		System.out.println("Beer at pos in utils "+position[0]);
+//		Utils.printBeer(beers.get(position[0]), System.out);
+		
+		for(int i=0;i<position.length;i++){
+			subBeers.add(beers.get(position[i]));
+		}
+		return subBeers;
+	}
+	
+	public static List<BreweryAverage> subListBrewery(List<BreweryAverage> breweries, int [] position){
+		List<BreweryAverage> subBreweries = new LinkedList<BreweryAverage>();
+		for(int i: position){
+			subBreweries.add(breweries.get(i));
+		}
+		return subBreweries;
+	}
+	
+	public static List<Style> subListStyle(List<Style> beers, int [] position){
+		List<Style> subStyles = new LinkedList<Style>();
+		for(int i: position){
+			subStyles.add(beers.get(i));
+		}
+		return subStyles;
+	}
+	
+	
+	public static Point getPointForPopupMenu(JPopupMenu popup, JTable table){
+		return SwingUtilities.convertPoint(popup, new Point(0,0), table);
+	}
+	
+	public static Point getPointForPopupMenu(JPopupMenu popup, Point p, JTable table){
+		return SwingUtilities.convertPoint(popup, p, table);
 	}
 
 }

@@ -44,6 +44,10 @@ public class ViewJOptionPane {
 		return (String) JOptionPane.showInputDialog(parent, message, title, JOptionPane.PLAIN_MESSAGE, null, items, items[0]);
 	}
 	
+	public void showErrorMessageDialog(String title, String message){
+		JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
+	}
+	
 	
 	public int showOkCancel(String title, String message){
 		return JOptionPane.showConfirmDialog(parent, message, title,JOptionPane.YES_NO_OPTION);
@@ -68,5 +72,7 @@ public class ViewJOptionPane {
 	public static boolean isClosedOption(int option){
 		return option==JOptionPane.CLOSED_OPTION ? true : false;
 	}
+	
+
 
 }

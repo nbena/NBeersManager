@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="C:/Users/nicola/Risorse per programmazione/Librerie/Java-JSP-Servlet/Apache POI/poi-3.11/poi-3.11-20141221.jar"/>
 	<classpathentry kind="lib" path="C:/Users/nicola/Risorse per programmazione/Librerie/Java-JSP-Servlet/Apache POI/poi-3.11/poi-ooxml-3.11-20141221.jar"/>
 	<classpathentry kind="lib" path="C:/Users/nicola/Risorse per programmazione/Librerie/Java-JSP-Servlet/Apache POI/poi-3.11/poi-ooxml-schemas-3.11-20141221.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nicola/Risorse per programmazione/Librerie/Java-JSP-Servlet/Apache POI/poi-3.11/ooxml-lib/xmlbeans-2.6.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

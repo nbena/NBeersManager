@@ -4,6 +4,7 @@ package org.nbena.beersmanager.exe.ui.controllers;
 import java.awt.event.ActionEvent;
 
 
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,6 +14,7 @@ import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,6 +22,10 @@ import java.util.stream.Collectors;
 
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 
 import org.json.JSONException;
@@ -102,6 +108,7 @@ public class ControllerMainGUI {
 		addSaveMenuAndButtonListeners();
 		addRefreshButtonListener();
 		addOperationOnClose();
+		addTablePopupMenu();
 
 	}
 	
@@ -312,6 +319,15 @@ public class ControllerMainGUI {
 		}else{
 			model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_IS_TRIED_NO));
 		}
+		model.applyFilteringToBeers();
+		showBeers();
+	}
+	
+	
+	public void beersFilteredByPlaceTried(String place){
+//		model.beersFilteredByPlaceTried(place);
+		model.setBeerFilteringCurrentValue(place);
+		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_PLACE_TRIED));
 		model.applyFilteringToBeers();
 		showBeers();
 	}
@@ -567,6 +583,20 @@ public class ControllerMainGUI {
 			
 		});
 		
+		
+		gui.addActionMenuBeersFilteredByPlaceTried(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+							
+				String string = askPlaceBeersFilteredByPlaceTried();
+				if(string!=null){
+					beersFilteredByPlaceTried(string);
+				}
+				
+			}
+			
+		});
 		
 	}
 	
@@ -989,12 +1019,52 @@ public class ControllerMainGUI {
 		b.setName(addBeerDialog.getBeerName());
 		b.setStyle(style);
 		b.setBrewery(brewery);
-		b.setAlcool(Utils.parseDouble(addBeerDialog.getABV()));
-		b.setMark(Integer.parseInt(addBeerDialog.getMark()));
-		b.setNumberOfStars(Integer.parseInt(addBeerDialog.getStars()));
+		
+		double alcool = 0.0;
+		int mark = 0;
+		int stars = 0;
+		double price = 0.0;
+		
+		if(addBeerDialog.getABV().equals("")){
+			b.setAlcool(alcool);
+		}
+		else{
+			b.setAlcool(Utils.parseDouble(addBeerDialog.getABV()));
+		}
+		
+		
+		if(addBeerDialog.getMark().equals("")){
+			b.setMark(mark);
+		}
+		else{
+			b.setMark(Integer.parseInt(addBeerDialog.getMark()));
+		}
+		
+		
+		if(addBeerDialog.getStars().equals("")){
+			b.setNumberOfStars(stars);
+		}
+		else{
+			b.setNumberOfStars(Integer.parseInt(addBeerDialog.getStars()));
+		}
+		
+		
+		
+		if(addBeerDialog.getPrice().equals("")){
+			b.setPrice(price);
+		}
+		else{
+			b.setPrice(Utils.parseDouble(addBeerDialog.getPrice()));
+		}
+		
+		
+		
+//		b.setAlcool(Utils.parseDouble(addBeerDialog.getABV()));
+//		b.setMark(Integer.parseInt(addBeerDialog.getMark()));
+//		b.setNumberOfStars(Integer.parseInt(addBeerDialog.getStars()));
 		b.setTried(addBeerDialog.isTried());
 		b.setPlaceTried(addBeerDialog.getPlace());
-		b.setPrice(Utils.parseDouble(addBeerDialog.getPrice()));
+//		b.setPrice(Utils.parseDouble(addBeerDialog.getPrice()));
 		b.setDescription(addBeerDialog.getDescription());
 		
 //		brewery.setName(addBeerDialog.getName());
@@ -1024,6 +1094,22 @@ public class ControllerMainGUI {
 		s.setDescription(addStyleDialog.getDescription());
 		s.setFermentation(Utils.getFermentationFromString(addStyleDialog.getFermentation()));
 		return s;
+	}
+	
+	
+	private void deleteBeersLogic(List<Beer> beers) throws UpdateSavingException{
+		model.deleteBeers(beers);
+		refreshData();
+	}
+	
+	private void deleteBreweriesLogic(List<BreweryAverage> breweries) throws UpdateSavingException{
+		model.deleteBreweries(breweries);
+		refreshData();
+	}
+	
+	private void deleteStylesLogic(List<Style> styles) throws UpdateSavingException{
+		model.deleteStyles(styles);
+		refreshData();
 	}
 	
 	/**
@@ -1451,12 +1537,13 @@ public class ControllerMainGUI {
 				} catch (UpdateSavingException e) {
 					showExceptionDialog(e);
 				}
+				
+				viewBeerDialog.setVisible(false);
+				viewBeerDialog.dispose();
 			}
 			
 		});
 		
-		viewBeerDialog.setVisible(false);
-		viewBeerDialog.dispose();
 	}
 	
 	private void setDeleteBreweryButtonListener(){
@@ -1470,12 +1557,12 @@ public class ControllerMainGUI {
 				} catch (UpdateSavingException e1) {
 					showExceptionDialog(e1);
 				}
+				
+				viewBreweryDialog.setVisible(false);
+				viewBreweryDialog.dispose();
 			}
 			
 		});
-		
-		viewBreweryDialog.setVisible(false);
-		viewBreweryDialog.dispose();
 	}
 	
 	private void setDeleteStyleButtonListener(){
@@ -1489,12 +1576,16 @@ public class ControllerMainGUI {
 				} catch (UpdateSavingException e1) {
 					showExceptionDialog(e1);
 				}
+				
+				
+				viewStyleDialog.setVisible(false);
+				viewStyleDialog.dispose();
+				
 			}
 			
 		});
 		
-		viewStyleDialog.setVisible(false);
-		viewStyleDialog.dispose();
+
 	}
 
 	
@@ -1760,6 +1851,137 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	
+	private void addTablePopupMenu(){
+		
+		addPopupMenuEventListener();
+		addPopupMenuViewThingsListener();
+		addPopupMenuModifyThingsListener();
+		addPopupMenuDeleteThingsListener();
+	}
+	
+	
+	private void addPopupMenuEventListener(){
+		gui.addPopupListener(new PopupMenuListener(){
+
+			@Override
+			public void popupMenuCanceled(PopupMenuEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void popupMenuWillBecomeVisible(PopupMenuEvent arg0) {
+				
+				
+				//select the row when the popup is select.
+//				int p = gui.getPointForPopup();
+//				System.out.println("The row is : "+p);
+//				gui.setSelectedRow(p, p);
+				int p = gui.getNewPointForPopoup();
+				gui.setSelectedRow(p, p);
+			}
+			
+		});
+	}
+	
+	private void addPopupMenuViewThingsListener(){
+		gui.addActionPopupMenuViewThings(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int row = gui.getTableSelectedRow();
+				openDialogShowThing(row);
+			}
+			
+		});
+	}
+	
+	private void addPopupMenuModifyThingsListener(){
+		gui.addActionPopupMenuModifyThings(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(model.getDataShownNow()==DataShownNow.BEER){
+					model.setBeerShown(model.getSelectedBeer(gui.getTableSelectedRow()));
+					showAddOrModifyBeer(false);
+				}
+				else if(model.getDataShownNow()==DataShownNow.STYLE){
+					model.setStyleShown(model.getSelectedStyle(gui.getTableSelectedRow()));
+					showAddOrModifyStyle(false);
+				}else{
+					model.setBreweryShown(model.getSelectedBrewery(gui.getTableSelectedRow()));
+					showAddOrModifyBrewery(false);
+				}
+			}
+			
+		});
+	}
+	
+	private void addPopupMenuDeleteThingsListener(){
+		gui.addActionPopupMenuDeleteThings(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+					
+				System.out.println(Arrays.toString(gui.getTableSelectedRows()));
+				
+				if(askSureToDelete()){
+					try{
+						if(model.getDataShownNow()==DataShownNow.BEER){
+							List<Beer> toDelete = Utils.subListBeer(model.getBeerData(), gui.getTableSelectedRows());
+							
+							
+//							System.out.println("Beer at pos "+gui.getTableSelectedRows()[0]);
+//							Utils.printBeer(model.getSelectedBeer(gui.getTableSelectedRows()[0]), System.out);
+							
+							
+							deleteBeersLogic(toDelete);
+						}
+						else if(model.getDataShownNow()==DataShownNow.STYLE){
+							List<BreweryAverage> toDelete = Utils.subListBrewery(model.getBreweryAverageData(), gui.getTableSelectedRows());
+							deleteBreweriesLogic(toDelete);
+						}else{
+							List<Style> toDelete = Utils.subListStyle(model.getStyleData(), gui.getTableSelectedRows());
+							deleteStylesLogic(toDelete);
+						}
+					}catch(UpdateSavingException e){
+						showExceptionDialog(e);
+					}
+				}
+			}
+			
+		});
+	}
+	
+	
+	private void popupMenuViewEnabled(boolean enabled){
+		gui.setPopupMenuViewThingsTableEnabled(enabled);
+	}
+	
+	
+	private void popupMenuModifyEnabled(boolean enabled){
+		gui.setPopoupMenuModifyThingsTableEnabled(enabled);
+	}
+	
+	
+	private void openDialogShowThing(int row){
+		if(model.getDataShownNow()==DataShownNow.BEER){
+			openBeerDialog(row);
+
+		}else if(model.getDataShownNow()==DataShownNow.STYLE){
+			openStyleDialog(row);
+		}else{
+			openBreweryDialog(row);
+		}
+	}
 
 	
 	private void addListSelectionListener(){
@@ -1772,15 +1994,19 @@ public class ControllerMainGUI {
 				if(arg0.getClickCount()==2){
 					JTable t =(JTable)arg0.getSource();
 					int row=t.getSelectedRow();
-					if(model.getDataShownNow()==DataShownNow.BEER){
-							openBeerDialog(row);
-				
-					}else if(model.getDataShownNow()==DataShownNow.STYLE){
-						openStyleDialog(row);
-					}else{
-						openBreweryDialog(row);
-					}
+//					if(model.getDataShownNow()==DataShownNow.BEER){
+//							openBeerDialog(row);
+//				
+//					}else if(model.getDataShownNow()==DataShownNow.STYLE){
+//						openStyleDialog(row);
+//					}else{
+//						openBreweryDialog(row);
+//					}
+					openDialogShowThing(row);
 				}
+//				else if(arg0.isPopupTrigger()){
+//					gui.showPopupMenu(true);
+//				}
 			}
 			
 
@@ -1811,6 +2037,29 @@ public class ControllerMainGUI {
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
+			}
+			
+		});
+		
+		
+		gui.addTableListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				
+//				gui.showPopupMenu(true);
+								
+				int [] rows = gui.getTableSelectedRows();
+				
+				if(rows.length>1){
+					popupMenuModifyEnabled(false);
+					popupMenuViewEnabled(false);
+				}
+				else{
+					popupMenuModifyEnabled(true);
+					popupMenuViewEnabled(true);
+				}
+				
 			}
 			
 		});
@@ -2148,32 +2397,63 @@ public class ControllerMainGUI {
 	private String askCountryBeersFiltererdByStyleProvenience(){
 		optionPane.setParent(gui);
 		String[] countries = Utils.toArray(model.getCountriesWithStyle());
-		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_ORIGIN_STYLE, countries);
+		String ret = null;
+		if(countries.length==0){
+			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_NATIONS);
+		}
+		else{
+			ret = optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_ORIGIN_STYLE, countries);
+		}
+		return ret;
 	}
 	
 	
 	private String askBreweryBeersFilteredByBrewery(){
 		optionPane.setParent(gui);
+		String ret = null;
 		String[] breweries = Utils.getBreweryStringArray(model.getBreweryData());
-		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_BREWERY, breweries);
+		if(breweries.length==0){
+			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_BREWERY);
+		}else{
+			ret = optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_BREWERY, breweries);
+		}	
+		return ret;
 	}
 	
 	private String askStyleBeersFilteredByStyleMain(){
 		optionPane.setParent(gui);
+		String ret = null;
 		String[] styles = Utils.getStyleStringArray(model.getOnlyMainStyle());
-		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_STYLE, styles);
+		if(styles.length==0){
+			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_STYLES);
+		}else{
+			ret = optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_STYLE, styles);
+		}		
+		return ret;
 	}
 	
 	private String askStyleBeersFilteredByStyle(){
 		optionPane.setParent(gui);
+		String ret = null;
 		String[] styles = Utils.getStyleStringArray(model.getStyleData());
-		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEER_FILTER_BY_STYLE_AND_SUB, styles);
+		if(styles.length==0){
+			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_STYLES);
+		}else{
+			ret = optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEER_FILTER_BY_STYLE_AND_SUB, styles);
+		}	
+		return ret;
 	}
 	
 	private String askCountryBeersFilteredByCountry(){
 		optionPane.setParent(gui);
+		String ret = null;
 		String[] countries = Utils.toArray(model.getCountriesWithBrewery());
-		return optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_ORIGIN_STYLE, countries);
+		if(countries.length==0){
+			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_NATIONS);
+		}else{
+			ret = optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_ORIGIN_STYLE, countries);
+		}		
+		return ret;
 	}
 	
 	private String askExactMarkBeersFilteredByExactMark(){
@@ -2204,6 +2484,30 @@ public class ControllerMainGUI {
 	private String askExactABVBeersFilteredByExactABV(){
 		optionPane.setParent(gui);
 		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_EXACT_ABV, Utils.Constants.DEFAULT_ABV);
+	}
+	
+	private String askPlaceBeersFilteredByPlaceTried(){
+		optionPane.setParent(gui);
+		String ret = null;
+		String [] places = Utils.toArray(model.getAllPlaces());
+		if(places.length==0){
+			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_PLACES);
+		}else{
+			ret = optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_PLACE_TRIED, places);
+		}
+		
+		return ret;
+	}
+	
+	
+	public boolean askSureToDelete(){
+		optionPane.setParent(gui);
+		boolean ret = false;
+		int res = optionPane.showOkCancel(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_BEFORE_DELETE);
+		if(ViewJOptionPane.isOkOption(res)){
+			ret = true;
+		}
+		return ret;
 	}
 	
 	private void addOperationOnClose(){

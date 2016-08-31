@@ -4,14 +4,17 @@ package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 
+import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.exe.ui.models.Model;
 
 import java.awt.GridBagLayout;
@@ -25,8 +28,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowListener;
 import java.io.File;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
+import java.awt.Insets;
+import java.awt.MouseInfo;
+import java.awt.Point;
+
+import javax.swing.JPopupMenu;
 
 public class ViewMainGUI extends JFrame {
 
@@ -132,7 +142,61 @@ public class ViewMainGUI extends JFrame {
 	private JMenuItem mntmStylesFilteredByFermentationSpontaneous;
 	private JMenuItem mntmStylesFilteredByMainStyle;
 	private JMenuItem mntmStylesFilteredByCountryOrigin;
+	private JMenuItem mntmBeersFilteredByPlaceTried;
+	private JPopupMenu popupMenu;
+	private JMenuItem mntmViewThingsTable;
+	private JMenuItem mntmModifyThingsTable;
+	private JMenuItem mntmDeleteThingsTable;
 	
+	
+	
+	public void addPopupListener(PopupMenuListener listener){
+		popupMenu.addPopupMenuListener(listener);
+	}
+	
+	
+	public void setPopupMenuViewThingsTableEnabled(boolean enabled){
+		mntmViewThingsTable.setEnabled(enabled);
+	}
+	
+	public void setPopoupMenuModifyThingsTableEnabled(boolean enabled){
+		mntmModifyThingsTable.setEnabled(enabled);
+	}
+	
+	public void addActionPopupMenuViewThings(ActionListener listener){
+		mntmViewThingsTable.addActionListener(listener);
+	}
+	
+	public void addActionPopupMenuModifyThings(ActionListener listener){
+		mntmModifyThingsTable.addActionListener(listener);
+	}
+	
+	public void addActionPopupMenuDeleteThings(ActionListener listener){
+		mntmDeleteThingsTable.addActionListener(listener);
+	}
+	
+	public void showPopupMenu(boolean show){
+		popupMenu.setVisible(show);
+	}
+	
+	public int getRowAtPoint(Point p){
+		return table.rowAtPoint(p);
+	}
+	
+
+	
+	public void setSelectedRow(int startRow, int endRow){
+		table.setRowSelectionInterval(startRow, endRow);
+	}
+	
+	//done here because I don't like the getPopup and getTable
+	public int getPointForPopup(){
+		return  table.rowAtPoint(Utils.getPointForPopupMenu(popupMenu, table));
+	}
+	
+	public int getNewPointForPopoup(){
+		return table.rowAtPoint(Utils.getPointForPopupMenu(popupMenu, MouseInfo.getPointerInfo().getLocation(), table));
+	}
 	
 	public void addActionRefreshButton(ActionListener listener){
 		btnReferesh.addActionListener(listener);
@@ -275,6 +339,10 @@ public class ViewMainGUI extends JFrame {
 		mntmBeersFilteredByBreweryCountry.addActionListener(listener);
 	}
 	
+	public void addActionMenuBeersFilteredByPlaceTried(ActionListener listener){
+		mntmBeersFilteredByPlaceTried.addActionListener(listener);
+	}
+	
 	
 	
 	public void addActionMenuStylesSortedByFermentationThenCountry(ActionListener listener){
@@ -411,6 +479,10 @@ public class ViewMainGUI extends JFrame {
 	
 	public int getTableSelectedRow(){
 		return table.getSelectedRow();
+	}
+	
+	public int[]  getTableSelectedRows(){
+		return table.getSelectedRows();
 	}
 	
 	public void noRowSelected(){
@@ -706,6 +778,9 @@ public class ViewMainGUI extends JFrame {
 		mntmBeersFiltedredByStyleProvenience = new JMenuItem("Nazione origine stile");
 		mnFilterBeer.add(mntmBeersFiltedredByStyleProvenience);
 		
+		mntmBeersFilteredByPlaceTried = new JMenuItem("Luogo di bevuta");
+		mnFilterBeer.add(mntmBeersFilteredByPlaceTried);
+		
 		mnFilterBrewery = new JMenu("Brewery");
 		mnFilter.add(mnFilterBrewery);
 		
@@ -773,20 +848,39 @@ public class ViewMainGUI extends JFrame {
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		table = new JTable(model.getTableModel());
 		
 		GridBagConstraints gbc_table = new GridBagConstraints();
+		gbc_table.insets = new Insets(0, 0, 5, 0);
 		gbc_table.fill = GridBagConstraints.BOTH;
 		gbc_table.gridx = 0;
 		gbc_table.gridy = 0;
 		contentPane.add(table, gbc_table);
 		
+		popupMenu = new JPopupMenu();
+//		GridBagConstraints gbc_popupMenu = new GridBagConstraints();
+//		gbc_popupMenu.gridx = 0;
+//		gbc_popupMenu.gridy = 1;
+//		table.add(popupMenu, gbc_popupMenu);
+		
+		
+		
+		mntmViewThingsTable = new JMenuItem("Vedi");
+		popupMenu.add(mntmViewThingsTable);
+		
 		//table.get
+		mntmModifyThingsTable = new JMenuItem("Modifica");
+		popupMenu.add(mntmModifyThingsTable);
+		
+		mntmDeleteThingsTable = new JMenuItem("Elimina");
+		popupMenu.add(mntmDeleteThingsTable);
+		
+		table.setComponentPopupMenu(popupMenu);
 		
 		
 	}

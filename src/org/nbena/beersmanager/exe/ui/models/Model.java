@@ -234,6 +234,9 @@ public class Model {
 		return QueryRunner.getAllCountriesWithABrewery(Utils.fromBreweriesAverageToBrewery(breweryData));
 	}
 	
+	public List<String> getAllPlaces(){
+		return QueryRunner.getAllPlaces(beerData);
+	}
 
 	/**
 	 * @return the dialogModel
@@ -267,7 +270,8 @@ public class Model {
 	 * @return the styleData
 	 */
 	public List<Style> getStyleData() {
-		return styleData;
+//		return styleData;
+		return filteredStyles;
 	}
 
 	/**
@@ -317,7 +321,8 @@ public class Model {
 	 * @return the beerData
 	 */
 	public List<Beer> getBeerData() {
-		return beerData;
+//		return beerData;
+		return filteredBeers;
 	}
 
 	/**
@@ -360,11 +365,13 @@ public class Model {
 	 * @return the breweryData
 	 */
 	public List<Brewery> getBreweryData() {
-		return Utils.fromBreweriesAverageToBrewery(breweryData);
+//		return Utils.fromBreweriesAverageToBrewery(breweryData);
+		return Utils.fromBreweriesAverageToBrewery(filteredBreweries);
 	}
 	
 	public List<BreweryAverage> getBreweryAverageData(){
-		return breweryData;
+//		return breweryData;
+		return filteredBreweries;
 	}
 
 	/**
@@ -477,6 +484,9 @@ public class Model {
 			throw new RuntimeException("Beer is not in the table");
 		//return null;
 	}
+	
+	
+	
 	
 	public Style getSelectedStyle(int index){
 		if (dataShownNow==DataShownNow.STYLE){
@@ -1229,6 +1239,26 @@ public class Model {
 			throw new UpdateSavingException(newStyle, UpdateSavingException.ErrorWhile.UPDATING);
 		}
 
+	}
+	
+	public void deleteBeers(List<Beer> beers) throws UpdateSavingException{
+		for(Beer b : beers){
+//			System.out.println("The beer to delete is: ");
+//			Utils.printBeer(b, System.out);
+			deleteBeer(b);
+		}
+	}
+	
+	public void deleteBreweries(List<BreweryAverage> breweries) throws UpdateSavingException{
+		for(BreweryAverage b: breweries){
+			deleteBrewery(b);
+		}
+	}
+	
+	public void deleteStyles(List<Style> styles) throws UpdateSavingException{
+		for(Style s: styles){
+			deleteStyle(s);
+		}
 	}
 	
 	public void deleteBeer(Beer b) throws UpdateSavingException{

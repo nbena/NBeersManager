@@ -261,7 +261,7 @@ public class Main {
 			
 			controller.showDefault();
 
-
+			Utils.printBeers(model.getBeerData(), System.out);
 
 
 	}

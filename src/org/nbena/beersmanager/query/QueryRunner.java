@@ -75,7 +75,8 @@ public class QueryRunner {
 		BY_EXACT_STAR,
 		BY_EXACT_ABV,
 		BY_TRAPPIST_YES,
-		BY_TRAPPIST_NO
+		BY_TRAPPIST_NO,
+		BY_PLACE_TRIED
 	}
 	
 	public static enum BreweryFilterAlgorithm{
@@ -197,6 +198,12 @@ public class QueryRunner {
 	
 	public static List<Beer> beersFilteredByStyleProvenience(List<Beer> beers, String provenience){
 		return beers.stream().filter(b -> b.getStyle().getStyleCountryOrigin().equalsIgnoreCase(provenience))
+				.collect(Collectors.toList());
+	}
+	
+	
+	public static List<Beer> beersFilteredByPlaceTried(List<Beer> beers, String place){
+		return beers.stream().filter(b -> b.getPlaceTried().equalsIgnoreCase(place))
 				.collect(Collectors.toList());
 	}
 	
@@ -659,14 +666,27 @@ public class QueryRunner {
 	
 		public static List<String> getAllCountriesWithAStyle(List<Style> styles){
 			List<String>  countries = new LinkedList<String>();
-			styles.stream().filter(s -> countries.contains(s.getStyleCountryOrigin()) ? countries.add(s.getStyleCountryOrigin()) : null);
+			styles.stream().filter(s -> !countries.contains(s.getStyleCountryOrigin()) ? countries.add(s.getStyleCountryOrigin()) : null);
 			return countries;
 		}
 	
 		public static List<String> getAllCountriesWithABrewery(List<Brewery> breweries){
 			List<String>  countries = new LinkedList<String>();
-			breweries.stream().filter(b -> countries.contains(b.getCountry()) ? countries.add(b.getCountry()) : null);
+			breweries.stream().filter(b -> !countries.contains(b.getCountry()) ? countries.add(b.getCountry()) : null);
 			return countries;
+		}
+		
+		public static List<String> getAllPlaces(List<Beer> beers){
+//			List<String> places = new LinkedList<String>();
+//			beers.stream().filter(b -> !places.contains(b.getPlaceTried()) ? places.add(b.getPlaceTried()) : null);
+//			return places;
+			List<String> places = new LinkedList<String>();
+			for(Beer b : beers){
+				if(!places.contains(b.getPlaceTried())){
+					places.add(b.getPlaceTried());
+				}
+			}
+			return places;
 		}
 	
 	
