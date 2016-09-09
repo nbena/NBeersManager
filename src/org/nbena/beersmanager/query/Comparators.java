@@ -450,6 +450,27 @@ public class Comparators {
 	}
 	
 	
+	
+	public static class ComparatorStyleByFermentationCategorySubcategory implements Comparator<Style>{
+
+		@Override
+		public int compare(Style arg0, Style arg1) {
+			int ret;
+			if(arg0.getFermentation().compareTo(arg1.getFermentation())==0){
+				if(arg0.getStyleMainName().equalsIgnoreCase(arg1.getStyleMainName())){
+					ret = arg0.getStyleSubCategory().compareToIgnoreCase(arg1.getStyleSubCategory());
+				}else{
+					ret = arg0.getStyleMainName().compareTo(arg1.getStyleMainName());
+				}
+			}else{
+				ret = arg0.getFermentation().compareTo(arg1.getFermentation());
+			}
+			return ret;
+		}
+		
+	}
+	
+	
 	//Comparator for binary search of beers.
 	public static class ComparatorBeerByNameStyleBrewery implements Comparator<Beer>{
 

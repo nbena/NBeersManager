@@ -41,7 +41,8 @@ public class QueryRunner {
 
 	public static enum StyleSortingAlgorithm{
 		FERMENTATION_COUNTRY,
-		COUNTRY_FERMENTATION
+		COUNTRY_FERMENTATION,
+		FERMENTATION_CATEGORY
 	}
 
 
@@ -460,6 +461,13 @@ public class QueryRunner {
 	public static List<Style> styleSortedByCountryThenFermentationy(List<Style> styles){
 		List<Style> sortedStyles=new LinkedList<Style>(styles);
 		Collections.sort(sortedStyles , new Comparators.ComparatorStyleCountryComplete());
+		return sortedStyles;
+	}
+	
+	
+	public static List<Style> stylesSortedByFermentationCategorySubcategory(List<Style> styles){
+		List<Style> sortedStyles=new LinkedList<Style>(styles);
+		Collections.sort(sortedStyles , new Comparators.ComparatorStyleByFermentationCategorySubcategory());
 		return sortedStyles;
 	}
 	

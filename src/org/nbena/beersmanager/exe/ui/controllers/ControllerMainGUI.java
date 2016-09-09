@@ -782,13 +782,20 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	public void stylesSortedByFermentationCategorySubcategory(){
+		model.setStyleSortingCurrentAlgorithm(Utils.getStylesSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.FERMENTATION_CATEGORY));
+		showStyles();
+	}
+	
 	public void stylesSortedByFermentationThenCountry(){
-		model.styleSortedByFermentationThenCountry();
+//		model.styleSortedByFermentationThenCountry();
+		model.setStyleSortingCurrentAlgorithm(Utils.getStylesSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.FERMENTATION_COUNTRY));
 		showStyles();
 	}
 	
 	public void stylesSortedByCountryThenFermentation(){
-		model.styleSortedByCountryThenFermentationy();
+//		model.styleSortedByCountryThenFermentationy();
+		model.setStyleSortingCurrentAlgorithm(Utils.getStylesSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.COUNTRY_FERMENTATION));
 		showStyles();
 	}
 	
@@ -810,36 +817,52 @@ public class ControllerMainGUI {
 			}
 			
 		});
+		
+		gui.addActionMenuStylesSortedByFermentationCategorySubcategory(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				stylesSortedByFermentationCategorySubcategory();
+				
+			}
+			
+		});
 	}
 	
 	
 	public void breweriesSortedByCountryThenName(){
-		model.breweriesSortedByCountryThenName();
+//		model.breweriesSortedByCountryThenName();
+		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.COUNTRY_NAME));
 		showBreweries();
 	}
 	
 	public void breweriesSortedByName(){
-		model.breweriesSortedBynName(null);
+//		model.breweriesSortedBynName(null);
+		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.NAME));
 		showBreweries();
 	}
 	
 	public void breweriesSortedByCountryThenAverageAscending(){
-		model.breweriesSortedByCountryThenAverageAscending();
+//		model.breweriesSortedByCountryThenAverageAscending();
+		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.COUNTRY_AVERAGE_ASCENDING));
 		showBreweries();
 	}
 	
 	public void breweriesSortedByAverageAscending(){
-		model.breweriesSortedByAverageAscending();
+//		model.breweriesSortedByAverageAscending();
+		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.AVERAGE_ASCENDING));
 		showBreweries();
 	}
 	
 	public void breweriesSortedByCountryThenAverageDescending(){
-		model.breweriesSortedByCountryThenAverageDescending();
+//		model.breweriesSortedByCountryThenAverageDescending();
+		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.COUNTRY_AVERAGE_DESCENDING));
 		showBreweries();
 	}
 	
 	public void breweriesSortedByAverageDescending(){
-		model.breweriesSortedByAverageDescending();
+//		model.breweriesSortedByAverageDescending();
+		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.COUNTRY_AVERAGE_ASCENDING));
 		showBreweries();
 	}
 	
@@ -1336,7 +1359,7 @@ public class ControllerMainGUI {
 		});
 	}
 	
-	public void showAddOrModifyBeer(boolean addNewBeerOrModify){
+	public void showAddOrModifyBeer(boolean addNewBeerOrModify, boolean fromDialog){
 		if(addNewBeerOrModify){
 			model.setAddNewBeerOrModifyBeer(true);
 			showAddBeerDialog();
@@ -1344,27 +1367,27 @@ public class ControllerMainGUI {
 		}
 		else{
 			model.setAddNewBeerOrModifyBeer(false);
-			showModifyBeerDialog();
+			showModifyBeerDialog(fromDialog);
 		}
 	}
 	
-	public void showAddOrModifyBrewery(boolean addNewBreweryOrModify){
+	public void showAddOrModifyBrewery(boolean addNewBreweryOrModify, boolean fromDialog){
 		if(addNewBreweryOrModify){
 			model.setAddNewBreweryOrModifyBrewery(true);
 			showAddBreweryDialog();
 		}else{
 			model.setAddNewBreweryOrModifyBrewery(false);
-			showModifyBreweryDialog();
+			showModifyBreweryDialog(fromDialog);
 		}
 	}
 	
-	public void showAddOrModifyStyle(boolean addNewStyleOrModify){
+	public void showAddOrModifyStyle(boolean addNewStyleOrModify, boolean fromDialog){
 		if(addNewStyleOrModify){
 			model.setAddNewStyleOrModifyStyle(true);
 			showAddStyleDialog();
 		}else{
 			model.setAddNewStyleOrModifyStyle(false);
-			showModifyStyleDialog();
+			showModifyStyleDialog(fromDialog);
 		}
 	}
 	
@@ -1447,7 +1470,7 @@ public class ControllerMainGUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				showAddOrModifyBeer(true);
+				showAddOrModifyBeer(true, true);
 				
 			}
 			
@@ -1458,7 +1481,7 @@ public class ControllerMainGUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				showAddOrModifyBrewery(true);
+				showAddOrModifyBrewery(true, true);
 			}
 			
 		});
@@ -1468,7 +1491,7 @@ public class ControllerMainGUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				showAddOrModifyStyle(true);
+				showAddOrModifyStyle(true, true);
 			}
 			
 		});
@@ -1647,9 +1670,12 @@ public class ControllerMainGUI {
 		viewStyleDialog.setVisible(true);
 	}
 	
-	private void showModifyBeerDialog(){
-		viewBeerDialog.setVisible(false);
-		viewBeerDialog.dispose();
+	private void showModifyBeerDialog(boolean fromDialog){
+		if(fromDialog){
+			viewBeerDialog.setVisible(false);
+			viewBeerDialog.dispose();
+		}
+
 		
 		addBeerDialog = new ViewAddNewBeer();
 		addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryData()), Utils.getStylesString(model.getStyleData()));
@@ -1667,9 +1693,12 @@ public class ControllerMainGUI {
 		addBeerDialog.setVisible(true);
 	}
 	
-	private void showModifyBreweryDialog(){
-		viewBreweryDialog.setVisible(false);
-		viewBreweryDialog.dispose();
+	private void showModifyBreweryDialog(boolean fromDialog){
+		if(fromDialog){
+			viewBreweryDialog.setVisible(false);
+			viewBreweryDialog.dispose();
+		}
+
 		
 		addBreweryDialog=new ViewAddNewBrewery();
 		addBreweryDialog.fillThings(model.getCountries());
@@ -1683,9 +1712,12 @@ public class ControllerMainGUI {
 		addBreweryDialog.setVisible(true);
 	}
 	
-	private void showModifyStyleDialog(){
-		viewStyleDialog.setVisible(false);
-		viewStyleDialog.dispose();
+	private void showModifyStyleDialog(boolean fromDialog){
+		if(fromDialog){
+			viewStyleDialog.setVisible(false);
+			viewStyleDialog.dispose();
+		}
+
 		
 		addStyleDialog=new ViewAddNewStyle();
 		addStyleDialog.fillThings(Utils.getMainStyleString(model.getOnlyMainStyle()), Utils.getFermentationsItalianString(), model.getCountries());
@@ -1718,7 +1750,7 @@ public class ControllerMainGUI {
 //				
 //				addStyleDialog.setVisible(true);
 							
-				showAddOrModifyStyle(false);
+				showAddOrModifyStyle(false, true);
 			}
 			
 		});
@@ -1741,7 +1773,7 @@ public class ControllerMainGUI {
 //				
 //				addBreweryDialog.setVisible(true);
 							
-				showAddOrModifyBrewery(false);
+				showAddOrModifyBrewery(false, true);
 			}
 			
 		});
@@ -1764,7 +1796,7 @@ public class ControllerMainGUI {
 //				
 //				addBeerDialog.setVisible(true);
 				
-				showAddOrModifyBeer(false);
+				showAddOrModifyBeer(false, true);
 				
 			}
 			
@@ -1911,14 +1943,14 @@ public class ControllerMainGUI {
 				
 				if(model.getDataShownNow()==DataShownNow.BEER){
 					model.setBeerShown(model.getSelectedBeer(gui.getTableSelectedRow()));
-					showAddOrModifyBeer(false);
+					showAddOrModifyBeer(false, false);
 				}
 				else if(model.getDataShownNow()==DataShownNow.STYLE){
 					model.setStyleShown(model.getSelectedStyle(gui.getTableSelectedRow()));
-					showAddOrModifyStyle(false);
+					showAddOrModifyStyle(false, false);
 				}else{
 					model.setBreweryShown(model.getSelectedBrewery(gui.getTableSelectedRow()));
-					showAddOrModifyBrewery(false);
+					showAddOrModifyBrewery(false, false);
 				}
 			}
 			
@@ -2135,6 +2167,10 @@ public class ControllerMainGUI {
 				newConf.setBreweryFilterValue("");
 				newConf.setStyleFilterValue("");
 				
+				newConf.setDefaultView(Utils.getViewDefaultFromDescription(preferencesDialog.getComboBoxDeafultViewSelectedItem()));
+				
+				newConf = ConfigurationFactory.setupPath(newConf);
+				
 				if(!model.getConfiguration().equals(newConf)){
 					System.out.println("Configuration has changed");
 					model.setConfiguration(newConf);
@@ -2249,6 +2285,7 @@ public class ControllerMainGUI {
 		
 		preferencesDialog.fillComboBoxFilteringStyle(Utils.getStyleFilterAlgorithmDescriptionList());
 		preferencesDialog.setComboBoxFilteringStyleSelectedItem(Utils.getStyleFilterAlgorithmDescription(conf.getStyleFilterAlgorithm()));
+//		System.out.println("Preferences");
 	}
 	
 	private void fillPreferences(Configuration conf){

@@ -42,7 +42,7 @@ public class ConfigurationFactory {
 	public static Configuration getDefaultSortingConfiguration(Configuration conf){
 		conf.setBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.MARK_STAR_DESCENDING);
 		conf.setBrewerySortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.AVERAGE_DESCENDING);
-		conf.setStyleSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.FERMENTATION_COUNTRY);
+		conf.setStyleSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.FERMENTATION_CATEGORY);
 		return conf;
 	}
 	

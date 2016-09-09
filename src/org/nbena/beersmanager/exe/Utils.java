@@ -755,6 +755,7 @@ public class Utils {
 	
 	private static final String STYLE_SORTING_ALGORITHM_COUNTRY_FERMENTATION = "Nazione, fermentazione";
 	private static final String STYLE_SORTING_ALGORITHM_FERMENTATION_COUNTRY = "Fermentazione, nazione";
+	private static final String STYLE_SORTING_ALGORITHM_FERMENTATION_CATEGORY = "Fermentazione, stile, sottostile";
 	
 	public static String getStyleSortingAlgorithmDescription(QueryRunner.StyleSortingAlgorithm algorithm){
 		String value = null;
@@ -764,6 +765,9 @@ public class Utils {
 			break;
 		case FERMENTATION_COUNTRY:
 			value = STYLE_SORTING_ALGORITHM_FERMENTATION_COUNTRY;
+			break;
+		case FERMENTATION_CATEGORY:
+			value = STYLE_SORTING_ALGORITHM_FERMENTATION_CATEGORY;
 			break;
 		
 		}
@@ -775,6 +779,7 @@ public class Utils {
 	
 	public static String[] getStyleSortingAlgorithmDescriptionList(){
 		QueryRunner.StyleSortingAlgorithm[] algorithms = QueryRunner.StyleSortingAlgorithm.values();
+//		System.out.println("::::::::::::::::::::::::::"+algorithms.length);
 		String [] values = new String[algorithms.length];
 		for(int i=0;i<algorithms.length;i++){
 			
@@ -791,6 +796,9 @@ public class Utils {
 			break;
 		case STYLE_SORTING_ALGORITHM_FERMENTATION_COUNTRY:
 			algorithm = QueryRunner.StyleSortingAlgorithm.FERMENTATION_COUNTRY;
+			break;
+		case STYLE_SORTING_ALGORITHM_FERMENTATION_CATEGORY:
+			algorithm = QueryRunner.StyleSortingAlgorithm.FERMENTATION_CATEGORY;
 			break;
 		default:
 			algorithm = null;
@@ -1377,6 +1385,9 @@ public class Utils {
 		case FERMENTATION_COUNTRY:
 			function=QueryRunner::styleSortedByFermentationThenCountry;
 			break;
+		case FERMENTATION_CATEGORY:
+			function=QueryRunner::stylesSortedByFermentationCategorySubcategory;
+			break;
 		}
 		return function;
 	}
@@ -1673,5 +1684,10 @@ public class Utils {
 	public static Point getPointForPopupMenu(JPopupMenu popup, Point p, JTable table){
 		return SwingUtilities.convertPoint(popup, p, table);
 	}
+	
+	
+//	private static String getDefaultViews(){
+//		
+//	}
 
 }

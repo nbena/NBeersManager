@@ -37,6 +37,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 
 public class ViewMainGUI extends JFrame {
 
@@ -147,6 +148,8 @@ public class ViewMainGUI extends JFrame {
 	private JMenuItem mntmViewThingsTable;
 	private JMenuItem mntmModifyThingsTable;
 	private JMenuItem mntmDeleteThingsTable;
+	private JScrollPane scrollPane;
+	private JMenuItem mntmStylesSortedByFermentationCategorySubcategory;
 	
 	
 	
@@ -351,6 +354,10 @@ public class ViewMainGUI extends JFrame {
 	
 	public void addActionMenuStylesSortedByCountryThenFermentation(ActionListener listener){
 		mntmStylesSortedByCountryThenFermentation.addActionListener(listener);
+	}
+	
+	public void addActionMenuStylesSortedByFermentationCategorySubcategory(ActionListener listener){
+		mntmStylesSortedByFermentationCategorySubcategory.addActionListener(listener);
 	}
 	
 	
@@ -700,6 +707,9 @@ public class ViewMainGUI extends JFrame {
 		mntmStylesSortedByCountryThenFermentation = new JMenuItem("Nazione origine stile, fermentazione");
 		mnOrderStyle.add(mntmStylesSortedByCountryThenFermentation);
 		
+		mntmStylesSortedByFermentationCategorySubcategory = new JMenuItem("Fermentazione, stile, sottostile");
+		mnOrderStyle.add(mntmStylesSortedByFermentationCategorySubcategory);
+		
 		JMenu mnFilter = new JMenu("Filter");
 		menuBar.add(mnFilter);
 		
@@ -853,6 +863,15 @@ public class ViewMainGUI extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
+		scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridheight = 2;
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 0;
+		gbc_scrollPane.gridy = 0;
+		contentPane.add(scrollPane, gbc_scrollPane);
+		
 		table = new JTable(model.getTableModel());
 		
 		GridBagConstraints gbc_table = new GridBagConstraints();
@@ -860,7 +879,8 @@ public class ViewMainGUI extends JFrame {
 		gbc_table.fill = GridBagConstraints.BOTH;
 		gbc_table.gridx = 0;
 		gbc_table.gridy = 0;
-		contentPane.add(table, gbc_table);
+//		contentPane.add(table, gbc_table);
+		scrollPane.setViewportView(table);
 		
 		popupMenu = new JPopupMenu();
 //		GridBagConstraints gbc_popupMenu = new GridBagConstraints();
