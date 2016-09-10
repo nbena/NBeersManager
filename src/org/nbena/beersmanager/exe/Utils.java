@@ -2,6 +2,7 @@ package org.nbena.beersmanager.exe;
 
 import java.io.OutputStream;
 
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -40,7 +41,6 @@ import org.nbena.beersmanager.query.QueryRunner;
 import org.nbena.beersmanager.query.QueryRunner.BeerFilterAlgorithm;
 import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
 import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
-import org.nbena.beersmanager.query.QueryRunner.StyleSortingAlgorithm;
 
 public class Utils {
 	
@@ -266,7 +266,7 @@ public class Utils {
 		Object[] array=new Object[5];
 		array[0]=s.getStyleMainName();
 		array[1]=s.getStyleSubCategory();
-		array[2]=s.getFermentation();
+		array[2]=getFermentationItalianString(s.getFermentation());
 		array[3]=s.getStyleCountryOrigin();
 		array[4]=s.getDescription();
 		return array;
@@ -305,7 +305,8 @@ public class Utils {
 		array[2]=b.getTown();
 		array[3]=b.getDescription();
 		array[4]=b.getWebsite();
-		array[5]=b.getAverage();
+		array[5]= b.getAverage()==Double.NaN ? 0.0 : b.getAverage();
+		System.out.println(b.getAverage());
 		return array;
 	}
 	
@@ -389,6 +390,8 @@ public class Utils {
 			style.setStyleMainName(main);
 		}
 		System.out.println("The style obtained is: ");
+		System.out.println("Style name: '"+style.getStyleMainName()+"'");
+		System.out.println("Sub: '"+style.getStyleSubCategory()+"'");
 		Utils.printStyle(style, System.out);
 		return style;
 	}
@@ -441,7 +444,7 @@ public class Utils {
 			replaced = replaced.substring(1, replaced.length());
 		}
 		if(replaced.charAt(replaced.length()-1)== ' '){
-			replaced.substring(0, replaced.length()-1);
+			replaced = replaced.substring(0, replaced.length()-1);
 		}
 		return replaced;
 	}
@@ -498,7 +501,7 @@ public class Utils {
 		return strings;
 	}
 	
-	public static String getFermentationString(Fermentation f){
+	public static String getFermentationItalianString(Fermentation f){
 		String s=null;
 		if(f==Fermentation.HIGH)
 			s="Alta";
@@ -525,7 +528,7 @@ public class Utils {
 	public static List<String> getFermentationsItalianString(){
 		List<String> strings = new LinkedList<String>();
 		for(Fermentation fermentation: Fermentation.values()){
-			strings.add(getFermentationString(fermentation));
+			strings.add(getFermentationItalianString(fermentation));
 		}
 		return strings;
 	}
@@ -1253,6 +1256,7 @@ public class Utils {
 		public static final String BREWERIES_FILTER_BY_COUNTRY = "Scegli la nazione:";
 			
 		public static final String STYLES_FILTER_BY_ORIGIN_COUNTRY = "Scegli la nazione di origine dello stile";
+		public static final String STYLES_FILTER_BY_MAIN_STYLE = "Scegli lo stile principale";
 		
 		public static final String DEFAULT_PRICE = "0.0";
 		public static final String DEFAULT_MARK = "0";

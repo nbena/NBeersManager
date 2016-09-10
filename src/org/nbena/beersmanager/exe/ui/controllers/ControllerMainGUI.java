@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 
 
 
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,10 +16,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
@@ -103,6 +102,8 @@ public class ControllerMainGUI {
 		addSortStylesListeners();
 		addSortBreweriesListeners();
 		addFilterBeersListeners();
+		addFilterBreweriesListeners();
+		addFilterStylesListeners();
 		addSearchMenuListeners();
 		addOptionsMenuListeners();
 		addSaveMenuAndButtonListeners();
@@ -601,6 +602,167 @@ public class ControllerMainGUI {
 	}
 	
 	
+	public void breweriesFilteredByTrappistYes(){
+		model.setBreweryFilteringCurrentAlgorithm(Utils.getBreweryAverageFilteringAlgorithm(QueryRunner.BreweryFilterAlgorithm.TRAPPIST_YES));
+		model.applyFilteringToBreweries();
+		showBreweries();
+	}
+	
+
+	public void breweriesFilteredByTrappistNo(){
+		model.setBreweryFilteringCurrentAlgorithm(Utils.getBreweryAverageFilteringAlgorithm(QueryRunner.BreweryFilterAlgorithm.TRAPPIST_NO));
+		model.applyFilteringToBreweries();
+		showBreweries();
+	}
+	
+	public void breweriesFilteredByCountry(String country){
+		model.setBreweryFilteringCurrentValue(country);
+		model.setBreweryFilteringCurrentAlgorithm(Utils.getBreweryAverageFilteringAlgorithm(QueryRunner.BreweryFilterAlgorithm.COUNTRY));
+		model.applyFilteringToBreweries();
+		showBreweries();
+	}
+	
+	private void addFilterBreweriesListeners(){
+		gui.addActionMenuBreweriesFilteredByNation(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String country = askCountryBreweriesFilteredByCountry();
+				if(country!=null){
+					breweriesFilteredByCountry(country);
+				}
+				
+			}
+			
+		});
+		
+		
+		gui.addActionMenuBreweriesFilteredByTrappistNo(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				breweriesFilteredByTrappistNo();
+				
+			}
+			
+		});
+		
+		
+		gui.addActionMenuBreweriesFilteredByTrappistYes(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				breweriesFilteredByTrappistYes();
+				
+			}
+			
+		});
+	}
+	
+	
+	public void stylesFilteredByFermentationHigh(){
+		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_FERMENTATION_HIGH));
+		model.applyFilteringTostyles();
+		showStyles();
+	}
+	
+	public void stylesFilteredByFermentationSpontan(){
+		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_FERMENTATION_SPONTANEOUS));
+		model.applyFilteringTostyles();
+		showStyles();
+	}
+	
+	public void stylesFilteredByFermentationLow(){
+		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_FERMENTATION_LOW));
+		model.applyFilteringTostyles();
+		showStyles();
+	}
+	
+	public void stylesFilteredByCountry(String country){
+		model.setStyleFilteringCurrentValue(country);
+		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_COUNTRY));
+		model.applyFilteringTostyles();
+		showStyles();
+	}
+	
+	public void stylesFilteredByMainStyle(Style main){
+		model.setStyleFilteringCurrentValue(main);
+		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_MAIN_STYLE));
+		model.applyFilteringTostyles();
+		showStyles();
+	}
+	
+	private void addFilterStylesListeners(){
+		gui.addActionMenuStylesFilteredByCountryOrigin(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String country = askCountryStylesFilteredByOriginCountry();
+				if(country!=null){
+					stylesFilteredByCountry(country);
+				}
+			}
+			
+		});
+		
+		
+		gui.addActionMenuStylesFilteredByFermentationHigh(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				stylesFilteredByFermentationHigh();
+				
+			}
+			
+		});
+		
+		gui.addActionMenuStylesFilteredByFermentationLow(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				stylesFilteredByFermentationLow();
+				
+			}
+			
+		});
+		
+		gui.addActionMenuStylesFilteredByFermentationSpontaneous(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				stylesFilteredByFermentationSpontan();
+				
+			}
+			
+		});
+		
+		
+		gui.addActionMenuStylesFilteredByMainStyle(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Style s = new Style();
+				String main= askMainStyleStylesFilteredByMainStyle();
+				if(main!=null){
+					s.setStyleMainName(main);
+					stylesFilteredByMainStyle(s);
+				}
+				
+				
+			}
+			
+		});
+	}
+	
+	
 	private void addViewListeners(){
 		gui.addActionListenerViewBeer(new ActionListener(){
 
@@ -1014,7 +1176,7 @@ public class ControllerMainGUI {
 		Style s=model.getStyleShown();
 		dialog.setStyleMainName(s.getStyleMainName());
 		dialog.setStyleSubcategory(s.getStyleSubCategory());
-		dialog.setFermentation(Utils.getFermentationString(s.getFermentation()));
+		dialog.setFermentation(Utils.getFermentationItalianString(s.getFermentation()));
 		dialog.setStyleCountry(s.getStyleCountryOrigin());
 		dialog.setDescription(s.getDescription());
 	}
@@ -2521,6 +2683,42 @@ public class ControllerMainGUI {
 	private String askExactABVBeersFilteredByExactABV(){
 		optionPane.setParent(gui);
 		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_EXACT_ABV, Utils.Constants.DEFAULT_ABV);
+	}
+	
+	private String askCountryBreweriesFilteredByCountry(){
+		optionPane.setParent(gui);
+		String ret=null;
+		String[] countries = Utils.toArray(model.getCountriesWithBrewery());
+		if(countries.length==0){
+			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_NATIONS);
+		}else{
+			ret = optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BREWERIES_FILTER_BY_COUNTRY, countries);
+		}	
+		return ret;
+	}
+	
+	private String askMainStyleStylesFilteredByMainStyle(){
+		optionPane.setParent(gui);
+		String ret=null;
+		String[] styles = Utils.toArray(model.getOnlyMainStyles());
+		if(styles.length==0){
+			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_STYLES);
+		}else{
+			ret = optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.STYLES_FILTER_BY_MAIN_STYLE, styles);
+		}	
+		return ret;
+	}
+	
+	private String askCountryStylesFilteredByOriginCountry(){
+		optionPane.setParent(gui);
+		String ret=null;
+		String[] countries = Utils.toArray(model.getCountriesWithStyle());
+		if(countries.length==0){
+			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_NATIONS);
+		}else{
+			ret = optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.STYLES_FILTER_BY_ORIGIN_COUNTRY, countries);
+		}	
+		return ret;
 	}
 	
 	private String askPlaceBeersFilteredByPlaceTried(){

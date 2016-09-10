@@ -3,16 +3,14 @@ package org.nbena.beersmanager.query;
 import java.util.List;
 
 
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 import org.nbena.beersmanager.coreclasses.*;
-import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.query.Comparators.ComparatorBeerForBinarySearch;
-import org.nbena.beersmanager.query.Comparators.ComparatorBreweryByAverageAscending;
-import org.nbena.beersmanager.query.Comparators.ComparatorBreweryByCountryThenAverageAscending;
 public class QueryRunner {
 	
 	public static enum ORDER_BY_BEER{}
@@ -312,6 +310,8 @@ public class QueryRunner {
 		}
 		return strings;
 	}
+	
+
 	
 	
 	public static List<Beer> theBestBeersBasedOnMark(List<Beer> beers){

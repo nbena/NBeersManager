@@ -1,17 +1,13 @@
 package org.nbena.beersmanager.exe.ui.models;
 
 import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 import org.json.JSONException;
@@ -27,16 +23,12 @@ import org.nbena.beersmanager.exceptions.UpdateSavingException;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.export.OutExporter;
 import org.nbena.beersmanager.export.JSONOutExporter;
-import org.nbena.beersmanager.export.PDFOutExporter;
 import org.nbena.beersmanager.export.TXTOutExporter;
 import org.nbena.beersmanager.json.coreclasses.JSONExporterCoreClasses;
 import org.nbena.beersmanager.export.MSExcelOldOutExporter;
 import org.nbena.beersmanager.export.MSExcelNewOutExporter;
 import org.nbena.beersmanager.query.BreweryAverage;
-import org.nbena.beersmanager.query.Comparators;
 import org.nbena.beersmanager.query.QueryRunner;
-import org.nbena.beersmanager.query.Comparators.ComparatorBreweryByAverageAscending;
-import org.nbena.beersmanager.query.Comparators.ComparatorBreweryByCountryThenAverageAscending;
 
 public class Model {
 	
@@ -1149,7 +1141,10 @@ public class Model {
 	
 	public Style getStyleBinarySearch(Style key) throws ObjectNotFoundException{
 		List<Style> tempStyleSortedList = QueryRunner.BinarySearch.stylesSortedForBinarySearch(styleData);
+//		System.out.println(":::::::::::::::::The style sorted for binary search:::::::::::");
+//		Utils.printStyles(tempStyleSortedList, System.out);
 		int pos = QueryRunner.BinarySearch.styleSearch(tempStyleSortedList, key, true);
+//		System.out.println("Position is: "+pos);
 		if(pos >=0){
 			return tempStyleSortedList.get(pos);
 		}

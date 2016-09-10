@@ -310,6 +310,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 			gbc_rdbtnTrappistNo.gridy = 11;
 			buttonGroup.add(rdbtnTrappistNo);
 			contentPanel.add(rdbtnTrappistNo, gbc_rdbtnTrappistNo);
+			rdbtnTrappistNo.setSelected(true);
 		}
 		
 		{
