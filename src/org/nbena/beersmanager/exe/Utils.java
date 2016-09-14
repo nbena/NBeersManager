@@ -453,11 +453,22 @@ public class Utils {
 		return naked;
 	}
 	
-	public static String getStyleString(Style s){
+	
+	public static String getStyleStringSubMain(Style s){
 		String returned = s.getStyleMainName();
 		if(!s.getStyleSubCategory().equals("")){
 			String sub= s.getStyleSubCategory();
 			returned = sub.concat(" - ").concat(returned);
+		}
+		return returned;
+	}
+	
+	
+	public static String getStyleStringMainSub(Style s){
+		String returned = s.getStyleMainName();
+		if(!s.getStyleSubCategory().equals("")){
+			String sub= s.getStyleSubCategory();
+			returned = returned.concat(" - ").concat(sub);
 		}
 		return returned;
 	}
@@ -468,7 +479,7 @@ public class Utils {
 		return style;
 	}
 	
-	public static Style getStyleFromString(String s){
+	public static Style getStyleFromStringSubMain(String s){
 		Style style = new Style();
 //		String name = s.substring(0, s.lastIndexOf("-"));
 //		name = removeInitialEndingBlankSpaces(name);
@@ -488,10 +499,27 @@ public class Utils {
 			main = removeInitialEndingBlankSpaces(main);
 			style.setStyleMainName(main);
 		}
-		System.out.println("The style obtained is: ");
-		System.out.println("Style name: '"+style.getStyleMainName()+"'");
-		System.out.println("Sub: '"+style.getStyleSubCategory()+"'");
-		Utils.printStyle(style, System.out);
+//		System.out.println("The style obtained is: ");
+//		System.out.println("Style name: '"+style.getStyleMainName()+"'");
+//		System.out.println("Sub: '"+style.getStyleSubCategory()+"'");
+//		Utils.printStyle(style, System.out);
+		return style;
+	}
+	
+	public static Style getStyleFromStringMainSub(String s){
+		Style style = new Style();
+		if(s.indexOf("-")==-1){
+			style.setStyleMainName(s);
+			style.setStyleSubCategory("");
+		}else{
+			String main = s.substring(0, s.lastIndexOf("-"));
+			main = removeInitialEndingBlankSpaces(main);
+			style.setStyleMainName(main);
+			
+			String sub = s.substring(s.lastIndexOf("-")+1, s.length());
+			sub = removeInitialEndingBlankSpaces(sub);
+			style.setStyleSubCategory(sub);
+		}
 		return style;
 	}
 	
@@ -518,19 +546,19 @@ public class Utils {
 	}
 	
 	
-	public static List<String> getStyleStringList(List<Style> styles){
+	public static List<String> getStyleStringListSubMain(List<Style> styles){
 		List<String> strings = new LinkedList<String>();
 		for(Style s: styles){
-			strings.add(getStyleString(s));
+			strings.add(getStyleStringSubMain(s));
 		}
 		return strings;
 	}
 	
-	public static String[] getStyleStringArray(List<Style> styles){
+	public static String[] getStyleStringArraySubMain(List<Style> styles){
 		String[] strings = new String[styles.size()];
 		int i=0;
 		for(Style s: styles){
-			strings[i]=getStyleString(s);
+			strings[i]=getStyleStringSubMain(s);
 			i++;
 		}
 		return strings;
@@ -544,6 +572,25 @@ public class Utils {
 		}
 		return strings;
 	}
+	
+	public static List<String> getStyleStringListMainSub(List<Style> styles){
+		List<String> strings = new LinkedList<String>();
+		for(Style s: styles){
+			strings.add(getStyleStringMainSub(s));
+		}
+		return strings;
+	}
+	
+	public static String[] getStyleStringArrayMainSub(List<Style> styles){
+		String[] strings = new String[styles.size()];
+		int i=0;
+		for(Style s: styles){
+			strings[i]=getStyleStringMainSub(s);
+			i++;
+		}
+		return strings;
+	}
+	
 	
 	public static String removeInitialEndingBlankSpaces(String s){
 		String replaced = s;
@@ -581,13 +628,7 @@ public class Utils {
 		return strings;
 	}
 	
-	public static List<String> getStylesString(List<Style> styles){
-		List<String> strings=new LinkedList<String>();
-		for(Style s: styles){
-			strings.add(getStyleString(s));
-		}
-		return strings;
-	}
+	
 	
 	public static String getBooleanItalian(boolean b){
 		return b==true ? "Sì" : "No";
@@ -1345,6 +1386,8 @@ public class Utils {
 		public static final String QUESTION = "Domanda";
 		public static final String CONFIRMATION_BEFORE_EXIT = "Ci sono dei dati da salvare. Uscire comunque?";
 		public static final String CONFIRMATION_BEFORE_DELETE = "Vuoi davvero eliminare questi dati?";
+		public static final String CONFIRMATION_OVERRIDE_FILE = "Il file esiste già. Vuoi sovrascriverlo?";
+		public static final String CONFIRMATION_SELECTED_THINGS = "Vuoi esportare solo gli elementi selezionati?";
 		
 		public static final String FILTER_BY_TITLE = "Filtra";
 		
@@ -1775,8 +1818,16 @@ public class Utils {
 		return subBeers;
 	}
 	
-	public static List<BreweryAverage> subListBrewery(List<BreweryAverage> breweries, int [] position){
+	public static List<BreweryAverage> subListBreweryAverage(List<BreweryAverage> breweries, int [] position){
 		List<BreweryAverage> subBreweries = new LinkedList<BreweryAverage>();
+		for(int i: position){
+			subBreweries.add(breweries.get(i));
+		}
+		return subBreweries;
+	}
+	
+	public static List<Brewery> subListBrewery(List<Brewery> breweries, int [] position){
+		List<Brewery> subBreweries = new LinkedList<Brewery>();
 		for(int i: position){
 			subBreweries.add(breweries.get(i));
 		}
@@ -1807,6 +1858,8 @@ public class Utils {
 		}
 		return res;
 	}
+	
+
 	
 //	private static String getDefaultViews(){
 //		

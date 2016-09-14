@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -102,6 +103,9 @@ public class Model {
 	private boolean isAddNewBeerOrModifyBeer;
 	private boolean isAddNewBreweryOrModifyBrewery;
 	private boolean isAddNewStyleOrModifyStyle;
+	private boolean exportAll;
+	
+	private int[] selctedRows;
 	
 //	private void setupSortingFunction(){
 //		Configuration.
@@ -845,140 +849,168 @@ public class Model {
 //	}
 	
 	public void exportBeers(ExportType export, OutputStream out, boolean writeTotalPrice) throws Exception{
+		List<Beer> toExport = setupBeerToExport();
 		switch (export){
 		case EXCEL_NEW:
-			exportMsExcelNewBeers(out, writeTotalPrice);
+			exportMsExcelNewBeers(toExport, out, writeTotalPrice);
 			break;
 		case EXCEL_OLD:
-			exportMsExcelOldBeers(out, writeTotalPrice);
+			exportMsExcelOldBeers(toExport, out, writeTotalPrice);
 			break;
 		case JSON:
-			exportJSONBeers(out);
+			exportJSONBeers(toExport, out);
 			break;
 		case PDF:
-			exportPDFBeers(out);
+			exportPDFBeers(toExport, out);
 			break;
 		case TXT:
-			exportTXTBeers(out, writeTotalPrice);
+			exportTXTBeers(toExport, out, writeTotalPrice);
 			break;	
 		}
 	}
 	
 	public void exportBreweries(ExportType export, OutputStream out) throws Exception{
+		List<Brewery> toExport = setupBreweryToExport();
 		switch (export){
 		case EXCEL_NEW:
-			exportMsExcelNewBreweries(out);
+			exportMsExcelNewBreweries(toExport, out);
 			break;
 		case EXCEL_OLD:
-			exportMsExcelOldBreweries(out);
+			exportMsExcelOldBreweries(toExport, out);
 			break;
 		case JSON:
-			exportJSONBreweries(out);
+			exportJSONBreweries(toExport, out);
 			break;
 		case PDF:
-			exportPDFBreweries(out);
+			exportPDFBreweries(toExport, out);
 			break;
 		case TXT:
-			exportTXTBreweries(out);
+			exportTXTBreweries(toExport, out);
 			break;	
 		}
 	}
 	
 	public void exportStyles(ExportType export, OutputStream out) throws Exception{
+		List<Style> toExport = setupStyleToExport();
 		switch (export){
 		case EXCEL_NEW:
-			exportMsExcelNewStyles(out);
+			exportMsExcelNewStyles(toExport, out);
 			break;
 		case EXCEL_OLD:
-			exportMsExcelOldStyles(out);
+			exportMsExcelOldStyles(toExport, out);
 			break;
 		case JSON:
-			exportJSONStyles(out);
+			exportJSONStyles(toExport, out);
 			break;
 		case PDF:
-			exportPDFStyles(out);
+			exportPDFStyles(toExport, out);
 			break;
 		case TXT:
-			exportTXTStyles(out);
+			exportTXTStyles(toExport, out);
 			break;	
 		}
 	}
 	
-	private void exportJSONBeers(OutputStream out) throws Exception{
-		exporter = new JSONOutExporter();
-		exporter.writeBeer(filteredBeers, out, false);
+	
+	private List<Beer> setupBeerToExport(){
+		List<Beer> export = new LinkedList<Beer>(filteredBeers);
+		if(!exportAll){
+			export = Utils.subListBeer(export, selctedRows);
+		}
+		return export;
 	}
 	
-	private void exportJSONBreweries(OutputStream out) throws Exception{
+	private List<Brewery> setupBreweryToExport(){
+		List<Brewery> export = Utils.fromBreweriesAverageToBrewery(filteredBreweries);
+		if(!exportAll){
+			export = Utils.subListBrewery(export, selctedRows);
+		}
+		return export;
+	}
+	
+	private List<Style> setupStyleToExport(){
+		List<Style> export = new LinkedList<Style>(filteredStyles);
+		if(!exportAll){
+			export = Utils.subListStyle(export, selctedRows);
+		}
+		return export;
+	}
+	
+	private void exportJSONBeers(List<Beer> data, OutputStream out) throws Exception{
+		exporter = new JSONOutExporter();
+		exporter.writeBeer(data, out, false);
+	}
+	
+	private void exportJSONBreweries(List<Brewery> data, OutputStream out) throws Exception{
 		exporter = new JSONOutExporter();
 //		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
-	private void exportJSONStyles(OutputStream out) throws Exception{
+	private void exportJSONStyles(List<Style> data, OutputStream out) throws Exception{
 		exporter = new JSONOutExporter();
-		exporter.writeStyle(styleData, out);
+		exporter.writeStyle(data, out);
 	}
 	
 	
-	private void exportMsExcelNewBeers(OutputStream out, boolean writeTotalPrice) throws Exception{
+	private void exportMsExcelNewBeers(List<Beer> data,OutputStream out, boolean writeTotalPrice) throws Exception{
 		exporter = new MSExcelNewOutExporter();
-		exporter.writeBeer(filteredBeers, out, writeTotalPrice);
+		exporter.writeBeer(data, out, writeTotalPrice);
 	}
 	
-	private void exportMsExcelNewBreweries(OutputStream out) throws Exception{
+	private void exportMsExcelNewBreweries(List<Brewery> data, OutputStream out) throws Exception{
 		exporter = new MSExcelNewOutExporter();
 //		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
-	private void exportMsExcelNewStyles(OutputStream out) throws Exception{
+	private void exportMsExcelNewStyles(List<Style> data, OutputStream out) throws Exception{
 		exporter = new MSExcelNewOutExporter();
-		exporter.writeStyle(styleData, out);
+		exporter.writeStyle(data, out);
 	}
 	
 	
-	private void exportMsExcelOldBeers(OutputStream out, boolean writeTotalPrice) throws Exception{
+	private void exportMsExcelOldBeers(List<Beer> data,OutputStream out, boolean writeTotalPrice) throws Exception{
 		exporter = new  MSExcelOldOutExporter();
-		exporter.writeBeer(filteredBeers, out, writeTotalPrice);
+		exporter.writeBeer(data, out, writeTotalPrice);
 	}
 	
-	private void exportMsExcelOldBreweries(OutputStream out) throws Exception{
+	private void exportMsExcelOldBreweries(List<Brewery> data, OutputStream out) throws Exception{
 		exporter = new MSExcelOldOutExporter();
 //		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
-	private void exportMsExcelOldStyles(OutputStream out) throws Exception{
+	private void exportMsExcelOldStyles(List<Style> data, OutputStream out) throws Exception{
 		exporter = new MSExcelOldOutExporter();
-		exporter.writeStyle(styleData, out);
+		exporter.writeStyle(data, out);
 	}
 	
-	private void exportPDFBeers(OutputStream out) throws Exception{
+	private void exportPDFBeers(List<Beer> data,OutputStream out) throws Exception{
 //		exporter = new JSONExporter();
 //		exporter.writeBeer(filteredBeers, out);
 	}
 	
-	private void exportPDFBreweries(OutputStream out) throws Exception{
+	private void exportPDFBreweries(List<Brewery> data, OutputStream out) throws Exception{
 //		exporter = new JSONExporter();
 //		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
-	private void exportPDFStyles(OutputStream out) throws Exception{
+	private void exportPDFStyles(List<Style> data, OutputStream out) throws Exception{
 //		exporter = new JSONExporter();
 //		exporter.writeStyle(styleData, out);
 	}
 	
-	private void exportTXTBeers(OutputStream out, boolean writeTotalPrice) throws Exception{
+	private void exportTXTBeers(List<Beer> data,OutputStream out, boolean writeTotalPrice) throws Exception{
 		exporter = new TXTOutExporter();
-		exporter.writeBeer(filteredBeers, out, writeTotalPrice);
+		exporter.writeBeer(data, out, writeTotalPrice);
 	}
 	
-	private void exportTXTBreweries(OutputStream out) throws Exception{
+	private void exportTXTBreweries(List<Brewery> data, OutputStream out) throws Exception{
 		exporter = new TXTOutExporter();
 //		exporter.writeBrewery(filteredBreweries, out);
 	}
 	
-	private void exportTXTStyles(OutputStream out) throws Exception{
+	private void exportTXTStyles(List<Style> data, OutputStream out) throws Exception{
 		exporter = new TXTOutExporter();
-		exporter.writeStyle(styleData, out);
+		exporter.writeStyle(data, out);
 	}
 	
 	public String getLastDirectory(){
@@ -1410,6 +1442,26 @@ public class Model {
 	
 	public void resetStyleFilter(){
 		clearFilter(false, false, true);
+	}
+	
+	public List<Brewery> getBreweryDataAlphaOrder(){
+		List<Brewery> sorted = QueryRunner.breweriesSortedByName(Utils.fromBreweriesAverageToBrewery(breweryData));
+		return sorted;
+	}
+	
+	public List<Style> getStyleDataMainSubOrder(){
+		List<Style> sorted = QueryRunner.stylesSortedByMainCategorySubCategory(styleData);
+		return sorted;
+	}
+	
+	
+	public void setExportSelectedThings(boolean exportAll){
+		this.exportAll = exportAll;
+		
+	}
+	
+	public void setSelectedRows(int [] selectedRows){
+		this.selctedRows = selectedRows;
 	}
 
 }

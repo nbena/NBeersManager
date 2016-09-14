@@ -576,7 +576,7 @@ public class ControllerMainGUI {
 				
 				String string = askStyleBeersFilteredByStyle();
 				if(string!=null && string!=""){
-					Style s= Utils.getStyleFromString(string);
+					Style s= Utils.getStyleFromStringSubMain(string);
 					beersFilteredByStyle(s);
 				}
 				
@@ -1087,7 +1087,7 @@ public class ControllerMainGUI {
 	
 	
 	
-	private File askFileToExport() throws FileNotFoundException{
+	private File initExport() throws FileNotFoundException{
 		File returned=null;
 		gui.initJFileChooser(Utils.getAllFileFilters(), new File(model.getLastDirectory()));
 		JFileChooser guiChooser=gui.getJFileChooser();
@@ -1097,12 +1097,23 @@ public class ControllerMainGUI {
 			if(Utils.checkIfExtensionIsPresent(returned)==false){
 				returned=new File(returned.getAbsolutePath()+"."+Utils.getJFileChooserSelectedExtension(guiChooser));
 			}
+			
+			if (returned.exists()){
+				boolean askOverride = this.askOverrideFileIfExists();
+				returned = askOverride==false ?  null : returned;
+			}
+			
+			if(gui.getTableSelectedRows().length>0){
+				boolean askOnlySelected = askExportOnlySelectedThings();
+				model.setExportSelectedThings(!askOnlySelected);
+				model.setSelectedRows(gui.getTableSelectedRows());
+			}
 		}
 		return returned;
 	}
 	
 	private void exportBeers() throws Exception{
-		File f=askFileToExport();
+		File f=initExport();
 		if(f!=null){
 			ExportType type=Utils.getExportType(f);
 			model.exportBeers(type, new FileOutputStream(f), false);
@@ -1115,7 +1126,7 @@ public class ControllerMainGUI {
 	}
 	
 	private void exportBreweries() throws Exception{
-		File f=askFileToExport();
+		File f=initExport();
 		if(f!=null){
 			ExportType type=Utils.getExportType(f);
 			model.exportBreweries(type, new FileOutputStream(f));
@@ -1123,7 +1134,7 @@ public class ControllerMainGUI {
 	}
 	
 	private void exportStyles() throws Exception{
-		File f=askFileToExport();
+		File f=initExport();
 		if(f!=null){
 			ExportType type=Utils.getExportType(f);
 			model.exportStyles(type, new FileOutputStream(f));
@@ -1163,7 +1174,7 @@ public class ControllerMainGUI {
 		Beer b=model.getBeerShown();
 		dialog.setBeerName(b.getName());
 		dialog.setBreweryName(Utils.getBreweryString(b.getBrewery()));
-		dialog.setStyle(Utils.getStyleString(b.getStyle()));
+		dialog.setStyle(Utils.getStyleStringSubMain(b.getStyle()));
 		dialog.setABV(Double.toString(b.getAlcool()));
 		dialog.setStars(Integer.toString(b.getNumberOfStars()));
 		dialog.setMark(Integer.toString(b.getMark()));
@@ -1201,7 +1212,7 @@ public class ControllerMainGUI {
 		Beer b = new Beer();
 		
 		Brewery brewery = Utils.getBreweryFromString(addBeerDialog.getBrewery());
-		Style style = Utils.getStyleFromString(addBeerDialog.getStyle());
+		Style style = Utils.getStyleFromStringMainSub(addBeerDialog.getStyle());
 		
 		brewery = model.getBreweryBinarySearch(brewery);	
 		style = model.getStyleBinarySearch(style);
@@ -1369,7 +1380,7 @@ public class ControllerMainGUI {
 	
 	private void addBeerDialogPriceMarkEditable( boolean editable){
 		addBeerDialog.setTextFieldMarkEditable(editable);
-		addBeerDialog.setTextFieldPriceEditable(editable);
+//		addBeerDialog.setTextFieldPriceEditable(editable); //price can be insert too.
 	}
 	
 	private void setAddNewBeerRadioButton(){
@@ -1562,7 +1573,7 @@ public class ControllerMainGUI {
 	
 	public void showAddBeerDialog(){
 		addBeerDialog = new ViewAddNewBeer();
-		addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryData()), Utils.getStylesString(model.getStyleData()));
+		addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryDataAlphaOrder()), Utils.getStyleStringListMainSub(model.getStyleDataMainSubOrder()));
 		
 		setAddNewBeerOkButton();
 		setAddNewBeerCancelButton();
@@ -1845,7 +1856,7 @@ public class ControllerMainGUI {
 
 		
 		addBeerDialog = new ViewAddNewBeer();
-		addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryData()), Utils.getStylesString(model.getStyleData()));
+		addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryDataAlphaOrder()), Utils.getStyleStringListMainSub(model.getStyleDataMainSubOrder()));
 		setBeerInDialog(addBeerDialog);
 		
 		setAddNewBeerOkButton();
@@ -2130,7 +2141,7 @@ public class ControllerMainGUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 					
-				System.out.println(Arrays.toString(gui.getTableSelectedRows()));
+//				System.out.println(Arrays.toString(gui.getTableSelectedRows()));
 				
 				if(askSureToDelete()){
 					try{
@@ -2145,7 +2156,7 @@ public class ControllerMainGUI {
 							deleteBeersLogic(toDelete);
 						}
 						else if(model.getDataShownNow()==DataShownNow.STYLE){
-							List<BreweryAverage> toDelete = Utils.subListBrewery(model.getBreweryAverageData(), gui.getTableSelectedRows());
+							List<BreweryAverage> toDelete = Utils.subListBreweryAverage(model.getBreweryAverageData(), gui.getTableSelectedRows());
 							deleteBreweriesLogic(toDelete);
 						}else{
 							List<Style> toDelete = Utils.subListStyle(model.getStyleData(), gui.getTableSelectedRows());
@@ -2323,23 +2334,25 @@ public class ControllerMainGUI {
 				
 //				newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
 				
-				newConf.setBeerFilterAlgorithm(Utils.getBeerFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringBeerSelectedItem()));
-//				newConf.setBeerFilterValue(preferencesDialog.getBeerFilteringValue());
-				newConf.setBreweryFilterAlgorithm(Utils.getBreweryFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringBrewerySelectedItem()));
-//				newConf.setBeerFilterValue(preferencesDialog.getBreweryFilteringValue());
-				newConf.setStyleFilterAlgorithm(Utils.getStyleFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringStyleSelectedItem()));
-//				newConf.setBeerFilterValue(preferencesDialog.getStyleFilteringValue());
+//				newConf.setBeerFilterAlgorithm(Utils.getBeerFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringBeerSelectedItem()));
+////				newConf.setBeerFilterValue(preferencesDialog.getBeerFilteringValue());
+//				newConf.setBreweryFilterAlgorithm(Utils.getBreweryFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringBrewerySelectedItem()));
+////				newConf.setBeerFilterValue(preferencesDialog.getBreweryFilteringValue());
+//				newConf.setStyleFilterAlgorithm(Utils.getStyleFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringStyleSelectedItem()));
+////				newConf.setBeerFilterValue(preferencesDialog.getStyleFilteringValue());
 				
-				newConf.setBeerFilterValue("");
-				newConf.setBreweryFilterValue("");
-				newConf.setStyleFilterValue("");
+//				newConf.setBeerFilterValue("");
+//				newConf.setBreweryFilterValue("");
+//				newConf.setStyleFilterValue("");
+				
+				newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
 				
 				newConf.setDefaultView(Utils.getViewDefaultFromDescription(preferencesDialog.getComboBoxDeafultViewSelectedItem()));
 				
 				newConf = ConfigurationFactory.setupPath(newConf);
 				
 				if(!model.getConfiguration().equals(newConf)){
-					System.out.println("Configuration has changed");
+//					System.out.println("Configuration has changed");
 					model.setConfiguration(newConf);
 					try {
 						model.saveConfiguration();
@@ -2380,20 +2393,21 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	//comment the body function and not the function so no warming.
 	private void addPreferencesDefaultFilteringButtonListener(){
-		preferencesDialog.addActionListenerDefaultFilteringButton(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				Configuration newConf = model.getConfiguration();			
-				newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
-				
-				fillPreferencesFilteringAlgorithm(newConf);
-				
-			}
-			
-		});
+//		preferencesDialog.addActionListenerDefaultFilteringButton(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				Configuration newConf = model.getConfiguration();			
+//				newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
+//				
+//				fillPreferencesFilteringAlgorithm(newConf);
+//				
+//			}
+//			
+//		});
 	}
 	
 	private void addPreferencesDefaultViewButtonListener(){
@@ -2444,14 +2458,14 @@ public class ControllerMainGUI {
 	}
 	
 	private void fillPreferencesFilteringAlgorithm(Configuration conf){
-		preferencesDialog.fillComboBoxFilteringBeer(Utils.getBeerFilterAlgorithmDescriptionList());
-		preferencesDialog.setComboBoxFilteringBeerSelectedItem(Utils.getBeerFilterAlgorithmDescription(conf.getBeerFilterAlgorithm()));
-		
-		preferencesDialog.fillComboBoxFilteringBrewery(Utils.getBreweryFilterAlgorithmDescriptionList());
-		preferencesDialog.setComboBoxFilteringBrewerySelectedItem(Utils.getBreweryFilterAlgorithmDescription(conf.getBreweryFilterAlgorithm()));
-		
-		preferencesDialog.fillComboBoxFilteringStyle(Utils.getStyleFilterAlgorithmDescriptionList());
-		preferencesDialog.setComboBoxFilteringStyleSelectedItem(Utils.getStyleFilterAlgorithmDescription(conf.getStyleFilterAlgorithm()));
+//		preferencesDialog.fillComboBoxFilteringBeer(Utils.getBeerFilterAlgorithmDescriptionList());
+//		preferencesDialog.setComboBoxFilteringBeerSelectedItem(Utils.getBeerFilterAlgorithmDescription(conf.getBeerFilterAlgorithm()));
+//		
+//		preferencesDialog.fillComboBoxFilteringBrewery(Utils.getBreweryFilterAlgorithmDescriptionList());
+//		preferencesDialog.setComboBoxFilteringBrewerySelectedItem(Utils.getBreweryFilterAlgorithmDescription(conf.getBreweryFilterAlgorithm()));
+//		
+//		preferencesDialog.fillComboBoxFilteringStyle(Utils.getStyleFilterAlgorithmDescriptionList());
+//		preferencesDialog.setComboBoxFilteringStyleSelectedItem(Utils.getStyleFilterAlgorithmDescription(conf.getStyleFilterAlgorithm()));
 //		System.out.println("Preferences");
 	}
 	
@@ -2639,7 +2653,7 @@ public class ControllerMainGUI {
 	private String askStyleBeersFilteredByStyle(){
 		optionPane.setParent(gui);
 		String ret = null;
-		String[] styles = Utils.getStyleStringArray(model.getStyleData());
+		String[] styles = Utils.getStyleStringArraySubMain(model.getStyleData());
 		if(styles.length==0){
 			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_STYLES);
 		}else{
@@ -2755,6 +2769,20 @@ public class ControllerMainGUI {
 			ret = true;
 		}
 		return ret;
+	}
+	
+	
+	private boolean askOverrideFileIfExists(){
+		optionPane.setParent(gui);
+		int res = optionPane.showOkCancel(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_OVERRIDE_FILE);
+		return ViewJOptionPane.isOkOption(res);
+
+	}
+	
+	private boolean askExportOnlySelectedThings(){
+		optionPane.setParent(gui);
+		int res = optionPane.showYesNo(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_SELECTED_THINGS);
+		return ViewJOptionPane.isYesOption(res);
 	}
 	
 	private void addOperationOnClose(){

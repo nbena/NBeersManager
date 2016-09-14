@@ -231,7 +231,7 @@ public class ViewPreferences extends JDialog {
 			contentPanel.add(tabbedPane, gbc_tabbedPane);
 			{
 				JPanel panelSorting = new JPanel();
-				tabbedPane.addTab("New tab", null, panelSorting, null);
+				tabbedPane.addTab("Ordinamento", null, panelSorting, null);
 				GridBagLayout gbl_panelSorting = new GridBagLayout();
 				gbl_panelSorting.columnWidths = new int[]{0, 0, 0, 0};
 				gbl_panelSorting.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -308,7 +308,7 @@ public class ViewPreferences extends JDialog {
 			}
 			{
 				JPanel panelFiltering = new JPanel();
-				tabbedPane.addTab("New tab", null, panelFiltering, null);
+//				tabbedPane.addTab("New tab", null, panelFiltering, null);
 				GridBagLayout gbl_panelFiltering = new GridBagLayout();
 				gbl_panelFiltering.columnWidths = new int[]{0, 0, 0, 0};
 				gbl_panelFiltering.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -440,7 +440,7 @@ public class ViewPreferences extends JDialog {
 			}
 			{
 				JPanel panelDefault = new JPanel();
-				tabbedPane.addTab("New tab", null, panelDefault, null);
+				tabbedPane.addTab("Viste", null, panelDefault, null);
 				GridBagLayout gbl_panelDefault = new GridBagLayout();
 				gbl_panelDefault.columnWidths = new int[]{0, 0, 0, 0, 0};
 				gbl_panelDefault.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
@@ -464,7 +464,7 @@ public class ViewPreferences extends JDialog {
 					panelDefault.add(lblDiDefaultMostra, gbc_lblDiDefaultMostra);
 				}
 				{
-					comboBoxDefaultView = new JComboBox();
+					comboBoxDefaultView = new JComboBox<String>();
 					GridBagConstraints gbc_comboBoxDefaultView = new GridBagConstraints();
 					gbc_comboBoxDefaultView.insets = new Insets(0, 0, 5, 0);
 					gbc_comboBoxDefaultView.fill = GridBagConstraints.HORIZONTAL;

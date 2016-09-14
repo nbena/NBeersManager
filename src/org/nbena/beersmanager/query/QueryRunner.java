@@ -478,6 +478,12 @@ public class QueryRunner {
 		return sortedStyles;
 	}
 	
+	public static List<Style> stylesSortedByMainCategorySubCategory(List<Style> styles){
+		List<Style> sortedStyles = new LinkedList<Style>(styles);
+		Collections.sort(sortedStyles, new Comparators.ComparatorStyleByCategoryAndSubcategory());
+		return sortedStyles;
+	}
+	
 	
 	public static HashMap<Brewery, Double> breweryWithAvrerageMoreThan(LinkedList<Beer> beers, double average, boolean isTried){
 		HashMap<Brewery, Double> bestBreweriesMap=new HashMap<Brewery, Double>();

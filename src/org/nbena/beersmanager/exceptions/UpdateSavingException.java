@@ -62,7 +62,7 @@ public class UpdateSavingException extends Exception {
 			up.concat("Brewery "+cause.getName());
 		}else if(o instanceof Style){
 			Style cause =(Style)o;
-			up.concat("Style "+Utils.getStyleString(cause));
+			up.concat("Style "+Utils.getStyleStringSubMain(cause));
 		}
 		System.out.println(up);
 		return up;

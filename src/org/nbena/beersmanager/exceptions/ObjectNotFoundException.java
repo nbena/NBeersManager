@@ -33,7 +33,7 @@ public class ObjectNotFoundException extends Exception {
 			up.concat("Brewery "+cause.getName());
 		}else if(o instanceof Style){
 			Style cause =(Style)o;
-			up.concat("Style "+Utils.getStyleString(cause));
+			up.concat("Style "+Utils.getStyleStringSubMain(cause));
 		}
 		return up;
 	}
