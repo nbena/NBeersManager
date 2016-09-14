@@ -31,7 +31,7 @@ public class MSExcelOldOutExporter extends OutExporter{
 	
 
 	@Override
-	public void writeBeer(List<Beer> beers, OutputStream out) throws Exception {
+	public void writeBeer(List<Beer> beers, OutputStream out, boolean writeTotalPrice) throws Exception {
 		if(out instanceof FileOutputStream == false)
 			throw new Exception("OutputStream is not a valid instace of FileOutputStream");
 		

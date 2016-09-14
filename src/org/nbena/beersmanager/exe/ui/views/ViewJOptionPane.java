@@ -53,6 +53,10 @@ public class ViewJOptionPane {
 		return JOptionPane.showConfirmDialog(parent, message, title,JOptionPane.YES_NO_OPTION);
 	}
 	
+	public int showYesNo(String title, String message){
+		return JOptionPane.showConfirmDialog(parent, message, title, JOptionPane.YES_NO_OPTION);
+	}
+	
 	public static boolean isYesOption(int option){
 		return option==JOptionPane.YES_OPTION ? true : false;
 	}

@@ -1105,7 +1105,12 @@ public class ControllerMainGUI {
 		File f=askFileToExport();
 		if(f!=null){
 			ExportType type=Utils.getExportType(f);
-			model.exportBeers(type, new FileOutputStream(f));
+			model.exportBeers(type, new FileOutputStream(f), false);
+			boolean price = false;
+			if(type.isPriceExportable()){
+				price = askPrintAlsoPriceWhenExportBeers();				
+			}
+			model.exportBeers(type, new FileOutputStream(f), price);
 		}
 	}
 	
@@ -2732,6 +2737,13 @@ public class ControllerMainGUI {
 		}
 		
 		return ret;
+	}
+	
+	private boolean askPrintAlsoPriceWhenExportBeers(){
+		optionPane.setParent(gui);
+		int res;
+		res = optionPane.showYesNo(Utils.Constants.QUESTION, Utils.Constants.WRITE_ALSO_TOTALE_PRICE);
+		return ViewJOptionPane.isYesOption(res);
 	}
 	
 	

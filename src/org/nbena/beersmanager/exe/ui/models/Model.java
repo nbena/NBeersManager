@@ -824,16 +824,33 @@ public class Model {
 		EXCEL_NEW,
 		EXCEL_OLD,
 		PDF,
-		TXT
+		TXT;
+		
+		public boolean isPriceExportable(){
+			return this==EXCEL_OLD || this==EXCEL_NEW || this==TXT;
+		}
+		
+		public static boolean isPriceExportable(ExportType type){
+			return type.isPriceExportable();
+		}
 	}
 	
-	public void exportBeers(ExportType export, OutputStream out) throws Exception{
+	public void writeTotalPrice(double total, OutputStream out){
+		TXTOutExporter exp = (TXTOutExporter)exporter;
+		exp.writeTotal(total, out);
+	}
+	
+//	public double getTotalFromSelectedBeers(){
+//		return Utils.getSum(filteredBeers);
+//	}
+	
+	public void exportBeers(ExportType export, OutputStream out, boolean writeTotalPrice) throws Exception{
 		switch (export){
 		case EXCEL_NEW:
-			exportMsExcelNewBeers(out);
+			exportMsExcelNewBeers(out, writeTotalPrice);
 			break;
 		case EXCEL_OLD:
-			exportMsExcelOldBeers(out);
+			exportMsExcelOldBeers(out, writeTotalPrice);
 			break;
 		case JSON:
 			exportJSONBeers(out);
@@ -842,7 +859,7 @@ public class Model {
 			exportPDFBeers(out);
 			break;
 		case TXT:
-			exportTXTBeers(out);
+			exportTXTBeers(out, writeTotalPrice);
 			break;	
 		}
 	}
@@ -889,7 +906,7 @@ public class Model {
 	
 	private void exportJSONBeers(OutputStream out) throws Exception{
 		exporter = new JSONOutExporter();
-		exporter.writeBeer(filteredBeers, out);
+		exporter.writeBeer(filteredBeers, out, false);
 	}
 	
 	private void exportJSONBreweries(OutputStream out) throws Exception{
@@ -903,9 +920,9 @@ public class Model {
 	}
 	
 	
-	private void exportMsExcelNewBeers(OutputStream out) throws Exception{
+	private void exportMsExcelNewBeers(OutputStream out, boolean writeTotalPrice) throws Exception{
 		exporter = new MSExcelNewOutExporter();
-		exporter.writeBeer(filteredBeers, out);
+		exporter.writeBeer(filteredBeers, out, writeTotalPrice);
 	}
 	
 	private void exportMsExcelNewBreweries(OutputStream out) throws Exception{
@@ -919,9 +936,9 @@ public class Model {
 	}
 	
 	
-	private void exportMsExcelOldBeers(OutputStream out) throws Exception{
+	private void exportMsExcelOldBeers(OutputStream out, boolean writeTotalPrice) throws Exception{
 		exporter = new  MSExcelOldOutExporter();
-		exporter.writeBeer(filteredBeers, out);
+		exporter.writeBeer(filteredBeers, out, writeTotalPrice);
 	}
 	
 	private void exportMsExcelOldBreweries(OutputStream out) throws Exception{
@@ -949,9 +966,9 @@ public class Model {
 //		exporter.writeStyle(styleData, out);
 	}
 	
-	private void exportTXTBeers(OutputStream out) throws Exception{
+	private void exportTXTBeers(OutputStream out, boolean writeTotalPrice) throws Exception{
 		exporter = new TXTOutExporter();
-		exporter.writeBeer(filteredBeers, out);
+		exporter.writeBeer(filteredBeers, out, writeTotalPrice);
 	}
 	
 	private void exportTXTBreweries(OutputStream out) throws Exception{

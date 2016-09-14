@@ -30,7 +30,7 @@ public class JSONOutExporter extends OutExporter{
 		ps.print(array.toString());
 	}
 	
-	public void writeBeer(List<Beer> beers, OutputStream out) throws Exception{
+	public void writeBeer(List<Beer> beers, OutputStream out, boolean writeTotalPrice) throws Exception{
 		JSONArray array=new JSONArray(beers);
 		PrintStream ps=new PrintStream(out);
 		ps.print(array.toString());

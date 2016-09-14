@@ -584,20 +584,20 @@ public class ViewMainGUI extends JFrame {
 		JMenu mnFile = new JMenu("File");
 		
 		
-		JMenu mnImport = new JMenu("Import");
+		JMenu mnImport = new JMenu("Importa");
 		
 		mntmSave = new JMenuItem("Salva");
 		mnFile.add(mntmSave);
-		JMenu mnNew = new JMenu("New");
+		JMenu mnNew = new JMenu("Nuovo");
 		
 		mnFile.add(mnNew);	
 		menuBar.add(mnFile);
 		mnFile.add(mnImport);
 		
 		
-		/*JMenuItem*/ mntmNewStyleFromFile = new JMenuItem("Beer Styles");
-		/*JMenuItem*/ mntmNewBeerFromFile = new JMenuItem("Beers");	
-		/*JMenuItem*/ mntmNewBreweryFromFile = new JMenuItem("Breweries");
+		/*JMenuItem*/ mntmNewStyleFromFile = new JMenuItem("Stile");
+		/*JMenuItem*/ mntmNewBeerFromFile = new JMenuItem("Birra");	
+		/*JMenuItem*/ mntmNewBreweryFromFile = new JMenuItem("Birrificio");
 		
 		mnImport.add(mntmNewBeerFromFile);
 		mnImport.add(mntmNewStyleFromFile);
@@ -605,16 +605,16 @@ public class ViewMainGUI extends JFrame {
 		
 		
 			
-		/*JMenuItem */mntmAddNewBeer = new JMenuItem("Beer");
-		/*JMenuItem */mntmAddNewBrewery = new JMenuItem("Brewery");
-		/*JMenuItem */mntmAddNewStyle = new JMenuItem("Beer Style");
+		/*JMenuItem */mntmAddNewBeer = new JMenuItem("Birra");
+		/*JMenuItem */mntmAddNewBrewery = new JMenuItem("Birrificio");
+		/*JMenuItem */mntmAddNewStyle = new JMenuItem("Stile");
 		
 		
 		mnNew.add(mntmAddNewBeer);
 		mnNew.add(mntmAddNewBrewery);
 		mnNew.add(mntmAddNewStyle);
 		
-		mntmExport = new JMenuItem("Export");
+		mntmExport = new JMenuItem("Esporta");
 		mnFile.add(mntmExport);
 		
 		btnSave = new JButton("Salva");
@@ -626,22 +626,22 @@ public class ViewMainGUI extends JFrame {
 		
 		
 		
-		JMenu mnQuery = new JMenu("View");
+		JMenu mnQuery = new JMenu("Vedi");
 		menuBar.add(mnQuery);
 		
-		mntmViewBeers = new JMenuItem("Beers");
+		mntmViewBeers = new JMenuItem("Birre");
 		mnQuery.add(mntmViewBeers);
 		
-		mntmViewBreweries = new JMenuItem("Breweries");
+		mntmViewBreweries = new JMenuItem("Birrifici");
 		mnQuery.add(mntmViewBreweries);
 		
-		mntmViewStyles = new JMenuItem("Styles");
+		mntmViewStyles = new JMenuItem("Stili");
 		mnQuery.add(mntmViewStyles);
 		
-		JMenu mnOrder = new JMenu("Order");
+		JMenu mnOrder = new JMenu("Ordina");
 		menuBar.add(mnOrder);
 		
-		mnOrderBeer = new JMenu("Beer");
+		mnOrderBeer = new JMenu("Birra");
 		mnOrder.add(mnOrderBeer);
 		
 		mntmSortBeersByCountryOfBreweryStyle = new JMenuItem("Nazione e nome birrificio, stile");
@@ -710,10 +710,10 @@ public class ViewMainGUI extends JFrame {
 		mntmStylesSortedByFermentationCategorySubcategory = new JMenuItem("Fermentazione, stile, sottostile");
 		mnOrderStyle.add(mntmStylesSortedByFermentationCategorySubcategory);
 		
-		JMenu mnFilter = new JMenu("Filter");
+		JMenu mnFilter = new JMenu("Filtra");
 		menuBar.add(mnFilter);
 		
-		mnFilterBeer = new JMenu("Beer");
+		mnFilterBeer = new JMenu("Birre");
 		mnFilter.add(mnFilterBeer);
 		
 		mntmBeersFilteredByStyle = new JMenuItem("Stile e sottostile");
@@ -722,7 +722,7 @@ public class ViewMainGUI extends JFrame {
 		mntmBeersFilteredByMainStyle = new JMenuItem("Solo stile principale");
 		mnFilterBeer.add(mntmBeersFilteredByMainStyle);
 		
-		mntmBeersFilteredByBrewery = new JMenuItem("Birrificio");
+		mntmBeersFilteredByBrewery = new JMenuItem("Birrifici");
 		mnFilterBeer.add(mntmBeersFilteredByBrewery);
 		
 		mnProvata = new JMenu("Provata");
@@ -791,7 +791,7 @@ public class ViewMainGUI extends JFrame {
 		mntmBeersFilteredByPlaceTried = new JMenuItem("Luogo di bevuta");
 		mnFilterBeer.add(mntmBeersFilteredByPlaceTried);
 		
-		mnFilterBrewery = new JMenu("Brewery");
+		mnFilterBrewery = new JMenu("Birricio");
 		mnFilter.add(mnFilterBrewery);
 		
 		mnTrappista_1 = new JMenu("Trappista");
@@ -806,7 +806,7 @@ public class ViewMainGUI extends JFrame {
 		mntmNazione = new JMenuItem("Nazione");
 		mnFilterBrewery.add(mntmNazione);
 		
-		mnFilterStyle = new JMenu("Style");
+		mnFilterStyle = new JMenu("Stili");
 		mnFilter.add(mnFilterStyle);
 		
 		mnFermentazione_1 = new JMenu("Fermentazione");

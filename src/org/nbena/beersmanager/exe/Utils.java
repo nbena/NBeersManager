@@ -220,6 +220,18 @@ public class Utils {
 		}
 	}
 	
+	public static void printBeersTotal(List<Beer> beers, OutputStream out){
+		//get the totale here because we loop on the list
+		PrintStream output = new PrintStream(out);
+		double total = 0.0;
+		for(Beer b: beers){
+			output.println("----");
+			output.println(beerToString(b));
+			total+=b.getPrice();
+		}
+		output.print("Totale: "+total);
+	}
+	
 	public static void printBreweries(List<Brewery> breweries, OutputStream out){
 		PrintStream output = new PrintStream(out);
 		for(Brewery b : breweries){
@@ -1366,6 +1378,9 @@ public class Utils {
 		public static final String NO_STYLES = "Non ci sono stili su cui effettuare la ricerca";
 		public static final String NO_BREWERY = "Non ci sono birrifici su cui effettuare la ricerca";
 		
+		
+		public static final String WRITE_ALSO_TOTALE_PRICE = "Vuoi scrivere anche il prezzo totale?";
+		
 		public static final String ERROR = "Errore";
 		
 		
@@ -1785,6 +1800,13 @@ public class Utils {
 		return SwingUtilities.convertPoint(popup, p, table);
 	}
 	
+	public static double getSum(List<Beer> beers){
+		double res=0;
+		for(Beer b: beers){
+			res+=b.getPrice();
+		}
+		return res;
+	}
 	
 //	private static String getDefaultViews(){
 //		

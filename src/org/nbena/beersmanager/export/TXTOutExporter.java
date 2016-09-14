@@ -1,6 +1,7 @@
 package org.nbena.beersmanager.export;
 
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 import org.nbena.beersmanager.coreclasses.Beer;
@@ -15,8 +16,8 @@ public class TXTOutExporter extends OutExporter {
 	}
 
 	@Override
-	public void writeBeer(List<Beer> beers, OutputStream out) throws Exception {
-		Utils.printBeers(beers, out);
+	public void writeBeer(List<Beer> beers, OutputStream out, boolean writeTotalPrice) throws Exception {
+		Utils.printBeersTotal(beers, out);
 	}
 
 	@Override
@@ -33,6 +34,11 @@ public class TXTOutExporter extends OutExporter {
 	@Override
 	public void writeBrewery(List<Brewery> breweries, OutputStream out) throws Exception {
 		Utils.printBreweries(breweries, out);
+	}
+	
+	public void writeTotal(double total, OutputStream out){
+		PrintStream output = new PrintStream(out);
+		output.println("Il totale: "+total);
 	}
 
 }

@@ -85,14 +85,13 @@ public abstract class OutExporter {
 		*/
 	}
 	
-	public abstract void writeBeer(List<Beer> beers, OutputStream out) throws Exception;
+	public abstract void writeBeer(List<Beer> beers, OutputStream out, boolean writeTotalPrice) throws Exception;
 	
 	public abstract void writeBeerSpecialClass(List<BeerJSONSpecialClass> beers, OutputStream out) throws Exception;
 	
 	public abstract void writeStyle(List<Style> styles, OutputStream out) throws Exception;
 	
 	public abstract void writeBrewery(List<Brewery> breweries, OutputStream out) throws Exception;
-	
 	
 
 }
