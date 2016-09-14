@@ -170,20 +170,20 @@ public class Utils {
 	public static String beerToString(Beer beer){
 		StringBuilder builder = new StringBuilder();
 //		builder.append("-------");
-		builder.append(" "+beer.getBrewery().getName()+": "+beer.getName());
-		builder.append(" "+beer.getStyle().getStyleMainName()+"  "+beer.getStyle().getStyleSubCategory());
+		builder.append(beer.getBrewery().getName()+": "+beer.getName()+"\n");
+		builder.append("\t"+beer.getStyle().getStyleMainName()+"  "+beer.getStyle().getStyleSubCategory()+"\n");
 //		builder.append(" "+beer.getColor()+" - Fermentation: "+beer.getFermentation());
-		builder.append("Fermentazione "+Utils.getFermentationItalianString(beer.getFermentation()));
-		builder.append(" Alcool: "+beer.getAlcool()+"% ");
-		builder.append(" Descrizione: "+beer.getDescription());
-		builder.append(" Voto: "+beer.getMark());
-		builder.append(" Stelle: "+beer.getNumberOfStars());
+		builder.append("\tFermentazione "+Utils.getFermentationItalianString(beer.getFermentation())+"\n");
+		builder.append("\tAlcool: "+beer.getAlcool()+"%\n");
+		builder.append("\tDescrizione: "+beer.getDescription()+"\n");
+		builder.append("\tVoto: "+beer.getMark()+"\n");
+		builder.append("\tStelle: "+beer.getNumberOfStars()+"\n");
 		if(beer.isTried()){
-			builder.append(" Provata: sì");
-			builder.append(" Luogo: "+beer.getPlaceTried()+ " Prezzo: "+beer.getPrice());
+			builder.append("\tProvata: sì\n");
+			builder.append("\tLuogo: "+beer.getPlaceTried()+ " Prezzo: "+beer.getPrice()+"\n");
 		}
 		else{
-			builder.append(" Provata: no");
+			builder.append(" Provata: no\n");
 		}
 		builder.append("\n");
 		return builder.toString();
@@ -191,15 +191,17 @@ public class Utils {
 	
 	public static String breweryToString(Brewery brewery){
 		StringBuilder builder = new StringBuilder();
-		builder.append(" "+brewery.getName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite());
-		builder.append(" "+brewery.getDescription()+"\n");
+		builder.append(brewery.getName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite()+"\n");
+		builder.append("\t"+brewery.getDescription()+"\n");
+		builder.append("\n");
 		return builder.toString();
 	}
 	
 	public static String styleToString(Style style){
 		StringBuilder builder = new StringBuilder();
-		builder.append(" "+style.getStyleSubCategory()+" "+style.getStyleMainName()+", "+style.getFermentation()+" fermentation");
-		builder.append(" "+style.getDescription()+"\n");
+		builder.append(style.getStyleSubCategory()+" "+style.getStyleMainName()+", Fermentazione "+getFermentationItalianString(style.getFermentation())+"\n");
+		builder.append("\t"+style.getDescription()+"\n");
+		builder.append("\n");
 		return builder.toString();
 	}
 	
