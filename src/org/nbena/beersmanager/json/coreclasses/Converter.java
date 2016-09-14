@@ -10,6 +10,7 @@ import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.query.QueryRunner;
 
 public class Converter {
 	
@@ -92,12 +93,15 @@ public class Converter {
 		//using instead a binary seacrh into breweries and style.
 		
 		
-		Collections.sort(breweries);	
-		Collections.sort(styles);
+//		Collections.sort(breweries);	
+//		Collections.sort(styles);
+		breweries = QueryRunner.BinarySearch.breweriesSortedForBinaySearchConverter(breweries);
+		styles = QueryRunner.BinarySearch.stylesSortedForBinarySearch(styles);
 		
 		for(int i=0, j=0;i<specialClassBeers.size();i++){
 			beer=toBeerNormalClass(specialClassBeers.get(i));
-			index1=Collections.binarySearch(styles, beer.getStyle());
+//			index1=Collections.binarySearch(styles, beer.getStyle());
+			index1 = QueryRunner.BinarySearch.styleSearch(styles, beer.getStyle(), true);
 			if(index1>=0){
 				beer.setStyle(styles.get(index1));
 			}
@@ -105,7 +109,7 @@ public class Converter {
 				System.err.print("Style not found, insertion point: "+index1);
 			}
 			
-			index2=Collections.binarySearch(breweries, beer.getBrewery());
+			index2=QueryRunner.BinarySearch.brewerySearchConverter(breweries, beer.getBrewery(), true);
 			if(index2>=0){
 				beer.setBrewery(breweries.get(index2));
 			}

@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 import org.nbena.beersmanager.coreclasses.*;
+import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.query.Comparators.ComparatorBeerForBinarySearch;
 public class QueryRunner {
 	
@@ -287,6 +288,9 @@ public class QueryRunner {
 				filteredStyles.add(s);
 			}
 		}
+		
+//		Utils.printStyles(filteredStyles, System.out);
+		
 		return filteredStyles;
 	}
 	
@@ -294,7 +298,7 @@ public class QueryRunner {
 		boolean ret=false;
 		for(int i=0;i<styles.size();i++){
 			Style s=styles.get(i);
-			if (s.getStyleMainName().equals(style.getStyleMainName())){
+			if (s.getStyleMainName().equalsIgnoreCase(style.getStyleMainName())){
 				i=styles.size();
 				ret=true;
 			}
@@ -308,6 +312,9 @@ public class QueryRunner {
 		for(Style s: filtered){
 			strings.add(s.getStyleMainName());
 		}
+		
+		
+		
 		return strings;
 	}
 	
@@ -668,6 +675,36 @@ public class QueryRunner {
 		public static boolean isStyleExists(List<Style> styles, Style style, boolean sorted){
 			return styleSearch(styles, style, sorted) >=0 ? true : false;
 		}
+		
+		
+		/**
+		 * Sorting algorithm used by the Converter class to perform a binary search of breweries, where only the brewery name is known.
+		 *  See {@link #Comparators.ComparatorBreweryForBinarySearchConverter()}.
+		 * @param breweries the breweries to search.
+		 * @return the list sorted.
+		 */
+		public static List<Brewery> breweriesSortedForBinaySearchConverter(List<Brewery> breweries){
+			List<Brewery> orderedBreweries = new LinkedList<Brewery>(breweries);
+			Collections.sort(orderedBreweries, new Comparators.ComparatorBreweryForBinarySearchConverter());
+			return orderedBreweries;
+		}
+		
+		/** 
+		 * Performs a binary search on list, that must be sorted used only the name of the brewery. See {@link #Comparators.ComparatorBreweryForBinarySearchConverter()}.
+		 * @param breweries  the list to search on.
+		 * @param brewery	the brewery to search
+		 * @param sorted	if false, the list will be internally sorted.
+		 * @return the result of the binary search.
+		 */
+		public static int brewerySearchConverter(List<Brewery> breweries, Brewery brewery, boolean sorted){
+			int ret;
+			if(!sorted){
+				breweries = breweriesSortedForBinarySearch(breweries);		
+			}
+			ret = Collections.binarySearch(breweries, brewery, new Comparators.ComparatorBreweryForBinarySearchConverter());
+			return ret;
+		}
+		
 		
 	}
 	

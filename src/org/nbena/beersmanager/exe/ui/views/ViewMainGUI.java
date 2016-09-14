@@ -901,6 +901,8 @@ public class ViewMainGUI extends JFrame {
 		popupMenu.add(mntmDeleteThingsTable);
 		
 		table.setComponentPopupMenu(popupMenu);
+		
+		table.getTableHeader().setResizingAllowed(true);
 
 		
 		

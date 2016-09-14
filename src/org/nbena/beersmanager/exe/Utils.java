@@ -30,6 +30,7 @@ import org.nbena.beersmanager.conf.Configuration;
 import org.nbena.beersmanager.conf.Configuration.ShowDefault;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
+import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
@@ -50,96 +51,105 @@ public class Utils {
 	}
 	
 	public static void printStyle(Style style, OutputStream output){
-		PrintStream out=new PrintStream(output);
-		out.println("-------");
-		out.println(" "+style.getStyleSubCategory()+" "+style.getStyleMainName()+", "+style.getFermentation()+" fermentation");
-		out.println(" "+style.getDescription()+"\n");
+//		PrintStream out=new PrintStream(output);
+//		out.println("-------");
+//		out.println(" "+style.getStyleSubCategory()+" "+style.getStyleMainName()+", "+style.getFermentation()+" fermentation");
+//		out.println(" "+style.getDescription()+"\n");
+		PrintStream out = new PrintStream(output);
+		out.println(styleToString(style));
 	}
 	
 	public static void printBeer(Beer beer, OutputStream output){
-		PrintStream out=new PrintStream(output);
-		out.println("-------");
-		out.println(" "+beer.getBrewery().getName()+": "+beer.getName());
-		out.println(" "+beer.getStyle().getStyleMainName()+"  "+beer.getStyle().getStyleSubCategory());
-//		out.println(" "+beer.getColor()+" - Fermentation: "+beer.getFermentation());
-		out.print("Fermentation "+beer.getFermentation().toFirstUpperCase());
-		out.println(" Alcool: "+beer.getAlcool()+"% ");
-		out.println(" Description: "+beer.getDescription());
-		out.println(" Mark: "+beer.getMark());
-		out.println(" Star: "+beer.getNumberOfStars());
-		if(beer.isTried()){
-			out.println(" Tried: yes");
-			out.println(" Place tried: "+beer.getPlaceTried()+ " Price: "+beer.getPrice());
-		}
-		else{
-			out.println(" Tried: no");
-		}
-		out.println();
+//		PrintStream out=new PrintStream(output);
+//		out.println("-------");
+//		out.println(" "+beer.getBrewery().getName()+": "+beer.getName());
+//		out.println(" "+beer.getStyle().getStyleMainName()+"  "+beer.getStyle().getStyleSubCategory());
+////		out.println(" "+beer.getColor()+" - Fermentation: "+beer.getFermentation());
+//		out.print("Fermentation "+beer.getFermentation().toFirstUpperCase());
+//		out.println(" Alcool: "+beer.getAlcool()+"% ");
+//		out.println(" Description: "+beer.getDescription());
+//		out.println(" Mark: "+beer.getMark());
+//		out.println(" Star: "+beer.getNumberOfStars());
+//		if(beer.isTried()){
+//			out.println(" Tried: yes");
+//			out.println(" Place tried: "+beer.getPlaceTried()+ " Price: "+beer.getPrice());
+//		}
+//		else{
+//			out.println(" Tried: no");
+//		}
+//		out.println();
+		PrintStream out = new PrintStream(output);
+		out.println(beerToString(beer));
 	}
 	
 	public static void printBrewery(Brewery brewery, OutputStream output){
-		PrintStream out=new PrintStream(output);
-		out.println("-------");
-		out.println(" "+brewery.getName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite());
-		out.println(" "+brewery.getDescription()+"\n");
+//		PrintStream out=new PrintStream(output);
+//		out.println("-------");
+//		out.println(" "+brewery.getName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite());
+//		out.println(" "+brewery.getDescription()+"\n");
+		PrintStream out = new PrintStream(output);
+		out.println(breweryToString(brewery));
 	}
 	
-	public static void printBeers(List<Beer> beers, OutputStream output){
-		/*
-		PrintStream out=new PrintStream(output);
-		out.println("-------------Beers:--------------");
-		for(Beer beer: beers){
-			out.println("-------");
-			out.println(" "+beer.getBrewery().getName()+": "+beer.getName());
-			out.println(" "+beer.getStyle().getStyleMainName()+"  "+beer.getStyle().getStyleSubCategory());
-			out.println(" "+beer.getColor()+" - Fermentation: "+beer.getFermentation());
-			out.println(" Alcool: "+beer.getAlcool()+"% ");
-			out.println(" Description: "+beer.getDescription());
-			out.println(" Mark: "+beer.getMark());
-			out.println(" Star: "+beer.getNumberOfStars());
-			if(beer.isTried()){
-				out.println(" Tried: yes");
-				out.println(" Place tried: "+beer.getPlaceTried()+ " Price: "+beer.getPrice());
-			}
-			else{
-				out.println(" Tried: no"+"\n");
-			}
-		}
-		out.println();
-		*/
-		for(Beer b: beers){
-			printBeer(b, output);
-		}
-	}
+//	public static void printBeers(List<Beer> beers, OutputStream output){
+//		/*
+//		PrintStream out=new PrintStream(output);
+//		out.println("-------------Beers:--------------");
+//		for(Beer beer: beers){
+//			out.println("-------");
+//			out.println(" "+beer.getBrewery().getName()+": "+beer.getName());
+//			out.println(" "+beer.getStyle().getStyleMainName()+"  "+beer.getStyle().getStyleSubCategory());
+//			out.println(" "+beer.getColor()+" - Fermentation: "+beer.getFermentation());
+//			out.println(" Alcool: "+beer.getAlcool()+"% ");
+//			out.println(" Description: "+beer.getDescription());
+//			out.println(" Mark: "+beer.getMark());
+//			out.println(" Star: "+beer.getNumberOfStars());
+//			if(beer.isTried()){
+//				out.println(" Tried: yes");
+//				out.println(" Place tried: "+beer.getPlaceTried()+ " Price: "+beer.getPrice());
+//			}
+//			else{
+//				out.println(" Tried: no"+"\n");
+//			}
+//		}
+//		out.println();
+//		*/
+////		for(Beer b: beers){
+////			printBeer(b, output);
+////		}
+////		printBeersNew(beers, output);
+//	}
+//	
+//	public static void printBreweries(List<Brewery> breweries, OutputStream output){
+//		/*
+//		PrintStream out=new PrintStream(output);
+//		out.println("-------------Breweries:--------------");
+//		for(Brewery brewery: breweries){
+//			out.println("-------");
+//			out.println(" "+brewery.getName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite());
+//			out.println(" "+brewery.getDescription()+"\n");
+//		}
+//		*/
+////		for(Brewery b: breweries){
+////			printBrewery(b, output);
+////		}
+////		printBreweriesNew(breweries, output);
+//	}
 	
-	public static void printBreweries(List<Brewery> breweries, OutputStream output){
-		/*
-		PrintStream out=new PrintStream(output);
-		out.println("-------------Breweries:--------------");
-		for(Brewery brewery: breweries){
-			out.println("-------");
-			out.println(" "+brewery.getName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite());
-			out.println(" "+brewery.getDescription()+"\n");
-		}
-		*/
-		for(Brewery b: breweries){
-			printBrewery(b, output);
-		}
-	}
-	
-	public static void printStyles(List<Style> styles, OutputStream output){
-		/*
-		PrintStream out=new PrintStream(output);
-		out.println("-------------Style:--------------");
-		for(Style style: styles){
-			out.println(" "+style.getStyleSubCategory()+" "+style.getStyleMainName()+", "+style.getFermentation()+" fermentation");
-			out.println(" "+style.getDescription()+"\n");
-		}
-		*/
-		for(Style s: styles){
-			printStyle(s, output);
-		}
-	}
+//	public static void printStyles(List<Style> styles, OutputStream output){
+//		/*
+//		PrintStream out=new PrintStream(output);
+//		out.println("-------------Style:--------------");
+//		for(Style style: styles){
+//			out.println(" "+style.getStyleSubCategory()+" "+style.getStyleMainName()+", "+style.getFermentation()+" fermentation");
+//			out.println(" "+style.getDescription()+"\n");
+//		}
+//		*/
+////		for(Style s: styles){
+////			printStyle(s, output);
+////		}
+////		printStylesNew(styles, output);
+//	}
 	
 	public static void printConfiguration(Configuration c, OutputStream output){
 		PrintStream out = new PrintStream(output);
@@ -155,6 +165,75 @@ public class Utils {
 		out.println("\tStyle filtering value: "+c.getStyleFilterValue());
 		
 		out.print("Default view: "+c.getDefaultView().toString());
+	}
+	
+	public static String beerToString(Beer beer){
+		StringBuilder builder = new StringBuilder();
+//		builder.append("-------");
+		builder.append(" "+beer.getBrewery().getName()+": "+beer.getName());
+		builder.append(" "+beer.getStyle().getStyleMainName()+"  "+beer.getStyle().getStyleSubCategory());
+//		builder.append(" "+beer.getColor()+" - Fermentation: "+beer.getFermentation());
+		builder.append("Fermentazione "+Utils.getFermentationItalianString(beer.getFermentation()));
+		builder.append(" Alcool: "+beer.getAlcool()+"% ");
+		builder.append(" Descrizione: "+beer.getDescription());
+		builder.append(" Voto: "+beer.getMark());
+		builder.append(" Stelle: "+beer.getNumberOfStars());
+		if(beer.isTried()){
+			builder.append(" Provata: sì");
+			builder.append(" Luogo: "+beer.getPlaceTried()+ " Prezzo: "+beer.getPrice());
+		}
+		else{
+			builder.append(" Provata: no");
+		}
+		builder.append("\n");
+		return builder.toString();
+	}
+	
+	public static String breweryToString(Brewery brewery){
+		StringBuilder builder = new StringBuilder();
+		builder.append(" "+brewery.getName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite());
+		builder.append(" "+brewery.getDescription()+"\n");
+		return builder.toString();
+	}
+	
+	public static String styleToString(Style style){
+		StringBuilder builder = new StringBuilder();
+		builder.append(" "+style.getStyleSubCategory()+" "+style.getStyleMainName()+", "+style.getFermentation()+" fermentation");
+		builder.append(" "+style.getDescription()+"\n");
+		return builder.toString();
+	}
+	
+	public static List<String> beersToString(List<Beer> beers){
+		List<String> beersString = new LinkedList<String>();
+		for(Beer b: beers){
+			String s = beerToString(b);
+			beersString.add(s);
+		}
+		return beersString;
+	}
+	
+	public static void printBeers(List<Beer> beers, OutputStream out){
+		PrintStream output = new PrintStream(out);
+		for(Beer b : beers){
+			output.println("----");
+			output.println(beerToString(b));
+		}
+	}
+	
+	public static void printBreweries(List<Brewery> breweries, OutputStream out){
+		PrintStream output = new PrintStream(out);
+		for(Brewery b : breweries){
+			output.println("----");
+			output.println(breweryToString(b));
+		}
+	}
+	
+	public static void printStyles(List<Style> styles, OutputStream out){
+		PrintStream output = new PrintStream(out);
+		for(Style b : styles){
+			output.println("----");
+			output.println(styleToString(b));
+		}
 	}
 	
 	public static String currentDirectory(){
@@ -298,6 +377,7 @@ public class Utils {
 		return array;
 	}
 	
+	
 	public static Object[] fromBreweryAverageToObjectArray(BreweryAverage b){
 		Object [] array=new Object[6];
 		array[0]=b.getName();
@@ -305,8 +385,15 @@ public class Utils {
 		array[2]=b.getTown();
 		array[3]=b.getDescription();
 		array[4]=b.getWebsite();
-		array[5]= b.getAverage()==Double.NaN ? 0.0 : b.getAverage();
-		System.out.println(b.getAverage());
+////		array[5]= (  (b.getAverage()==Double.NaN) ? 0.0 : b.getAverage());
+//		double res=b.getAverage();
+//		if(b.getAverage()==Double.NaN){
+//			res=0.0;
+//		}
+//		array[5]=res;
+////		System.out.println(b.getAverage());
+//		System.out.println("Brewery : "+b.getName()+", average: "+b.getAverage()+" is NaN?"+ (b.getAverage()==Double.NaN));
+		array[5] = (Double.isNaN(b.getAverage()) ? 0.0 : b.getAverage());
 		return array;
 	}
 	
@@ -433,6 +520,15 @@ public class Utils {
 		for(Style s: styles){
 			strings[i]=getStyleString(s);
 			i++;
+		}
+		return strings;
+	}
+	
+	public static String[] getMainStyleStringArray(List<Style> styles){
+		String [] strings = new String[styles.size()];
+		int i=0;
+		for(Style s: styles){
+			strings[i++]=s.getStyleMainName();
 		}
 		return strings;
 	}

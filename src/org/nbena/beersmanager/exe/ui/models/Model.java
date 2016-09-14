@@ -636,11 +636,11 @@ public class Model {
 	}
 
 	
-	public List<Style> getOnlyMainStyle(){
+	public List<Style> getOnlyMainStyles(){
 		return QueryRunner.onlyMainStyles(styleData);
 	}
 	
-	public List<String> getOnlyMainStyles(){
+	public List<String> getOnlyMainStylesString(){
 		return QueryRunner.onlyMainStylesAsString(styleData);
 	}
 	

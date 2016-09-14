@@ -70,6 +70,7 @@ public class BreweryAverage extends Brewery {
 	
 	public void setAverage(List<Beer> thisBreweryBeers){
 		average=QueryRunner.breweryAverage(thisBreweryBeers, this, true);
+		average=(Double.isNaN(average) ? 0.0 : average);
 	}
 
 	/* (non-Javadoc)

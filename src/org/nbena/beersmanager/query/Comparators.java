@@ -673,36 +673,52 @@ public class Comparators {
 		
 	}
 	
+	private static int compareAverageAscending(BreweryAverage arg0, BreweryAverage arg1){
+		int ret;
+		if(arg0.getAverage()>arg1.getAverage()){
+			ret=1;
+		}else if(arg0.getAverage()==arg1.getAverage()){
+			ret=0;
+		}else{
+			ret=-1;
+		}
+		return ret;
+	}
+	
 	public static class ComparatorBreweryByAverageAscending implements Comparator<BreweryAverage>{
 
 		@Override
 		public int compare(BreweryAverage arg0, BreweryAverage arg1) {
-			int ret;
-			if(arg0.getAverage()>arg1.getAverage()){
-				ret=1;
-			}else if(arg0.getAverage()==arg1.getAverage()){
-				ret=0;
-			}else{
-				ret=-1;
-			}
-			return ret;
+			return compareAverageAscending(arg0, arg1);
 		}
 		
+	}
+	
+	private static int compareAverageDescending(BreweryAverage arg0, BreweryAverage arg1){
+		int ret;
+		if(arg1.getAverage()>arg0.getAverage()){
+			ret = 1;
+		}else if(arg1.getAverage()==arg0.getAverage()){
+			ret = 0;
+		}else{
+			ret = -1;
+		}
+		return ret;
 	}
 	
 	public static class ComparatorBreweryByAverageDescending implements Comparator<BreweryAverage>{
 
 		@Override
 		public int compare(BreweryAverage arg0, BreweryAverage arg1) {
-			int ret;
-			if(arg0.getAverage()>arg1.getAverage()){
-				ret=-1;
-			}else if(arg0.getAverage()==arg1.getAverage()){
-				ret=0;
-			}else{
-				ret=1;
-			}
-			return ret;
+//			int ret;
+//			if(arg0.getAverage()>arg1.getAverage()){
+//				ret=-1;
+//			}else if(arg0.getAverage()==arg1.getAverage()){
+//				ret=0;
+//			}else{
+//				ret=1;
+//			}
+			return compareAverageDescending(arg0, arg1);
 		}
 		
 	}
@@ -752,13 +768,17 @@ public class Comparators {
 		
 	}
 	
+	private static int compareBreweryByName(Brewery arg0, Brewery arg1){
+		return arg0.getName().compareTo(arg1.getName());
+	}
+	
 	
 	public static class ComparatorBreweryForBinarySearch implements Comparator<Brewery>{
 
 		@Override
 		public int compare(Brewery arg0, Brewery arg1) {
 			int ret;
-			if (arg0.equals(arg1)){
+			if (arg0.getName().equals(arg1.getName())){
 				ret = 0;
 			}
 			else{
@@ -775,6 +795,28 @@ public class Comparators {
 		
 	}
 	
+	public static class ComparatorBreweryForBinarySearchConverter implements Comparator<Brewery>{
+
+		@Override
+		public int compare(Brewery arg0, Brewery arg1) {
+			int ret;
+			if (arg0.equals(arg1)){
+				ret = 0;
+			}
+			else{
+//				if (arg0.getCountry().equalsIgnoreCase(arg1.getCountry())){
+//					ret = arg0.getName().compareToIgnoreCase(arg1.getName());
+//				}
+//				else{
+//					ret = arg0.getCountry().compareTo(arg1.getCountry());
+//				}
+//				return compareBreweryByCountryName(arg0, arg1);
+				return compareBreweryByName(arg0, arg1);
+			}
+			return ret;
+		}
+		
+	}
 	
 	public static class ComparatorBreweryAverageForBinarySearch implements Comparator<BreweryAverage>{
 

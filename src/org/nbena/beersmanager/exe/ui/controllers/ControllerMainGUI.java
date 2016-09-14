@@ -1608,7 +1608,7 @@ public class ControllerMainGUI {
 	 * @return the string list of main styles plus 'New Style'. 
 	 */
 	private List<String> getStylesListToAddToAddNewStyle(){
-		List<String> styles = new LinkedList<String>(model.getOnlyMainStyles());
+		List<String> styles = new LinkedList<String>(model.getOnlyMainStylesString());
 		styles.add(Utils.Constants.NEW_STYLE_STRING);
 		return styles;
 	}
@@ -1882,7 +1882,7 @@ public class ControllerMainGUI {
 
 		
 		addStyleDialog=new ViewAddNewStyle();
-		addStyleDialog.fillThings(Utils.getMainStyleString(model.getOnlyMainStyle()), Utils.getFermentationsItalianString(), model.getCountries());
+		addStyleDialog.fillThings(Utils.getMainStyleString(model.getOnlyMainStyles()), Utils.getFermentationsItalianString(), model.getCountries());
 		setStyleInDialog(addStyleDialog);
 		
 		setAddNewStyleOkButton();
@@ -2622,7 +2622,7 @@ public class ControllerMainGUI {
 	private String askStyleBeersFilteredByStyleMain(){
 		optionPane.setParent(gui);
 		String ret = null;
-		String[] styles = Utils.getStyleStringArray(model.getOnlyMainStyle());
+		String[] styles = Utils.getMainStyleStringArray(model.getOnlyMainStyles());
 		if(styles.length==0){
 			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_STYLES);
 		}else{
@@ -2700,7 +2700,7 @@ public class ControllerMainGUI {
 	private String askMainStyleStylesFilteredByMainStyle(){
 		optionPane.setParent(gui);
 		String ret=null;
-		String[] styles = Utils.toArray(model.getOnlyMainStyles());
+		String[] styles = Utils.toArray(model.getOnlyMainStylesString());
 		if(styles.length==0){
 			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_STYLES);
 		}else{
