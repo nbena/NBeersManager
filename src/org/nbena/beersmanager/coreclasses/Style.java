@@ -10,14 +10,14 @@ public class Style implements Comparable<Style>{
 	
 	private String styleMainName;
 	private String styleSubCategory;
-	private String description;
+	private String styleDescription;
 	private String styleCountryOrigin;
 	private Fermentation fermentation;
 	
 	public Style(String styleMainName, String styleSubCategory, String description, String styleCountryOrigin, Fermentation fermentation) {
 		this.styleMainName = styleMainName;
 		this.styleSubCategory = styleSubCategory;
-		this.description = description;
+		this.styleDescription = description;
 		this.styleCountryOrigin = styleCountryOrigin;
 		this.fermentation = fermentation;
 	}
@@ -58,14 +58,14 @@ public class Style implements Comparable<Style>{
 	 * @return the description
 	 */
 	public String getDescription() {
-		return description;
+		return styleDescription;
 	}
 	/**
 	 * @param description the description to set
 	 */
 	//@XmlElement
 	public void setDescription(String description) {
-		this.description = description;
+		this.styleDescription = description;
 	}
 
 
@@ -144,7 +144,7 @@ public class Style implements Comparable<Style>{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((styleDescription == null) ? 0 : styleDescription.hashCode());
 		result = prime * result + ((fermentation == null) ? 0 : fermentation.hashCode());
 		result = prime * result + ((styleCountryOrigin == null) ? 0 : styleCountryOrigin.hashCode());
 		result = prime * result + ((styleMainName == null) ? 0 : styleMainName.hashCode());
@@ -166,10 +166,10 @@ public class Style implements Comparable<Style>{
 		if (getClass() != obj.getClass())
 			return false;
 		Style other = (Style) obj;
-		if (description == null) {
-			if (other.description != null)
+		if (styleDescription == null) {
+			if (other.styleDescription != null)
 				return false;
-		} else if (!description.equals(other.description))
+		} else if (!styleDescription.equals(other.styleDescription))
 			return false;
 		if (fermentation != other.fermentation)
 			return false;

@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="brewery")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Brewery implements Comparable<Brewery> {
+
+
 	private String breweryName;
 	private String town;
 	private String country;
@@ -15,38 +17,45 @@ public class Brewery implements Comparable<Brewery> {
 	private boolean isAuthenticTrappist;
 	
 
+	
+	public Brewery(String breweryName, String town, String country, String breweryDescription, String website,
+			boolean isAuthenticTrappist) {
+		this.breweryName = breweryName;
+		this.town = town;
+		this.country = country;
+		this.breweryDescription = breweryDescription;
+		this.website = website;
+		this.isAuthenticTrappist = isAuthenticTrappist;
+	}
+	
+	
+	
+	public Brewery(String breweryName, String town, String country, String breweryDescription, String website) {
+		this.breweryName = breweryName;
+		this.town = town;
+		this.country = country;
+		this.breweryDescription = breweryDescription;
+		this.website = website;
+	}
+
+
+
 	public Brewery() {
 	}
 
-	public Brewery(String name, String town, String country, String description, String website) {
-		this.breweryName = name;
-		this.town = town;
-		this.country = country;
-		this.breweryDescription = description;
-		this.website = website;
-	}
-	
-	public Brewery(String name, String town, String country, String description, String website, boolean isAuthenticTrappist) {
-		this.breweryName = name;
-		this.town = town;
-		this.country = country;
-		this.breweryDescription = description;
-		this.website = website;
-		this.isAuthenticTrappist=isAuthenticTrappist;
-	}
 
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public String getBreweryName() {
 		return breweryName;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param breweryName the name to set
 	 */
-	public void setName(String name) {
-		this.breweryName = name;
+	public void setBreweryName(String breweryName) {
+		this.breweryName = breweryName;
 	}
 
 	/**
@@ -80,15 +89,15 @@ public class Brewery implements Comparable<Brewery> {
 	/**
 	 * @return the description
 	 */
-	public String getDescription() {
+	public String getBreweryDescription() {
 		return breweryDescription;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param breweryDescription the description to set
 	 */
-	public void setDescription(String description) {
-		this.breweryDescription = description;
+	public void setBreweryDescription(String breweryDescription) {
+		this.breweryDescription = breweryDescription;
 	}
 
 	/**
@@ -131,7 +140,7 @@ public class Brewery implements Comparable<Brewery> {
 			}*/
 //		System.out.println(name+"\n");
 //		System.out.println(o.getName()+"\n");
-		return getName().compareTo(o.getName());
+		return getBreweryName().compareTo(o.getBreweryName());
 	}
 
 	/* (non-Javadoc)

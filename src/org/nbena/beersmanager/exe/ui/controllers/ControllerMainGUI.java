@@ -1111,6 +1111,9 @@ public class ControllerMainGUI {
 				model.setExportSelectedThings(!askOnlySelected);
 				model.setSelectedRows(gui.getTableSelectedRows());
 			}
+			else{
+				model.setExportSelectedThings(true);
+			}
 		}
 		return returned;
 	}
@@ -1350,10 +1353,10 @@ public class ControllerMainGUI {
 	
 	public void setBreweryInDialog(BreweryDialog dialog){
 		BreweryAverage b=model.getBreweryShown();
-		dialog.setBreweryName(b.getName());
+		dialog.setBreweryName(b.getBreweryName());
 		dialog.setBreweryTown(b.getTown());
 		dialog.setBreweryCountry(b.getCountry());
-		dialog.setBreweryDescription(b.getDescription());
+		dialog.setBreweryDescription(b.getBreweryDescription());
 		dialog.setBreweryWebsite(b.getWebsite());
 		dialog.setBreweryAverage(Double.toString(b.getAverage()));
 		dialog.setBreweryTrappist(b.isAuthenticTrappist());
@@ -1429,10 +1432,10 @@ public class ControllerMainGUI {
 	
 	private Brewery getBreweryInAddNewBreweryDialog(){
 		Brewery b = new Brewery();
-		b.setName(addBreweryDialog.getBreweryName());
+		b.setBreweryName(addBreweryDialog.getBreweryName());
 		b.setCountry(addBreweryDialog.getBreweryCountry());
 		b.setTown(addBreweryDialog.getBreweryTown());
-		b.setDescription(addBreweryDialog.getDescription());
+		b.setBreweryDescription(addBreweryDialog.getDescription());
 		b.setWebsite(addBreweryDialog.getBreweryWebsite());	
 		b.setAuthenticTrappist(addBreweryDialog.isTrappist());  
 		return b;

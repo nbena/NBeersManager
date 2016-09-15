@@ -21,49 +21,7 @@ public class BeerJSONExportSpecialClass {
 	private byte[] image; //tell to xml to ignore
 	private String imageFilePath;
 
-	public BeerJSONExportSpecialClass(String name, Brewery brewery, StyleJSONSpecialClass style) {
-		this.beerName = name;
-		this.brewery = brewery;
-		this.style = style;
-	}
 	
-	public BeerJSONExportSpecialClass(String name, Brewery brewery, StyleJSONSpecialClass style, int numberOfStar) {
-		this.beerName = name;
-		this.brewery = brewery;
-		this.style = style;
-		this.numberOfStars=numberOfStar;
-	}
-	
-	
-	
-
-	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description) {
-		this.placeTried = placeTried;
-		this.price = price;
-		this.alcool = alcool;
-		this.mark = mark;
-		this.numberOfStars = numberOfStars;
-		this.beerDescription = description;
-	}
-	
-//	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description, String color) {
-//		this.placeTried = placeTried;
-//		this.price = price;
-//		this.alcool = alcool;
-//		this.mark = mark;
-//		this.numberOfStars = numberOfStars;
-//		this.description = description;
-//		this.color=color;
-//	}
-	
-	public void setAssage(String placeTried, double price, double alcool, int mark, int numberOfStars, String description, byte[] image) {
-		this.placeTried = placeTried;
-		this.price = price;
-		this.alcool = alcool;
-		this.mark = mark;
-		this.numberOfStars = numberOfStars;
-		this.beerDescription = description;
-	}
 
 	public BeerJSONExportSpecialClass() {
 	}
@@ -71,15 +29,15 @@ public class BeerJSONExportSpecialClass {
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public String getBeerName() {
 		return beerName;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param beerName the name to set
 	 */
-	public void setName(String name) {
-		this.beerName = name;
+	public void setBeerName(String beerName) {
+		this.beerName = beerName;
 	}
 
 	/**
@@ -200,15 +158,15 @@ public class BeerJSONExportSpecialClass {
 	/**
 	 * @return the description
 	 */
-	public String getDescription() {
+	public String getBeerDescription() {
 		return beerDescription;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param beerDescription the description to set
 	 */
-	public void setDescription(String description) {
-		this.beerDescription = description;
+	public void setBeerDescription(String beerDescription) {
+		this.beerDescription = beerDescription;
 	}
 
 	/**

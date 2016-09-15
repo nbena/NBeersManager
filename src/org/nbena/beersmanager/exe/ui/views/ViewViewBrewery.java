@@ -136,11 +136,11 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 	
 	@Deprecated
 	public void setBrewery(Brewery b){
-		textFieldName.setText(b.getName());
+		textFieldName.setText(b.getBreweryName());
 		textFieldTown.setText(b.getTown());
 		textFieldCountry.setText(b.getCountry());
 		textFieldWebsite.setText(b.getWebsite());
-		textAreaDescription.setText(b.getDescription());
+		textAreaDescription.setText(b.getBreweryDescription());
 	}
 
 	/**

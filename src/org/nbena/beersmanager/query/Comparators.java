@@ -35,7 +35,7 @@ public class Comparators {
 			int ret;
 			if(arg0.getCountry().equals(arg1.getCountry())){
 				if(arg0.getTown().equals(arg1.getTown())){
-					ret=arg0.getName().compareTo(arg1.getName());
+					ret=arg0.getBreweryName().compareTo(arg1.getBreweryName());
 				}
 				else{
 					ret=arg0.getTown().compareTo(arg1.getTown());
@@ -287,7 +287,7 @@ public class Comparators {
 			int ret;
 			if(arg0.getBrewery().getCountry().equalsIgnoreCase(arg1.getBrewery().getCountry())){
 				if(arg0.getBrewery().getTown().equalsIgnoreCase(arg1.getBrewery().getTown())){
-					if(arg0.getBrewery().getName().equalsIgnoreCase(arg1.getBrewery().getName())){
+					if(arg0.getBrewery().getBreweryName().equalsIgnoreCase(arg1.getBrewery().getBreweryName())){
 						if(arg0.getStyle().getFermentation()==arg1.getStyle().getFermentation()){
 							if(arg0.getStyle().getStyleMainName().equalsIgnoreCase(arg1.getStyle().getStyleMainName())){
 								if(arg0.getStyle().getStyleSubCategory().equalsIgnoreCase(arg1.getStyle().getStyleSubCategory())){
@@ -306,7 +306,7 @@ public class Comparators {
 						}
 					}
 					else{
-						ret=arg0.getBrewery().getName().compareTo(arg1.getBrewery().getName());
+						ret=arg0.getBrewery().getBreweryName().compareTo(arg1.getBrewery().getBreweryName());
 					}
 				}
 				else{
@@ -345,11 +345,11 @@ public class Comparators {
 					if(o1.getStyle().getStyleMainName().equalsIgnoreCase(o2.getStyle().getStyleMainName())){
 						if(o1.getStyle().getStyleSubCategory().equalsIgnoreCase(o2.getStyle().getStyleSubCategory())){
 							if(o1.getBrewery().getTown().equalsIgnoreCase(o2.getBrewery().getTown())){
-								if(o1.getBrewery().getName().equalsIgnoreCase(o2.getBrewery().getName())){
+								if(o1.getBrewery().getBreweryName().equalsIgnoreCase(o2.getBrewery().getBreweryName())){
 									ret=o1.getName().compareTo(o2.getName());
 								}
 								else{
-									ret=o1.getBrewery().getName().compareTo(o2.getBrewery().getName());
+									ret=o1.getBrewery().getBreweryName().compareTo(o2.getBrewery().getBreweryName());
 								}
 							}
 							else{
@@ -400,11 +400,11 @@ public class Comparators {
 					if(o1.getStyle().getStyleSubCategory().equalsIgnoreCase(o2.getStyle().getStyleSubCategory())){
 						if(o1.getBrewery().getCountry().equalsIgnoreCase(o2.getBrewery().getCountry())){
 							if(o1.getBrewery().getTown().equalsIgnoreCase(o2.getBrewery().getTown())){
-								if(o1.getBrewery().getName().equalsIgnoreCase(o2.getBrewery().getName())){
+								if(o1.getBrewery().getBreweryName().equalsIgnoreCase(o2.getBrewery().getBreweryName())){
 									ret=o1.getName().compareTo(o2.getName());
 								}
 								else{
-									ret=o1.getBrewery().getName().compareTo(o2.getBrewery().getName());
+									ret=o1.getBrewery().getBreweryName().compareTo(o2.getBrewery().getBreweryName());
 								}
 							}
 							else{
@@ -626,7 +626,7 @@ public class Comparators {
 	private static int compareBreweryByCountryName(Brewery o1, Brewery o2){
 		int ret;
 		if(o1.getCountry().equals(o2.getCountry())){
-			ret=o1.getName().compareToIgnoreCase(o2.getName());
+			ret=o1.getBreweryName().compareToIgnoreCase(o2.getBreweryName());
 		}else{
 			ret=o1.getCountry().compareToIgnoreCase(o2.getCountry());
 		}
@@ -668,7 +668,7 @@ public class Comparators {
 
 		@Override
 		public int compare(Brewery arg0, Brewery arg1) {
-			return arg0.getName().compareToIgnoreCase(arg1.getName());
+			return arg0.getBreweryName().compareToIgnoreCase(arg1.getBreweryName());
 		}
 		
 	}
@@ -769,7 +769,7 @@ public class Comparators {
 	}
 	
 	private static int compareBreweryByName(Brewery arg0, Brewery arg1){
-		return arg0.getName().compareTo(arg1.getName());
+		return arg0.getBreweryName().compareTo(arg1.getBreweryName());
 	}
 	
 	
@@ -778,7 +778,7 @@ public class Comparators {
 		@Override
 		public int compare(Brewery arg0, Brewery arg1) {
 			int ret;
-			if (arg0.getName().equals(arg1.getName())){
+			if (arg0.getBreweryName().equals(arg1.getBreweryName())){
 				ret = 0;
 			}
 			else{
@@ -874,21 +874,21 @@ public class Comparators {
 	}
 	
 	
-	public static void main(String args[]){
-		LinkedList<Brewery> breweries=new LinkedList<Brewery>();
-		Brewery b=new Brewery("Carlow Brewing", "Carlow", "Ireland", "a", "b");
-		Brewery b2=new Brewery("Guinness", "Dublin", "Ireland", "a", "b");
-		Brewery b3=new Brewery("Porterhouse", "Dublin", "Ireland", "a", "b");
-		Brewery b4=new Brewery("Elav", "Bergamo", "Italy", "a", "b");
-		Brewery b5=new Brewery("Valcavallina", "Bergamo", "Italy", "a", "b");
-		breweries.add(b);
-		breweries.add(b2);
-		breweries.add(b3);
-		breweries.add(b4);
-		breweries.add(b5);
-		Collections.sort(breweries, new ComparatorBreweryGeographycally());
-		Utils.printBreweries(breweries, System.out);
-		
-	}
+//	public static void main(String args[]){
+//		LinkedList<Brewery> breweries=new LinkedList<Brewery>();
+//		Brewery b=new Brewery("Carlow Brewing", "Carlow", "Ireland", "a", "b");
+//		Brewery b2=new Brewery("Guinness", "Dublin", "Ireland", "a", "b");
+//		Brewery b3=new Brewery("Porterhouse", "Dublin", "Ireland", "a", "b");
+//		Brewery b4=new Brewery("Elav", "Bergamo", "Italy", "a", "b");
+//		Brewery b5=new Brewery("Valcavallina", "Bergamo", "Italy", "a", "b");
+//		breweries.add(b);
+//		breweries.add(b2);
+//		breweries.add(b3);
+//		breweries.add(b4);
+//		breweries.add(b5);
+//		Collections.sort(breweries, new ComparatorBreweryGeographycally());
+//		Utils.printBreweries(breweries, System.out);
+//		
+//	}
 
 }

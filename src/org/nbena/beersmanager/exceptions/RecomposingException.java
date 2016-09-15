@@ -41,7 +41,7 @@ public class RecomposingException extends Exception {
 			msg.append("style:" +s.getStyleMainName()+" "+s.getStyleSubCategory());
 		}else if(o instanceof Brewery){
 			Brewery b = (Brewery)o;
-			msg.append("brewery: "+b.getName());
+			msg.append("brewery: "+b.getBreweryName());
 		}
 		return msg.toString();
 	}

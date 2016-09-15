@@ -172,7 +172,7 @@ public class Utils {
 	public static String beerToString(Beer beer){
 		StringBuilder builder = new StringBuilder();
 //		builder.append("-------");
-		builder.append(beer.getBrewery().getName()+": "+beer.getName()+"\n");
+		builder.append(beer.getBrewery().getBreweryName()+": "+beer.getName()+"\n");
 		builder.append("\t"+beer.getStyle().getStyleMainName()+"  "+beer.getStyle().getStyleSubCategory()+"\n");
 //		builder.append(" "+beer.getColor()+" - Fermentation: "+beer.getFermentation());
 		builder.append("\tFermentazione "+Utils.getFermentationItalianString(beer.getFermentation())+"\n");
@@ -193,8 +193,8 @@ public class Utils {
 	
 	public static String breweryToString(Brewery brewery){
 		StringBuilder builder = new StringBuilder();
-		builder.append(brewery.getName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite()+"\n");
-		builder.append("\t"+brewery.getDescription()+"\n");
+		builder.append(brewery.getBreweryName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite()+"\n");
+		builder.append("\t"+brewery.getBreweryDescription()+"\n");
 		builder.append("\n");
 		return builder.toString();
 	}
@@ -302,10 +302,10 @@ public class Utils {
 	@Deprecated
 	public static String getBreweryStringForExport(Brewery b){
 		String s =
-				b.getName()+":::::"+
+				b.getBreweryName()+":::::"+
 				b.getTown()+":::::"+
 				b.getCountry()+":::::"+
-				b.getDescription()+":::::"+
+				b.getBreweryDescription()+":::::"+
 				b.getWebsite()+":::::"+
 				Boolean.toString(b.isAuthenticTrappist());
 		return s;
@@ -327,10 +327,10 @@ public class Utils {
 	public static Brewery getBreweryFromStringExport(String s){
 		String[] array = s.split(":::::");
 		Brewery b = new Brewery();
-		b.setName(array[0]);
+		b.setBreweryName(array[0]);
 		b.setTown(array[1]);
 		b.setCountry(array[2]);
-		b.setDescription(array[3]);
+		b.setBreweryDescription(array[3]);
 		b.setWebsite(array[4]);
 		b.setAuthenticTrappist(Boolean.parseBoolean(array[5]));
 		return b;
@@ -375,7 +375,7 @@ public class Utils {
 //		Object[] array=new Object[10];
 		Object[] array=new Object[9];
 		array[0]=b.getName();
-		array[1]=b.getBrewery().getName();
+		array[1]=b.getBrewery().getBreweryName();
 		array[2]=b.getStyle().getStyleSubCategory()+" "+b.getStyle().getStyleMainName();
 		array[3]=b.getAlcool();
 		array[4]=b.getMark();
@@ -389,10 +389,10 @@ public class Utils {
 	
 	public static Object[] fromBreweryToObjectArray(Brewery b){
 		Object [] array=new Object[5];
-		array[0]=b.getName();
+		array[0]=b.getBreweryName();
 		array[1]=b.getCountry();
 		array[2]=b.getTown();
-		array[3]=b.getDescription();
+		array[3]=b.getBreweryDescription();
 		array[4]=b.getWebsite();
 		return array;
 	}
@@ -400,10 +400,10 @@ public class Utils {
 	
 	public static Object[] fromBreweryAverageToObjectArray(BreweryAverage b){
 		Object [] array=new Object[6];
-		array[0]=b.getName();
+		array[0]=b.getBreweryName();
 		array[1]=b.getCountry();
 		array[2]=b.getTown();
-		array[3]=b.getDescription();
+		array[3]=b.getBreweryDescription();
 		array[4]=b.getWebsite();
 ////		array[5]= (  (b.getAverage()==Double.NaN) ? 0.0 : b.getAverage());
 //		double res=b.getAverage();
@@ -532,7 +532,7 @@ public class Utils {
 	}
 	
 	public static String getBreweryString(Brewery b){
-		return b.getName()+", "+b.getTown()+" ("+b.getCountry()+")";
+		return b.getBreweryName()+", "+b.getTown()+" ("+b.getCountry()+")";
 	}
 	
 	public static List<String> getBreweryStringList(List<Brewery> breweries){
@@ -619,7 +619,7 @@ public class Utils {
 		town = removeInitialEndingBlankSpaces(town);
 		String country = s.substring(s.lastIndexOf("(")+1, s.lastIndexOf(")"));
 		country = removeInitialEndingBlankSpaces(country);
-		b.setName(name);
+		b.setBreweryName(name);
 		b.setTown(town);
 		b.setCountry(country);
 		
@@ -701,8 +701,8 @@ public class Utils {
 		BreweryAverage av=new BreweryAverage();
 		av.setAuthenticTrappist(b.isAuthenticTrappist());
 		av.setCountry(b.getCountry());
-		av.setDescription(b.getDescription());
-		av.setName(b.getName());
+		av.setBreweryDescription(b.getBreweryDescription());
+		av.setBreweryName(b.getBreweryName());
 		av.setTown(b.getTown());
 		av.setWebsite(b.getWebsite());
 		av.setAverage(itsBeers);
@@ -713,8 +713,8 @@ public class Utils {
 		BreweryAverage av=new BreweryAverage();
 		av.setAuthenticTrappist(b.isAuthenticTrappist());
 		av.setCountry(b.getCountry());
-		av.setDescription(b.getDescription());
-		av.setName(b.getName());
+		av.setBreweryDescription(b.getBreweryDescription());
+		av.setBreweryName(b.getBreweryName());
 		av.setTown(b.getTown());
 		av.setWebsite(b.getWebsite());
 		av.setAverage(0.0);
@@ -744,8 +744,8 @@ public class Utils {
 		Brewery b=new Brewery();
 		b.setAuthenticTrappist(brewery.isAuthenticTrappist());
 		b.setCountry(brewery.getCountry());
-		b.setDescription(brewery.getDescription());
-		b.setName(brewery.getName());
+		b.setBreweryDescription(brewery.getBreweryDescription());
+		b.setBreweryName(brewery.getBreweryName());
 		b.setTown(brewery.getTown());
 		b.setWebsite(brewery.getWebsite());
 		return b;

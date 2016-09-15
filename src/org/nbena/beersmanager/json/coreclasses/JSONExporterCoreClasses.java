@@ -76,6 +76,13 @@ public class JSONExporterCoreClasses {
 	}
 	*/
 	
+	/**
+	 * 
+	 * @param beers
+	 * @param out
+	 * @throws JSONException
+	 * @deprecated use <code> {@link #writeBeerSpecial(List, OutputStream)} </code>.
+	 */
 	public static void writeBeer(List<Beer> beers, OutputStream out) throws JSONException{
 		JSONArray array=new JSONArray(beers);
 		PrintStream ps=new PrintStream(out);
@@ -144,9 +151,9 @@ public class JSONExporterCoreClasses {
 		beer.setAlcool(obj.getDouble(JSON_BEER_ALCOOL));
 		beer.setBreweryName(obj.getString(JSON_BEER_BREWERY_NAME));
 //		beer.setColor(obj.getString(JSON_BEER_COLOR));
-		beer.setDescription(obj.getString(JSON_BEER_DESCRIPTION));
+		beer.setBeerDescription(obj.getString(JSON_BEER_DESCRIPTION));
 		beer.setMark(obj.getInt(JSON_BEER_MARK));
-		beer.setName(obj.getString(JSON_BEER_NAME));
+		beer.setBeerName(obj.getString(JSON_BEER_NAME));
 		beer.setNumberOfStars(obj.getInt(JSON_BEER_NUMBER_STARS));
 		beer.setPlaceTried(obj.getString(JSON_BEER_PLACE_TRIED));
 		beer.setPrice(obj.getDouble(JSON_BEER_PRICE));
@@ -162,7 +169,7 @@ public class JSONExporterCoreClasses {
 		style.setStyleSubCategory(obj.getString(JSON_STYLE_SUBCATEGORY));
 		style.setStyleCountryOrigin(obj.getString(JSON_STYLE_COUNTRY_ORIIGIN));
 		style.setFermentation(obj.getString(JSON_STYLE_FERMENTATION));
-		style.setDescription(obj.getString(JSON_STYLE_DESCRIPTION));
+		style.setStyleDescription(obj.getString(JSON_STYLE_DESCRIPTION));
 		return style;
 	}
 	
@@ -170,8 +177,8 @@ public class JSONExporterCoreClasses {
 		Brewery brewery = new Brewery();
 		brewery.setAuthenticTrappist(obj.getBoolean(JSON_BREWERY_TRAPPIST));
 		brewery.setCountry(obj.getString(JSON_BREWERY_COUNTRY));
-		brewery.setDescription(obj.getString(JSON_BREWERY_DESCRIPTION));
-		brewery.setName(obj.getString(JSON_BREWERY_NAME));
+		brewery.setBreweryDescription(obj.getString(JSON_BREWERY_DESCRIPTION));
+		brewery.setBreweryName(obj.getString(JSON_BREWERY_NAME));
 		brewery.setTown(obj.getString(JSON_BREWERY_TOWN));
 		brewery.setWebsite(obj.getString(JSON_BREWERY_WEBSITE));
 		return brewery;
@@ -204,9 +211,9 @@ public class JSONExporterCoreClasses {
 		beer.setAlcool(obj.getDouble(JSON_BEER_ALCOOL));
 //		beer.setBreweryName(obj.getString(JSON_BEER_BREWERY_NAME));
 //		beer.setColor(obj.getString(JSON_BEER_COLOR));
-		beer.setDescription(obj.getString(JSON_BEER_DESCRIPTION));
+		beer.setBeerDescription(obj.getString(JSON_BEER_DESCRIPTION));
 		beer.setMark(obj.getInt(JSON_BEER_MARK));
-		beer.setName(obj.getString(JSON_BEER_NAME));
+		beer.setBeerName(obj.getString(JSON_BEER_NAME));
 		beer.setNumberOfStars(obj.getInt(JSON_BEER_NUMBER_STARS));
 		beer.setPlaceTried(obj.getString(JSON_BEER_PLACE_TRIED));
 		beer.setPrice(obj.getDouble(JSON_BEER_PRICE));

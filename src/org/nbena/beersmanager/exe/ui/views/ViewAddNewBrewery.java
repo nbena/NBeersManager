@@ -137,11 +137,11 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 	*/
 	@Deprecated
 	public void setBrewery(Brewery b){
-		textFieldName.setText(b.getName());
+		textFieldName.setText(b.getBreweryName());
 		textFieldTown.setText(b.getTown());
 		comboBoxCountry.setSelectedItem(b.getCountry());
 		textFieldWebsite.setText(b.getWebsite());
-		textAreaDescription.setText(b.getDescription());
+		textAreaDescription.setText(b.getBreweryDescription());
 	}
 
 	/**

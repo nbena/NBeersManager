@@ -946,6 +946,7 @@ public class Model {
 	private void exportJSONBreweries(List<Brewery> data, OutputStream out) throws Exception{
 		exporter = new JSONOutExporter();
 //		exporter.writeBrewery(filteredBreweries, out);
+		exporter.writeBrewery(data, out);
 	}
 	
 	private void exportJSONStyles(List<Style> data, OutputStream out) throws Exception{

@@ -101,15 +101,15 @@ public class BeerJSONSaveSpecialClass {
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public String getBeerName() {
 		return beerName;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param beerName the name to set
 	 */
-	public void setName(String name) {
-		this.beerName = name;
+	public void setBeerName(String beerName) {
+		this.beerName = beerName;
 	}
 
 	/**
@@ -229,15 +229,15 @@ public class BeerJSONSaveSpecialClass {
 	/**
 	 * @return the description
 	 */
-	public String getDescription() {
+	public String getBeerDescription() {
 		return beerDescription;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param beerDescription the description to set
 	 */
-	public void setDescription(String description) {
-		this.beerDescription = description;
+	public void setBeerDescription(String beerDescription) {
+		this.beerDescription = beerDescription;
 	}
 
 	

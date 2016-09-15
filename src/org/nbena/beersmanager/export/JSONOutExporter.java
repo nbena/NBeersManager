@@ -1,11 +1,9 @@
 package org.nbena.beersmanager.export;
 
 import java.io.OutputStream;
-import java.io.PrintStream;
+
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;

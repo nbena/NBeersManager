@@ -133,7 +133,7 @@ public class MSExcelOldOutExporter extends OutExporter{
 				cells[f]=row.createCell(f);
 			}
 			
-			cells[0].setCellValue(beer.getBrewery().getName());
+			cells[0].setCellValue(beer.getBrewery().getBreweryName());
 			cells[1].setCellValue(beer.getBrewery().getCountry());
 			cells[2].setCellValue(beer.getBrewery().getTown());
 			cells[3].setCellValue(beer.getName());
@@ -235,14 +235,14 @@ public class MSExcelOldOutExporter extends OutExporter{
 			}
 			
 			cells[0].setCellValue(beer.getBreweryName());
-			cells[1].setCellValue(beer.getName());
+			cells[1].setCellValue(beer.getBeerName());
 			cells[2].setCellValue(beer.getStyleMainName());
 			cells[3].setCellValue(beer.getStyleSubcategory());
 			cells[4].setCellValue(beer.getMark());
 			cells[5].setCellValue(beer.getAlcool());
 			cells[6].setCellValue(beer.getPlaceTried());
 			cells[7].setCellValue(beer.getNumberOfStars());
-			cells[8].setCellValue(beer.getDescription());
+			cells[8].setCellValue(beer.getBeerDescription());
 			
 			
 			i++;
@@ -337,11 +337,11 @@ public class MSExcelOldOutExporter extends OutExporter{
 				cells[f]=row.createCell(f);
 			}
 			
-			cells[0].setCellValue(brewery.getName());
+			cells[0].setCellValue(brewery.getBreweryName());
 			cells[1].setCellValue(brewery.getTown());
 			cells[2].setCellValue(brewery.getCountry());
 			cells[3].setCellValue(brewery.getWebsite());
-			cells[4].setCellValue(brewery.getDescription());
+			cells[4].setCellValue(brewery.getBreweryDescription());
 			
 			i++;
 		}

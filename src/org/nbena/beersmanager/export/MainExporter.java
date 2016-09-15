@@ -30,8 +30,8 @@ public class MainExporter {
 		
 		br.setAuthenticTrappist(false);
 		br.setCountry("Ireland");
-		br.setDescription("Best");
-		br.setName("Carlow Brewing");
+		br.setBreweryDescription("Best");
+		br.setBreweryName("Carlow Brewing");
 		br.setTown("Carlow");
 		br.setWebsite("www.carlowbrewing.com");
 		

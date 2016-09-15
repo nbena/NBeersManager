@@ -23,10 +23,10 @@ public class Converter {
 		styleMainName=beer.getStyle().getStyleMainName();
 		styleSubcategory=beer.getStyle().getStyleSubCategory();
 		*/
-		BeerJSONSaveSpecialClass beerSpecial=new BeerJSONSaveSpecialClass(beer.getName(), beer.getBrewery().getName(), beer.getStyle().getStyleMainName(), beer.getStyle().getStyleSubCategory(), beer.getNumberOfStars());
+		BeerJSONSaveSpecialClass beerSpecial=new BeerJSONSaveSpecialClass(beer.getName(), beer.getBrewery().getBreweryName(), beer.getStyle().getStyleMainName(), beer.getStyle().getStyleSubCategory(), beer.getNumberOfStars());
 		beerSpecial.setAlcool(beer.getAlcool());
 //		beerSpecial.setColor(beer.getColor());
-		beerSpecial.setDescription(beer.getDescription());
+		beerSpecial.setBeerDescription(beer.getDescription());
 		beerSpecial.setImageFilePath(beer.getImageFilePath()); //absolute path is get by working directory
 		beerSpecial.setMark(beer.getMark());
 		beerSpecial.setPlaceTried(beer.getPlaceTried());
@@ -49,12 +49,12 @@ public class Converter {
 		style.setStyleSubCategory(specialClassBeer.getStyleSubcategory());
 		
 		Brewery brewery=new Brewery();
-		brewery.setName(specialClassBeer.getBreweryName());
+		brewery.setBreweryName(specialClassBeer.getBreweryName());
 		
-		Beer beer=new Beer(specialClassBeer.getName(), brewery, style);
+		Beer beer=new Beer(specialClassBeer.getBeerName(), brewery, style);
 		beer.setAlcool(specialClassBeer.getAlcool());
 //		beer.setColor(specialClassBeer.getColor());
-		beer.setDescription(specialClassBeer.getDescription());
+		beer.setDescription(specialClassBeer.getBeerDescription());
 		beer.setImageFilePath(specialClassBeer.getImageFilePath()); //absolute path is get by working directory
 		beer.setMark(specialClassBeer.getMark());
 		beer.setPlaceTried(specialClassBeer.getPlaceTried());
@@ -69,7 +69,7 @@ public class Converter {
 		Style style = new Style();
 		style.setStyleMainName(specialClassStyle.getStyleMainName());
 		style.setStyleSubCategory(specialClassStyle.getStyleSubCategory());
-		style.setDescription(specialClassStyle.getDescription());
+		style.setDescription(specialClassStyle.getStyleDescription());
 		style.setFermentation(Fermentation.toFermentation(specialClassStyle.getFermentation()));
 		style.setStyleCountryOrigin(specialClassStyle.getStyleCountryOrigin());
 		return style;
@@ -79,7 +79,7 @@ public class Converter {
 		StyleJSONSpecialClass specialClassStyle=new StyleJSONSpecialClass();
 		specialClassStyle.setStyleMainName(style.getStyleMainName());
 		specialClassStyle.setStyleSubCategory(style.getStyleSubCategory());
-		specialClassStyle.setDescription(style.getDescription());
+		specialClassStyle.setStyleDescription(style.getDescription());
 		specialClassStyle.setFermentation(style.getFermentation().toFirstUpperCase());
 		specialClassStyle.setStyleCountryOrigin(style.getStyleCountryOrigin());
 		return specialClassStyle;
@@ -169,7 +169,7 @@ public class Converter {
 		beer.setBrewery(specialClassBeer.getBrewery());
 		beer.setAlcool(specialClassBeer.getAlcool());
 //		beer.setColor(specialClassBeer.getColor());
-		beer.setDescription(specialClassBeer.getDescription());
+		beer.setDescription(specialClassBeer.getBeerDescription());
 		beer.setImageFilePath(specialClassBeer.getImageFilePath()); //absolute path is get by working directory
 		beer.setMark(specialClassBeer.getMark());
 		beer.setPlaceTried(specialClassBeer.getPlaceTried());
@@ -177,7 +177,7 @@ public class Converter {
 		beer.setNumberOfStars(specialClassBeer.getNumberOfStars());
 		beer.setTried(specialClassBeer.isTried());
 		beer.setStyle(toNormalStyle(specialClassBeer.getStyle()));
-		beer.setName(specialClassBeer.getName());
+		beer.setName(specialClassBeer.getBeerName());
 		return beer;
 	}
 	
@@ -187,7 +187,7 @@ public class Converter {
 		beer.setBrewery(b.getBrewery());
 		beer.setAlcool(b.getAlcool());
 //		beer.setColor(specialClassBeer.getColor());
-		beer.setDescription(b.getDescription());
+		beer.setBeerDescription(b.getDescription());
 		beer.setImageFilePath(b.getImageFilePath()); //absolute path is get by working directory
 		beer.setMark(b.getMark());
 		beer.setPlaceTried(b.getPlaceTried());
@@ -195,7 +195,7 @@ public class Converter {
 		beer.setNumberOfStars(b.getNumberOfStars());
 		beer.setTried(b.isTried());
 		beer.setStyle(toStyleSpecialClass(b.getStyle()));
-		beer.setName(b.getName());
+		beer.setBeerName(b.getName());
 		return beer;
 	}
 	

@@ -57,15 +57,15 @@ public class StyleJSONSpecialClass {
 		/**
 		 * @return the description
 		 */
-		public String getDescription() {
+		public String getStyleDescription() {
 			return styleDescription;
 		}
 		/**
-		 * @param description the description to set
+		 * @param styleDescription the description to set
 		 */
 		//@XmlElement
-		public void setDescription(String description) {
-			this.styleDescription = description;
+		public void setStyleDescription(String styleDescription) {
+			this.styleDescription = styleDescription;
 		}
 
 

@@ -281,7 +281,7 @@ public class Beer {
 	
 	public String toString(){
 		StringBuilder b =new StringBuilder();
-		b.append(brewery.getName()+" "+name+"\n");
+		b.append(brewery.getBreweryName()+" "+name+"\n");
 		b.append(style.getStyleMainName()+" "+style.getStyleSubCategory()+", "+alcool+" %\n");
 		b.append("Stars: "+numberOfStars+", mark: "+mark+"\n");
 //		b.append("Color: "+color+"\n");

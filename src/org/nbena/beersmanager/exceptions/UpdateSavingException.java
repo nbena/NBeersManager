@@ -51,15 +51,15 @@ public class UpdateSavingException extends Exception {
 		
 		if (o instanceof Beer) {
 			Beer cause = (Beer)o;
-			up.concat("Beer "+cause.getBrewery().getName() +" "+cause.getName());
+			up.concat("Beer "+cause.getBrewery().getBreweryName() +" "+cause.getName());
 		}
 		else if(o instanceof Brewery){
 			Brewery cause = (Brewery)o;
-			up.concat("Brewery "+cause.getName());
+			up.concat("Brewery "+cause.getBreweryName());
 		}
 		else if(o instanceof BreweryAverage){
 			BreweryAverage cause = (BreweryAverage)o;
-			up.concat("Brewery "+cause.getName());
+			up.concat("Brewery "+cause.getBreweryName());
 		}else if(o instanceof Style){
 			Style cause =(Style)o;
 			up.concat("Style "+Utils.getStyleStringSubMain(cause));
