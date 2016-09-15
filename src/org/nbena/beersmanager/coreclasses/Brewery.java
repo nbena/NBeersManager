@@ -7,10 +7,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="brewery")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Brewery implements Comparable<Brewery> {
-	private String name;
+	private String breweryName;
 	private String town;
 	private String country;
-	private String description;
+	private String breweryDescription;
 	private String website;
 	private boolean isAuthenticTrappist;
 	
@@ -19,18 +19,18 @@ public class Brewery implements Comparable<Brewery> {
 	}
 
 	public Brewery(String name, String town, String country, String description, String website) {
-		this.name = name;
+		this.breweryName = name;
 		this.town = town;
 		this.country = country;
-		this.description = description;
+		this.breweryDescription = description;
 		this.website = website;
 	}
 	
 	public Brewery(String name, String town, String country, String description, String website, boolean isAuthenticTrappist) {
-		this.name = name;
+		this.breweryName = name;
 		this.town = town;
 		this.country = country;
-		this.description = description;
+		this.breweryDescription = description;
 		this.website = website;
 		this.isAuthenticTrappist=isAuthenticTrappist;
 	}
@@ -39,14 +39,14 @@ public class Brewery implements Comparable<Brewery> {
 	 * @return the name
 	 */
 	public String getName() {
-		return name;
+		return breweryName;
 	}
 
 	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
-		this.name = name;
+		this.breweryName = name;
 	}
 
 	/**
@@ -81,14 +81,14 @@ public class Brewery implements Comparable<Brewery> {
 	 * @return the description
 	 */
 	public String getDescription() {
-		return description;
+		return breweryDescription;
 	}
 
 	/**
 	 * @param description the description to set
 	 */
 	public void setDescription(String description) {
-		this.description = description;
+		this.breweryDescription = description;
 	}
 
 	/**
@@ -142,9 +142,9 @@ public class Brewery implements Comparable<Brewery> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((breweryDescription == null) ? 0 : breweryDescription.hashCode());
 		result = prime * result + (isAuthenticTrappist ? 1231 : 1237);
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((breweryName == null) ? 0 : breweryName.hashCode());
 		result = prime * result + ((town == null) ? 0 : town.hashCode());
 		result = prime * result + ((website == null) ? 0 : website.hashCode());
 		return result;
@@ -167,17 +167,17 @@ public class Brewery implements Comparable<Brewery> {
 				return false;
 		} else if (!country.equals(other.country))
 			return false;
-		if (description == null) {
-			if (other.description != null)
+		if (breweryDescription == null) {
+			if (other.breweryDescription != null)
 				return false;
-		} else if (!description.equals(other.description))
+		} else if (!breweryDescription.equals(other.breweryDescription))
 			return false;
 		if (isAuthenticTrappist != other.isAuthenticTrappist)
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (breweryName == null) {
+			if (other.breweryName != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!breweryName.equals(other.breweryName))
 			return false;
 		if (town == null) {
 			if (other.town != null)

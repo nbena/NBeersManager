@@ -9,7 +9,7 @@ public class StyleJSONSpecialClass {
 		
 		private String styleMainName;
 		private String styleSubCategory;
-		private String description;
+		private String styleDescription;
 		private String styleCountryOrigin;
 		private String fermentation;
 		
@@ -17,7 +17,7 @@ public class StyleJSONSpecialClass {
 		public StyleJSONSpecialClass(String styleMainName, String styleSubCategory, String description, String styleCountryOrigin, String fermentation) {
 			this.styleMainName = styleMainName;
 			this.styleSubCategory = styleSubCategory;
-			this.description = description;
+			this.styleDescription = description;
 			this.styleCountryOrigin = styleCountryOrigin;
 			this.fermentation = fermentation;
 		}
@@ -58,14 +58,14 @@ public class StyleJSONSpecialClass {
 		 * @return the description
 		 */
 		public String getDescription() {
-			return description;
+			return styleDescription;
 		}
 		/**
 		 * @param description the description to set
 		 */
 		//@XmlElement
 		public void setDescription(String description) {
-			this.description = description;
+			this.styleDescription = description;
 		}
 
 

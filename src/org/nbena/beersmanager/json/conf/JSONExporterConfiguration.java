@@ -255,14 +255,14 @@ public class JSONExporterConfiguration {
 //			c.setBeerFilterValue(Utils.getStyleFromStringExport(json.getString(JSON_BEER_FILTER_VALUE)));
 			
 			String objString = json.getJSONObject(JSON_BEER_FILTER_VALUE).toString();
-			c.setBeerFilterValue(JSONExporterCoreClasses.readStyle(objString));
+//			c.setBeerFilterValue(JSONExporterCoreClasses.readStyle(objString));
 			
 		}else if(value.equals(JSON_BEER_FILTER_VALUE_TYPE_BREWERY)){
 //			c.setBeerFilterValue(JSONExporterCoreClasses.readBrewery(json.getJSONObject(JSON_BEER_FILTER_VALUE).toString()));
 //			c.setBeerFilterValue(Utils.getBreweryFromStringExport(json.getString(JSON_BEER_FILTER_VALUE)));
 			
 			String objString = json.getJSONObject(JSON_BEER_FILTER_VALUE).toString();
-			c.setBeerFilterValue(JSONExporterCoreClasses.readBrewery(objString));	
+//			c.setBeerFilterValue(JSONExporterCoreClasses.readBrewery(objString));	
 			
 		}else if(value.equals(JSON_BEER_FILTER_VALUE_TYPE_STRING)){
 			c.setBeerFilterValue(json.getString(JSON_BEER_FILTER_VALUE));
@@ -307,7 +307,7 @@ public class JSONExporterConfiguration {
 //			c.setStyleFilterValue(Utils.getStyleFromStringExport(json.getString(JSON_STYLE_FILTER_VALUE)));
 			
 			String objString = json.getJSONObject(JSON_STYLE_FILTER_VALUE).toString();
-			c.setStyleFilterValue(JSONExporterCoreClasses.readStyle(objString));
+//			c.setStyleFilterValue(JSONExporterCoreClasses.readStyle(objString));
 			
 			
 		}else if(value.equals(JSON_STYLE_FILTER_VALUE_TYPE_STRING)){

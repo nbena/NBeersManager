@@ -4,13 +4,13 @@ import java.util.List;
 
 
 
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 import org.nbena.beersmanager.coreclasses.*;
-import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.query.Comparators.ComparatorBeerForBinarySearch;
 public class QueryRunner {
 	
@@ -615,7 +615,7 @@ public class QueryRunner {
 		}
 		
 		public static boolean isBeerExists(List<Beer> beers, Beer beer, boolean sorted){
-			return beerSearch(beers, beer, sorted) > 0 ? true : false;
+			return beerSearch(beers, beer, sorted) >= 0 ? true : false;
 		}
 		
 		
@@ -635,8 +635,8 @@ public class QueryRunner {
 			return ret;
 		}
 		
-		public static boolean isBreweryExists(List<Brewery> beers, Brewery beer, boolean sorted){
-			return brewerySearch(beers, beer, sorted) >=0 ? true : false;
+		public static boolean isBreweryExists(List<Brewery> breweries, Brewery brewery, boolean sorted){
+			return brewerySearch(breweries, brewery, sorted) >=0 ? true : false;
 		}
 		
 		
@@ -740,6 +740,73 @@ public class QueryRunner {
 			return places;
 		}
 	
+		public static class Diff {
+			
+			public static List<Beer> beerDiff(List<Beer> base, List<Beer> second, boolean sortOne, boolean sortTwo){
+				List<Beer> beerDiff = new LinkedList<Beer>();
+				List<Beer> baseSort = new LinkedList<Beer>(base);
+				List<Beer> secondSort = new LinkedList<Beer>(second);
+				if(!sortOne){
+					baseSort = BinarySearch.beersSortedForBinarySearch(baseSort);
+				}
+				else if (!sortTwo){
+					secondSort = BinarySearch.beersSortedForBinarySearch(secondSort);
+				}
+				
+				for(Beer b: secondSort){
+					if(!BinarySearch.isBeerExists(baseSort, b, true)){
+						beerDiff.add(b);
+					}
+				}
+				
+				return beerDiff;
+			}
+			
+			
+			public static List<Brewery> breweryDiff(List<Brewery> base, List<Brewery> second, boolean sortOne, boolean sortTwo){
+				List<Brewery> breweryDiff = new LinkedList<Brewery>();
+				List<Brewery> baseSort = new LinkedList<Brewery>(base);
+				List<Brewery> secondSort = new LinkedList<Brewery>(second);
+				if(!sortOne){
+					baseSort = BinarySearch.breweriesSortedForBinarySearch(baseSort);
+				}
+				else if (!sortTwo){
+					secondSort = BinarySearch.breweriesSortedForBinarySearch(secondSort);
+				}
+				
+				for(Brewery b: secondSort){
+					if(BinarySearch.isBreweryExists(baseSort, b, true)){
+						breweryDiff.add(b);
+					}
+				}
+				
+				return breweryDiff;
+				
+			}
+			
+			
+			public static List<Style> styleDiff(List<Style> base, List<Style> second, boolean sortOne, boolean sortTwo){
+				List<Style> styleDiff = new LinkedList<Style>();
+				List<Style> baseSort = new LinkedList<Style>(base);
+				List<Style> secondSort = new LinkedList<Style>(second);
+				if(!sortOne){
+					baseSort = BinarySearch.stylesSortedForBinarySearch(baseSort);
+				}
+				else if (!sortTwo){
+					secondSort = BinarySearch.stylesSortedForBinarySearch(secondSort);
+				}
+				
+				for(Style s: secondSort){
+					if(BinarySearch.isStyleExists(baseSort, s, true)){
+						styleDiff.add(s);
+					}
+				}
+				
+				
+				return styleDiff;
+			}
+			
+		}
 	
 	
 

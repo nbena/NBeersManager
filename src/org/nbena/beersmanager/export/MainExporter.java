@@ -11,7 +11,7 @@ import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
-import org.nbena.beersmanager.json.coreclasses.BeerJSONSpecialClass;
+import org.nbena.beersmanager.json.coreclasses.BeerJSONSaveSpecialClass;
 import org.nbena.beersmanager.json.coreclasses.Converter;
 
 public class MainExporter {
@@ -87,7 +87,7 @@ public class MainExporter {
 		
 		System.out.println("Reading time");
 		List<Beer> beerRead=new LinkedList<Beer>();
-		List<BeerJSONSpecialClass> beerSpecial = new LinkedList<BeerJSONSpecialClass>();
+		List<BeerJSONSaveSpecialClass> beerSpecial = new LinkedList<BeerJSONSaveSpecialClass>();
 		List<Brewery> breweryRead=new LinkedList<Brewery>();
 		List<Style> styleRead=new LinkedList<Style>();
 		

@@ -12,8 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 //@XmlRootElement(name="beer")
 //@XmlAccessorType(XmlAccessType.FIELD)
-public class BeerJSONSpecialClass {
-	private String name;
+public class BeerJSONSaveSpecialClass {
+	private String beerName;
 	private String breweryName;
 	private String styleMainName;
 	private String styleSubcategory;
@@ -23,7 +23,7 @@ public class BeerJSONSpecialClass {
 	private double alcool;
 	private int mark;
 	private int numberOfStars;
-	private String description;
+	private String beerDescription;
 //	private String color;
 	//private byte[] image; //tell to xml to ignore
 	private String imageFilePath;
@@ -45,8 +45,8 @@ public class BeerJSONSpecialClass {
 
 
 
-	public BeerJSONSpecialClass(String name, String breweryName, String styleMainName, String styleSubcategory) {
-		this.name = name;
+	public BeerJSONSaveSpecialClass(String name, String breweryName, String styleMainName, String styleSubcategory) {
+		this.beerName = name;
 		this.breweryName = breweryName;
 		this.styleMainName = styleMainName;
 		this.styleSubcategory = styleSubcategory;
@@ -55,8 +55,8 @@ public class BeerJSONSpecialClass {
 
 
 
-	public BeerJSONSpecialClass(String name, String breweryName, String styleMainName, String styleSubcategory, int numberOfStars) {
-		this.name = name;
+	public BeerJSONSaveSpecialClass(String name, String breweryName, String styleMainName, String styleSubcategory, int numberOfStars) {
+		this.beerName = name;
 		this.breweryName = breweryName;
 		this.styleMainName = styleMainName;
 		this.styleSubcategory = styleSubcategory;
@@ -95,21 +95,21 @@ public class BeerJSONSpecialClass {
 //		this.description = description;
 //	}
 
-	public BeerJSONSpecialClass() {
+	public BeerJSONSaveSpecialClass() {
 	}
 
 	/**
 	 * @return the name
 	 */
 	public String getName() {
-		return name;
+		return beerName;
 	}
 
 	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
-		this.name = name;
+		this.beerName = name;
 	}
 
 	/**
@@ -230,14 +230,14 @@ public class BeerJSONSpecialClass {
 	 * @return the description
 	 */
 	public String getDescription() {
-		return description;
+		return beerDescription;
 	}
 
 	/**
 	 * @param description the description to set
 	 */
 	public void setDescription(String description) {
-		this.description = description;
+		this.beerDescription = description;
 	}
 
 	

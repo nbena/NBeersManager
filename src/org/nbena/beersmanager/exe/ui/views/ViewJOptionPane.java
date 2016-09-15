@@ -48,6 +48,10 @@ public class ViewJOptionPane {
 		JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
 	}
 	
+	public void showWarningMessageDialog(String title, String message){
+		JOptionPane.showMessageDialog(parent, message, title, JOptionPane.WARNING_MESSAGE);
+	}
+	
 	
 	public int showOkCancel(String title, String message){
 		return JOptionPane.showConfirmDialog(parent, message, title,JOptionPane.YES_NO_OPTION);

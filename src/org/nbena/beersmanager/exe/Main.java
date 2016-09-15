@@ -20,6 +20,7 @@ import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.exceptions.RecomposingException;
 import org.nbena.beersmanager.exe.ui.controllers.ControllerMainGUI;
 import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.models.ModelBeerTable;
@@ -118,7 +119,7 @@ public class Main {
 		
 		styles=Utils.readStyles(jsonFiles[2]);
 		breweries=Utils.readBreweries(jsonFiles[1]);
-		beers=Utils.readBeers(jsonFiles[0], breweries, styles);
+		beers=Utils.readBeersFromSpecial(jsonFiles[0], breweries, styles);
 	}
 	
 	private void saveStyles() throws FileNotFoundException, Exception	{
@@ -247,7 +248,7 @@ public class Main {
 			
 			try {
 				model.readThings();
-			} catch (FileNotFoundException | JSONException e) {
+			} catch (FileNotFoundException | JSONException | RecomposingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

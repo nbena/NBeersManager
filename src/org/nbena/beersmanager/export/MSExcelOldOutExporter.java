@@ -13,7 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
-import org.nbena.beersmanager.json.coreclasses.BeerJSONSpecialClass;
+import org.nbena.beersmanager.json.coreclasses.BeerJSONSaveSpecialClass;
 
 public class MSExcelOldOutExporter extends OutExporter{
 	
@@ -157,7 +157,7 @@ public class MSExcelOldOutExporter extends OutExporter{
 	}
 
 	@Override
-	public void writeBeerSpecialClass(List<BeerJSONSpecialClass> beers, OutputStream out) throws Exception {
+	public void writeBeerSpecialClass(List<BeerJSONSaveSpecialClass> beers, OutputStream out) throws Exception {
 		if(out instanceof FileOutputStream == false)
 			throw new Exception("OutputStream is not a valid instace of FileOutputStream");
 		
@@ -227,7 +227,7 @@ public class MSExcelOldOutExporter extends OutExporter{
 		//content
 		cells=new Cell[9];
 		int i=1;
-		for(BeerJSONSpecialClass beer: beers){
+		for(BeerJSONSaveSpecialClass beer: beers){
 			Row row=sheet.createRow(i);
 			
 			for(int f=0;f<14;f++){

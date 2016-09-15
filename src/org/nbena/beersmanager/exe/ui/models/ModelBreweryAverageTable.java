@@ -7,7 +7,7 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.query.BreweryAverage;
 
-public class ModelBreweryAverage extends MyModelAbstractTable {
+public class ModelBreweryAverageTable extends MyModelAbstractTable {
 
 	/**
 	 * 
@@ -15,13 +15,13 @@ public class ModelBreweryAverage extends MyModelAbstractTable {
 	private static final long serialVersionUID = -7478980599280631956L;
 
 
-	public ModelBreweryAverage() {
+	public ModelBreweryAverageTable() {
 		super(new Object[][]{}, Utils.Constants.TABLE_HEADER_BREWERY_AVERAGE);
 	}
 
 
 
-	public ModelBreweryAverage(Object[][] data) {
+	public ModelBreweryAverageTable(Object[][] data) {
 		super(data, Utils.Constants.TABLE_HEADER_BREWERY_AVERAGE);
 	}
 

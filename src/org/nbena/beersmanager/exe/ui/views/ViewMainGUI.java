@@ -48,9 +48,9 @@ public class ViewMainGUI extends JFrame {
 	private JPanel contentPane;
 	
 	
-	private JMenuItem mntmNewStyleFromFile;
-	private JMenuItem mntmNewBeerFromFile;
-	private JMenuItem mntmNewBreweryFromFile;
+	private JMenuItem mntmNewStylesFromFile;
+	private JMenuItem mntmNewBeersFromFile;
+	private JMenuItem mntmNewBreweriesFromFile;
 
 	
 	private JMenuItem mntmAddNewBeer;
@@ -429,15 +429,15 @@ public class ViewMainGUI extends JFrame {
 	
 	
 	public void addActionMenuNewStyleFromFile(ActionListener listener){
-		mntmNewStyleFromFile.addActionListener(listener);
+		mntmNewStylesFromFile.addActionListener(listener);
 	}
 	
 	public void addActionMenuNewBeerFromFile(ActionListener listener){
-		mntmNewBeerFromFile.addActionListener(listener);
+		mntmNewBeersFromFile.addActionListener(listener);
 	}
 	
 	public void addActionMenuNewBreweryFromFile(ActionListener listener){
-		mntmNewBreweryFromFile.addActionListener(listener);
+		mntmNewBreweriesFromFile.addActionListener(listener);
 	}
 	
 	public void addActionMenuAddNewStyle(ActionListener listener){
@@ -477,6 +477,20 @@ public class ViewMainGUI extends JFrame {
 	
 	public void addActionMenuExport(ActionListener listener){
 		mntmExport.addActionListener(listener);
+	}
+	
+	
+	public void addActionMenuImportBeers(ActionListener listener){
+		mntmNewBeersFromFile.addActionListener(listener);
+	}
+	
+	
+	public void addActionMenuImportBreweries(ActionListener listener){
+		mntmNewBreweriesFromFile.addActionListener(listener);
+	}
+	
+	public void addActionMenuImportStyles(ActionListener listener){
+		mntmNewStylesFromFile.addActionListener(listener);
 	}
 	
 	
@@ -535,7 +549,7 @@ public class ViewMainGUI extends JFrame {
 		return chooser;
 	}
 	
-	public void initJFileChooser(FileNameExtensionFilter[] filters, File directory){
+	public void initJFileChooser(FileNameExtensionFilter[] filters, File directory, boolean multiSelectionEnabled){
 		chooser=new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		
@@ -543,7 +557,16 @@ public class ViewMainGUI extends JFrame {
 		
 		chooser.setCurrentDirectory(directory);
 		chooser.setAcceptAllFileFilterUsed(false);
-		chooser.setMultiSelectionEnabled(false);
+		chooser.setMultiSelectionEnabled(multiSelectionEnabled);
+	}
+	
+	
+	public void setJFileChooserTitle(String title){
+		chooser.setDialogTitle(title);
+	}
+	
+	public void setJFileChooserToolTip(String toolTip){
+		chooser.setToolTipText(toolTip);
 	}
 	
 	
@@ -595,13 +618,13 @@ public class ViewMainGUI extends JFrame {
 		mnFile.add(mnImport);
 		
 		
-		/*JMenuItem*/ mntmNewStyleFromFile = new JMenuItem("Stile");
-		/*JMenuItem*/ mntmNewBeerFromFile = new JMenuItem("Birra");	
-		/*JMenuItem*/ mntmNewBreweryFromFile = new JMenuItem("Birrificio");
+		/*JMenuItem*/ mntmNewStylesFromFile = new JMenuItem("Stile");
+		/*JMenuItem*/ mntmNewBeersFromFile = new JMenuItem("Birra");	
+		/*JMenuItem*/ mntmNewBreweriesFromFile = new JMenuItem("Birrificio");
 		
-		mnImport.add(mntmNewBeerFromFile);
-		mnImport.add(mntmNewStyleFromFile);
-		mnImport.add(mntmNewBreweryFromFile);
+		mnImport.add(mntmNewBeersFromFile);
+		mnImport.add(mntmNewStylesFromFile);
+		mnImport.add(mntmNewBreweriesFromFile);
 		
 		
 			

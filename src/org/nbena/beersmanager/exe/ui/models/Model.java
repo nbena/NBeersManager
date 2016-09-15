@@ -20,12 +20,14 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exceptions.ObjectNotFoundException;
+import org.nbena.beersmanager.exceptions.RecomposingException;
 import org.nbena.beersmanager.exceptions.UpdateSavingException;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.export.OutExporter;
 import org.nbena.beersmanager.export.JSONOutExporter;
 import org.nbena.beersmanager.export.TXTOutExporter;
 import org.nbena.beersmanager.json.coreclasses.JSONExporterCoreClasses;
+import org.nbena.beersmanager.json.coreclasses.JSONImporter;
 import org.nbena.beersmanager.export.MSExcelOldOutExporter;
 import org.nbena.beersmanager.export.MSExcelNewOutExporter;
 import org.nbena.beersmanager.query.BreweryAverage;
@@ -427,7 +429,7 @@ public class Model {
 	public void showBreweryAverageData(){
 		dataShownNow=DataShownNow.BREWERY_AVERAGE;
 		tableModel.clear();
-		ModelBreweryAverage tableModelOld=(ModelBreweryAverage)tableModel;
+		ModelBreweryAverageTable tableModelOld=(ModelBreweryAverageTable)tableModel;
 		tableModel=tableModelOld;
 //		tableModel.fireTableStructureChanged();
 		
@@ -1383,16 +1385,16 @@ public class Model {
 		setStyleData(styles);
 	}
 	
-	private void readBeers(List<Brewery> breweries) throws FileNotFoundException, JSONException{
+	private void readBeers(List<Brewery> breweries) throws FileNotFoundException, JSONException, RecomposingException{
 //		List<Brewery> breweries = Utils.readBreweries(new File(configuration.getBreweryFilePath()));
 //		List<Style> styles = Utils.readStyles(new File(configuration.getStyleFilePath()));
-		List<Beer> beers=Utils.readBeers(new File(configuration.getBeerFilePath()), breweries, styleData);
+		List<Beer> beers=Utils.readBeersFromSpecial(new File(configuration.getBeerFilePath()), breweries, styleData);
 		setBeerData(beers);
 //		setBreweryData(breweries);
 //		setStyleData(styles);
 	}
 	
-	public void readThings() throws FileNotFoundException, JSONException{
+	public void readThings() throws FileNotFoundException, JSONException, RecomposingException{
 		List<Brewery> breweries=readBreweries();
 		readStyles();
 		readBeers(breweries); //so I do not need to convert.
@@ -1462,6 +1464,45 @@ public class Model {
 	
 	public void setSelectedRows(int [] selectedRows){
 		this.selctedRows = selectedRows;
+	}
+	
+	
+	public void importBeers(File f) throws FileNotFoundException, JSONException, RecomposingException{
+		List<Beer> beerDiff = JSONImporter.getBeersDifference(beerData,  f);
+		System.out.println("Le birre diiff:");
+		Utils.printBeers(beerDiff, System.out);
+		if(!beerDiff.isEmpty()){
+			beerData.addAll(beerDiff);
+			filteredBeers = beerData;
+		}
+		
+//		beerSortingCurrentAlgorithm.apply(beerData);
+//		clearFilter(false, true, true);
+	}
+	
+	public void importBreweries(File f) throws FileNotFoundException, JSONException{
+		List<Brewery> breweriesDiff = JSONImporter.getBreweriesDifference(Utils.fromBreweriesAverageToBrewery(breweryData), f);
+		if(!breweriesDiff.isEmpty()){
+			breweryData.addAll(Utils.fromBreweriesToBreweriesAverage(breweriesDiff));
+			setAverages();
+			filteredBreweries = breweryData;
+		}
+		
+//		brewerySortingCurrentAlgorithm.apply(breweryData);
+//		clearFilter(true, false, true);
+	}
+	
+	public void importStyles(File f) throws FileNotFoundException, JSONException{
+		List<Style> stylesDiff = JSONImporter.getStylesDifference(styleData, f);
+		if(!stylesDiff.isEmpty()){
+			styleData.addAll(stylesDiff);
+			filteredStyles = styleData;
+			
+		}
+		
+//		styleSortingCurrentAlgorithm.apply(styleData);
+//		clearFilter(true, true, false);
+		
 	}
 
 }

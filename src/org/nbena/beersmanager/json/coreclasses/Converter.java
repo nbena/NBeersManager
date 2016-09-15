@@ -1,6 +1,6 @@
 package org.nbena.beersmanager.json.coreclasses;
 
-import java.util.Collections;
+
 
 
 import java.util.LinkedList;
@@ -10,18 +10,20 @@ import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.exceptions.RecomposingException;
+import org.nbena.beersmanager.export.BeerJSONExportSpecialClass;
 import org.nbena.beersmanager.query.QueryRunner;
 
 public class Converter {
 	
 	
-	public static BeerJSONSpecialClass toBeerSpecialClass(Beer beer){
+	public static BeerJSONSaveSpecialClass toBeerJSONSaveSpecialClassSpecialClass(Beer beer){
 		/*
 		String styleMainName, styleSubcategory, breweryname=null;
 		styleMainName=beer.getStyle().getStyleMainName();
 		styleSubcategory=beer.getStyle().getStyleSubCategory();
 		*/
-		BeerJSONSpecialClass beerSpecial=new BeerJSONSpecialClass(beer.getName(), beer.getBrewery().getName(), beer.getStyle().getStyleMainName(), beer.getStyle().getStyleSubCategory(), beer.getNumberOfStars());
+		BeerJSONSaveSpecialClass beerSpecial=new BeerJSONSaveSpecialClass(beer.getName(), beer.getBrewery().getName(), beer.getStyle().getStyleMainName(), beer.getStyle().getStyleSubCategory(), beer.getNumberOfStars());
 		beerSpecial.setAlcool(beer.getAlcool());
 //		beerSpecial.setColor(beer.getColor());
 		beerSpecial.setDescription(beer.getDescription());
@@ -37,7 +39,7 @@ public class Converter {
 
 	
 	
-	public static Beer toBeerNormalClass(BeerJSONSpecialClass specialClassBeer){
+	public static Beer toNormalBeerFromJSONSaveSpecialClass(BeerJSONSaveSpecialClass specialClassBeer){
 		/*
 		 * Information about style and brewrey are filled then, because knowing name, category and subcategory
 		 * then I can look for which style and brewery match them.
@@ -63,7 +65,7 @@ public class Converter {
 	}
 	
 	
-	public static Style toStyleNormalClass(StyleJSONSpecialClass specialClassStyle){
+	public static Style toNormalStyle(StyleJSONSpecialClass specialClassStyle){
 		Style style = new Style();
 		style.setStyleMainName(specialClassStyle.getStyleMainName());
 		style.setStyleSubCategory(specialClassStyle.getStyleSubCategory());
@@ -85,7 +87,7 @@ public class Converter {
 	}
 	
 	
-	public static LinkedList<Beer> recompose(List<BeerJSONSpecialClass> specialClassBeers, List<Brewery> breweries, List<Style> styles){
+	public static LinkedList<Beer> recompose(List<BeerJSONSaveSpecialClass> specialClassBeers, List<Brewery> breweries, List<Style> styles) throws RecomposingException{
 		LinkedList<Beer> beers=new LinkedList<Beer>();
 		Beer beer;
 		int index1, index2;
@@ -99,14 +101,15 @@ public class Converter {
 		styles = QueryRunner.BinarySearch.stylesSortedForBinarySearch(styles);
 		
 		for(int i=0, j=0;i<specialClassBeers.size();i++){
-			beer=toBeerNormalClass(specialClassBeers.get(i));
+			beer=toNormalBeerFromJSONSaveSpecialClass(specialClassBeers.get(i));
 //			index1=Collections.binarySearch(styles, beer.getStyle());
 			index1 = QueryRunner.BinarySearch.styleSearch(styles, beer.getStyle(), true);
 			if(index1>=0){
 				beer.setStyle(styles.get(index1));
 			}
 			else{
-				System.err.print("Style not found, insertion point: "+index1);
+				throw new RecomposingException(beer.getStyle());
+//				System.err.print("Style not found, insertion point: "+index1);
 			}
 			
 			index2=QueryRunner.BinarySearch.brewerySearchConverter(breweries, beer.getBrewery(), true);
@@ -114,7 +117,8 @@ public class Converter {
 				beer.setBrewery(breweries.get(index2));
 			}
 			else{
-				System.err.print("Brewery not found, insertion point: "+index2);
+//				System.err.print("Brewery not found, insertion point: "+index2);
+				throw new RecomposingException(beer.getBrewery());
 			}
 			
 			if(index1>=0 && index2>=0){
@@ -128,7 +132,7 @@ public class Converter {
 	public static List<Style> toNormalStyleList(List<StyleJSONSpecialClass> styles){
 		LinkedList<Style> normalStyles = new LinkedList<Style>();
 		for(StyleJSONSpecialClass style: styles){
-			normalStyles.add(toStyleNormalClass(style));
+			normalStyles.add(toNormalStyle(style));
 		}
 		return normalStyles;
 	}
@@ -141,25 +145,75 @@ public class Converter {
 		return specialStyles;
 	}
 	
-	public static List<BeerJSONSpecialClass> toSpecialBeerList(List<Beer> beers){
-		LinkedList<BeerJSONSpecialClass> beersSpecial=new LinkedList<BeerJSONSpecialClass>();
+	public static List<BeerJSONSaveSpecialClass> toBeerJSONSaveSpecialClassList(List<Beer> beers){
+		LinkedList<BeerJSONSaveSpecialClass> beersSpecial=new LinkedList<BeerJSONSaveSpecialClass>();
 		for(Beer beer: beers){
-			beersSpecial.add(toBeerSpecialClass(beer));
+			beersSpecial.add(toBeerJSONSaveSpecialClassSpecialClass(beer));
 		}
 		return beersSpecial;
 	}
 	
 
-	public static List<Beer> toNormalBeerList(List<BeerJSONSpecialClass> beers){
+	public static List<Beer> toNormalBeerFromJSONSaveSpecialClassList(List<BeerJSONSaveSpecialClass> beers){
 		LinkedList<Beer> normalBeers=new LinkedList<Beer>();
-		for(BeerJSONSpecialClass beer: beers){
-			normalBeers.add(toBeerNormalClass(beer));
+		for(BeerJSONSaveSpecialClass beer: beers){
+			normalBeers.add(toNormalBeerFromJSONSaveSpecialClass(beer));
 		}
 		return normalBeers;
 	}
 	
-		
+	
+	
+	public static Beer toNormalBeerFromJSONExportSpecialClass(BeerJSONExportSpecialClass specialClassBeer){
+		Beer beer = new Beer();
+		beer.setBrewery(specialClassBeer.getBrewery());
+		beer.setAlcool(specialClassBeer.getAlcool());
+//		beer.setColor(specialClassBeer.getColor());
+		beer.setDescription(specialClassBeer.getDescription());
+		beer.setImageFilePath(specialClassBeer.getImageFilePath()); //absolute path is get by working directory
+		beer.setMark(specialClassBeer.getMark());
+		beer.setPlaceTried(specialClassBeer.getPlaceTried());
+		beer.setPrice(specialClassBeer.getPrice());
+		beer.setNumberOfStars(specialClassBeer.getNumberOfStars());
+		beer.setTried(specialClassBeer.isTried());
+		beer.setStyle(toNormalStyle(specialClassBeer.getStyle()));
+		beer.setName(specialClassBeer.getName());
+		return beer;
+	}
+	
+	
+	public static BeerJSONExportSpecialClass toBeerJSONExportSpecialClass(Beer b){
+		BeerJSONExportSpecialClass beer = new BeerJSONExportSpecialClass();
+		beer.setBrewery(b.getBrewery());
+		beer.setAlcool(b.getAlcool());
+//		beer.setColor(specialClassBeer.getColor());
+		beer.setDescription(b.getDescription());
+		beer.setImageFilePath(b.getImageFilePath()); //absolute path is get by working directory
+		beer.setMark(b.getMark());
+		beer.setPlaceTried(b.getPlaceTried());
+		beer.setPrice(b.getPrice());
+		beer.setNumberOfStars(b.getNumberOfStars());
+		beer.setTried(b.isTried());
+		beer.setStyle(toStyleSpecialClass(b.getStyle()));
+		beer.setName(b.getName());
+		return beer;
+	}
+	
+	public static List<Beer> toNormalBeerFromJSONExportSpecialClassList(List<BeerJSONExportSpecialClass> beers){
+		LinkedList<Beer> normalBeers=new LinkedList<Beer>();
+		for(BeerJSONExportSpecialClass beer: beers){
+			normalBeers.add(toNormalBeerFromJSONExportSpecialClass(beer));
+		}
+		return normalBeers;
+	}
 
+	public static List<BeerJSONExportSpecialClass> toBeerJSONExportSpecialClassList(List<Beer> beers){
+		LinkedList<BeerJSONExportSpecialClass> beersSpecial=new LinkedList<BeerJSONExportSpecialClass>();
+		for(Beer beer: beers){
+			beersSpecial.add(toBeerJSONExportSpecialClass(beer));
+		}
+		return beersSpecial;
+	}
 	
 
 

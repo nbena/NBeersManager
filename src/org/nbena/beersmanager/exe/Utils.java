@@ -31,10 +31,12 @@ import org.nbena.beersmanager.conf.Configuration.ShowDefault;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.exceptions.RecomposingException;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
+import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
-import org.nbena.beersmanager.json.coreclasses.BeerJSONSpecialClass;
+import org.nbena.beersmanager.json.coreclasses.BeerJSONSaveSpecialClass;
 import org.nbena.beersmanager.json.coreclasses.Converter;
 import org.nbena.beersmanager.json.coreclasses.JSONExporterCoreClasses;
 import org.nbena.beersmanager.query.BreweryAverage;
@@ -334,12 +336,16 @@ public class Utils {
 		return b;
 	}
 	
-	public static List<Beer> readBeers(File file, List<Brewery> breweries, List<Style> styles) throws FileNotFoundException, JSONException{
+	public static List<Beer> readBeersFromSpecial(File file, List<Brewery> breweries, List<Style> styles) throws FileNotFoundException, JSONException, RecomposingException{
 		List<Beer> beersRead=new LinkedList<Beer>();
-		List<BeerJSONSpecialClass> beersSpecial;	  
+		List<BeerJSONSaveSpecialClass> beersSpecial;	  
 		beersSpecial = JSONExporterCoreClasses.readBeersSpecial( new FileInputStream(file));
 		beersRead = Converter.recompose(beersSpecial, breweries, styles);
 		return beersRead;
+	}
+	
+	public static List<Beer> readBeersFromBeerExportClass(File file) throws FileNotFoundException, JSONException{
+		return JSONExporterCoreClasses.readBeersJSONExportSpecialClass(new FileInputStream(file));
 	}
 	
 	public static void saveStyles(List<Style> styles, File file) throws FileNotFoundException, JSONException{
@@ -1428,7 +1434,14 @@ public class Utils {
 		
 		public static final String ERROR = "Errore";
 		
+		public static final String SHOULD_SELECT_3_FILE = "Seleziona i file per l'import delle birre: servono anche i relativi file\n"
+				+ "dei loro birrifici e stili";
 		
+		public static final String MUST_SELECT_3_FILE = "Per poter importare una o più birre, è necessario importare anche i relativi file"
+				+ "dei loro birrifici e stili";
+		
+		public static final String WARN_BREWERY_STYLE_ALREADY_HERE = "Assicurati che i birrifici e gli stili delle birre da importati siano"
+				+ "già presenti nel database locale";
 		
 	}
 	
@@ -1464,6 +1477,29 @@ public class Utils {
 		filters[2]=new FileNameExtensionFilter(Constants.JSON[0], Constants.JSON[1]);
 		filters[3]=new FileNameExtensionFilter(Constants.PDF[0], Constants.PDF[1]);
 		filters[4]=new FileNameExtensionFilter(Constants.TXT[0], Constants.TXT[1]);
+		return filters;
+	}
+	
+	public static FileNameExtensionFilter[] getSingleFileFilterAsArray(Model.ExportType type){
+		FileNameExtensionFilter[] filters = new FileNameExtensionFilter[1];
+		switch(type){
+		case EXCEL_NEW:
+			filters[0]=new FileNameExtensionFilter(Constants.EXCEL_NEW[0], Constants.EXCEL_NEW[1]);
+			break;
+		case EXCEL_OLD:
+			filters[0]=new FileNameExtensionFilter(Constants.EXCEL_OLD[0], Constants.EXCEL_OLD[1]);
+			break;
+		case JSON:
+			filters[0]=new FileNameExtensionFilter(Constants.JSON[0], Constants.JSON[1]);
+			break;
+		case PDF:
+			filters[0]=new FileNameExtensionFilter(Constants.PDF[0], Constants.PDF[1]);
+			break;
+		case TXT:
+			filters[0]=new FileNameExtensionFilter(Constants.TXT[0], Constants.TXT[1]);
+			break;
+		
+		}
 		return filters;
 	}
 	

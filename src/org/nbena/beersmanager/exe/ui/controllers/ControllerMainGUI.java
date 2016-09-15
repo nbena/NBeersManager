@@ -35,13 +35,14 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exceptions.ObjectNotFoundException;
+import org.nbena.beersmanager.exceptions.RecomposingException;
 import org.nbena.beersmanager.exceptions.UpdateSavingException;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.models.Model.DataShownNow;
 import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
 import org.nbena.beersmanager.exe.ui.models.ModelBeerTable;
-import org.nbena.beersmanager.exe.ui.models.ModelBreweryAverage;
+import org.nbena.beersmanager.exe.ui.models.ModelBreweryAverageTable;
 import org.nbena.beersmanager.exe.ui.models.ModelBreweryTable;
 import org.nbena.beersmanager.exe.ui.models.ModelStyleTable;
 import org.nbena.beersmanager.exe.ui.views.BeerDialog;
@@ -58,6 +59,7 @@ import org.nbena.beersmanager.exe.ui.views.ViewPreferences;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBeer;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBrewery;
 import org.nbena.beersmanager.exe.ui.views.ViewViewStyle;
+import org.nbena.beersmanager.json.coreclasses.JSONImporter;
 import org.nbena.beersmanager.query.BreweryAverage;
 import org.nbena.beersmanager.query.QueryRunner;
 
@@ -95,6 +97,7 @@ public class ControllerMainGUI {
 	
 	private void addListeners(){
 		addFileExporterListeners();
+		addFileImporterListeners();
 		addAddNewThingsListeners();
 		addListSelectionListener();
 		addViewListeners();
@@ -159,7 +162,7 @@ public class ControllerMainGUI {
 	public void showBreweriesAverage(){
 		enableShowBreweriesItems();
 		
-		model.setTableModel(new ModelBreweryAverage());
+		model.setTableModel(new ModelBreweryAverageTable());
 		model.showBreweryData();
 		
 		gui.setTableModel(model.getTableModel());
@@ -1089,7 +1092,7 @@ public class ControllerMainGUI {
 	
 	private File initExport() throws FileNotFoundException{
 		File returned=null;
-		gui.initJFileChooser(Utils.getAllFileFilters(), new File(model.getLastDirectory()));
+		gui.initJFileChooser(Utils.getAllFileFilters(), new File(model.getLastDirectory()), false);
 		JFileChooser guiChooser=gui.getJFileChooser();
 		if(guiChooser.showSaveDialog(gui)==JFileChooser.APPROVE_OPTION){
 			returned=guiChooser.getSelectedFile();
@@ -1168,6 +1171,154 @@ public class ControllerMainGUI {
 			}
 			
 		});
+	}
+	
+	private File getImportedFile(){
+		File file = null;
+		JFileChooser guiChooser=gui.getJFileChooser();
+		if(guiChooser.showOpenDialog(gui)==JFileChooser.APPROVE_OPTION){
+			file=guiChooser.getSelectedFile();
+		}
+		return file;
+	}
+	
+//	private boolean checkAllRight(File []files, int count){
+//		return files.length==count ? true : false;
+//	}
+//	
+//	private File initImportBeers(){
+//		File file = null;
+//		gui.initJFileChooser(Utils.getSingleFileFilterAsArray(Model.ExportType.JSON), new File(model.getLastDirectory()), false);
+//		
+////		boolean loop = true;
+////		
+////		while(loop){
+////			
+////			files = getImportedFiles();
+////			
+////			
+////			if(files == null){
+////				loop = false;
+////			}
+////			
+////			else if (checkAllRight(files, 3)){
+////				loop = false;
+////			}
+////			else{
+////				
+////				//show message
+////				
+////			}
+////		}
+//		return file;
+//	}
+//	
+//	private File initImportBreweries(){
+//		File file = null;
+//		gui.initJFileChooser(Utils.getSingleFileFilterAsArray(Model.ExportType.JSON), new File(model.getLastDirectory()), false);
+//		file = getImportedFile();
+//		return file;
+//	}
+//	
+//	private File initImportStyles(){
+//		File file = null;
+//		gui.initJFileChooser(Utils.getSingleFileFilterAsArray(Model.ExportType.JSON), new File(model.getLastDirectory()), false);
+//		file = getImportedFile();
+//		return file;
+//	}
+	
+	private File initImport(){
+		File file = null;
+		gui.initJFileChooser(Utils.getSingleFileFilterAsArray(Model.ExportType.JSON), new File(model.getLastDirectory()), false);
+		file = getImportedFile();
+		return file;
+	}
+	
+//	/**
+//	 * 
+//	 * @param dataType the type to import: beer, brewery or style.
+//	 * @return
+//	 */
+//	private File[] initImport(Model.DataShownNow dataType){
+//		File [] files = null;
+//		gui.initJFileChooser(Utils.getAllFileFilters(), new File(model.getLastDirectory()), false);
+//		return files;
+//	}
+	
+	public void importBeers() throws FileNotFoundException, JSONException, RecomposingException {
+//		File [] files = initImportBeers();
+		File file = initImport();
+		if(file!=null){
+			model.importBeers(file);
+//			refreshData();
+		}
+	}
+	
+	public void importBreweries() throws FileNotFoundException, JSONException {
+//		File [] files = initImportBreweries();
+		File file = initImport();
+		if(file!=null){
+			model.importBreweries(file);
+//			refreshData();
+		}		
+	}
+	
+	public void importStyles() throws FileNotFoundException, JSONException {
+//		File [] files = initImportStyles();
+		File file = initImport();
+		if(file!=null){
+			model.importStyles(file);
+//			refreshData();
+		}
+		
+	}
+	
+	private void addFileImporterListeners(){
+		gui.addActionMenuImportBeers(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					importBeers();
+					refreshData();
+				} catch (FileNotFoundException | JSONException | RecomposingException e) {
+					showExceptionDialog(e);
+				}
+			}
+			
+		});
+		
+		gui.addActionMenuImportBreweries(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					importBreweries();
+					refreshData();
+				} catch (FileNotFoundException | JSONException e) {
+					showExceptionDialog(e);
+				}
+			}
+			
+		});
+		
+		gui.addActionMenuImportStyles(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					importStyles();
+					refreshData();
+				} catch (FileNotFoundException | JSONException e) {
+					showExceptionDialog(e);
+				}
+			}
+			
+		});
+		
 	}
 	
 	private void setBeerInDialog(BeerDialog dialog){
@@ -2562,15 +2713,19 @@ public class ControllerMainGUI {
 	}
 	
 	private void refreshData(){
+		System.out.println("Refreshing data");
 		switch(model.getDataShownNow()){
 		case BEER:
 			showBeers();
+			System.out.println("Refreshing beers");
 			break;
 		case STYLE:
 			showStyles();
+			System.out.print("Refreshing styles");
 			break;
 		default:
 			showBreweries();
+			System.out.print("Refreshing styles");
 			break;
 		}
 	}
