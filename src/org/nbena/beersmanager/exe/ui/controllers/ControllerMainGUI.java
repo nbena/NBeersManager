@@ -1125,7 +1125,6 @@ public class ControllerMainGUI {
 		File f=initExport();
 		if(f!=null){
 			ExportType type=Utils.getExportType(f);
-			model.exportBeers(type, new FileOutputStream(f), false);
 			boolean price = false;
 			if(type.isPriceExportable()){
 				price = askPrintAlsoPriceWhenExportBeers();				
