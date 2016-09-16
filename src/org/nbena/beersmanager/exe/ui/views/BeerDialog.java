@@ -11,13 +11,13 @@ public interface BeerDialog {
 	public abstract void setStyle(String t);
 	
 	
-	public abstract void setABV(String t);
+	public abstract void setABV(double abv);
 	
 	
-	public abstract void setStars(String t);
+	public abstract void setStars(int star);
 	
 	
-	public abstract void setMark(String t);
+	public abstract void setMark(int mark);
 	
 	
 	public abstract void setTried(boolean tried);
@@ -29,7 +29,7 @@ public interface BeerDialog {
 	public abstract void setPlace(String t);
 	
 	
-	public abstract void setPrice(String t);
+	public abstract void setPrice(double price);
 	
 
 }

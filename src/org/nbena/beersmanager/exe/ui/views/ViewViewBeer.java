@@ -99,16 +99,16 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 		textFieldStyle.setText(t);
 	}
 	
-	public void setABV(String t){
-		textFieldABV.setText(t);
+	public void setABV(double abv){
+		textFieldABV.setText(Double.toString(abv));
 	}
 	
-	public void setStars(String t){
-		textFieldStars.setText(t);
+	public void setStars(int stars){
+		textFieldStars.setText(Integer.toString(stars));
 	}
 	
-	public void setMark(String t){
-		textFieldMark.setText(t);
+	public void setMark(int mark){
+		textFieldMark.setText(Integer.toString(mark));
 	}
 	
 	public void setTried(boolean tried){
@@ -119,12 +119,12 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 		textAreaDescription.setText(t);
 	}
 	
-	public void setPlace(String t){
-		textFieldPlace.setText(t);
+	public void setPrice(double price){
+		textFieldPrice.setText(Double.toString(price));
 	}
 	
-	public void setPrice(String t){
-		textFieldPrice.setText(t);
+	public void setPlace(String t){
+		textFieldPlace.setText(t);
 	}
 	
 	/**

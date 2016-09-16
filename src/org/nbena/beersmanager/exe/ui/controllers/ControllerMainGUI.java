@@ -2,10 +2,6 @@ package org.nbena.beersmanager.exe.ui.controllers;
 
 
 import java.awt.event.ActionEvent;
-
-
-
-
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,12 +11,19 @@ import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.PopupMenuEvent;
@@ -1329,13 +1332,13 @@ public class ControllerMainGUI {
 		dialog.setBeerName(b.getName());
 		dialog.setBreweryName(Utils.getBreweryString(b.getBrewery()));
 		dialog.setStyle(Utils.getStyleStringSubMain(b.getStyle()));
-		dialog.setABV(Double.toString(b.getAlcool()));
-		dialog.setStars(Integer.toString(b.getNumberOfStars()));
-		dialog.setMark(Integer.toString(b.getMark()));
+		dialog.setABV(b.getAlcool());
+		dialog.setStars(b.getNumberOfStars());
+		dialog.setMark(b.getMark());
 		dialog.setTried(b.isTried());
 		dialog.setDescription(b.getDescription());
 		dialog.setPlace(b.getPlaceTried());
-		dialog.setPrice(Double.toString(b.getPrice()));
+		dialog.setPrice(b.getPrice());
 		
 	
 //		addBeerDialogPriceMarkEditable(dialog, b.isTried());
@@ -1375,42 +1378,45 @@ public class ControllerMainGUI {
 		b.setStyle(style);
 		b.setBrewery(brewery);
 		
-		double alcool = 0.0;
-		int mark = 0;
-		int stars = 0;
-		double price = 0.0;
+//		double alcool = 0.0;
+//		int mark = 0;
+//		int stars = 0;
+//		double price = 0.0;
 		
-		if(addBeerDialog.getABV().equals("")){
-			b.setAlcool(alcool);
-		}
-		else{
-			b.setAlcool(Utils.parseDouble(addBeerDialog.getABV()));
-		}
-		
-		
-		if(addBeerDialog.getMark().equals("")){
-			b.setMark(mark);
-		}
-		else{
-			b.setMark(Integer.parseInt(addBeerDialog.getMark()));
-		}
+//		if(addBeerDialog.getABV().equals("")){
+//			b.setAlcool(alcool);
+//		}
+//		else{
+//			b.setAlcool(Utils.parseDouble(addBeerDialog.getABV()));
+//		}
 		
 		
-		if(addBeerDialog.getStars().equals("")){
-			b.setNumberOfStars(stars);
-		}
-		else{
-			b.setNumberOfStars(Integer.parseInt(addBeerDialog.getStars()));
-		}
+//		if(addBeerDialog.getMark().equals("")){
+//			b.setMark(mark);
+//		}
+//		else{
+//			b.setMark(Integer.parseInt(addBeerDialog.getMark()));
+//		}
 		
 		
+//		if(addBeerDialog.getStars().equals("")){
+//			b.setNumberOfStars(stars);
+//		}
+//		else{
+//			b.setNumberOfStars(addBeerDialog.getStars());
+//		}
 		
-		if(addBeerDialog.getPrice().equals("")){
-			b.setPrice(price);
-		}
-		else{
-			b.setPrice(Utils.parseDouble(addBeerDialog.getPrice()));
-		}
+		b.setMark(addBeerDialog.getMark());
+		b.setNumberOfStars(addBeerDialog.getStars());
+		b.setMark(addBeerDialog.getMark());
+		b.setPrice(addBeerDialog.getPrice());
+		
+//		if(addBeerDialog.getPrice().equals("")){
+//			b.setPrice(price);
+//		}
+//		else{
+//			b.setPrice(Utils.parseDouble(addBeerDialog.getPrice()));
+//		}
 		
 		
 		
@@ -1421,6 +1427,7 @@ public class ControllerMainGUI {
 		b.setPlaceTried(addBeerDialog.getPlace());
 //		b.setPrice(Utils.parseDouble(addBeerDialog.getPrice()));
 		b.setDescription(addBeerDialog.getDescription());
+		b.setAlcool(addBeerDialog.getABV());
 		
 //		brewery.setName(addBeerDialog.getName());
 //		brewery.setCountry(addBeerDialog.get);
@@ -1533,8 +1540,9 @@ public class ControllerMainGUI {
 	}
 	
 	private void addBeerDialogPriceMarkEditable( boolean editable){
-		addBeerDialog.setTextFieldMarkEditable(editable);
+//		addBeerDialog.setTextFieldMarkEditable(editable);
 //		addBeerDialog.setTextFieldPriceEditable(editable); //price can be insert too.
+		addBeerDialog.setMarkSpinnerEnable(editable);
 	}
 	
 	private void setAddNewBeerRadioButton(){
@@ -1567,6 +1575,12 @@ public class ControllerMainGUI {
 				Beer b=null;
 				
 
+				
+				for(ViewAddNewBeer.SpinnerType type: ViewAddNewBeer.SpinnerType.values()){
+					trySpinnerCommit(type);//need to be done here because if user modify the editor, then click "ok" nobody adjusts the value
+				}
+				
+				System.out.println("Called the try commit");
 				
 				try {
 					b=getBeerFromAddNewBeerDialog();
@@ -1723,18 +1737,253 @@ public class ControllerMainGUI {
 		}
 	}
 	
+	private void trySpinnerCommit(ViewAddNewBeer.SpinnerType type){
+		try{
+			addBeerDialog.spinnerCommitEdit(type);
+		}
+		catch(ParseException e){
+			System.out.println("Catching exception with type: "+type.toString());
+			addBeerDialog.setSpinnerTextFieldValue(type, addBeerDialog.getSpinnerValue(type));
+		}
+	}
+	
+	
+	
+	private void initSpinnersBeer(){
+		
+//		addBeerDialog.setMarkSpinnerModel(model.getSpinnerModel());
+//		
+//		addBeerDialog.setMarkSpinnerChangeEvent(new ChangeListener(){
+//
+//			
+//			//event happens when user digit something, doing so we keep the model
+//			//synchronized with the editor value.
+//			@Override
+//			public void stateChanged(ChangeEvent arg0) {
+//				
+//				try {
+//					addBeerDialog.markSpinnerCommitEdit();
+//				} catch (ParseException e) {
+//					addBeerDialog.setMarkSpinnerTextFieldValue(addBeerDialog.getMark());
+//				}
+//			}
+//			
+//		});
+		
+		
+		for(ViewAddNewBeer.SpinnerType type: ViewAddNewBeer.SpinnerType.values()){
+			addBeerDialog.setSpinnerModel(type, model.getSpinnerModel(type));
+			addBeerDialog.setSpinnerChangeEvent(type, new ChangeListener(){
+
+				@Override
+				public void stateChanged(ChangeEvent arg0) {
+					
+//					try{
+//						addBeerDialog.pinnerCommitEdit(type);
+//					}
+//					catch(ParseException e){
+//						addBeerDialog.setSpinnerTextFieldValue(type, addBeerDialog.getSpinnerValue(type));
+//					}
+					trySpinnerCommit(type);
+					
+				}
+				
+			});
+		}
+	}
+	
+	private void setOkButtonEnabledBeer(){
+		addBeerDialog.addDocumentListenerName(new DocumentListener(){
+
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				
+				if(!Utils.isOnlySpace(addBeerDialog.getBeerName())){
+					addBeerDialog.setOkButtonEnabled(true);
+				}
+				else{
+					addBeerDialog.setOkButtonEnabled(false);
+				}
+				
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				
+				if(!Utils.isOnlySpace(addBeerDialog.getBeerName())){
+					addBeerDialog.setOkButtonEnabled(true);
+				}
+				else{
+					addBeerDialog.setOkButtonEnabled(false);
+				}
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				
+				if(!Utils.isOnlySpace(addBeerDialog.getBeerName())){
+					addBeerDialog.setOkButtonEnabled(true);
+				}
+				else{
+					addBeerDialog.setOkButtonEnabled(false);
+				}
+			}
+			
+		});
+	}
+	
+	private void setOkButtonEnabledBrewery(){
+		addBreweryDialog.addDocumentListenerName(new DocumentListener(){
+
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				
+				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+					addBreweryDialog.setOkButtonEnabled(true);
+				}
+				else{
+					addBreweryDialog.setOkButtonEnabled(false);
+				}
+				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryName())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+//				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+				
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				
+				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+					addBreweryDialog.setOkButtonEnabled(true);
+				}
+				else{
+					addBreweryDialog.setOkButtonEnabled(false);
+				}
+				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryName())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+//				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				
+				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+					addBreweryDialog.setOkButtonEnabled(true);
+				}
+				else{
+					addBreweryDialog.setOkButtonEnabled(false);
+				}
+				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryName())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+//				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+			}
+			
+		});
+		
+		addBreweryDialog.addDocumentListenerTown(new DocumentListener(){
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+					addBreweryDialog.setOkButtonEnabled(true);
+				}
+				else{
+					addBreweryDialog.setOkButtonEnabled(false);
+				}
+				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryName())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+//				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+				
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+					addBreweryDialog.setOkButtonEnabled(true);
+				}
+				else{
+					addBreweryDialog.setOkButtonEnabled(false);
+				}
+				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryName())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+//				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+					addBreweryDialog.setOkButtonEnabled(true);
+				}
+				else{
+					addBreweryDialog.setOkButtonEnabled(false);
+				}
+				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryName())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+//				
+//				if(Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
+//					addBreweryDialog.setOkButtonEnabled(false);
+//				}
+				
+			}
+			
+		});
+	}
+	
+	private void setOkButtonEnabledStyle(){
+		addStyleDialog.setOkButtonEnabled(true); //no need to textfield check
+	}
 
 	
 	public void showAddBeerDialog(){
 		addBeerDialog = new ViewAddNewBeer();
 		addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryDataAlphaOrder()), Utils.getStyleStringListMainSub(model.getStyleDataMainSubOrder()));
 		
+		initSpinnersBeer();
+		
 		setAddNewBeerOkButton();
 		setAddNewBeerCancelButton();
 		setAddNewBeerRadioButton();
 		
+		setOkButtonEnabledBeer();
+		
 		addBeerDialog.setTried(true);
 		addBeerDialogPriceMarkEditable(true);
+		
+//		addBeerDialog.setStarSliderLableTable(model.getLabelTable());
+		//already done in the gui class.
 		
 		addBeerDialog.setVisible(true);
 	}
@@ -1745,6 +1994,8 @@ public class ControllerMainGUI {
 		
 		setAddNewBreweryOkButton();
 		setAddNewBreweryCancelButton();
+		
+		setOkButtonEnabledBrewery();
 		
 		addBreweryDialog.setVisible(true);
 	}
@@ -1790,6 +2041,8 @@ public class ControllerMainGUI {
 		
 		setAddNewStyleOkButton();
 		setAddNewStyleCancelButton();
+		
+		setOkButtonEnabledStyle();
 		
 		addAddStyleComboBoxStyleListener();
 		
@@ -2011,6 +2264,9 @@ public class ControllerMainGUI {
 		
 		addBeerDialog = new ViewAddNewBeer();
 		addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryDataAlphaOrder()), Utils.getStyleStringListMainSub(model.getStyleDataMainSubOrder()));
+		
+		initSpinnersBeer();
+		
 		setBeerInDialog(addBeerDialog);
 		
 		setAddNewBeerOkButton();

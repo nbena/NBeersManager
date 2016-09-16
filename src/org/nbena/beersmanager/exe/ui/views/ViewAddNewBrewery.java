@@ -1,6 +1,7 @@
 package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
 
 import javax.swing.ButtonGroup;
@@ -9,10 +10,10 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentListener;
 
 import org.nbena.beersmanager.coreclasses.Brewery;
 
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -124,6 +125,10 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 			rdbtnTrappistNo.setSelected(false);
 		}
 	}
+	
+	public void setOkButtonEnabled(boolean enabled){
+		okButton.setEnabled(enabled);
+	}
 
 	
 	/**
@@ -142,6 +147,18 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 		comboBoxCountry.setSelectedItem(b.getCountry());
 		textFieldWebsite.setText(b.getWebsite());
 		textAreaDescription.setText(b.getBreweryDescription());
+	}
+	
+	public void addDocumentListenerName(DocumentListener listener){
+		textFieldName.getDocument().addDocumentListener(listener);
+	}
+	
+	public void addDocumentListenerTown(DocumentListener listener){
+		textFieldTown.getDocument().addDocumentListener(listener);
+	}
+	
+	public void addDocumentListenerWebsite(DocumentListener listener){
+		textFieldWebsite.getDocument().addDocumentListener(listener);
 	}
 
 	/**
@@ -342,6 +359,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
+				okButton.setEnabled(false);
 			}
 			{
 				cancelButton = new JButton("Annulla");

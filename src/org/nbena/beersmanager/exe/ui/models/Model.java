@@ -2,6 +2,7 @@ package org.nbena.beersmanager.exe.ui.models;
 
 import java.io.File;
 
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -9,7 +10,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+
+import javax.swing.JLabel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
+import java.util.Hashtable;
 
 import org.json.JSONException;
 import org.nbena.beersmanager.conf.Configuration;
@@ -23,6 +28,7 @@ import org.nbena.beersmanager.exceptions.ObjectNotFoundException;
 import org.nbena.beersmanager.exceptions.RecomposingException;
 import org.nbena.beersmanager.exceptions.UpdateSavingException;
 import org.nbena.beersmanager.exe.Utils;
+import org.nbena.beersmanager.exe.ui.views.ViewAddNewBeer;
 import org.nbena.beersmanager.export.OutExporter;
 import org.nbena.beersmanager.export.JSONOutExporter;
 import org.nbena.beersmanager.export.TXTOutExporter;
@@ -115,24 +121,57 @@ public class Model {
 	
 	private boolean somethingToSave = false;
 	
+	private Hashtable<Integer, JLabel> labelTable;
+	
+	private MarkSpinnerModel spinnerModel;
+	
+	public static final SpinnerNumberModel spinnerMarkModel = new SpinnerNumberModel(Utils.Constants.MARK_SPINNER_DEF_VALUE,
+			Utils.Constants.MARK_SPINNER_MIN_VALUE, Utils.Constants.MARK_SPINNER_MAX_VALUE, Utils.Constants.MARK_SPINNER_STEP_VALUE);
+	
+	public static final SpinnerNumberModel spinnerPriceModel = new SpinnerNumberModel(Utils.Constants.PRICE_SPINNER_DEF_VALUE,
+			Utils.Constants.PRICE_SPINNER_MIN_VALUE, Utils.Constants.PRICE_SPINNER_MAX_VALUE, Utils.Constants.PRICE_SPINNER_STEP_VALUE);
+	
+	public static final SpinnerNumberModel spinnerABVModel = new SpinnerNumberModel(Utils.Constants.ABV_SPINNER_DEF_VALUE,
+			Utils.Constants.ABV_SPINNER_MIN_VALUE, Utils.Constants.ABV_SPINNER_MAX_VALUE, Utils.Constants.ABV_SPINNER_STEP_VALUE);
+	
+	private void initLabelTable(){
+//		labelTable = new Hashtable<Integer, JLabel>();
+//		labelTable.put(1,  new JLabel("1"));
+//		labelTable.put(2, new JLabel("2"));
+//		labelTable.put(3,  new JLabel("3"));
+//		labelTable.put(4, new JLabel("4"));
+//		labelTable.put(5, new JLabel("5"));
+	}
+	
+	private void initSpinner(){
+		spinnerModel = new MarkSpinnerModel();
+	}
 	
 	public Model(){
 		//tableModel=new MyModelAbstractTable();
+		initLabelTable();
+		initSpinner();
 	}
 	
 	public Model(MyModelAbstractTable tableModel){
 		this.tableModel=tableModel;
+		initLabelTable();
+		initSpinner();
 	}
 	
 	public Model(MyModelAbstractDialog dialogModel) {
 		super();
 		this.dialogModel = dialogModel;
+		initLabelTable();
+		initSpinner();
 	}
 
 	public Model(MyModelAbstractTable tableModel, MyModelAbstractDialog dialogModel) {
 		super();
 		this.tableModel = tableModel;
 		this.dialogModel = dialogModel;
+		initLabelTable();
+		initSpinner();
 	}
 
 	/**
@@ -1505,5 +1544,33 @@ public class Model {
 //		clearFilter(true, true, false);
 		
 	}
+
+	/**
+	 * @return the labelTable
+	 */
+	public Hashtable<Integer, JLabel> getLabelTable() {
+		return labelTable;
+	}
+
+	/**
+	 * @return the spinnerModel
+	 */
+	public SpinnerNumberModel getSpinnerModel(ViewAddNewBeer.SpinnerType type) {
+		SpinnerNumberModel ret = null;
+		switch(type){
+		case ABV:
+			ret = spinnerABVModel;
+			break;
+		case MARK:
+			ret = spinnerMarkModel;
+			break;
+		case PRICE:
+			ret = spinnerPriceModel;
+			break;	
+		}
+		return ret;
+	}
+	
+	
 
 }

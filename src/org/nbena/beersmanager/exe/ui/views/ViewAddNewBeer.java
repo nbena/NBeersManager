@@ -1,28 +1,38 @@
 package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentListener;
+
+
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.text.ParseException;
+
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JSlider;
 
 public class ViewAddNewBeer extends JDialog implements BeerDialog{
 
@@ -43,6 +53,12 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	private JComboBox<String> comboBoxStyle;
 	private JRadioButton rdbtnTriedYes;
 	private JRadioButton rdbtnTriedNo;
+	
+	private JSlider starSlider;
+	private JSpinner markSpinner;
+	private JSpinner priceSpinner;
+	private JSpinner abvSpinner;
+	
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	private JScrollPane scrollPane;
@@ -85,22 +101,33 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		comboBoxStyle.setSelectedItem(t);
 	}
 	
-	public void setABV(String t){
-		textFieldABV.setText(t);
+//	public void setABV(String t){
+//		textFieldABV.setText(t);
+//	}
+	
+	public void setABV(double abv){
+		abvSpinner.setValue(abv);
 	}
 	
-	public void setStars(String t){
-		textFieldStars.setText(t);
+//	public void setStars(String t){
+//		textFieldStars.setText(t);
+//	}
+	
+	public void setStars(int star){
+		starSlider.setValue(star);
 	}
 	
-	public void setMark(String t){
-		textFieldMark.setText(t);
-	}
+//	public void setMark(String t){
+//		textFieldMark.setText(t);
+//	}
 	
 //	public void setTried(String t){
 //		textFieldTried.setText(t);
 //	}
 
+	public void setMark(int mark){
+		markSpinner.setValue(mark);
+	}
 	
 	public void setTriedButtonDefault(boolean tried){
 		setTried(tried);
@@ -139,16 +166,26 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		return textFieldBeerName.getText();
 	}
 	
-	public String getABV(){
-		return textFieldABV.getText();
+//	public String getABV(){
+//		return textFieldABV.getText();
+//	}
+	
+	public double getABV(){
+//		return ((Double)abvSpinner.getValue())==null ? 0.0 : (Double)abvSpinner.getValue();
+		return (Double)abvSpinner.getValue();
 	}
 	
-	public String getStars(){
-		return textFieldStars.getText();
+	public int getStars(){
+//		return textFieldStars.getText();
+		return (Integer)starSlider.getValue();
 	}
 	
-	public String getMark(){
-		return textFieldMark.getText();
+	public int getMark(){
+//		return textFieldMark.getText();
+//		return ((Integer)markSpinner.getValue())==null ? 0 : (Integer)markSpinner.getValue();
+		return (Integer)markSpinner.getValue();
+//		MarkSpinnerModel model = (MarkSpinnerModel)markSpinner.getModel();
+//		return model.getIntValue();
 	}
 	
 //	public String getTried(){
@@ -159,8 +196,12 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		return textAreaDescription.getText();
 	}
 	
-	public String getPrice(){
-		return textFieldPrice.getText();
+//	public String getPrice(){
+//		return textFieldPrice.getText();
+//	}
+	
+	public double getPrice(){
+		return (Double)priceSpinner.getValue();
 	}
 	
 	public String getPlace(){
@@ -191,11 +232,219 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		textFieldMark.setEditable(enabled);
 	}
 	
-	public void setPrice(String t){
-		textFieldPrice.setText(t);
+//	public void setPrice(String t){
+//		textFieldPrice.setText(t);
+//	}
+	
+	public void setPrice(double price){
+		priceSpinner.setValue(price);
+	}
+	
+	
+	public void addDocumentListenerPrice(DocumentListener listener){
+		textFieldPrice.getDocument().addDocumentListener(listener);
+	}
+	
+	public void addDocumentListenerName(DocumentListener listener){
+		textFieldBeerName.getDocument().addDocumentListener(listener);
+	}
+	
+	
+	public void addDocumentListenerABV(DocumentListener listener){
+		textFieldABV.getDocument().addDocumentListener(listener);
+	}
+	
+	
+	
+	public void setStarSliderLableTable(Hashtable<Integer, JLabel> table){
+		starSlider.setLabelTable(table);
+	}
+	
+	
+//	public void setSpinnerModel(MarkSpinnerModel model){
+//		markSpinner.setModel(model);
+//	}
+	
+	public static enum SpinnerType{
+		ABV,
+		MARK,
+		PRICE
+	}
+	
+//	private void setMarkSpinnerModel(SpinnerNumberModel model){
+//		markSpinner.setModel(model);
+//	}
+//	
+//	private void setMarkSpinnerChangeEvent(ChangeListener listener){
+//		markSpinner.addChangeListener(listener);
+//	}
+//	
+//	
+//	private void setMarkSpinnerTextFieldValue(int value){
+//		((JFormattedTextField)markSpinner.getValue()).setValue(value);
+//	}
+//	
+//	private void markSpinnerCommitEdit() throws ParseException{
+//		markSpinner.commitEdit();
+//	}
+	
+	public void setMarkSpinnerEnable(boolean enabled){
+		markSpinner.setEnabled(enabled);
+		markSpinner.setValue(0);
+	}
+	
+	
+//	private void setABVSpinnerModel(SpinnerNumberModel model){
+//		abvSpinner.setModel(model);
+//	}
+//	
+//	private void setABVSpinnerChangeEvent(ChangeListener listener){
+//		abvSpinner.addChangeListener(listener);
+//	}
+//	
+//	
+//	private void setABVSpinnerTextFieldValue(int value){
+//		((JFormattedTextField)abvSpinner.getValue()).setValue(value);
+//	}
+//	
+//	private void ABVSpinnerCommitEdit() throws ParseException{
+//		abvSpinner.commitEdit();
+//	}
+//	
+//
+//	private void setPriceSpinnerModel(SpinnerNumberModel model){
+//		priceSpinner.setModel(model);
+//	}
+//	
+//	private void setPriceSpinnerChangeEvent(ChangeListener listener){
+//		priceSpinner.addChangeListener(listener);
+//	}
+//	
+//
+//	
+//	private void setPriceSpinnerTextFieldValue(int value){
+//		((JFormattedTextField)priceSpinner.getValue()).setValue(value);
+//	}
+//	
+//	private void priceSpinnerCommitEdit() throws ParseException{
+//		priceSpinner.commitEdit();
+//	}
+	
+	public void setSpinnerModel(SpinnerType type, SpinnerNumberModel model){
+		switch(type){
+		case ABV:
+			abvSpinner.setModel(model);
+			break;
+		case MARK:
+			markSpinner.setModel(model);
+			break;
+		case PRICE:
+			priceSpinner.setModel(model);
+			break;		
+		}
+		
+	}
+	
+	public void setSpinnerChangeEvent(SpinnerType type, ChangeListener listener){
+		switch(type){
+		case ABV:
+			abvSpinner.addChangeListener(listener);
+			break;
+		case MARK:
+			markSpinner.addChangeListener(listener);
+			break;
+		case PRICE:
+			System.out.println("Called the change event on price");
+			priceSpinner.addChangeListener(listener);
+			break;		
+		}
+		
+	}
+	
+	public void forceChangeEvent(SpinnerType type){
+		switch(type){
+		case ABV:
+			break;
+		case MARK:
+			break;
+		case PRICE:
+			break;
+		default:
+			break;
+		
+		}
+	}
+	
+//	public JComponent getMarkSpinnerEditor(){
+//		return markSpinner.getEditor();
+//	}
+	
+//	public JSpinner getSpinner(SpinnerType type){
+//		switch(type){
+//		case ABV:
+//			break;
+//		case MARK:
+//			break;
+//		case PRICE:
+//			break;		
+//		}
+//		return markSpinner;
+//	}
+	
+	public void setSpinnerTextFieldValue(SpinnerType type, Object value){
+		switch(type){
+		case ABV:
+//			((JFormattedTextField)abvSpinner.getValue()).setValue(value);
+			((JFormattedTextField)abvSpinner.getEditor()).setValue(value);
+			break;
+		case MARK:
+//			((JFormattedTextField)markSpinner.getValue()).setValue(value);
+			((JFormattedTextField)markSpinner.getEditor()).setValue(value);
+			break;
+		case PRICE:
+//			((JFormattedTextField)priceSpinner.getValue()).setValue(value);
+			((JFormattedTextField)priceSpinner.getEditor()).setValue(value);
+			break;		
+		}
+		
+	}
+	
+	public void spinnerCommitEdit(SpinnerType type) throws ParseException {
+		switch(type){
+		case ABV:
+			abvSpinner.commitEdit();
+			break;
+		case MARK:
+			markSpinner.commitEdit();
+			break;
+		case PRICE:
+			priceSpinner.commitEdit();
+			break;		
+		}
+		
+	}
+	
+	public Object getSpinnerValue(SpinnerType type){
+		Object o = null;
+		switch(type){
+		case ABV:
+			o = abvSpinner.getValue();
+			break;
+		case MARK:
+			o = markSpinner.getValue();
+			break;
+		case PRICE:
+			o = priceSpinner.getValue();
+			break;		
+		}
+		return o;
 	}
 	
 
+	public void setOkButtonEnabled(boolean enabled){
+		okButton.setEnabled(enabled);
+	}
+	
 	/**
 	 * Launch the application.
 	 */
@@ -261,7 +510,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			contentPanel.add(lblBirrificio, gbc_lblBirrificio);
 		}
 		{
-			comboBoxBrewery = new JComboBox();
+			comboBoxBrewery = new JComboBox<String>();
 			GridBagConstraints gbc_comboBoxBrewery = new GridBagConstraints();
 			gbc_comboBoxBrewery.gridwidth = 5;
 			gbc_comboBoxBrewery.insets = new Insets(0, 0, 5, 0);
@@ -279,7 +528,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			contentPanel.add(lblStile, gbc_lblStile);
 		}
 		{
-			comboBoxStyle = new JComboBox();
+			comboBoxStyle = new JComboBox<String>();
 			GridBagConstraints gbc_comboBoxStyle = new GridBagConstraints();
 			gbc_comboBoxStyle.insets = new Insets(0, 0, 5, 5);
 			gbc_comboBoxStyle.fill = GridBagConstraints.HORIZONTAL;
@@ -288,31 +537,14 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			contentPanel.add(comboBoxStyle, gbc_comboBoxStyle);
 		}
 		{
-			JLabel lblAbv = new JLabel("ABV%:");
-			GridBagConstraints gbc_lblAbv = new GridBagConstraints();
-			gbc_lblAbv.insets = new Insets(0, 0, 5, 5);
-			gbc_lblAbv.gridx = 1;
-			gbc_lblAbv.gridy = 8;
-			contentPanel.add(lblAbv, gbc_lblAbv);
-		}
-		{
 			textFieldABV = new JTextField();
 			GridBagConstraints gbc_textFieldABV = new GridBagConstraints();
 			gbc_textFieldABV.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldABV.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldABV.gridx = 3;
 			gbc_textFieldABV.gridy = 8;
-			contentPanel.add(textFieldABV, gbc_textFieldABV);
+//			contentPanel.add(textFieldABV, gbc_textFieldABV);
 			textFieldABV.setColumns(10);
-		}
-		
-		{
-			JLabel lblStars = new JLabel("Stelle:");
-			GridBagConstraints gbc_lblStars = new GridBagConstraints();
-			gbc_lblStars.insets = new Insets(0, 0, 5, 5);
-			gbc_lblStars.gridx = 5;
-			gbc_lblStars.gridy = 8;
-			contentPanel.add(lblStars, gbc_lblStars);
 		}
 		
 		{
@@ -322,19 +554,8 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			gbc_textFieldStars.insets = new Insets(0, 0, 5, 0);
 			gbc_textFieldStars.gridx = 7;
 			gbc_textFieldStars.gridy = 8;
-			contentPanel.add(textFieldStars, gbc_textFieldStars);
+//			contentPanel.add(textFieldStars, gbc_textFieldStars);
 			textFieldStars.setColumns(10);
-		}
-		
-		
-		
-		{
-			JLabel lblVoto = new JLabel("Voto:");
-			GridBagConstraints gbc_lblVoto = new GridBagConstraints();
-			gbc_lblVoto.insets = new Insets(0, 0, 5, 5);
-			gbc_lblVoto.gridx = 1;
-			gbc_lblVoto.gridy = 10;
-			contentPanel.add(lblVoto, gbc_lblVoto);
 		}
 		
 		{
@@ -344,12 +565,74 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			gbc_textFieldMark.insets = new Insets(0, 0, 5, 5);
 			gbc_textFieldMark.gridx = 3;
 			gbc_textFieldMark.gridy = 10;
-			contentPanel.add(textFieldMark, gbc_textFieldMark);
+//			contentPanel.add(textFieldMark, gbc_textFieldMark);
 			textFieldMark.setColumns(10);
 		}
 		
 		{
 			textFieldMark.setColumns(10);
+		}
+		
+		
+		
+		{
+			JLabel lblVoto = new JLabel("Voto:");
+			GridBagConstraints gbc_lblVoto = new GridBagConstraints();
+			gbc_lblVoto.insets = new Insets(0, 0, 5, 5);
+			gbc_lblVoto.gridx = 1;
+			gbc_lblVoto.gridy = 8;
+			contentPanel.add(lblVoto, gbc_lblVoto);
+		}
+		{
+			markSpinner = new JSpinner();
+			markSpinner.setEditor(new JSpinner.NumberEditor(markSpinner));
+			GridBagConstraints gbc_markSpinner = new GridBagConstraints();
+			gbc_markSpinner.insets = new Insets(0, 0, 5, 5);
+			gbc_markSpinner.gridx = 3;
+			gbc_markSpinner.gridy = 8;
+			contentPanel.add(markSpinner, gbc_markSpinner);
+		}
+		{
+			JLabel lblAbv = new JLabel("ABV%:");
+			GridBagConstraints gbc_lblAbv = new GridBagConstraints();
+			gbc_lblAbv.insets = new Insets(0, 0, 5, 5);
+			gbc_lblAbv.gridx = 5;
+			gbc_lblAbv.gridy = 8;
+			contentPanel.add(lblAbv, gbc_lblAbv);
+		}
+		{
+			abvSpinner = new JSpinner();
+			abvSpinner.setEditor(new JSpinner.NumberEditor(abvSpinner));
+			GridBagConstraints gbc_abvSpinner = new GridBagConstraints();
+			gbc_abvSpinner.fill = GridBagConstraints.HORIZONTAL;
+			gbc_abvSpinner.insets = new Insets(0, 0, 5, 0);
+			gbc_abvSpinner.gridx = 7;
+			gbc_abvSpinner.gridy = 8;
+			contentPanel.add(abvSpinner, gbc_abvSpinner);
+		}
+		
+		{
+			JLabel lblStars = new JLabel("Stelle:");
+			GridBagConstraints gbc_lblStars = new GridBagConstraints();
+			gbc_lblStars.insets = new Insets(0, 0, 5, 5);
+			gbc_lblStars.gridx = 1;
+			gbc_lblStars.gridy = 10;
+			contentPanel.add(lblStars, gbc_lblStars);
+		}
+		{
+			starSlider = new JSlider();
+			starSlider.setValue(1);
+			starSlider.setMaximum(5);
+			starSlider.setMinimum(1);
+			starSlider.setMajorTickSpacing(1);
+			starSlider.setPaintLabels(true);
+			starSlider.setMinorTickSpacing(1);
+			GridBagConstraints gbc_starSlider = new GridBagConstraints();
+			gbc_starSlider.fill = GridBagConstraints.HORIZONTAL;
+			gbc_starSlider.insets = new Insets(0, 0, 5, 5);
+			gbc_starSlider.gridx = 3;
+			gbc_starSlider.gridy = 10;
+			contentPanel.add(starSlider, gbc_starSlider);
 		}
 		
 		{
@@ -381,30 +664,11 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			gbc_rdbtnTriedNo.gridy = 10;
 			contentPanel.add(rdbtnTriedNo, gbc_rdbtnTriedNo);
 		}
-		
-		{
-			JLabel lblPrezzo = new JLabel("Prezzo:");
-			GridBagConstraints gbc_lblPrezzo = new GridBagConstraints();
-			gbc_lblPrezzo.insets = new Insets(0, 0, 5, 5);
-			gbc_lblPrezzo.gridx = 1;
-			gbc_lblPrezzo.gridy = 12;
-			contentPanel.add(lblPrezzo, gbc_lblPrezzo);
-		}
-		{
-			textFieldPrice = new JTextField();
-			GridBagConstraints gbc_textFieldPrice = new GridBagConstraints();
-			gbc_textFieldPrice.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldPrice.insets = new Insets(0, 0, 5, 5);
-			gbc_textFieldPrice.gridx = 3;
-			gbc_textFieldPrice.gridy = 12;
-			contentPanel.add(textFieldPrice, gbc_textFieldPrice);
-			textFieldPrice.setColumns(10);
-		}
 		{
 			JLabel lblLuogo = new JLabel("Luogo:");
 			GridBagConstraints gbc_lblLuogo = new GridBagConstraints();
 			gbc_lblLuogo.insets = new Insets(0, 0, 5, 5);
-			gbc_lblLuogo.gridx = 5;
+			gbc_lblLuogo.gridx = 1;
 			gbc_lblLuogo.gridy = 12;
 			contentPanel.add(lblLuogo, gbc_lblLuogo);
 		}
@@ -412,11 +676,40 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			textFieldPlace = new JTextField();
 			GridBagConstraints gbc_textFieldPlace = new GridBagConstraints();
 			gbc_textFieldPlace.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldPlace.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldPlace.gridx = 7;
+			gbc_textFieldPlace.insets = new Insets(0, 0, 5, 5);
+			gbc_textFieldPlace.gridx = 3;
 			gbc_textFieldPlace.gridy = 12;
 			contentPanel.add(textFieldPlace, gbc_textFieldPlace);
 			textFieldPlace.setColumns(10);
+		}
+		
+		{
+			JLabel lblPrezzo = new JLabel("Prezzo:");
+			GridBagConstraints gbc_lblPrezzo = new GridBagConstraints();
+			gbc_lblPrezzo.insets = new Insets(0, 0, 5, 5);
+			gbc_lblPrezzo.gridx = 5;
+			gbc_lblPrezzo.gridy = 12;
+			contentPanel.add(lblPrezzo, gbc_lblPrezzo);
+		}
+		{
+			textFieldPrice = new JTextField();
+			GridBagConstraints gbc_textFieldPrice = new GridBagConstraints();
+			gbc_textFieldPrice.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldPrice.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldPrice.gridx = 7;
+			gbc_textFieldPrice.gridy = 12;
+//			contentPanel.add(textFieldPrice, gbc_textFieldPrice);
+			textFieldPrice.setColumns(10);
+		}
+		{
+			priceSpinner = new JSpinner();
+			priceSpinner.setEditor(new JSpinner.NumberEditor(priceSpinner));
+			GridBagConstraints gbc_priceSpinner = new GridBagConstraints();
+			gbc_priceSpinner.fill = GridBagConstraints.HORIZONTAL;
+			gbc_priceSpinner.insets = new Insets(0, 0, 5, 0);
+			gbc_priceSpinner.gridx = 7;
+			gbc_priceSpinner.gridy = 12;
+			contentPanel.add(priceSpinner, gbc_priceSpinner);
 		}
 		{
 			JLabel lblDescrizione = new JLabel("Descrizione:");
@@ -430,7 +723,6 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			scrollPane = new JScrollPane();
 			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 			gbc_scrollPane.gridwidth = 5;
-			gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
 			gbc_scrollPane.fill = GridBagConstraints.BOTH;
 			gbc_scrollPane.gridx = 3;
 			gbc_scrollPane.gridy = 14;
@@ -447,40 +739,57 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			textAreaDescription.setLineWrap(true);
 			scrollPane.setViewportView(textAreaDescription);
 		}
+//		{
+//			JPanel buttonPane = new JPanel();
+//			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+//			GridBagLayout gbl_buttonPane = new GridBagLayout();
+//			gbl_buttonPane.columnWidths = new int[]{376, 47, 65, 0};
+//			gbl_buttonPane.rowHeights = new int[]{23, 0};
+//			gbl_buttonPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+//			gbl_buttonPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+//			buttonPane.setLayout(gbl_buttonPane);
+//
+//			
+//			
+//			
+//			
+//			
+//			
+//			{
+//				okButton = new JButton("OK");
+//				okButton.setActionCommand("OK");
+//				GridBagConstraints gbc_okButton = new GridBagConstraints();
+//				gbc_okButton.gridx = 2;
+//				gbc_okButton.gridy = 0;
+//				gbc_okButton.weightx = 0;
+//				buttonPane.add(okButton, gbc_okButton);
+//				getRootPane().setDefaultButton(okButton);
+//			}
+//			{
+//				cancelButton = new JButton("Cancel");
+//				cancelButton.setActionCommand("Cancel");
+//				GridBagConstraints gbc_cancelButton = new GridBagConstraints();
+//				gbc_cancelButton.gridx = 3;
+//				gbc_cancelButton.gridy = 0;
+//				gbc_cancelButton.weightx = 0;
+//				buttonPane.add(cancelButton, gbc_cancelButton);
+//			}
+//		}
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			GridBagLayout gbl_buttonPane = new GridBagLayout();
-			gbl_buttonPane.columnWidths = new int[]{376, 47, 65, 0};
-			gbl_buttonPane.rowHeights = new int[]{23, 0};
-			gbl_buttonPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-			gbl_buttonPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-			buttonPane.setLayout(gbl_buttonPane);
-
-			
-			
-			
-			
-			
-			
 			{
-				okButton = new JButton("OK");
+			    okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
-				GridBagConstraints gbc_okButton = new GridBagConstraints();
-				gbc_okButton.gridx = 2;
-				gbc_okButton.gridy = 0;
-				gbc_okButton.weightx = 0;
-				buttonPane.add(okButton, gbc_okButton);
+				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
+				okButton.setEnabled(false);
 			}
 			{
-				cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Annulla");
 				cancelButton.setActionCommand("Cancel");
-				GridBagConstraints gbc_cancelButton = new GridBagConstraints();
-				gbc_cancelButton.gridx = 3;
-				gbc_cancelButton.gridy = 0;
-				gbc_cancelButton.weightx = 0;
-				buttonPane.add(cancelButton, gbc_cancelButton);
+				buttonPane.add(cancelButton);
 			}
 		}
 		

@@ -1443,6 +1443,22 @@ public class Utils {
 		public static final String WARN_BREWERY_STYLE_ALREADY_HERE = "Assicurati che i birrifici e gli stili delle birre da importati siano"
 				+ "già presenti nel database locale";
 		
+		
+		public static final int MARK_SPINNER_STEP_VALUE = 1;
+		public static final int MARK_SPINNER_MIN_VALUE = 0;
+		public static final int MARK_SPINNER_MAX_VALUE = 5;
+		public static final int MARK_SPINNER_DEF_VALUE = MARK_SPINNER_MIN_VALUE;
+		
+		public static final double ABV_SPINNER_STEP_VALUE = 0.10;
+		public static final double ABV_SPINNER_MIN_VALUE = 0.00;
+		public static final double ABV_SPINNER_MAX_VALUE = 100.0;
+		public static final double ABV_SPINNER_DEF_VALUE = 5.00;
+		
+		public static final double PRICE_SPINNER_STEP_VALUE = 0.01;
+		public static final double PRICE_SPINNER_MIN_VALUE = 0.10;
+		public static final double PRICE_SPINNER_MAX_VALUE = 100.0;
+		public static final double PRICE_SPINNER_DEF_VALUE = 5.00;
+		
 	}
 	
 	public static String getFileExtension(File f){
@@ -1897,6 +1913,17 @@ public class Utils {
 		return res;
 	}
 	
+	public static boolean isOnlySpace(String s){
+		boolean ret = true;
+		for(int i=0;i<s.length();i++){
+			if(s.charAt(i)!=' '){
+				ret = false;
+				i = s.length(); 
+			}
+		}
+		return ret;
+		
+	}
 
 	
 //	private static String getDefaultViews(){

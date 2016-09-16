@@ -139,6 +139,10 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 		comboBoxMainStyle.addItem(newS);
 		comboBoxMainStyle.setSelectedItem(newS);
 	}
+	
+	public void setOkButtonEnabled(boolean enabled){
+		okButton.setEnabled(enabled);
+	}
 
 	/**
 	 * Launch the application.
@@ -279,6 +283,7 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
+				okButton.setEnabled(false);
 			}
 			{
 				cancelButton = new JButton("Cancel");
