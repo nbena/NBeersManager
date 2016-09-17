@@ -23,7 +23,8 @@ public class UpdateSavingException extends Exception {
 		UPDATING,
 		ADDING,
 		DELETING,
-		DELETING_TRAVERSAL
+		DELETING_TRAVERSAL,
+		UPDATING_TRAVERSAL
 	}
 	
 	public static String createMessage(Object o, ErrorWhile error){
@@ -45,6 +46,8 @@ public class UpdateSavingException extends Exception {
 			break;
 		case DELETING_TRAVERSAL:
 			up+= "Deleting elements related with this object.";
+		case UPDATING_TRAVERSAL: 
+			up += "Updating elements related with this object: ";
 			break;
 		}
 		

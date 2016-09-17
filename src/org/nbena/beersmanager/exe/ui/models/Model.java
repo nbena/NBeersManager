@@ -1309,6 +1309,15 @@ public class Model {
 		if(breweryData.remove(breweryShown)){
 			breweryData.add(newBrewery);
 			filteredBreweries = breweryData;
+			
+			List<Beer> beersToUpdate = QueryRunner.beersFilteredByBrewery(beerData, breweryShown);
+			if(!beersToUpdate.isEmpty()){
+				for(Beer b : beersToUpdate){
+					b.setBrewery(newBrewery);
+				}
+				saveBeer = true;
+			}
+			
 			somethingToSave = true;
 			saveBrewery = true;
 		}
@@ -1322,6 +1331,15 @@ public class Model {
 		if(styleData.remove(styleShown)){
 			styleData.add(newStyle);
 			filteredStyles = styleData;
+			
+			List<Beer> beersToUpdate = QueryRunner.beersFilteredByStyle(beerData, styleShown);
+			if(!beersToUpdate.isEmpty()){
+				for(Beer b : beersToUpdate){
+					b.setStyle(newStyle);
+				}
+				saveBeer = true;
+			}
+			
 			somethingToSave = true;
 			saveStyle = true;
 		}

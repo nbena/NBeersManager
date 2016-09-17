@@ -1704,6 +1704,12 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	/**
+	 * 
+	 * @param addNewBeerOrModify: <code>true</code> if the new beer will be added.
+	 * @param fromDialog: <code>true</code> if the action come from the dialog that show the element 
+	 * 					without modify it.
+	 */
 	public void showAddOrModifyBeer(boolean addNewBeerOrModify, boolean fromDialog){
 		if(addNewBeerOrModify){
 			model.setAddNewBeerOrModifyBeer(true);
@@ -1741,7 +1747,7 @@ public class ControllerMainGUI {
 			addBeerDialog.spinnerCommitEdit(type);
 		}
 		catch(ParseException e){
-			System.out.println("Catching exception with type: "+type.toString());
+//			System.out.println("Catching exception with type: "+type.toString());
 			addBeerDialog.setSpinnerTextFieldValue(type, addBeerDialog.getSpinnerValue(type));
 		}
 	}
@@ -2261,8 +2267,12 @@ public class ControllerMainGUI {
 		}
 
 		
+		
 		addBeerDialog = new ViewAddNewBeer();
 		addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryDataAlphaOrder()), Utils.getStyleStringListMainSub(model.getStyleDataMainSubOrder()));
+		
+		addBeerDialog.setOkButtonEnabled(true); //must be set to true because default is false
+		//and it is set to true just inside the text field document listener event
 		
 		initSpinnersBeer();
 		
@@ -2288,6 +2298,10 @@ public class ControllerMainGUI {
 
 		
 		addBreweryDialog=new ViewAddNewBrewery();
+		
+		addBreweryDialog.setOkButtonEnabled(true); //must be set to true because default is false
+		//and it is set to true just inside the text field document listener event
+		
 		addBreweryDialog.fillThings(model.getCountries());
 		setBreweryInDialog(addBreweryDialog);
 		
@@ -2307,6 +2321,10 @@ public class ControllerMainGUI {
 
 		
 		addStyleDialog=new ViewAddNewStyle();
+		
+		addStyleDialog.setOkButtonEnabled(true); //must be set to true because default is false
+		//and it is set to true just inside the text field document listener event
+		
 		addStyleDialog.fillThings(Utils.getMainStyleString(model.getOnlyMainStyles()), Utils.getFermentationsItalianString(), model.getCountries());
 		setStyleInDialog(addStyleDialog);
 		
@@ -2991,19 +3009,19 @@ public class ControllerMainGUI {
 	}
 	
 	private void refreshData(){
-		System.out.println("Refreshing data");
+//		System.out.println("Refreshing data");
 		switch(model.getDataShownNow()){
 		case BEER:
 			showBeers();
-			System.out.println("Refreshing beers");
+//			System.out.println("Refreshing beers");
 			break;
 		case STYLE:
 			showStyles();
-			System.out.print("Refreshing styles");
+//			System.out.print("Refreshing styles");
 			break;
 		default:
 			showBreweries();
-			System.out.print("Refreshing styles");
+//			System.out.print("Refreshing styles");
 			break;
 		}
 	}
