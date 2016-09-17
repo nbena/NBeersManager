@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JEditorPane;
+import javax.swing.JScrollBar;
 
 public class ViewException extends JDialog {
 
@@ -24,7 +25,10 @@ public class ViewException extends JDialog {
 	private JTextField textFieldErrorMessage;
 	
 	private JButton okButton;
+	private JButton btnSaveException;
 	private JEditorPane editorPaneException;
+	
+
 	
 	public void setErrorType(String t){
 		textFieldErrorType.setText(t);
@@ -48,6 +52,14 @@ public class ViewException extends JDialog {
 	
 	public void addActionListenerOkButton(ActionListener listener){
 		okButton.addActionListener(listener);
+	}
+	
+	public void addActionListenerSaveButton(ActionListener listener){
+		btnSaveException.addActionListener(listener);
+	}
+	
+	public String getStackTrace(){
+		return editorPaneException.getText();
 	}
 
 	/**
@@ -98,12 +110,24 @@ public class ViewException extends JDialog {
 		{
 			textFieldErrorType = new JTextField();
 			GridBagConstraints gbc_textFieldErrorType = new GridBagConstraints();
+			gbc_textFieldErrorType.gridwidth = 2;
 			gbc_textFieldErrorType.insets = new Insets(0, 0, 5, 0);
 			gbc_textFieldErrorType.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldErrorType.gridx = 2;
+			gbc_textFieldErrorType.gridx = 1;
 			gbc_textFieldErrorType.gridy = 2;
-			contentPanel.add(textFieldErrorType, gbc_textFieldErrorType);
+//			contentPanel.add(textFieldErrorType, gbc_textFieldErrorType);
 			textFieldErrorType.setColumns(10);
+		}
+		{
+			JScrollBar scrollBarErrorType = new JScrollBar();
+			scrollBarErrorType.setOrientation(JScrollBar.HORIZONTAL);
+			GridBagConstraints gbc_scrollBarErrorType = new GridBagConstraints();
+			gbc_scrollBarErrorType.gridwidth = 2;
+			gbc_scrollBarErrorType.insets = new Insets(0, 0, 5, 0);
+			gbc_scrollBarErrorType.gridx = 1;
+			gbc_scrollBarErrorType.gridy = 2;
+			contentPanel.add(scrollBarErrorType, gbc_scrollBarErrorType);
+			scrollBarErrorType.add(textFieldErrorType);
 		}
 		{
 			JLabel lblMessaggio = new JLabel("Messaggio:");
@@ -116,18 +140,29 @@ public class ViewException extends JDialog {
 		{
 			textFieldErrorMessage = new JTextField();
 			GridBagConstraints gbc_textFieldErrorMessage = new GridBagConstraints();
+			gbc_textFieldErrorMessage.gridwidth = 2;
 			gbc_textFieldErrorMessage.insets = new Insets(0, 0, 5, 0);
 			gbc_textFieldErrorMessage.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldErrorMessage.gridx = 2;
+			gbc_textFieldErrorMessage.gridx = 1;
 			gbc_textFieldErrorMessage.gridy = 4;
-			contentPanel.add(textFieldErrorMessage, gbc_textFieldErrorMessage);
+//			contentPanel.add(textFieldErrorMessage, gbc_textFieldErrorMessage);
 			textFieldErrorMessage.setColumns(10);
+		}
+		{
+			JScrollBar scrollBarErrorMessage = new JScrollBar();
+			scrollBarErrorMessage.setOrientation(JScrollBar.HORIZONTAL);
+			GridBagConstraints gbc_scrollBarErrorMessage = new GridBagConstraints();
+			gbc_scrollBarErrorMessage.gridwidth = 2;
+			gbc_scrollBarErrorMessage.insets = new Insets(0, 0, 5, 5);
+			gbc_scrollBarErrorMessage.gridx = 1;
+			gbc_scrollBarErrorMessage.gridy = 4;
+			contentPanel.add(scrollBarErrorMessage, gbc_scrollBarErrorMessage);
+			scrollBarErrorMessage.add(textFieldErrorMessage);
 		}
 		{
 			JScrollPane scrollPane = new JScrollPane();
 			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 			gbc_scrollPane.gridwidth = 3;
-			gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
 			gbc_scrollPane.fill = GridBagConstraints.BOTH;
 			gbc_scrollPane.gridx = 0;
 			gbc_scrollPane.gridy = 6;
@@ -137,25 +172,21 @@ public class ViewException extends JDialog {
 				scrollPane.setViewportView(editorPaneException);
 			}
 		}
+		
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			GridBagLayout gbl_buttonPane = new GridBagLayout();
-			gbl_buttonPane.columnWidths = new int[]{312, 47, 65, 0};
-			gbl_buttonPane.rowHeights = new int[]{23, 0};
-			gbl_buttonPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-			gbl_buttonPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-			buttonPane.setLayout(gbl_buttonPane);
 			{
-				okButton = new JButton("OK");
+			    okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
-				GridBagConstraints gbc_okButton = new GridBagConstraints();
-				gbc_okButton.anchor = GridBagConstraints.NORTHWEST;
-				gbc_okButton.insets = new Insets(0, 0, 0, 5);
-				gbc_okButton.gridx = 1;
-				gbc_okButton.gridy = 0;
-				buttonPane.add(okButton, gbc_okButton);
+				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
+				okButton.setEnabled(false);
+			}
+			{
+				btnSaveException = new JButton("Annulla");
+				buttonPane.add(btnSaveException);
 			}
 		}
 	}

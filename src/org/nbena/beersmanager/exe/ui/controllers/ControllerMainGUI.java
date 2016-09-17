@@ -81,7 +81,7 @@ public class ControllerMainGUI {
 	
 	private ViewPreferences preferencesDialog;
 	
-	private ViewException exceptionDialog;
+//	private ViewException exceptionDialog; //make this static so I can call if some problem appears in the main
 	
 	private ViewJOptionPane optionPane;
 
@@ -164,6 +164,8 @@ public class ControllerMainGUI {
 	
 	public void showBreweriesAverage(){
 		enableShowBreweriesItems();
+		
+		model.setAverages();
 		
 		model.setTableModel(new ModelBreweryAverageTable());
 		model.showBreweryData();
@@ -1088,15 +1090,11 @@ public class ControllerMainGUI {
 		
 	}
 	
-
-	
-	
 	
 	
 	private File initExport() throws FileNotFoundException{
 		File returned=null;
-		gui.initJFileChooser(Utils.getAllFileFilters(), new File(model.getLastDirectory()), false);
-		JFileChooser guiChooser=gui.getJFileChooser();
+		JFileChooser guiChooser = ViewMainGUI.initJFileChooser(Utils.getAllFileFilters(), new File(model.getLastDirectory()), false);
 		if(guiChooser.showSaveDialog(gui)==JFileChooser.APPROVE_OPTION){
 			returned=guiChooser.getSelectedFile();
 			
@@ -1105,7 +1103,7 @@ public class ControllerMainGUI {
 			}
 			
 			if (returned.exists()){
-				boolean askOverride = this.askOverrideFileIfExists();
+				boolean askOverride = askOverrideFileIfExists();
 				returned = askOverride==false ?  null : returned;
 			}
 			
@@ -1178,9 +1176,8 @@ public class ControllerMainGUI {
 		});
 	}
 	
-	private File getImportedFile(){
+	private File getImportedFile(JFileChooser guiChooser){
 		File file = null;
-		JFileChooser guiChooser=gui.getJFileChooser();
 		if(guiChooser.showOpenDialog(gui)==JFileChooser.APPROVE_OPTION){
 			file=guiChooser.getSelectedFile();
 		}
@@ -1234,8 +1231,9 @@ public class ControllerMainGUI {
 	
 	private File initImport(){
 		File file = null;
-		gui.initJFileChooser(Utils.getSingleFileFilterAsArray(Model.ExportType.JSON), new File(model.getLastDirectory()), false);
-		file = getImportedFile();
+		JFileChooser chooser = ViewMainGUI.initJFileChooser(Utils.getSingleFileFilterAsArray(Model.ExportType.JSON),
+				new File(model.getLastDirectory()), false);
+		file = getImportedFile(chooser);
 		return file;
 	}
 	
@@ -2986,8 +2984,8 @@ public class ControllerMainGUI {
 	
 	
 	
-	public void showExceptionDialog(Exception e){
-		exceptionDialog = new ViewException();
+	public static void showExceptionDialog(Exception e){
+		ViewException exceptionDialog = new ViewException();
 		
 		exceptionDialog.addActionListenerOkButton(new ActionListener(){
 
@@ -3000,10 +2998,46 @@ public class ControllerMainGUI {
 			
 		});
 		
+		String stackTrace = Utils.getStackTrace(e);
+		
+		
 		exceptionDialog.init();
 		exceptionDialog.setErrorType(e.getClass().getSimpleName());
 		exceptionDialog.setErrorMessage(e.getMessage());
-		exceptionDialog.setStackTrace("<html><body style=\"color: red;\">", Utils.getStackTrace(e), "</body></html>");
+		exceptionDialog.setStackTrace("<html><body style=\"color: red;\">", stackTrace, "</body></html>");
+		
+		
+		exceptionDialog.addActionListenerSaveButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+						
+					File returned= null;
+					JFileChooser  guiChooser = ViewMainGUI.initJFileChooser(Utils.getSingleFileFilterAsArray(Model.ExportType.TXT),
+								new File(System.getProperty("user.home")), false);
+							
+					if(guiChooser.showSaveDialog(null)==JFileChooser.APPROVE_OPTION){
+						returned = guiChooser.getSelectedFile();
+								
+						if(Utils.checkIfExtensionIsPresent(returned)==false){
+							returned=new File(returned.getAbsolutePath()+".txt");
+							}
+								
+							if (returned.exists()){
+								boolean askOverride = askOverrideFileIfExists();
+								returned = askOverride==false ?  null : returned;
+								}
+								
+						try {
+							Model.saveException(stackTrace, returned);
+							} catch (FileNotFoundException e) {
+								tellUserErrorSaveException();			
+							}
+								
+							}
+							
+						}
+		});
 		
 		exceptionDialog.setVisible(true);
 	}
@@ -3244,8 +3278,9 @@ public class ControllerMainGUI {
 	
 	
 	
-	private boolean askOverrideFileIfExists(){
-		optionPane.setParent(gui);
+	private static boolean askOverrideFileIfExists(){
+		ViewJOptionPane optionPane = new ViewJOptionPane();
+		optionPane.setParent(null);
 		int res = optionPane.showOkCancel(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_OVERRIDE_FILE);
 		return ViewJOptionPane.isOkOption(res);
 
@@ -3255,6 +3290,24 @@ public class ControllerMainGUI {
 		optionPane.setParent(gui);
 		int res = optionPane.showYesNo(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_SELECTED_THINGS);
 		return ViewJOptionPane.isYesOption(res);
+	}
+	
+	public static void tellToUserDefaultOptionWillBeUsed(){
+		ViewJOptionPane optionPane = new ViewJOptionPane();
+		optionPane.setParent(null);
+		optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.WARN_DEFAULT_CONFIGURATION);
+	}
+	
+	public static void tellUserErrorNoCountry(){
+		ViewJOptionPane optionPane = new ViewJOptionPane();
+		optionPane.setParent(null);
+		optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.ERR_NO_COUNTRY);
+	}
+	
+	public static void tellUserErrorSaveException(){
+		ViewJOptionPane optionPane = new ViewJOptionPane();
+		optionPane.setParent(null);
+		optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.ERR_SAVE_EXCEPTION);
 	}
 	
 	private void addOperationOnClose(){
@@ -3305,5 +3358,8 @@ public class ControllerMainGUI {
 			
 		});
 	}
+	
+
+	
 
 }

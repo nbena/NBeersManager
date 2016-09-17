@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -1632,6 +1633,11 @@ public class Model {
 		return ret;
 	}
 	
+	public static void saveException(String exception, File f) throws FileNotFoundException{
+		PrintStream out = new PrintStream(new FileOutputStream(f));
+		out.print(exception);
+		out.close();
+	}
 	
 
 }

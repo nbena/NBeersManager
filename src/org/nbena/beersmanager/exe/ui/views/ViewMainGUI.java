@@ -539,7 +539,7 @@ public class ViewMainGUI extends JFrame {
 		mntmViewStyles.addActionListener(listener);
 	}
 
-	private void setFilters(JFileChooser chooser, FileNameExtensionFilter[] filters){
+	private static void setFilters(JFileChooser chooser, FileNameExtensionFilter[] filters){
 		for(FileNameExtensionFilter filter: filters){
 			chooser.setFileFilter(filter);
 		}
@@ -549,8 +549,9 @@ public class ViewMainGUI extends JFrame {
 		return chooser;
 	}
 	
-	public void initJFileChooser(FileNameExtensionFilter[] filters, File directory, boolean multiSelectionEnabled){
-		chooser=new JFileChooser();
+	//static because I need to call when the gui is not ready
+	public static JFileChooser initJFileChooser(FileNameExtensionFilter[] filters, File directory, boolean multiSelectionEnabled){
+		JFileChooser chooser=new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		
 		setFilters(chooser, filters);
@@ -558,6 +559,7 @@ public class ViewMainGUI extends JFrame {
 		chooser.setCurrentDirectory(directory);
 		chooser.setAcceptAllFileFilterUsed(false);
 		chooser.setMultiSelectionEnabled(multiSelectionEnabled);
+		return chooser;
 	}
 	
 	

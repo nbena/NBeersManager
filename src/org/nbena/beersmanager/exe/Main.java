@@ -217,27 +217,37 @@ public class Main {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 					| UnsupportedLookAndFeelException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				ControllerMainGUI.showExceptionDialog(e);
+				System.exit(1);
 			}
 			
 			Model model =new Model();
+			Configuration conf = null;
+			
 			
 			try {
-				Configuration conf = ConfigurationFactory.readConfiguration(ConfigurationFactory.getDefaultConfigurationPath());
+				conf = ConfigurationFactory.readConfiguration(ConfigurationFactory.getDefaultConfigurationPath());
 				conf = ConfigurationFactory.setupPath(conf);
 				model.setConfiguration(conf);
 			} catch (JSONException | FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				ControllerMainGUI.showExceptionDialog(e);
+				ControllerMainGUI.tellToUserDefaultOptionWillBeUsed();
+				
+				conf = ConfigurationFactory.getDefaultConfiguration();
+				model.setConfiguration(conf);
 			}
 			
 			try {
 				model.setCountries(Utils.getCountries(model.getConfiguration().getCountriesFilePath()));
 			} catch (JSONException | FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				ControllerMainGUI.showExceptionDialog(e);
+				ControllerMainGUI.tellUserErrorNoCountry();
+				System.exit(1);
 			}
+			
 			
 			ViewMainGUI gui = new ViewMainGUI(model);
 			ControllerMainGUI controller=new ControllerMainGUI(gui, model);
@@ -249,8 +259,9 @@ public class Main {
 			try {
 				model.readThings();
 			} catch (FileNotFoundException | JSONException | RecomposingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				ControllerMainGUI.showExceptionDialog(e);
+				System.exit(1);
 			}
 			
 			model.setAverages();
