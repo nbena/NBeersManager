@@ -2552,29 +2552,49 @@ public class ControllerMainGUI {
 					
 //				System.out.println(Arrays.toString(gui.getTableSelectedRows()));
 				
-				if(askSureToDelete()){
+//				if(askSureToDelete()){
 					try{
-						if(model.getDataShownNow()==DataShownNow.BEER){
-							List<Beer> toDelete = Utils.subListBeer(model.getBeerData(), gui.getTableSelectedRows());
-							
-							
-//							System.out.println("Beer at pos "+gui.getTableSelectedRows()[0]);
-//							Utils.printBeer(model.getSelectedBeer(gui.getTableSelectedRows()[0]), System.out);
-							
-							
-							deleteBeersLogic(toDelete);
-						}
+						
+							if(model.getDataShownNow()==DataShownNow.BEER){
+								
+								if(askSureToDeleteBeer()){
+									List<Beer> toDelete = Utils.subListBeer(model.getBeerData(), gui.getTableSelectedRows());
+									
+									
+//									System.out.println("Beer at pos "+gui.getTableSelectedRows()[0]);
+//									Utils.printBeer(model.getSelectedBeer(gui.getTableSelectedRows()[0]), System.out);
+									
+									
+									deleteBeersLogic(toDelete);
+								}
+								
+
+							}
+
+						
 						else if(model.getDataShownNow()==DataShownNow.STYLE){
-							List<BreweryAverage> toDelete = Utils.subListBreweryAverage(model.getBreweryAverageData(), gui.getTableSelectedRows());
-							deleteBreweriesLogic(toDelete);
+							
+							if(askSureToDeleteStyle()){
+
+								
+								List<Style> toDelete = Utils.subListStyle(model.getStyleData(), gui.getTableSelectedRows());
+								deleteStylesLogic(toDelete);
+							}
+							
 						}else{
-							List<Style> toDelete = Utils.subListStyle(model.getStyleData(), gui.getTableSelectedRows());
-							deleteStylesLogic(toDelete);
+							
+							if(askSureToDeleteBrewery()){
+								
+								List<BreweryAverage> toDelete = Utils.subListBreweryAverage(model.getBreweryAverageData(), gui.getTableSelectedRows());
+								deleteBreweriesLogic(toDelete);
+							}
+							
+
 						}
 					}catch(UpdateSavingException e){
 						showExceptionDialog(e);
 					}
-				}
+//				}
 			}
 			
 		});
@@ -3174,7 +3194,7 @@ public class ControllerMainGUI {
 	}
 	
 	
-	public boolean askSureToDelete(){
+	public boolean askSureToDeleteBeer(){
 		optionPane.setParent(gui);
 		boolean ret = false;
 		int res = optionPane.showOkCancel(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_BEFORE_DELETE);
@@ -3183,6 +3203,27 @@ public class ControllerMainGUI {
 		}
 		return ret;
 	}
+	
+	public boolean askSureToDeleteBrewery(){
+		optionPane.setParent(gui);
+		boolean ret = false;
+		int res = optionPane.showOkCancel(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_BEFORE_DELETE_BREWERY);
+		if(ViewJOptionPane.isOkOption(res)){
+			ret = true;
+		}
+		return ret;
+	}
+	
+	public boolean askSureToDeleteStyle(){
+		optionPane.setParent(gui);
+		boolean ret = false;
+		int res = optionPane.showOkCancel(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_BEFORE_DELETE_STYLE);
+		if(ViewJOptionPane.isOkOption(res)){
+			ret = true;
+		}
+		return ret;
+	}
+	
 	
 	
 	private boolean askOverrideFileIfExists(){

@@ -1394,6 +1394,10 @@ public class Utils {
 		public static final String QUESTION = "Domanda";
 		public static final String CONFIRMATION_BEFORE_EXIT = "Ci sono dei dati da salvare. Uscire comunque?";
 		public static final String CONFIRMATION_BEFORE_DELETE = "Vuoi davvero eliminare questi dati?";
+		public static final String CONFIRMATION_BEFORE_DELETE_STYLE = "Vuoi davvero eliminare questo stile?"
+				+ "\nSarà necessario anche eliminare tutte le birre appartenenti ad esso.";
+		public static final String CONFIRMATION_BEFORE_DELETE_BREWERY = "Vuoi davvero eliminare questo birrificio?"
+				+ "\nSarà necessario anche eliminare tutte le birre prodotte da esso.";
 		public static final String CONFIRMATION_OVERRIDE_FILE = "Il file esiste già. Vuoi sovrascriverlo?";
 		public static final String CONFIRMATION_SELECTED_THINGS = "Vuoi esportare solo gli elementi selezionati?";
 		
