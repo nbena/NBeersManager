@@ -2987,6 +2987,9 @@ public class ControllerMainGUI {
 	public static void showExceptionDialog(Exception e){
 		ViewException exceptionDialog = new ViewException();
 		
+//		System.out.print("Exception msg: "+e.getMessage());
+//		System.out.println("Exception class: "+e.getClass().getSimpleName());
+		
 		exceptionDialog.addActionListenerOkButton(new ActionListener(){
 
 			@Override
@@ -3308,6 +3311,12 @@ public class ControllerMainGUI {
 		ViewJOptionPane optionPane = new ViewJOptionPane();
 		optionPane.setParent(null);
 		optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.ERR_SAVE_EXCEPTION);
+	}
+	
+	public static void tellUserErrorSaveDefaultConfig(){
+		ViewJOptionPane optionPane = new ViewJOptionPane();
+		optionPane.setParent(null);
+		optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.ERR_SAVE_DEFAULT_CONFIG);
 	}
 	
 	private void addOperationOnClose(){

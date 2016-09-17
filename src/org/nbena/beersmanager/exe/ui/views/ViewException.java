@@ -79,7 +79,7 @@ public class ViewException extends JDialog {
 	 * Create the dialog.
 	 */
 	public ViewException() {
-		setBounds(100, 100, 450, 442);
+		setBounds(100, 100, 560, 442);
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -100,25 +100,17 @@ public class ViewException extends JDialog {
 			contentPanel.add(lblNewLabel, gbc_lblNewLabel);
 		}
 		{
-			JLabel lblErrore = new JLabel("Errore:");
-			GridBagConstraints gbc_lblErrore = new GridBagConstraints();
-			gbc_lblErrore.insets = new Insets(0, 0, 5, 5);
-			gbc_lblErrore.gridx = 0;
-			gbc_lblErrore.gridy = 2;
-			contentPanel.add(lblErrore, gbc_lblErrore);
-		}
-		{
 			textFieldErrorType = new JTextField();
 			GridBagConstraints gbc_textFieldErrorType = new GridBagConstraints();
-			gbc_textFieldErrorType.gridwidth = 2;
+			gbc_textFieldErrorType.gridwidth = 3;
 			gbc_textFieldErrorType.insets = new Insets(0, 0, 5, 0);
 			gbc_textFieldErrorType.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldErrorType.gridx = 1;
+			gbc_textFieldErrorType.gridx = 0;
 			gbc_textFieldErrorType.gridy = 2;
-//			contentPanel.add(textFieldErrorType, gbc_textFieldErrorType);
+			contentPanel.add(textFieldErrorType, gbc_textFieldErrorType);
 			textFieldErrorType.setColumns(10);
-		}
-		{
+//		}
+//		{
 			JScrollBar scrollBarErrorType = new JScrollBar();
 			scrollBarErrorType.setOrientation(JScrollBar.HORIZONTAL);
 			GridBagConstraints gbc_scrollBarErrorType = new GridBagConstraints();
@@ -126,29 +118,34 @@ public class ViewException extends JDialog {
 			gbc_scrollBarErrorType.insets = new Insets(0, 0, 5, 0);
 			gbc_scrollBarErrorType.gridx = 1;
 			gbc_scrollBarErrorType.gridy = 2;
-			contentPanel.add(scrollBarErrorType, gbc_scrollBarErrorType);
-			scrollBarErrorType.add(textFieldErrorType);
+
+//			scrollBarErrorType.add(textFieldErrorType);
+			scrollBarErrorType.setModel(textFieldErrorType.getHorizontalVisibility());
+			
+//			contentPanel.add(textFieldErrorType, gbc_textFieldErrorType);
+//			contentPanel.add(scrollBarErrorType, gbc_scrollBarErrorType);
+
 		}
 		{
-			JLabel lblMessaggio = new JLabel("Messaggio:");
-			GridBagConstraints gbc_lblMessaggio = new GridBagConstraints();
-			gbc_lblMessaggio.insets = new Insets(0, 0, 5, 5);
-			gbc_lblMessaggio.gridx = 0;
-			gbc_lblMessaggio.gridy = 4;
-			contentPanel.add(lblMessaggio, gbc_lblMessaggio);
+			JLabel lblErrore = new JLabel("Errore:");
+			GridBagConstraints gbc_lblErrore = new GridBagConstraints();
+			gbc_lblErrore.insets = new Insets(0, 0, 5, 5);
+			gbc_lblErrore.gridx = 0;
+			gbc_lblErrore.gridy = 1;
+			contentPanel.add(lblErrore, gbc_lblErrore);
 		}
 		{
 			textFieldErrorMessage = new JTextField();
 			GridBagConstraints gbc_textFieldErrorMessage = new GridBagConstraints();
-			gbc_textFieldErrorMessage.gridwidth = 2;
+			gbc_textFieldErrorMessage.gridwidth = 3;
 			gbc_textFieldErrorMessage.insets = new Insets(0, 0, 5, 0);
 			gbc_textFieldErrorMessage.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldErrorMessage.gridx = 1;
+			gbc_textFieldErrorMessage.gridx = 0;
 			gbc_textFieldErrorMessage.gridy = 4;
-//			contentPanel.add(textFieldErrorMessage, gbc_textFieldErrorMessage);
+			contentPanel.add(textFieldErrorMessage, gbc_textFieldErrorMessage);
 			textFieldErrorMessage.setColumns(10);
-		}
-		{
+//		}
+//		{
 			JScrollBar scrollBarErrorMessage = new JScrollBar();
 			scrollBarErrorMessage.setOrientation(JScrollBar.HORIZONTAL);
 			GridBagConstraints gbc_scrollBarErrorMessage = new GridBagConstraints();
@@ -156,8 +153,20 @@ public class ViewException extends JDialog {
 			gbc_scrollBarErrorMessage.insets = new Insets(0, 0, 5, 5);
 			gbc_scrollBarErrorMessage.gridx = 1;
 			gbc_scrollBarErrorMessage.gridy = 4;
-			contentPanel.add(scrollBarErrorMessage, gbc_scrollBarErrorMessage);
-			scrollBarErrorMessage.add(textFieldErrorMessage);
+
+//			scrollBarErrorMessage.add(textFieldErrorMessage);
+			scrollBarErrorMessage.setModel(textFieldErrorMessage.getHorizontalVisibility());
+			
+//			contentPanel.add(textFieldErrorMessage,gbc_textFieldErrorMessage);
+//			contentPanel.add(scrollBarErrorMessage, gbc_scrollBarErrorMessage);
+		}
+		{
+			JLabel lblMessaggio = new JLabel("Messaggio:");
+			GridBagConstraints gbc_lblMessaggio = new GridBagConstraints();
+			gbc_lblMessaggio.insets = new Insets(0, 0, 5, 5);
+			gbc_lblMessaggio.gridx = 0;
+			gbc_lblMessaggio.gridy = 3;
+			contentPanel.add(lblMessaggio, gbc_lblMessaggio);
 		}
 		{
 			JScrollPane scrollPane = new JScrollPane();
@@ -182,10 +191,10 @@ public class ViewException extends JDialog {
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
-				okButton.setEnabled(false);
+				okButton.setEnabled(true);
 			}
 			{
-				btnSaveException = new JButton("Annulla");
+				btnSaveException = new JButton("Salva errore");
 				buttonPane.add(btnSaveException);
 			}
 		}

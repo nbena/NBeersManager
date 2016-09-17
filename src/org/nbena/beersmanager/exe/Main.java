@@ -212,6 +212,8 @@ public class Main {
 //			e.printStackTrace();
 //		}
 //			
+//		System.out.println(Utils.currentDirectory());
+		
 			
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -237,6 +239,13 @@ public class Main {
 				
 				conf = ConfigurationFactory.getDefaultConfiguration();
 				model.setConfiguration(conf);
+				try {
+					model.saveConfiguration();
+				} catch (FileNotFoundException e1) {
+					
+					ControllerMainGUI.tellUserErrorSaveDefaultConfig();
+					//it happens only if we are very unlucky!!
+				}
 			}
 			
 			try {

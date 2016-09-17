@@ -35,7 +35,7 @@ public class ConfigurationFactory {
 		conf = getDefaultView(conf);
 		conf = getDefaultSortingConfiguration(conf);
 		conf = getDefaultFilteringConfiguration(conf);
-		conf.setPaths(Utils.jsonConfiguration(Utils.currentDirectory()));
+		conf.setPaths(Utils.currentDirectory());
 		return conf;
 	}
 	
@@ -99,9 +99,9 @@ public class ConfigurationFactory {
 		return exporter.readConfiguration();
 	}
 	
-	public static Configuration readConfiguration() throws JSONException, FileNotFoundException{
-		return readConfiguration(getDefaultConfigurationPath());
-	}
+//	public static Configuration readConfiguration() throws JSONException, FileNotFoundException{
+//		return readConfiguration(getDefaultConfigurationPath());
+//	}
 	
 	public static void writeConfiguration(Configuration c, String configurationPath) throws FileNotFoundException{
 		JSONExporterConfiguration exporter=new JSONExporterConfiguration();
@@ -109,8 +109,10 @@ public class ConfigurationFactory {
 		exporter.writeConfiguration(c);
 	}
 	
-	public static void writeConfiguration(Configuration c) throws FileNotFoundException{
-		writeConfiguration(c, getDefaultConfigurationPath());
-	}
+//	public static void writeConfiguration(Configuration c) throws FileNotFoundException{
+//		writeConfiguration(c, getDefaultConfigurationPath());
+//	}
+	
+	
 
 }

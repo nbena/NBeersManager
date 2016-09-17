@@ -1447,12 +1447,13 @@ public class Utils {
 		public static final String WARN_BREWERY_STYLE_ALREADY_HERE = "Assicurati che i birrifici e gli stili delle birre da importati siano"
 				+ "già presenti nel database locale";
 		
-		public static final String WARN_DEFAULT_CONFIGURATION = "Due to the previous error, default configuration will be used";
-		public static final String ERR_NO_COUNTRY = "Due to the previous error, there are no country to shown.\n"
-				+ "The program can't work without.";
+		public static final String WARN_DEFAULT_CONFIGURATION = "A causa dell'errore precedente, verrà usata e salvata la configurazione di default";
+		public static final String ERR_NO_COUNTRY = "A causa dell'errore precedente, non è possibile caricare la lista delle nazioni.\n"
+				+ "Il programma non può funzionare senza.";
 		
-		public static final String ERR_SAVE_EXCEPTION = "Error while saving this error"; //when trying to save an exception, there is no
+		public static final String ERR_SAVE_EXCEPTION = "Errore mentra si salvava questo errore"; //when trying to save an exception, there is no
 		//need to show another exception dialog if an error occurs
+		public static final String ERR_SAVE_DEFAULT_CONFIG = "Errore mentre si salvava la configurazione di default.\nAl prossimo avvio si ritetnterà.";
 		
 		
 		public static final int MARK_SPINNER_STEP_VALUE = 1;
