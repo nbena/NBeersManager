@@ -1329,8 +1329,6 @@ public class Model {
 	
 	public void deleteBeers(List<Beer> beers) throws UpdateSavingException{
 		for(Beer b : beers){
-//			System.out.println("The beer to delete is: ");
-//			Utils.printBeer(b, System.out);
 			deleteBeer(b);
 		}
 	}
@@ -1376,6 +1374,16 @@ public class Model {
 		if(breweryData.remove(toDelete)){
 			filteredBreweries = breweryData;
 			
+			List<Beer> beersToDelete = QueryRunner.beersFilteredByBrewery(beerData, Utils.fromBreweryAverageToBrewery(toDelete));
+			if(!beersToDelete.isEmpty()){
+				try{
+					deleteBeers(beersToDelete);
+				}catch(UpdateSavingException e){
+					breweryData.add(toDelete);
+					throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
+				}
+			}
+			
 			somethingToSave = true;
 		}
 		else{
@@ -1392,6 +1400,18 @@ public class Model {
 		}
 		if(styleData.remove(toDelete)){
 			filteredStyles = styleData;
+			
+			List<Beer> beersToDelete = QueryRunner.beersFilteredByStyle(beerData, toDelete);
+			if(!beersToDelete.isEmpty()){
+				try{
+					deleteBeers(beersToDelete);
+				}catch(UpdateSavingException e){
+					styleData.add(toDelete);
+					throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING_TRAVERSAL);
+				}
+				
+			}
+			
 			
 			somethingToSave = true;
 		}
@@ -1539,18 +1559,19 @@ public class Model {
 			filteredStyles = styleData;
 			
 		}
+	}
 		
 //		styleSortingCurrentAlgorithm.apply(styleData);
 //		clearFilter(true, true, false);
 		
-	}
-
-	/**
-	 * @return the labelTable
-	 */
-	public Hashtable<Integer, JLabel> getLabelTable() {
-		return labelTable;
-	}
+//	}
+//
+//	/**
+//	 * @return the labelTable
+//	 */
+//	public Hashtable<Integer, JLabel> getLabelTable() {
+//		return labelTable;
+//	}
 
 	/**
 	 * @return the spinnerModel
