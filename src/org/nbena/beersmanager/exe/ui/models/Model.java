@@ -121,9 +121,10 @@ public class Model {
 	
 	private boolean somethingToSave = false;
 	
-	private Hashtable<Integer, JLabel> labelTable;
+	private boolean saveBeer = false;
+	private boolean saveBrewery = false;
+	private boolean saveStyle = false;
 	
-	private MarkSpinnerModel spinnerModel;
 	
 	public static final SpinnerNumberModel spinnerMarkModel = new SpinnerNumberModel(Utils.Constants.MARK_SPINNER_DEF_VALUE,
 			Utils.Constants.MARK_SPINNER_MIN_VALUE, Utils.Constants.MARK_SPINNER_MAX_VALUE, Utils.Constants.MARK_SPINNER_STEP_VALUE);
@@ -134,44 +135,41 @@ public class Model {
 	public static final SpinnerNumberModel spinnerABVModel = new SpinnerNumberModel(Utils.Constants.ABV_SPINNER_DEF_VALUE,
 			Utils.Constants.ABV_SPINNER_MIN_VALUE, Utils.Constants.ABV_SPINNER_MAX_VALUE, Utils.Constants.ABV_SPINNER_STEP_VALUE);
 	
-	private void initLabelTable(){
-//		labelTable = new Hashtable<Integer, JLabel>();
-//		labelTable.put(1,  new JLabel("1"));
-//		labelTable.put(2, new JLabel("2"));
-//		labelTable.put(3,  new JLabel("3"));
-//		labelTable.put(4, new JLabel("4"));
-//		labelTable.put(5, new JLabel("5"));
-	}
+//	private void initLabelTable(){
+////		labelTable = new Hashtable<Integer, JLabel>();
+////		labelTable.put(1,  new JLabel("1"));
+////		labelTable.put(2, new JLabel("2"));
+////		labelTable.put(3,  new JLabel("3"));
+////		labelTable.put(4, new JLabel("4"));
+////		labelTable.put(5, new JLabel("5"));
+//	}
 	
-	private void initSpinner(){
-		spinnerModel = new MarkSpinnerModel();
-	}
 	
 	public Model(){
 		//tableModel=new MyModelAbstractTable();
-		initLabelTable();
-		initSpinner();
+//		initLabelTable();
+//		initSpinner();
 	}
 	
 	public Model(MyModelAbstractTable tableModel){
 		this.tableModel=tableModel;
-		initLabelTable();
-		initSpinner();
+//		initLabelTable();
+//		initSpinner();
 	}
 	
 	public Model(MyModelAbstractDialog dialogModel) {
 		super();
 		this.dialogModel = dialogModel;
-		initLabelTable();
-		initSpinner();
+//		initLabelTable();
+//		initSpinner();
 	}
 
 	public Model(MyModelAbstractTable tableModel, MyModelAbstractDialog dialogModel) {
 		super();
 		this.tableModel = tableModel;
 		this.dialogModel = dialogModel;
-		initLabelTable();
-		initSpinner();
+//		initLabelTable();
+//		initSpinner();
 	}
 
 	/**
@@ -1254,6 +1252,7 @@ public class Model {
 			beerData.add(beer);
 			filteredBeers = beerData;
 			somethingToSave = true;
+			saveBeer = true;
 		}
 		else{
 			throw new UpdateSavingException(beer, UpdateSavingException.ErrorWhile.ADDING);
@@ -1265,6 +1264,7 @@ public class Model {
 			breweryData.add(Utils.fromBreweryToBreweryAverage(brewery));
 			filteredBreweries = breweryData;
 			somethingToSave = true;
+			saveBrewery = true;
 		}
 		else{
 			throw new UpdateSavingException(brewery, UpdateSavingException.ErrorWhile.ADDING);
@@ -1284,6 +1284,7 @@ public class Model {
 			styleData.add(style);
 			filteredStyles = styleData;
 			somethingToSave = true;
+			saveStyle = true;
 		}
 		else{
 			throw new UpdateSavingException(style, UpdateSavingException.ErrorWhile.ADDING);
@@ -1296,6 +1297,7 @@ public class Model {
 			beerData.add(newBeer);
 			filteredBeers = beerData;
 			somethingToSave = true;
+			saveBeer = true;
 		}
 		else{
 			throw new UpdateSavingException(newBeer, UpdateSavingException.ErrorWhile.UPDATING);
@@ -1308,6 +1310,7 @@ public class Model {
 			breweryData.add(newBrewery);
 			filteredBreweries = breweryData;
 			somethingToSave = true;
+			saveBrewery = true;
 		}
 		else{
 			throw new UpdateSavingException(newBrewery, UpdateSavingException.ErrorWhile.UPDATING);
@@ -1320,6 +1323,7 @@ public class Model {
 			styleData.add(newStyle);
 			filteredStyles = styleData;
 			somethingToSave = true;
+			saveStyle = true;
 		}
 		else{
 			throw new UpdateSavingException(newStyle, UpdateSavingException.ErrorWhile.UPDATING);
@@ -1357,6 +1361,7 @@ public class Model {
 			filteredBeers = beerData;
 			
 			somethingToSave = true;
+			saveBeer = true;
 		}
 		else{
 			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
@@ -1385,6 +1390,8 @@ public class Model {
 			}
 			
 			somethingToSave = true;
+			saveBrewery = true;
+			saveBeer = true;
 		}
 		else{
 			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
@@ -1414,6 +1421,8 @@ public class Model {
 			
 			
 			somethingToSave = true;
+			saveStyle = true;
+			saveBeer = true;
 		}
 		else{
 			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
@@ -1461,9 +1470,22 @@ public class Model {
 	}
 	
 	public void saveThings() throws JSONException, FileNotFoundException {
-		saveBeers();
-		saveBreweries();
-		saveStyles();
+		if(saveBeer){
+			saveBeers();
+			saveBeer = false;
+		}
+		
+		if(saveBrewery){
+			saveBreweries();
+			saveBrewery = false;
+		}
+		
+		
+		if(saveStyle){
+			saveStyles();
+			saveStyle = false;
+		}
+		
 		somethingToSave = false;
 	}
 	
