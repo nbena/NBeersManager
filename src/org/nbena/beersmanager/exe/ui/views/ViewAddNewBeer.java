@@ -18,6 +18,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentListener;
 
+import org.nbena.beersmanager.exe.Utils;
+import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel;
+import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.ABVSpinnerNumberModel;
+import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.MarkSpinnerNumberModel;
+import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.PriceSpinnerNumberModel;
 
 import java.awt.Insets;
 import java.awt.event.ActionListener;
@@ -25,9 +30,11 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import java.awt.event.MouseAdapter;
+import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 
 import javax.swing.JScrollPane;
@@ -125,9 +132,6 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 //		textFieldTried.setText(t);
 //	}
 
-	public void setMark(int mark){
-		markSpinner.setValue(mark);
-	}
 	
 	public void setTriedButtonDefault(boolean tried){
 		setTried(tried);
@@ -171,8 +175,18 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 //	}
 	
 	public double getABV(){
-//		return ((Double)abvSpinner.getValue())==null ? 0.0 : (Double)abvSpinner.getValue();
-		return (Double)abvSpinner.getValue();
+//		Object ret = null;
+//		try{
+//			ret= (Double)abvSpinner.getValue();
+//		}catch(ClassCastException e){
+//			int r = (Integer)abvSpinner.getValue();
+//			double t = new Double(r);
+//			ret = t;
+//		}
+//		return (Double)ret;
+//		ABVSpinnerNumberModel model = (ABVSpinnerNumberModel)abvSpinner.getModel();
+//		return model.getValue();
+		return ((SpinnerNumberModel)abvSpinner.getModel()).getNumber().doubleValue();
 	}
 	
 	public int getStars(){
@@ -183,9 +197,12 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	public int getMark(){
 //		return textFieldMark.getText();
 //		return ((Integer)markSpinner.getValue())==null ? 0 : (Integer)markSpinner.getValue();
-		return (Integer)markSpinner.getValue();
+//		return (Integer)markSpinner.getValue();
 //		MarkSpinnerModel model = (MarkSpinnerModel)markSpinner.getModel();
 //		return model.getIntValue();
+//		MarkSpinnerNumberModel model = (MarkSpinnerNumberModel)markSpinner.getModel();
+//		return model.getValue();
+		return ((SpinnerNumberModel)markSpinner.getModel()).getNumber().intValue();
 	}
 	
 //	public String getTried(){
@@ -201,7 +218,18 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 //	}
 	
 	public double getPrice(){
-		return (Double)priceSpinner.getValue();
+//		Object ret = null;
+//		try{
+//			ret= (Double)priceSpinner.getValue();
+//		}catch(ClassCastException e){
+//			int r = (Integer)priceSpinner.getValue();
+//			double t = new Double(r);
+//			ret = t;
+//		}
+//		return (Double)ret;
+//		PriceSpinnerNumberModel model = (PriceSpinnerNumberModel)priceSpinner.getModel();
+//		return model.getValue();
+		return ((SpinnerNumberModel)priceSpinner.getModel()).getNumber().doubleValue();
 	}
 	
 	public String getPlace(){
@@ -224,13 +252,13 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		rdbtnTriedNo.addMouseListener(listener);
 	}
 	
-	public void setTextFieldPriceEditable(boolean enabled){
-		textFieldPrice.setEditable(enabled);
-	}
-	
-	public void setTextFieldMarkEditable(boolean enabled){
-		textFieldMark.setEditable(enabled);
-	}
+//	public void setTextFieldPriceEditable(boolean enabled){
+//		textFieldPrice.setEditable(enabled);
+//	}
+//	
+//	public void setTextFieldMarkEditable(boolean enabled){
+//		textFieldMark.setEditable(enabled);
+//	}
 	
 //	public void setPrice(String t){
 //		textFieldPrice.setText(t);
@@ -250,15 +278,15 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	}
 	
 	
-	public void addDocumentListenerABV(DocumentListener listener){
-		textFieldABV.getDocument().addDocumentListener(listener);
-	}
+//	public void addDocumentListenerABV(DocumentListener listener){
+//		textFieldABV.getDocument().addDocumentListener(listener);
+//	}
+//	
 	
 	
-	
-	public void setStarSliderLableTable(Hashtable<Integer, JLabel> table){
-		starSlider.setLabelTable(table);
-	}
+//	public void setStarSliderLableTable(Hashtable<Integer, JLabel> table){
+//		starSlider.setLabelTable(table);
+//	}
 	
 	
 //	public void setSpinnerModel(MarkSpinnerModel model){
@@ -290,7 +318,10 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	
 	public void setMarkSpinnerEnable(boolean enabled){
 		markSpinner.setEnabled(enabled);
-		markSpinner.setValue(0);
+		if(!enabled){
+			markSpinner.setValue(0);
+		}
+		
 	}
 	
 	
@@ -330,50 +361,97 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 //		priceSpinner.commitEdit();
 //	}
 	
-	public void setSpinnerModel(SpinnerType type, SpinnerNumberModel model){
-		switch(type){
-		case ABV:
-			abvSpinner.setModel(model);
-			break;
-		case MARK:
-			markSpinner.setModel(model);
-			break;
-		case PRICE:
-			priceSpinner.setModel(model);
-			break;		
-		}
-		
-	}
+//	public void setSpinnerModel(SpinnerType type, SpinnerNumberModel model){
+//		switch(type){
+//		case ABV:
+//			abvSpinner.setModel(model);
+//			System.out.println("ABV STEP: "+model.getStepSize());
+//			break;
+//		case MARK:
+//			markSpinner.setModel(model);
+//			System.out.println("MARK STEP "+model.getStepSize());
+//			break;
+//		case PRICE:
+//			priceSpinner.setModel(model);
+//			System.out.println("PRICE STEP "+model.getStepSize());
+//			break;		
+//		}
+//		
+//	}
 	
-	public void setSpinnerChangeEvent(SpinnerType type, ChangeListener listener){
-		switch(type){
-		case ABV:
-			abvSpinner.addChangeListener(listener);
-			break;
-		case MARK:
-			markSpinner.addChangeListener(listener);
-			break;
-		case PRICE:
-			System.out.println("Called the change event on price");
-			priceSpinner.addChangeListener(listener);
-			break;		
-		}
-		
-	}
+//	public void setSpinnerChangeEvent(SpinnerType type, ChangeListener listener){
+//		switch(type){
+//		case ABV:
+//			abvSpinner.addChangeListener(listener);
+//			break;
+//		case MARK:
+//			markSpinner.addChangeListener(listener);
+//			break;
+//		case PRICE:
+//			System.out.println("Called the change event on price");
+//			priceSpinner.addChangeListener(listener);
+//			break;		
+//		}
+//		
+//	}
 	
-	public void forceChangeEvent(SpinnerType type){
-		switch(type){
-		case ABV:
-			break;
-		case MARK:
-			break;
-		case PRICE:
-			break;
-		default:
-			break;
-		
-		}
-	}
+	
+	
+//	public JFormattedTextField getSpinnerTextField(SpinnerType type){
+//		return null;
+//	}
+//	
+//	public void addChangeEventToSpinnerTextField(SpinnerType type, PropertyChangeListener listener){
+//		JFormattedTextField text = null;
+//		switch(type){
+//		case ABV:
+//			text =(JFormattedTextField) abvSpinner.getEditor();
+//			break;
+//		case MARK:
+//			text =(JFormattedTextField) markSpinner.getEditor();
+//			break;
+//		case PRICE:
+//			text =(JFormattedTextField) priceSpinner.getEditor();
+//			break;
+//		
+//		}
+//		
+//		text.addPropertyChangeListener(listener);
+//	}
+	
+//	public Object getValue(SpinnerType type) throws ClassCastException{
+//		Object ret = null;
+//		switch(type){
+//		case ABV:
+//			ret = getABV();
+//			break;
+//		case MARK:
+//			ret = getMark();
+//			break;
+//		case PRICE:
+//			ret = getPrice();
+//			break;
+//		
+//		}
+//		return ret;
+//	}
+	
+//	public void setDefaultValue(SpinnerType type){
+//		switch(type){
+//		case ABV:
+//			abvSpinner.setValue(Utils.Constants.ABV_SPINNER_DEF_VALUE);
+//			break;
+//		case MARK:
+//			markSpinner.setValue(Utils.Constants.MARK_SPINNER_DEF_VALUE);
+//			break;
+//		case PRICE:
+//			priceSpinner.setValue(Utils.Constants.PRICE_SPINNER_DEF_VALUE);
+//			break;
+//			
+//		}
+//	}
+	
+
 	
 //	public JComponent getMarkSpinnerEditor(){
 //		return markSpinner.getEditor();
@@ -391,58 +469,169 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 //		return markSpinner;
 //	}
 	
-	public void setSpinnerTextFieldValue(SpinnerType type, Object value){
-		switch(type){
-		case ABV:
-//			((JFormattedTextField)abvSpinner.getValue()).setValue(value);
-			((JFormattedTextField)abvSpinner.getEditor()).setValue(value);
-			break;
-		case MARK:
-//			((JFormattedTextField)markSpinner.getValue()).setValue(value);
-			((JFormattedTextField)markSpinner.getEditor()).setValue(value);
-			break;
-		case PRICE:
-//			((JFormattedTextField)priceSpinner.getValue()).setValue(value);
-			((JFormattedTextField)priceSpinner.getEditor()).setValue(value);
-			break;		
-		}
-		
+	
+//	public void spinnerCommitEdit(SpinnerType type) throws ParseException {
+//		switch(type){
+//		case ABV:
+//			abvSpinner.commitEdit();
+//			break;
+//		case MARK:
+//			markSpinner.commitEdit();
+//			break;
+//		case PRICE:
+//			priceSpinner.commitEdit();
+//			break;		
+//		}
+//		
+//	}
+//	
+//	public Object getSpinnerValue(SpinnerType type){
+//		Object o = null;
+//		switch(type){
+//		case ABV:
+//			o = abvSpinner.getValue();
+//			break;
+//		case MARK:
+//			o = markSpinner.getValue();
+//			break;
+//		case PRICE:
+//			o = priceSpinner.getValue();
+//			break;		
+//		}
+//		return o;
+//	}
+	
+	private JFormattedTextField getTextFieldABV(){
+		JComponent editor = abvSpinner.getEditor();
+		JFormattedTextField text = ((JSpinner.NumberEditor)editor).getTextField();
+		return text;
 	}
 	
-	public void spinnerCommitEdit(SpinnerType type) throws ParseException {
-		switch(type){
-		case ABV:
-			abvSpinner.commitEdit();
-			break;
-		case MARK:
-			markSpinner.commitEdit();
-			break;
-		case PRICE:
-			priceSpinner.commitEdit();
-			break;		
-		}
-		
+	private JFormattedTextField getTextFieldMark(){
+		JComponent editor = markSpinner.getEditor();
+		JFormattedTextField text = ((JSpinner.NumberEditor)editor).getTextField();
+		return text;
 	}
 	
-	public Object getSpinnerValue(SpinnerType type){
-		Object o = null;
-		switch(type){
-		case ABV:
-			o = abvSpinner.getValue();
-			break;
-		case MARK:
-			o = markSpinner.getValue();
-			break;
-		case PRICE:
-			o = priceSpinner.getValue();
-			break;		
-		}
-		return o;
+	private JFormattedTextField getTextFieldPrice(){
+		JComponent editor = priceSpinner.getEditor();
+		JFormattedTextField text = ((JSpinner.NumberEditor)editor).getTextField();
+		return text;
 	}
+	
+	private void resizeTextFieldABV(){
+		getTextFieldABV().setColumns(5);
+	}
+	
+	private void resizeTextFieldMark(){
+		getTextFieldMark().setColumns(5);
+//		System.out.println("Resized text field");
+	}
+	
+	private void resizeTextFieldPrice(){
+		getTextFieldPrice().setColumns(5);
+	}
+	
+//	private JFormattedTextField getFormattedTextField(SpinnerType type){
+//		JFormattedTextField text = null;
+//		switch(type){
+//		case ABV:
+//			text = getTextFieldABV();
+//			break;
+//		case MARK:
+//			text = getTextFieldMark();
+//			break;
+//		case PRICE:
+//			text = getTextFieldPrice();
+//			break;
+//		
+//		}
+//		return text;
+//	}
+	
+	
+//	private void resizeSpinnerEditors(SpinnerType type){
+//		JFormattedTextField text = getFormattedTextField(type);
+//		text.setColumns(5);
+//	}
 	
 
 	public void setOkButtonEnabled(boolean enabled){
 		okButton.setEnabled(enabled);
+	}
+	
+	public void setMark(int mark){
+//		System.out.println("Set the value of mark: "+mark);
+		markSpinner.setValue(mark);
+//		markSpinner.getModel().setValue(mark);
+//		System.out.println("Settings the current mark: "+mark+"\n the value is: "+(Integer)markSpinner.getValue());
+//		getTextFieldMark().setValue(mark);
+		
+//		getTextFieldMark().setEditable(false);
+		
+//		getTextFieldMark().setText(Integer.toString(mark));
+	}
+	
+//	private void initResize(){
+//		for(SpinnerType type: SpinnerType.values()){
+//			resizeSpinnerEditors(type);
+//		}
+//	}
+	
+	/**
+	 * Initializes every spinner. It adds the model, the editor, and then it resizes it to 5 columns.
+	 * No matter if, while you are digit, you digit a letter or something wrong in the spinner, when you loose
+	 * focus on it, or click ok, the value is set to default.
+	 * @param models the model to initializes them. Array must be <code><ol>
+	 * 																	<li> {@link CustomSpinnerModel#MarkSpinnerModel()()}</li>
+	 * 																	<li> {@link CustomSpinnerModel#ABVSpinnerModel()()}</li>
+	 * 																	<li> {@link CustomSpinnerModel#PriceSpinnerModel()()}</li>
+	 * 																	</ol></code>
+	 * @throws <code> IllegalArgumentException </code> if array is not in that order.
+	 */
+	public void initSpinners(SpinnerNumberModel[] models){
+		
+		if(!checkArgs(models)){
+			throw new IllegalArgumentException("models not in proper order");  //should never happen
+		}
+		
+		initMarkSpinner(models[0]);
+		initABVSpinner(models[1]);
+		initPriceSpinner(models[2]);
+	}
+	
+	
+	private void initMarkSpinner(SpinnerNumberModel model){
+//		System.out.println("Instance of model mark: "+model.getClass().getName());
+		markSpinner.setModel(model/*new CustomSpinnerModel.MarkSpinnerNumberModel()*/);	//must set model before!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+		markSpinner.setEditor(new JSpinner.NumberEditor(markSpinner/*, "000"*//*,"###"*//*, "000"*/, "#"));
+		resizeTextFieldMark();
+//		
+//		markSpinner.setModel(new SpinnerNumberModel(Utils.Constants.MARK_SPINNER_DEF_VALUE, Utils.Constants.MARK_SPINNER_MIN_VALUE,
+//				Utils.Constants.MARK_SPINNER_MAX_VALUE, Utils.Constants.MARK_SPINNER_STEP_VALUE));
+////		markSpinner.setEditor(new JSpinner.NumberEditor(markSpinner, "#"));
+//		markSpinner.setValue(new Integer(50));
+//		System.out.println("set the fuck value to 50");
+	}
+	
+	
+	private void initABVSpinner(SpinnerNumberModel model){
+		abvSpinner.setModel(model);
+		abvSpinner.setEditor(new JSpinner.NumberEditor(abvSpinner, "00.00"));
+		resizeTextFieldABV();
+	}
+	
+	private void initPriceSpinner(SpinnerNumberModel model){
+		priceSpinner.setModel(model);
+		priceSpinner.setEditor(new JSpinner.NumberEditor(priceSpinner, "00.00"));
+		resizeTextFieldPrice();
+	}
+	
+	
+	private boolean checkArgs(SpinnerNumberModel [] models){
+		return models[0] instanceof MarkSpinnerNumberModel &&
+				models[1] instanceof ABVSpinnerNumberModel &&
+				models[2] instanceof PriceSpinnerNumberModel;
 	}
 	
 	/**
@@ -536,42 +725,40 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			gbc_comboBoxStyle.gridy = 6;
 			contentPanel.add(comboBoxStyle, gbc_comboBoxStyle);
 		}
-		{
-			textFieldABV = new JTextField();
-			GridBagConstraints gbc_textFieldABV = new GridBagConstraints();
-			gbc_textFieldABV.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldABV.insets = new Insets(0, 0, 5, 5);
-			gbc_textFieldABV.gridx = 3;
-			gbc_textFieldABV.gridy = 8;
-//			contentPanel.add(textFieldABV, gbc_textFieldABV);
-			textFieldABV.setColumns(10);
-		}
+//		{
+//			textFieldABV = new JTextField();
+//			GridBagConstraints gbc_textFieldABV = new GridBagConstraints();
+//			gbc_textFieldABV.fill = GridBagConstraints.HORIZONTAL;
+//			gbc_textFieldABV.insets = new Insets(0, 0, 5, 5);
+//			gbc_textFieldABV.gridx = 3;
+//			gbc_textFieldABV.gridy = 8;
+////			contentPanel.add(textFieldABV, gbc_textFieldABV);
+//			textFieldABV.setColumns(10);
+//		}
+//		
+//		{
+//			textFieldStars = new JTextField();
+//			GridBagConstraints gbc_textFieldStars = new GridBagConstraints();
+//			gbc_textFieldStars.fill = GridBagConstraints.HORIZONTAL;
+//			gbc_textFieldStars.insets = new Insets(0, 0, 5, 0);
+//			gbc_textFieldStars.gridx = 7;
+//			gbc_textFieldStars.gridy = 8;
+////			contentPanel.add(textFieldStars, gbc_textFieldStars);
+//			textFieldStars.setColumns(10);
+//		}
+//		
+//		{
+//			textFieldMark = new JTextField();
+//			GridBagConstraints gbc_textFieldMark = new GridBagConstraints();
+//			gbc_textFieldMark.fill = GridBagConstraints.HORIZONTAL;
+//			gbc_textFieldMark.insets = new Insets(0, 0, 5, 5);
+//			gbc_textFieldMark.gridx = 3;
+//			gbc_textFieldMark.gridy = 10;
+////			contentPanel.add(textFieldMark, gbc_textFieldMark);
+//			textFieldMark.setColumns(10);
+//		}
 		
-		{
-			textFieldStars = new JTextField();
-			GridBagConstraints gbc_textFieldStars = new GridBagConstraints();
-			gbc_textFieldStars.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldStars.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldStars.gridx = 7;
-			gbc_textFieldStars.gridy = 8;
-//			contentPanel.add(textFieldStars, gbc_textFieldStars);
-			textFieldStars.setColumns(10);
-		}
-		
-		{
-			textFieldMark = new JTextField();
-			GridBagConstraints gbc_textFieldMark = new GridBagConstraints();
-			gbc_textFieldMark.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldMark.insets = new Insets(0, 0, 5, 5);
-			gbc_textFieldMark.gridx = 3;
-			gbc_textFieldMark.gridy = 10;
-//			contentPanel.add(textFieldMark, gbc_textFieldMark);
-			textFieldMark.setColumns(10);
-		}
-		
-		{
-			textFieldMark.setColumns(10);
-		}
+
 		
 		
 		
@@ -585,7 +772,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		}
 		{
 			markSpinner = new JSpinner();
-			markSpinner.setEditor(new JSpinner.NumberEditor(markSpinner));
+//			markSpinner.setEditor(new JSpinner.NumberEditor(markSpinner));
 			GridBagConstraints gbc_markSpinner = new GridBagConstraints();
 			gbc_markSpinner.insets = new Insets(0, 0, 5, 5);
 			gbc_markSpinner.gridx = 3;
@@ -602,7 +789,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		}
 		{
 			abvSpinner = new JSpinner();
-			abvSpinner.setEditor(new JSpinner.NumberEditor(abvSpinner));
+//			abvSpinner.setEditor(new JSpinner.NumberEditor(abvSpinner, "00.00"));
 			GridBagConstraints gbc_abvSpinner = new GridBagConstraints();
 			gbc_abvSpinner.fill = GridBagConstraints.HORIZONTAL;
 			gbc_abvSpinner.insets = new Insets(0, 0, 5, 0);
@@ -703,7 +890,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 		}
 		{
 			priceSpinner = new JSpinner();
-			priceSpinner.setEditor(new JSpinner.NumberEditor(priceSpinner));
+//			priceSpinner.setEditor(new JSpinner.NumberEditor(priceSpinner, "00.00"));
 			GridBagConstraints gbc_priceSpinner = new GridBagConstraints();
 			gbc_priceSpinner.fill = GridBagConstraints.HORIZONTAL;
 			gbc_priceSpinner.insets = new Insets(0, 0, 5, 0);

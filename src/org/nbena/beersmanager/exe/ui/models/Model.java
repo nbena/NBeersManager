@@ -3,6 +3,7 @@ package org.nbena.beersmanager.exe.ui.models;
 import java.io.File;
 
 
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -29,6 +30,9 @@ import org.nbena.beersmanager.exceptions.ObjectNotFoundException;
 import org.nbena.beersmanager.exceptions.RecomposingException;
 import org.nbena.beersmanager.exceptions.UpdateSavingException;
 import org.nbena.beersmanager.exe.Utils;
+import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.ABVSpinnerNumberModel;
+import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.MarkSpinnerNumberModel;
+import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.PriceSpinnerNumberModel;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewBeer;
 import org.nbena.beersmanager.export.OutExporter;
 import org.nbena.beersmanager.export.JSONOutExporter;
@@ -127,14 +131,18 @@ public class Model {
 	private boolean saveStyle = false;
 	
 	
-	public static final SpinnerNumberModel spinnerMarkModel = new SpinnerNumberModel(Utils.Constants.MARK_SPINNER_DEF_VALUE,
-			Utils.Constants.MARK_SPINNER_MIN_VALUE, Utils.Constants.MARK_SPINNER_MAX_VALUE, Utils.Constants.MARK_SPINNER_STEP_VALUE);
+//	public static final SpinnerNumberModel spinnerMarkModel = new SpinnerNumberModel(Utils.Constants.MARK_SPINNER_DEF_VALUE,
+//			Utils.Constants.MARK_SPINNER_MIN_VALUE, Utils.Constants.MARK_SPINNER_MAX_VALUE, Utils.Constants.MARK_SPINNER_STEP_VALUE);
+//	
+//	public static final SpinnerNumberModel spinnerPriceModel = new SpinnerNumberModel(Utils.Constants.PRICE_SPINNER_DEF_VALUE,
+//			Utils.Constants.PRICE_SPINNER_MIN_VALUE, Utils.Constants.PRICE_SPINNER_MAX_VALUE, Utils.Constants.PRICE_SPINNER_STEP_VALUE);
+//	
+//	public static final SpinnerNumberModel spinnerABVModel = new SpinnerNumberModel(Utils.Constants.ABV_SPINNER_DEF_VALUE,
+//			Utils.Constants.ABV_SPINNER_MIN_VALUE, Utils.Constants.ABV_SPINNER_MAX_VALUE, Utils.Constants.ABV_SPINNER_STEP_VALUE);
 	
-	public static final SpinnerNumberModel spinnerPriceModel = new SpinnerNumberModel(Utils.Constants.PRICE_SPINNER_DEF_VALUE,
-			Utils.Constants.PRICE_SPINNER_MIN_VALUE, Utils.Constants.PRICE_SPINNER_MAX_VALUE, Utils.Constants.PRICE_SPINNER_STEP_VALUE);
-	
-	public static final SpinnerNumberModel spinnerABVModel = new SpinnerNumberModel(Utils.Constants.ABV_SPINNER_DEF_VALUE,
-			Utils.Constants.ABV_SPINNER_MIN_VALUE, Utils.Constants.ABV_SPINNER_MAX_VALUE, Utils.Constants.ABV_SPINNER_STEP_VALUE);
+	private static final MarkSpinnerNumberModel markSpinner = new MarkSpinnerNumberModel();
+	private static final ABVSpinnerNumberModel abvSpinner = new ABVSpinnerNumberModel();
+	private static final PriceSpinnerNumberModel priceSpinner = new PriceSpinnerNumberModel();
 	
 //	private void initLabelTable(){
 ////		labelTable = new Hashtable<Integer, JLabel>();
@@ -1617,20 +1625,43 @@ public class Model {
 	/**
 	 * @return the spinnerModel
 	 */
-	public SpinnerNumberModel getSpinnerModel(ViewAddNewBeer.SpinnerType type) {
-		SpinnerNumberModel ret = null;
-		switch(type){
-		case ABV:
-			ret = spinnerABVModel;
-			break;
-		case MARK:
-			ret = spinnerMarkModel;
-			break;
-		case PRICE:
-			ret = spinnerPriceModel;
-			break;	
-		}
-		return ret;
+//	public SpinnerNumberModel getSpinnerModel(ViewAddNewBeer.SpinnerType type) {
+//		SpinnerNumberModel ret = null;
+////		switch(type){
+////		case ABV:
+////			ret = spinnerABVModel;
+////			break;
+////		case MARK:
+////			ret = spinnerMarkModel;
+////			break;
+////		case PRICE:
+////			ret = spinnerPriceModel;
+////			break;	
+////		}
+//		switch(type){
+//		case ABV:
+////			ret = abvSpinner;
+//			ret = new CustomSpinnerModel.ABVSpinnerNumberModel();
+//			break;
+//		case MARK:
+////			ret =  markSpinner;
+//			ret = new CustomSpinnerModel.MarkSpinnerNumberModel();
+//			break;
+//		case PRICE:
+////			ret = priceSpinner;
+//			ret = new CustomSpinnerModel.PriceSpinnerNumberModel();
+//			break;	
+//		}
+//		return ret;
+//	}
+	
+	
+	public static SpinnerNumberModel[] getSpinnerModelAsArray(){
+		SpinnerNumberModel [] models = new SpinnerNumberModel[3];
+		models[0]=new CustomSpinnerModel.MarkSpinnerNumberModel();
+		models[1]=new CustomSpinnerModel.ABVSpinnerNumberModel();
+		models[2]=new CustomSpinnerModel.PriceSpinnerNumberModel();
+		return models;
 	}
 	
 	public static void saveException(String exception, File f) throws FileNotFoundException{

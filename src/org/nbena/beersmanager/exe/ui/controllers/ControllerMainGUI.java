@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -1573,11 +1575,12 @@ public class ControllerMainGUI {
 				
 
 				
-				for(ViewAddNewBeer.SpinnerType type: ViewAddNewBeer.SpinnerType.values()){
-					trySpinnerCommit(type);//need to be done here because if user modify the editor, then click "ok" nobody adjusts the value
-				}
-				
-				System.out.println("Called the try commit");
+//				for(ViewAddNewBeer.SpinnerType type: ViewAddNewBeer.SpinnerType.values()){
+////					trySpinnerCommit(type);//need to be done here because if user modify the editor, then click "ok" nobody adjusts the value
+////					trySpinnerCommitNew(type);
+//				}
+//				
+//				System.out.println("Called the try commit");
 				
 				try {
 					b=getBeerFromAddNewBeerDialog();
@@ -1740,16 +1743,49 @@ public class ControllerMainGUI {
 		}
 	}
 	
-	private void trySpinnerCommit(ViewAddNewBeer.SpinnerType type){
-		try{
-			addBeerDialog.spinnerCommitEdit(type);
-		}
-		catch(ParseException e){
-//			System.out.println("Catching exception with type: "+type.toString());
-			addBeerDialog.setSpinnerTextFieldValue(type, addBeerDialog.getSpinnerValue(type));
-		}
-	}
+//	private void trySpinnerCommit(ViewAddNewBeer.SpinnerType type){
+//		try{
+//			addBeerDialog.spinnerCommitEdit(type);
+//		}
+//		catch(ParseException e){
+////			System.out.println("Catching exception with type: "+type.toString());
+//			addBeerDialog.setSpinnerTextFieldValue(type, addBeerDialog.getSpinnerValue(type));
+//		}
+//	}
 	
+	
+//	private void trySpinnerCommitNew(ViewAddNewBeer.SpinnerType type){
+//		
+////		
+////		try{
+////			/*Object value = */addBeerDialog.getValue(type);
+////		}
+////		catch(ClassCastException e){
+////			addBeerDialog.setDefaultValue(type);
+////		}
+//		
+//		
+////		switch(type){
+////		case ABV:
+////			break;
+////		case MARK:
+////			break;
+////		case PRICE:
+////			break;
+////		default:
+////			break;
+//			
+////		}
+//		
+//		try{
+//		addBeerDialog.spinnerCommitEdit(type);
+//	}
+//	catch(ParseException e){
+////		System.out.println("Catching exception with type: "+type.toString());
+//		addBeerDialog.setSpinnerTextFieldValue(type, addBeerDialog.getSpinnerValue(type));
+//	}
+//		
+//	}
 	
 	
 	private void initSpinnersBeer(){
@@ -1774,25 +1810,43 @@ public class ControllerMainGUI {
 //		});
 		
 		
-		for(ViewAddNewBeer.SpinnerType type: ViewAddNewBeer.SpinnerType.values()){
-			addBeerDialog.setSpinnerModel(type, model.getSpinnerModel(type));
-			addBeerDialog.setSpinnerChangeEvent(type, new ChangeListener(){
-
-				@Override
-				public void stateChanged(ChangeEvent arg0) {
-					
-//					try{
-//						addBeerDialog.pinnerCommitEdit(type);
-//					}
-//					catch(ParseException e){
-//						addBeerDialog.setSpinnerTextFieldValue(type, addBeerDialog.getSpinnerValue(type));
-//					}
-					trySpinnerCommit(type);
-					
-				}
-				
-			});
-		}
+//		for(ViewAddNewBeer.SpinnerType type: ViewAddNewBeer.SpinnerType.values()){
+//			addBeerDialog.setSpinnerModel(type, model.getSpinnerModel(type));
+////			addBeerDialog.setSpinnerChangeEvent(type, new ChangeListener(){
+////
+////				@Override
+////				public void stateChanged(ChangeEvent arg0) {
+////					
+//////					try{
+//////						addBeerDialog.pinnerCommitEdit(type);
+//////					}
+//////					catch(ParseException e){
+//////						addBeerDialog.setSpinnerTextFieldValue(type, addBeerDialog.getSpinnerValue(type));
+//////					}
+//////					trySpinnerCommit(type);
+////					
+////				}
+////				
+////			});
+//			
+////			addBeerDialog.addPropertyChangeListener(new PropertyChangeListener(){
+////
+////				@Override
+////				public void propertyChange(PropertyChangeEvent arg0) {
+////					
+////					trySpinnerCommitNew(type);
+////					
+////				}
+////				
+////			});
+//		}
+//		
+//		addBeerDialog.initResize();
+		
+		addBeerDialog.initSpinners(Model.getSpinnerModelAsArray());
+		
+//		addBeerDialog.setABV(0.5000);
+//		addBeerDialog.setPrice(0.600);
 	}
 	
 	private void setOkButtonEnabledBeer(){
@@ -2284,6 +2338,9 @@ public class ControllerMainGUI {
 //		addBeerDialogPriceMarkEditable(true);
 		
 //		model.setAddNewBeerOrModifyBeer(false);  already done.
+		
+		addBeerDialog.setMark(model.getBeerShown().getMark());
+		
 		addBeerDialogPriceMarkEditable(model.getBeerShown().isTried());
 		addBeerDialog.setVisible(true);
 	}

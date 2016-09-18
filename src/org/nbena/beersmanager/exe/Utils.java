@@ -1456,20 +1456,36 @@ public class Utils {
 		public static final String ERR_SAVE_DEFAULT_CONFIG = "Errore mentre si salvava la configurazione di default.\nAl prossimo avvio si ritetnterà.";
 		
 		
+//		public static final Integer MARK_SPINNER_STEP_VALUE = new Integer(1);
+//		public static final Integer MARK_SPINNER_MIN_VALUE = new Integer(0);
+//		public static final Integer MARK_SPINNER_MAX_VALUE = new Integer(5);
+//		public static final Integer MARK_SPINNER_DEF_VALUE = new Integer(MARK_SPINNER_MIN_VALUE);
+//		
+//		public static final Double ABV_SPINNER_STEP_VALUE = new Double(00.10);
+//		public static final Double ABV_SPINNER_MIN_VALUE = new Double(00.00);
+//		public static final Double ABV_SPINNER_MAX_VALUE = new Double(99.00);
+//		public static final Double ABV_SPINNER_DEF_VALUE = new Double(05.00);
+//		
+//		public static final Double PRICE_SPINNER_STEP_VALUE = new Double(00.01);
+//		public static final Double PRICE_SPINNER_MIN_VALUE = new Double(00.10);
+//		public static final Double PRICE_SPINNER_MAX_VALUE = new Double(99.0);
+//		public static final Double PRICE_SPINNER_DEF_VALUE = new Double(05.00);
+		
+		
 		public static final int MARK_SPINNER_STEP_VALUE = 1;
 		public static final int MARK_SPINNER_MIN_VALUE = 0;
-		public static final int MARK_SPINNER_MAX_VALUE = 5;
-		public static final int MARK_SPINNER_DEF_VALUE = MARK_SPINNER_MIN_VALUE;
+		public static final int MARK_SPINNER_MAX_VALUE = 100;
+		public static final int MARK_SPINNER_DEF_VALUE = 50;
 		
-		public static final double ABV_SPINNER_STEP_VALUE = 0.10;
-		public static final double ABV_SPINNER_MIN_VALUE = 0.00;
-		public static final double ABV_SPINNER_MAX_VALUE = 100.0;
-		public static final double ABV_SPINNER_DEF_VALUE = 5.00;
+		public static final double ABV_SPINNER_STEP_VALUE = 00.10;
+		public static final double ABV_SPINNER_MIN_VALUE = 00.00;
+		public static final double ABV_SPINNER_MAX_VALUE = 99.00;
+		public static final double ABV_SPINNER_DEF_VALUE = 05.00;
 		
-		public static final double PRICE_SPINNER_STEP_VALUE = 0.01;
-		public static final double PRICE_SPINNER_MIN_VALUE = 0.10;
-		public static final double PRICE_SPINNER_MAX_VALUE = 100.0;
-		public static final double PRICE_SPINNER_DEF_VALUE = 5.00;
+		public static final double PRICE_SPINNER_STEP_VALUE = 00.10;
+		public static final double PRICE_SPINNER_MIN_VALUE = 00.10;
+		public static final double PRICE_SPINNER_MAX_VALUE = 99.0;
+		public static final double PRICE_SPINNER_DEF_VALUE = 05.00;
 		
 	}
 	
