@@ -100,6 +100,7 @@ public class ControllerMainGUI {
 		gui.setVisible(true);
 	}
 	
+	
 	private void addListeners(){
 		addFileExporterListeners();
 		addFileImporterListeners();
@@ -675,33 +676,33 @@ public class ControllerMainGUI {
 	
 	public void stylesFilteredByFermentationHigh(){
 		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_FERMENTATION_HIGH));
-		model.applyFilteringTostyles();
+		model.applyFilteringToStyles();
 		showStyles();
 	}
 	
 	public void stylesFilteredByFermentationSpontan(){
 		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_FERMENTATION_SPONTANEOUS));
-		model.applyFilteringTostyles();
+		model.applyFilteringToStyles();
 		showStyles();
 	}
 	
 	public void stylesFilteredByFermentationLow(){
 		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_FERMENTATION_LOW));
-		model.applyFilteringTostyles();
+		model.applyFilteringToStyles();
 		showStyles();
 	}
 	
 	public void stylesFilteredByCountry(String country){
 		model.setStyleFilteringCurrentValue(country);
 		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_COUNTRY));
-		model.applyFilteringTostyles();
+		model.applyFilteringToStyles();
 		showStyles();
 	}
 	
 	public void stylesFilteredByMainStyle(Style main){
 		model.setStyleFilteringCurrentValue(main);
 		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_MAIN_STYLE));
-		model.applyFilteringTostyles();
+		model.applyFilteringToStyles();
 		showStyles();
 	}
 	
@@ -3118,6 +3119,7 @@ public class ControllerMainGUI {
 //			System.out.print("Refreshing styles");
 			break;
 		}
+		
 	}
 	
 	private void addRefreshButtonListener(){
@@ -3125,7 +3127,20 @@ public class ControllerMainGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
+				
+				switch(model.getDataShownNow()){
+				case BEER:			
+					model.resetBeerFilter();			
+					break;
+				case STYLE:
+					model.resetStyleFilter();
+					break;
+				default:
+					model.resetBreweryFilter();
+						break;
+				
+				}
+				
 				refreshData();
 			}
 			

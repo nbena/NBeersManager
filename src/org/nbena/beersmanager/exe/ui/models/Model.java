@@ -118,6 +118,7 @@ public class Model {
 	private boolean isAddNewStyleOrModifyStyle;
 	private boolean exportAll;
 	
+	
 	private int[] selctedRows;
 	
 //	private void setupSortingFunction(){
@@ -354,9 +355,11 @@ public class Model {
 		tableModel=tableModelOld;
 //		tableModel.fireTableStructureChanged();
 		
+		applyFilteringToStyles();
+		
 		applySortingToStyles();
 		
-		clearFilter(true, true, false);
+//		clearFilter(true, true, false);
 		
 		tableModel.setData(filteredStyles); //it work||
 	}
@@ -395,11 +398,14 @@ public class Model {
 		tableModel=tableModelOld;
 //		tableModel.fireTableStructureChanged();
 		
+		applyFilteringToBeers();
+		
 		applySortingToBeers();
 		
 //		Utils.printBeers(filteredBeers, System.out);
 		
-		clearFilter(false, true, true);
+		
+//		clearFilter(false, true, true);
 		
 		tableModel.setData(filteredBeers); //it work||
 	}
@@ -463,13 +469,16 @@ public class Model {
 			tableModel=tableModelOld;
 //			tableModel.fireTableStructureChanged();
 			
+			
+			applyFilteringToBreweries();
+			
 			applySortingToBreweries();
 			
 			
 			tableModel.setData(filteredBreweries); //it work||
 		}
 		
-		clearFilter(true, false, true);
+//		clearFilter(true, false, true);
 	}
 	
 	public void showBreweryAverageData(){
@@ -478,6 +487,9 @@ public class Model {
 		ModelBreweryAverageTable tableModelOld=(ModelBreweryAverageTable)tableModel;
 		tableModel=tableModelOld;
 //		tableModel.fireTableStructureChanged();
+		
+		applyFilteringToBreweries();
+		
 		
 		applySortingToBreweries();
 		
@@ -1164,7 +1176,7 @@ public class Model {
 	}
 	
 	
-	public void applyFilteringTostyles(){
+	public void applyFilteringToStyles(){
 		filteredStyles = styleFilteringCurrentAlgorithm.apply(filteredStyles, styleFilteringCurrentValue);
 	}
 	
@@ -1259,7 +1271,7 @@ public class Model {
 	public void addNewBeer(Beer beer) throws UpdateSavingException{
 		if(!QueryRunner.BinarySearch.isBeerExists(beerData, beer, false)){
 			beerData.add(beer);
-			filteredBeers = beerData;
+			filteredBeers = beerData; /*when refresh keep the filter*/
 			somethingToSave = true;
 			saveBeer = true;
 		}

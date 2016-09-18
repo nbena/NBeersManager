@@ -186,7 +186,8 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 //		return (Double)ret;
 //		ABVSpinnerNumberModel model = (ABVSpinnerNumberModel)abvSpinner.getModel();
 //		return model.getValue();
-		return ((SpinnerNumberModel)abvSpinner.getModel()).getNumber().doubleValue();
+		double a = ((SpinnerNumberModel)abvSpinner.getModel()).getNumber().doubleValue();
+		return Utils.truncateDouble(a);
 	}
 	
 	public int getStars(){
@@ -229,7 +230,8 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 //		return (Double)ret;
 //		PriceSpinnerNumberModel model = (PriceSpinnerNumberModel)priceSpinner.getModel();
 //		return model.getValue();
-		return ((SpinnerNumberModel)priceSpinner.getModel()).getNumber().doubleValue();
+		double a = ((SpinnerNumberModel)priceSpinner.getModel()).getNumber().doubleValue();
+		return Utils.truncateDouble(a);
 	}
 	
 	public String getPlace(){

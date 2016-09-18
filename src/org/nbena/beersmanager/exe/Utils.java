@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.DecimalFormat;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileInputStream;
@@ -377,14 +378,22 @@ public class Utils {
 		array[0]=b.getName();
 		array[1]=b.getBrewery().getBreweryName();
 		array[2]=b.getStyle().getStyleSubCategory()+" "+b.getStyle().getStyleMainName();
-		array[3]=b.getAlcool();
+		array[3]=truncateDouble(b.getAlcool());
 		array[4]=b.getMark();
 		array[5]=b.getNumberOfStars();
 		array[6]=Utils.getBooleanItalian(b.isTried());
 		array[7]=b.getPlaceTried();
-		array[8]=b.getPrice();
+		array[8]=truncateDouble(b.getPrice());
 //		array[9]=b.getDescription();
 		return array;
+	}
+	
+	private static String truncateDoubleString(double a){
+		return new DecimalFormat("##.##").format(a).replaceAll(",", ".");
+	}
+	
+	public static double truncateDouble(double a){
+		return Double.parseDouble(truncateDoubleString(a));
 	}
 	
 	public static Object[] fromBreweryToObjectArray(Brewery b){
