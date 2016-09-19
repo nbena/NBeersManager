@@ -541,7 +541,7 @@ public class Utils {
 	}
 	
 	public static String getBreweryString(Brewery b){
-		return b.getBreweryName()+", "+b.getTown()+" ("+b.getCountry()+")";
+		return b.getBreweryName()+"; "+b.getTown()+" ("+b.getCountry()+")";
 	}
 	
 	public static List<String> getBreweryStringList(List<Brewery> breweries){
@@ -623,8 +623,8 @@ public class Utils {
 	
 	public static Brewery getBreweryFromString(String s){
 		Brewery b=new Brewery();
-		String name = s.substring(0, s.indexOf(","));
-		String town = s.substring(s.indexOf(","), s.lastIndexOf("(") );
+		String name = s.substring(0, s.indexOf(";"));
+		String town = s.substring(s.indexOf(";"), s.lastIndexOf("(") );
 		town = removeInitialEndingBlankSpaces(town);
 		String country = s.substring(s.lastIndexOf("(")+1, s.lastIndexOf(")"));
 		country = removeInitialEndingBlankSpaces(country);
@@ -632,8 +632,8 @@ public class Utils {
 		b.setTown(town);
 		b.setCountry(country);
 		
-		System.out.println("Brewery is: ");
-		Utils.printBrewery(b, System.out);
+//		System.out.println("Brewery is: ");
+//		Utils.printBrewery(b, System.out);
 		return b;
 	}
 	
