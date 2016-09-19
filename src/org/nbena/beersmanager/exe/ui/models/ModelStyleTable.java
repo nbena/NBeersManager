@@ -3,7 +3,7 @@ package org.nbena.beersmanager.exe.ui.models;
 import java.util.List;
 
 
-import javax.swing.table.DefaultTableModel;
+
 
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.exe.Utils.Constants;
@@ -50,8 +50,9 @@ public class ModelStyleTable extends /*DefaultTableModel*/MyModelAbstractTable{
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void setData(List data) {
+	public void setData(@SuppressWarnings("rawtypes") List data) {
 		styleData=(List<Style>)data;
 		for(Style s: styleData){
 			this.addRow(Utils.fromStyleToObjectArray(s));

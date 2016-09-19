@@ -593,9 +593,9 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	 */
 	public void initSpinners(SpinnerNumberModel[] models){
 		
-		if(!checkArgs(models)){
-			throw new IllegalArgumentException("models not in proper order");  //should never happen
-		}
+//		if(!checkArgs(models)){
+//			throw new IllegalArgumentException("models not in proper order");  //should never happen
+//		}
 		
 		initMarkSpinner(models[0]);
 		initABVSpinner(models[1]);

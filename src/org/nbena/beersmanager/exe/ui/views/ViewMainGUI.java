@@ -601,6 +601,9 @@ public class ViewMainGUI extends JFrame {
 	public void setDoNothingOnClose(){
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
+	
+	
+
 
 	/**
 	 * Launch the application.
@@ -893,7 +896,7 @@ public class ViewMainGUI extends JFrame {
 		mnFilterStyle.add(mntmStylesFilteredByCountryOrigin);
 		
 		mnSearch = new JMenu("Search");
-		menuBar.add(mnSearch);
+//		menuBar.add(mnSearch);	maybe in future.
 		
 		mntmSearchBeer = new JMenuItem("Birra");
 		mnSearch.add(mntmSearchBeer);
@@ -904,7 +907,7 @@ public class ViewMainGUI extends JFrame {
 		mntmSearchStyle = new JMenuItem("Stile");
 		mnSearch.add(mntmSearchStyle);
 		
-		JMenu mnOptions = new JMenu("Options");
+		JMenu mnOptions = new JMenu("Opzioni");
 		menuBar.add(mnOptions);
 		
 		mntmPreferences = new JMenuItem("Preferenze");

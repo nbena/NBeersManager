@@ -46,7 +46,8 @@ public class QueryRunner {
 	public static enum StyleSortingAlgorithm{
 		FERMENTATION_COUNTRY,
 		COUNTRY_FERMENTATION,
-		FERMENTATION_CATEGORY
+		FERMENTATION_CATEGORY,
+		
 	}
 
 
@@ -296,7 +297,7 @@ public class QueryRunner {
 		
 //		Utils.printStyles(filteredStyles, System.out);
 		
-		return filteredStyles;
+		return stylesSortedByOnlyMainCategory(filteredStyles);
 	}
 	
 	private static boolean searchForMainStyle(List<Style> styles, Style style){
@@ -516,6 +517,12 @@ public class QueryRunner {
 	public static List<Style> stylesSortedByMainCategorySubCategory(List<Style> styles){
 		List<Style> sortedStyles = new LinkedList<Style>(styles);
 		Collections.sort(sortedStyles, new Comparators.ComparatorStyleByCategoryAndSubcategory());
+		return sortedStyles;
+	}
+	
+	public static List<Style> stylesSortedByOnlyMainCategory(List<Style> styles){
+		List<Style> sortedStyles = new LinkedList<Style>(styles);
+		Collections.sort(sortedStyles, new Comparators.ComparatorStyleOnlyMainCategory());
 		return sortedStyles;
 	}
 	

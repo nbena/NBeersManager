@@ -3,6 +3,7 @@ package org.nbena.beersmanager.exe;
 import java.io.OutputStream;
 
 
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -34,7 +35,6 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exceptions.RecomposingException;
 import org.nbena.beersmanager.coreclasses.Fermentation;
-import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
 import org.nbena.beersmanager.json.coreclasses.BeerJSONSaveSpecialClass;
@@ -285,6 +285,45 @@ public class Utils {
 	
 	public static List<Brewery> readBreweries(File file) throws FileNotFoundException, JSONException{
 		return JSONExporterCoreClasses.readBreweries(new FileInputStream(file));
+	}
+	
+	private static String readGPL(File file) throws FileNotFoundException{
+		StringBuilder sb = new StringBuilder();
+		Scanner sc = new Scanner(new FileInputStream(file));
+		while(sc.hasNext()){
+			String line = sc.nextLine();
+			sb.append(line+"\n");
+//			System.out.println(line);
+		}
+		sc.close();
+		return sb.toString();
+	}
+	
+	private static final String GPL = "Questo programma è coperto dalla licenza GPL v3. Il file license non è stato trovato,"
+			+ " dovresti procurartnene una copia su www.gun.org/license";
+	
+	public static final String OTHER = "Questo programma utilizza librerie di terze parti: software di Apache Software Foundation e JSON.org";
+	
+	public static String readLicense(String path){
+		String gpl = null;
+		File file = new File(path);
+		boolean normalText = false;
+		if(file.exists()){
+			try {
+				gpl = readGPL(file);
+			} catch (FileNotFoundException e) {
+				normalText = true;
+			}
+		}
+		
+		if(normalText){
+			gpl = GPL;
+		}
+		return gpl;
+	}
+	
+	public static String gplPath(String pwd){
+		return pwd+="license";
 	}
 	
 	@Deprecated

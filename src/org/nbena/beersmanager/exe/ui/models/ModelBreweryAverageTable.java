@@ -3,7 +3,6 @@ package org.nbena.beersmanager.exe.ui.models;
 import java.util.List;
 
 
-import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.query.BreweryAverage;
 
@@ -43,7 +42,8 @@ public class ModelBreweryAverageTable extends MyModelAbstractTable {
 
 
 	@Override
-	public void setData(List data) {
+	public void setData(@SuppressWarnings("rawtypes") List data) {
+		@SuppressWarnings("unchecked")
 		List<BreweryAverage> breweryData=(List<BreweryAverage>)data;
 		for(BreweryAverage b: breweryData){
 			this.addRow(Utils.fromBreweryAverageToObjectArray(b));

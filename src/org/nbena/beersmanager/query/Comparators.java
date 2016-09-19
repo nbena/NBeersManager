@@ -168,6 +168,15 @@ public class Comparators {
 		
 	}
 	
+	public static class ComparatorStyleOnlyMainCategory implements Comparator<Style>{
+
+		@Override
+		public int compare(Style arg0, Style arg1) {
+			return arg0.getStyleMainName().compareToIgnoreCase(arg1.getStyleMainName());
+		}
+		
+	}
+	
 	
 	private static int compareStyleByFermentationComplete(Style o1, Style o2){
 		int ret;

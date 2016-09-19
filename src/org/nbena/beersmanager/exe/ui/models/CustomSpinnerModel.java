@@ -23,8 +23,8 @@ public class CustomSpinnerModel  {
 //					Utils.Constants.MARK_SPINNER_MAX_VALUE, Utils.Constants.MARK_SPINNER_STEP_VALUE);
 //			
 //			super.setValue(Utils.Constants.MARK_SPINNER_DEF_VALUE);
-			System.out.println("The value of def: "+Utils.Constants.MARK_SPINNER_DEF_VALUE);
-			System.out.println("The current value at inizialization is: "+(Integer)this.getValue());
+//			System.out.println("The value of def: "+Utils.Constants.MARK_SPINNER_DEF_VALUE);
+//			System.out.println("The current value at inizialization is: "+(Integer)this.getValue());
 			
 		}
 		

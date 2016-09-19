@@ -4,6 +4,7 @@ import java.io.File;
 
 
 
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -13,10 +14,8 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
-import java.util.Hashtable;
 
 import org.json.JSONException;
 import org.nbena.beersmanager.conf.Configuration;
@@ -31,10 +30,6 @@ import org.nbena.beersmanager.exceptions.RecomposingException;
 import org.nbena.beersmanager.exceptions.UpdateSavingException;
 import org.nbena.beersmanager.exceptions.UpdateSavingException.ErrorWhile;
 import org.nbena.beersmanager.exe.Utils;
-import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.ABVSpinnerNumberModel;
-import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.MarkSpinnerNumberModel;
-import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.PriceSpinnerNumberModel;
-import org.nbena.beersmanager.exe.ui.views.ViewAddNewBeer;
 import org.nbena.beersmanager.export.OutExporter;
 import org.nbena.beersmanager.export.JSONOutExporter;
 import org.nbena.beersmanager.export.TXTOutExporter;
@@ -145,9 +140,9 @@ public class Model {
 //	public static final SpinnerNumberModel spinnerABVModel = new SpinnerNumberModel(Utils.Constants.ABV_SPINNER_DEF_VALUE,
 //			Utils.Constants.ABV_SPINNER_MIN_VALUE, Utils.Constants.ABV_SPINNER_MAX_VALUE, Utils.Constants.ABV_SPINNER_STEP_VALUE);
 	
-	private static final MarkSpinnerNumberModel markSpinner = new MarkSpinnerNumberModel();
-	private static final ABVSpinnerNumberModel abvSpinner = new ABVSpinnerNumberModel();
-	private static final PriceSpinnerNumberModel priceSpinner = new PriceSpinnerNumberModel();
+//	private static final MarkSpinnerNumberModel markSpinner = new MarkSpinnerNumberModel();
+//	private static final ABVSpinnerNumberModel abvSpinner = new ABVSpinnerNumberModel();
+//	private static final PriceSpinnerNumberModel priceSpinner = new PriceSpinnerNumberModel();
 	
 //	private void initLabelTable(){
 ////		labelTable = new Hashtable<Integer, JLabel>();
@@ -1688,9 +1683,15 @@ public class Model {
 	
 	public static SpinnerNumberModel[] getSpinnerModelAsArray(){
 		SpinnerNumberModel [] models = new SpinnerNumberModel[3];
-		models[0]=new CustomSpinnerModel.MarkSpinnerNumberModel();
-		models[1]=new CustomSpinnerModel.ABVSpinnerNumberModel();
-		models[2]=new CustomSpinnerModel.PriceSpinnerNumberModel();
+//		models[0]=new CustomSpinnerModel.MarkSpinnerNumberModel();
+//		models[1]=new CustomSpinnerModel.ABVSpinnerNumberModel();
+//		models[2]=new CustomSpinnerModel.PriceSpinnerNumberModel();
+		models[0]=new SpinnerNumberModel(Utils.Constants.MARK_SPINNER_DEF_VALUE , Utils.Constants.MARK_SPINNER_MIN_VALUE, 
+				Utils.Constants.MARK_SPINNER_MAX_VALUE, Utils.Constants.MARK_SPINNER_STEP_VALUE);
+		models[1]=new SpinnerNumberModel(Utils.Constants.ABV_SPINNER_DEF_VALUE, Utils.Constants.ABV_SPINNER_MIN_VALUE, 
+				Utils.Constants.ABV_SPINNER_MAX_VALUE, Utils.Constants.ABV_SPINNER_STEP_VALUE);
+		models[2]=new SpinnerNumberModel(Utils.Constants.PRICE_SPINNER_DEF_VALUE, Utils.Constants.PRICE_SPINNER_MIN_VALUE, 
+				Utils.Constants.PRICE_SPINNER_MAX_VALUE, Utils.Constants.PRICE_SPINNER_STEP_VALUE);
 		return models;
 	}
 	
@@ -1704,5 +1705,8 @@ public class Model {
 		return QueryRunner.breweriesSortedByName(getBreweryData());
 	}
 	
+	public String getLicense(){
+		return Utils.readLicense(Utils.gplPath(configuration.getPwd()));
+	}
 
 }

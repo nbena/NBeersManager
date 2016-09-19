@@ -49,7 +49,8 @@ public class ModelBreweryTable extends /*DefaultTableModel*/MyModelAbstractTable
 
 
 	@Override
-	public void setData(List data) {
+	public void setData(@SuppressWarnings("rawtypes") List data) {
+		@SuppressWarnings("unchecked")
 		List<Brewery> breweryData=(List<Brewery>)data;
 		for(Brewery b: breweryData){
 			this.addRow(Utils.fromBreweryToObjectArray(b));

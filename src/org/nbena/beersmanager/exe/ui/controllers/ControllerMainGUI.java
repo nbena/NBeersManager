@@ -46,6 +46,7 @@ import org.nbena.beersmanager.exe.ui.models.ModelStyleTable;
 import org.nbena.beersmanager.exe.ui.views.BeerDialog;
 import org.nbena.beersmanager.exe.ui.views.BreweryDialog;
 import org.nbena.beersmanager.exe.ui.views.StyleDialog;
+import org.nbena.beersmanager.exe.ui.views.ViewAbout;
 import org.nbena.beersmanager.exe.ui.views.ViewAbstractDialog;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewBeer;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewBrewery;
@@ -78,6 +79,7 @@ public class ControllerMainGUI {
 //	private ViewException exceptionDialog; //make this static so I can call if some problem appears in the main
 	
 	private ViewJOptionPane optionPane;
+	private ViewAbout viewAbout;
 
 	
 
@@ -105,7 +107,7 @@ public class ControllerMainGUI {
 		addFilterBeersListeners();
 		addFilterBreweriesListeners();
 		addFilterStylesListeners();
-		addSearchMenuListeners();
+//		addSearchMenuListeners();
 		addOptionsMenuListeners();
 		addSaveMenuAndButtonListeners();
 		addRefreshButtonListener();
@@ -114,7 +116,7 @@ public class ControllerMainGUI {
 
 	}
 	
-	
+
 	
 	public void showDefault(){
 		switch(model.getDefaultView()){
@@ -2157,8 +2159,11 @@ public class ControllerMainGUI {
 	 * @return the string list of main styles plus 'New Style'. 
 	 */
 	private List<String> getStylesListToAddToAddNewStyle(){
-		List<String> styles = new LinkedList<String>(model.getOnlyMainStylesString());
+		
+		List<String> styles = new LinkedList<String>();
 		styles.add(Utils.Constants.NEW_STYLE_STRING);
+		styles.addAll(model.getOnlyMainStylesString());
+		
 		return styles;
 	}
 	
@@ -2849,39 +2854,73 @@ public class ControllerMainGUI {
 	}
 	
 	
-	private void addSearchMenuListeners(){
-		gui.addActionMenuSearchBeer(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+//	private void addSearchMenuListeners(){
+//		gui.addActionMenuSearchBeer(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//		});
+//		
+//		gui.addActionMenuSearchBrewery(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//		});
+//		
+//		gui.addActionMenuSearchStyle(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//		});
+//	}
+	
+	public Configuration getConfigurationFromConfigurationDialog(){
+		Configuration newConf = new Configuration();
 		
-		gui.addActionMenuSearchBrewery(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+		newConf.setBeerSortingAlgorithm(Utils.getBeerSortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingBeerSelectedItem()));
+		newConf.setBrewerySortingAlgorithm(Utils.getBrewerySortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingBrewerySelectedItem()));
+		newConf.setStyleSortingAlgorithm(Utils.getStyleSortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingStyleSelectedItem()));
 		
-		gui.addActionMenuSearchStyle(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+//		newConf.setBeerFilterAlgorithm(QueryRunner.BeerFilterAlgorithm.NONE);
+//		newConf.setBeerFilterValue("");
+//		newConf.setBreweryFilterAlgorithm(QueryRunner.BreweryFilterAlgorithm.NONE);
+//		newConf.setBreweryFilterValue("");
+//		newConf.setStyleFilterAlgorithm(QueryRunner.StyleFilterAlgorithm.NONE);
+//		newConf.setStyleFilterValue("");
+		
+//		newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
+		
+//		newConf.setBeerFilterAlgorithm(Utils.getBeerFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringBeerSelectedItem()));
+////		newConf.setBeerFilterValue(preferencesDialog.getBeerFilteringValue());
+//		newConf.setBreweryFilterAlgorithm(Utils.getBreweryFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringBrewerySelectedItem()));
+////		newConf.setBeerFilterValue(preferencesDialog.getBreweryFilteringValue());
+//		newConf.setStyleFilterAlgorithm(Utils.getStyleFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringStyleSelectedItem()));
+////		newConf.setBeerFilterValue(preferencesDialog.getStyleFilteringValue());
+		
+//		newConf.setBeerFilterValue("");
+//		newConf.setBreweryFilterValue("");
+//		newConf.setStyleFilterValue("");
+		
+		newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
+		
+		newConf.setDefaultView(Utils.getViewDefaultFromDescription(preferencesDialog.getComboBoxDeafultViewSelectedItem()));
+		
+		newConf = ConfigurationFactory.setupPath(newConf);
+		
+		return newConf;
 	}
-	
-	
 	
 	
 	private void addPreferencesOkButtonListener(){
@@ -2891,38 +2930,14 @@ public class ControllerMainGUI {
 			public void actionPerformed(ActionEvent e) {
 				preferencesDialog.setVisible(false);
 				
+				Configuration newConf = getConfigurationFromConfigurationDialog();
 				
-				Configuration newConf = new Configuration();
-				
-				newConf.setBeerSortingAlgorithm(Utils.getBeerSortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingBeerSelectedItem()));
-				newConf.setBrewerySortingAlgorithm(Utils.getBrewerySortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingBrewerySelectedItem()));
-				newConf.setStyleSortingAlgorithm(Utils.getStyleSortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingStyleSelectedItem()));
-				
-//				newConf.setBeerFilterAlgorithm(QueryRunner.BeerFilterAlgorithm.NONE);
-//				newConf.setBeerFilterValue("");
-//				newConf.setBreweryFilterAlgorithm(QueryRunner.BreweryFilterAlgorithm.NONE);
-//				newConf.setBreweryFilterValue("");
-//				newConf.setStyleFilterAlgorithm(QueryRunner.StyleFilterAlgorithm.NONE);
-//				newConf.setStyleFilterValue("");
-				
-//				newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
-				
-//				newConf.setBeerFilterAlgorithm(Utils.getBeerFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringBeerSelectedItem()));
-////				newConf.setBeerFilterValue(preferencesDialog.getBeerFilteringValue());
-//				newConf.setBreweryFilterAlgorithm(Utils.getBreweryFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringBrewerySelectedItem()));
-////				newConf.setBeerFilterValue(preferencesDialog.getBreweryFilteringValue());
-//				newConf.setStyleFilterAlgorithm(Utils.getStyleFilterAlgorithmFromDescription(preferencesDialog.getComboBoxFilteringStyleSelectedItem()));
-////				newConf.setBeerFilterValue(preferencesDialog.getStyleFilteringValue());
-				
-//				newConf.setBeerFilterValue("");
-//				newConf.setBreweryFilterValue("");
-//				newConf.setStyleFilterValue("");
-				
-				newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
-				
-				newConf.setDefaultView(Utils.getViewDefaultFromDescription(preferencesDialog.getComboBoxDeafultViewSelectedItem()));
-				
-				newConf = ConfigurationFactory.setupPath(newConf);
+//				System.out.println("La nuova configurazione: ");
+//				Utils.printConfiguration(newConf, System.out);
+//				System.out.println("La vecchia configurazione: ");
+//				Utils.printConfiguration(model.getConfiguration(), System.out);
+//				
+//				System.out.println("They are equals? "+model.getConfiguration().equals(newConf));
 				
 				if(!model.getConfiguration().equals(newConf)){
 //					System.out.println("Configuration has changed");
@@ -3064,8 +3079,26 @@ public class ControllerMainGUI {
 	}
 	
 	public void showAboutDialog(){
+		viewAbout = new ViewAbout();
+		viewAbout.addActionListenerOkButton(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				viewAbout.setVisible(false);
+				viewAbout.dispose();
+				
+			}
+			
+		});
 		
+		viewAbout.setGPL(model.getLicense(), "text/plain");
+		
+		viewAbout.setOther(Utils.OTHER, "text/plain");
+		
+		viewAbout.setVisible(true);
 	}
+
 	
 	private void addOptionsMenuListeners(){
 		gui.addActionMenuPreferences(new ActionListener(){
