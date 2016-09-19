@@ -1331,7 +1331,7 @@ public class ControllerMainGUI {
 		Beer b=model.getBeerShown();
 		dialog.setBeerName(b.getName());
 		dialog.setBreweryName(Utils.getBreweryString(b.getBrewery()));
-		dialog.setStyle(Utils.getStyleStringSubMain(b.getStyle()));
+		dialog.setStyle(Utils.getStyleStringMainSub(b.getStyle())); //here a bug fix
 		dialog.setABV(b.getAlcool());
 		dialog.setStars(b.getNumberOfStars());
 		dialog.setMark(b.getMark());

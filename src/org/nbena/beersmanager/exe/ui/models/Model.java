@@ -29,6 +29,7 @@ import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exceptions.ObjectNotFoundException;
 import org.nbena.beersmanager.exceptions.RecomposingException;
 import org.nbena.beersmanager.exceptions.UpdateSavingException;
+import org.nbena.beersmanager.exceptions.UpdateSavingException.ErrorWhile;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.ABVSpinnerNumberModel;
 import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.MarkSpinnerNumberModel;
@@ -43,6 +44,9 @@ import org.nbena.beersmanager.export.MSExcelOldOutExporter;
 import org.nbena.beersmanager.export.MSExcelNewOutExporter;
 import org.nbena.beersmanager.query.BreweryAverage;
 import org.nbena.beersmanager.query.QueryRunner;
+import org.nbena.beersmanager.query.QueryRunner.BeerFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
 
 public class Model {
 	
@@ -339,12 +343,15 @@ public class Model {
 	private void clearFilter(boolean beer, boolean brewery, boolean style){
 		if(beer){
 			filteredBeers=beerData;
+			beersFilteringCurrentAlgorithm = Utils.getBeerFilteringAlgorithm(BeerFilterAlgorithm.NONE);
 		}
 		if(brewery){
 			filteredBreweries=breweryData;
+			breweryFilteringCurrentAlgorithm = Utils.getBreweryAverageFilteringAlgorithm(BreweryFilterAlgorithm.NONE);
 		}
 		if(style){
 			filteredStyles=styleData;
+			styleFilteringCurrentAlgorithm = Utils.getStyleFilteringAlgorithm(StyleFilterAlgorithm.NONE);
 		}
 	}
 	
@@ -1276,7 +1283,8 @@ public class Model {
 			saveBeer = true;
 		}
 		else{
-			throw new UpdateSavingException(beer, UpdateSavingException.ErrorWhile.ADDING);
+//			throw new UpdateSavingException(beer, UpdateSavingException.ErrorWhile.ADDING);
+			throw new UpdateSavingException(UpdateSavingException.createMessage(beer, ErrorWhile.ADDING));
 		}
 	}
 	
@@ -1288,7 +1296,8 @@ public class Model {
 			saveBrewery = true;
 		}
 		else{
-			throw new UpdateSavingException(brewery, UpdateSavingException.ErrorWhile.ADDING);
+//			throw new UpdateSavingException(brewery, UpdateSavingException.ErrorWhile.ADDING);
+			throw new UpdateSavingException(UpdateSavingException.createMessage(brewery, ErrorWhile.ADDING));
 		}
 
 	}
@@ -1308,7 +1317,8 @@ public class Model {
 			saveStyle = true;
 		}
 		else{
-			throw new UpdateSavingException(style, UpdateSavingException.ErrorWhile.ADDING);
+//			throw new UpdateSavingException(style, UpdateSavingException.ErrorWhile.ADDING);
+			throw new UpdateSavingException(UpdateSavingException.createMessage(style, ErrorWhile.ADDING));
 		}
 
 	}
@@ -1321,7 +1331,8 @@ public class Model {
 			saveBeer = true;
 		}
 		else{
-			throw new UpdateSavingException(newBeer, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(newBeer, UpdateSavingException.ErrorWhile.UPDATING);
+			throw new UpdateSavingException(UpdateSavingException.createMessage(newBeer, ErrorWhile.UPDATING));
 		}
 
 	}
@@ -1343,7 +1354,8 @@ public class Model {
 			saveBrewery = true;
 		}
 		else{
-			throw new UpdateSavingException(newBrewery, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(newBrewery, UpdateSavingException.ErrorWhile.UPDATING);
+			throw new UpdateSavingException(UpdateSavingException.createMessage(newBrewery, ErrorWhile.UPDATING));
 		}
 
 	}
@@ -1365,7 +1377,8 @@ public class Model {
 			saveStyle = true;
 		}
 		else{
-			throw new UpdateSavingException(newStyle, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(newStyle, UpdateSavingException.ErrorWhile.UPDATING);
+			throw new UpdateSavingException(UpdateSavingException.createMessage(newStyle, ErrorWhile.UPDATING));
 		}
 
 	}
@@ -1403,7 +1416,8 @@ public class Model {
 			saveBeer = true;
 		}
 		else{
-			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
+//			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
+			throw new UpdateSavingException(UpdateSavingException.createMessage(b, ErrorWhile.DELETING));
 		}
 	}
 	
@@ -1424,7 +1438,8 @@ public class Model {
 					deleteBeers(beersToDelete);
 				}catch(UpdateSavingException e){
 					breweryData.add(toDelete);
-					throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
+//					throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
+					throw new UpdateSavingException(UpdateSavingException.createMessage(toDelete, ErrorWhile.DELETING_TRAVERSAL));
 				}
 			}
 			
@@ -1433,7 +1448,8 @@ public class Model {
 			saveBeer = true;
 		}
 		else{
-			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
+			throw new UpdateSavingException(UpdateSavingException.createMessage(toDelete, ErrorWhile.DELETING));
 		}
 	}
 	
@@ -1453,7 +1469,8 @@ public class Model {
 					deleteBeers(beersToDelete);
 				}catch(UpdateSavingException e){
 					styleData.add(toDelete);
-					throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING_TRAVERSAL);
+//					throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING_TRAVERSAL);
+					throw new UpdateSavingException(UpdateSavingException.createMessage(s, ErrorWhile.DELETING_TRAVERSAL));
 				}
 				
 			}
@@ -1464,7 +1481,8 @@ public class Model {
 			saveBeer = true;
 		}
 		else{
-			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
+			throw new UpdateSavingException(UpdateSavingException.createMessage(toDelete, ErrorWhile.DELETING));
 		}
 	}
 	
