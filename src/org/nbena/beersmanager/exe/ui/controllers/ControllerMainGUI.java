@@ -2,28 +2,21 @@ package org.nbena.beersmanager.exe.ui.controllers;
 
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.text.ParseException;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFormattedTextField;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -64,7 +57,6 @@ import org.nbena.beersmanager.exe.ui.views.ViewPreferences;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBeer;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBrewery;
 import org.nbena.beersmanager.exe.ui.views.ViewViewStyle;
-import org.nbena.beersmanager.json.coreclasses.JSONImporter;
 import org.nbena.beersmanager.query.BreweryAverage;
 import org.nbena.beersmanager.query.QueryRunner;
 
@@ -880,7 +872,31 @@ public class ControllerMainGUI {
 		showBeers();
 	}
 	
-		
+	public void beersSortedByABVAscending(){
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.ABV_ASCENDING));
+		showBeers();
+	}
+	
+	public void beersSortedByABVDescending(){
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.ABV_DESCENDING));
+		showBeers();
+	}
+	
+	public void beersSortedByPriceAscending(){
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.PRICE_ASCENDING));
+		showBeers();
+	}
+	
+	public void beersSortedByPriceDescending(){
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.PRICE_DESCENDING));
+		showBeers();
+	}
+	
+	public void beersSortedByName(){
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.NAME));
+		showBeers();
+	}
+	
 	private void addSortBeersListeners(){
 		gui.addActionMenuBeersSortedByCountryOfBreweryStyle(new ActionListener(){
 
@@ -950,6 +966,60 @@ public class ControllerMainGUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				beersSortedByStarMarkDescending();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersSortedByABVAscending(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				beersSortedByABVAscending();
+			}
+			
+		});
+		
+		gui.addActionMenuBeersSortedByABVDescending(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				beersSortedByABVDescending();
+				
+			}
+			
+		});
+		
+		gui.addActionMenuBeersSortedByPriceAscending(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				beersSortedByPriceAscending();
+				
+			}
+			
+		});
+		
+		gui.addActionMenuBeersSortedByPriceDescending(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				beersSortedByPriceDescending();
+				
+			}
+			
+		});
+		
+		gui.addActionMenubeersSortedByName(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				beersSortedByName();
+				
 			}
 			
 		});
@@ -3189,7 +3259,7 @@ public class ControllerMainGUI {
 	private String askBreweryBeersFilteredByBrewery(){
 		optionPane.setParent(gui);
 		String ret = null;
-		String[] breweries = Utils.getBreweryStringArray(model.getBreweryData());
+		String[] breweries = Utils.getBreweryStringArray(model.getBreweryDataSortedByName());
 		if(breweries.length==0){
 			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_BREWERY);
 		}else{

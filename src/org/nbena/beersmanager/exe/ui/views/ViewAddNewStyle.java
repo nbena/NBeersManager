@@ -1,6 +1,7 @@
 package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -8,8 +9,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.nbena.beersmanager.coreclasses.Fermentation;
-import org.nbena.beersmanager.coreclasses.Style;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -55,7 +54,10 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 	}
 	
 
-	
+	/**
+	 * Do not update the fermentation when click on a low-fermentation style.
+	 * @param styles
+	 */
 	private void fillComboStyle(List<String> styles){
 		for(String s: styles){
 			comboBoxMainStyle.addItem(s);

@@ -2,7 +2,7 @@ package org.nbena.beersmanager.exe.ui.views;
 
 
 
-import java.awt.EventQueue;
+
 
 
 import javax.swing.JFileChooser;
@@ -22,13 +22,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowListener;
 import java.io.File;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
@@ -97,11 +95,8 @@ public class ViewMainGUI extends JFrame {
 	private JMenuItem mntmBeersFilteredByFermentationSpontaneous;
 	private JMenuItem mntmBeersFilteredByTrappistYes;
 	private JMenuItem mntmBeersFiltedredByTrappistNo;
+
 	
-	private JMenuItem [] mntmMainStyles;
-	private JMenuItem [] mntmStyles;
-	private JMenuItem [] mntmCountries;
-	private JMenuItem [] mntmBreweries;
 	
 	private JMenu mnSearch;
 	private JMenuItem mntmSearchBeer;
@@ -150,6 +145,14 @@ public class ViewMainGUI extends JFrame {
 	private JMenuItem mntmDeleteThingsTable;
 	private JScrollPane scrollPane;
 	private JMenuItem mntmStylesSortedByFermentationCategorySubcategory;
+	private JMenu mnBeersSortedByABV;
+	private JMenuItem mntmBeersSortedByABVAscending;
+	private JMenuItem mntmBeersSortedByABVDescending;
+	private JMenu mnBeersSortedByPrice;
+	private JMenuItem mntmBeersSortedByPriceAscending;
+	private JMenuItem mntmBeersSortedByPriceDescending;
+	private JMenuItem mntmBeersSortedByName;
+	
 	
 	
 	
@@ -417,6 +420,25 @@ public class ViewMainGUI extends JFrame {
 		mntmBeersSortedByStarMarkDescending.addActionListener(listener);
 	}
 	
+	public void addActionMenuBeersSortedByABVAscending(ActionListener listener){
+		mntmBeersSortedByABVAscending.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersSortedByABVDescending(ActionListener listener){
+		mntmBeersSortedByABVDescending.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersSortedByPriceAscending(ActionListener listener){
+		mntmBeersSortedByPriceAscending.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersSortedByPriceDescending(ActionListener listener){
+		mntmBeersSortedByPriceDescending.addActionListener(listener);
+	}
+	
+	public void addActionMenubeersSortedByName(ActionListener listener){
+		mntmBeersSortedByName.addActionListener(listener);
+	}
 	
 	
 	public void setTableModel(AbstractTableModel model){
@@ -669,6 +691,9 @@ public class ViewMainGUI extends JFrame {
 		mnOrderBeer = new JMenu("Birra");
 		mnOrder.add(mnOrderBeer);
 		
+		mntmBeersSortedByName = new JMenuItem("Nome");
+		mnOrderBeer.add(mntmBeersSortedByName);
+		
 		mntmSortBeersByCountryOfBreweryStyle = new JMenuItem("Nazione e nome birrificio, stile");
 		mnOrderBeer.add(mntmSortBeersByCountryOfBreweryStyle);
 		
@@ -695,6 +720,21 @@ public class ViewMainGUI extends JFrame {
 		
 		mntmBeersSortedByStarMarkAscending = new JMenuItem("Ascendente");
 		mnStarMark.add(mntmBeersSortedByStarMarkAscending);
+		
+		mnBeersSortedByABV = new JMenu ("ABV%");
+		mntmBeersSortedByABVAscending = new JMenuItem("Ascendente");
+		mntmBeersSortedByABVDescending = new JMenuItem("Discendente");
+		mnBeersSortedByABV.add(mntmBeersSortedByABVAscending);
+		mnBeersSortedByABV.add(mntmBeersSortedByABVDescending);
+		
+		mnBeersSortedByPrice = new JMenu ("Prezzo");
+		mntmBeersSortedByPriceAscending = new JMenuItem("Ascendente");
+		mntmBeersSortedByPriceDescending = new JMenuItem("Discendente");
+		mnBeersSortedByPrice.add(mntmBeersSortedByPriceAscending);
+		mnBeersSortedByPrice.add(mntmBeersSortedByPriceDescending);
+		
+		mnOrderBeer.add(mnBeersSortedByABV);
+		mnOrderBeer.add(mnBeersSortedByPrice);
 		
 		mnOrderBrewery = new JMenu("Brewery");
 		mnOrder.add(mnOrderBrewery);

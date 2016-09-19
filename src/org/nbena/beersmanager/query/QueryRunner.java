@@ -33,7 +33,12 @@ public class QueryRunner {
 		MARK_STAR_ASCENDING,
 		STAR_MARK_ASCENDING,
 		MARK_STAR_DESCENDING,
-		STAR_MARK_DESCENDING
+		STAR_MARK_DESCENDING,
+		PRICE_ASCENDING,
+		PRICE_DESCENDING,
+		ABV_ASCENDING,
+		ABV_DESCENDING,
+		NAME
 	}
 
 
@@ -76,7 +81,7 @@ public class QueryRunner {
 		BY_EXACT_ABV,
 		BY_TRAPPIST_YES,
 		BY_TRAPPIST_NO,
-		BY_PLACE_TRIED
+		BY_PLACE_TRIED,
 	}
 	
 	public static enum BreweryFilterAlgorithm{
@@ -438,6 +443,36 @@ public class QueryRunner {
 		return sortedBeers;
 	}
 	
+	public static List<Beer> beersSortedByABVAscending(List<Beer> beers){
+		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerABVAscending());
+		return sortedBeers;
+	}
+	
+	public static List<Beer> beersSortedByPriceAscending(List<Beer> beers){
+		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerPriceAscending());
+		return sortedBeers;
+	}
+	
+	public static List<Beer> beersSortedByABVDescending(List<Beer> beers){
+		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerABVDescending());
+		return sortedBeers;
+	}
+	
+	public static List<Beer> beersSortedByPriceDescending(List<Beer> beers){
+		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerPriceDescending());
+		return sortedBeers;
+	}
+	
+	public static List<Beer> beersSortedByName(List<Beer> beers){
+		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
+		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByName());
+		return sortedBeers;
+	}
+	
 	@Deprecated 
 	/**
 	 * Only internal use for binary search.
@@ -737,6 +772,8 @@ public class QueryRunner {
 					places.add(b.getPlaceTried());
 				}
 			}
+			
+			Collections.sort(places);	//get the places already sorted
 			return places;
 		}
 	

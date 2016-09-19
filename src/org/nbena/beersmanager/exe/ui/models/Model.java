@@ -1700,5 +1700,9 @@ public class Model {
 		out.close();
 	}
 	
+	public List<Brewery> getBreweryDataSortedByName(){
+		return QueryRunner.breweriesSortedByName(getBreweryData());
+	}
+	
 
 }

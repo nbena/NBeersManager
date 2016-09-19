@@ -1,10 +1,9 @@
 package org.nbena.beersmanager.query;
 
-import java.util.Collections;
+
 
 
 import java.util.Comparator;
-import java.util.LinkedList;
 
 import org.nbena.beersmanager.coreclasses.*;
 import org.nbena.beersmanager.exe.Utils;
@@ -492,6 +491,64 @@ public class Comparators {
 //			}
 //			return ret;
 			return compareBeerByNameStyleBrewery(o1, o2);
+		}
+		
+	}
+	
+	public static class ComparatorBeerABVAscending implements Comparator<Beer> {
+
+		@Override
+		public int compare(Beer arg0, Beer arg1) {
+			int ret;
+			//ugly but compact
+			ret = (arg0.getAlcool()>arg1.getAlcool()? 1: (arg0.getAlcool()==arg1.getAlcool())? 0 : -1);
+			return ret;
+		}
+		
+	}
+	
+	public static class ComparatorBeerABVDescending implements Comparator<Beer> {
+
+		@Override
+		public int compare(Beer arg0, Beer arg1) {
+			int ret;
+			//ugly but compact
+			ret = (arg0.getAlcool()>arg1.getAlcool()? -1: (arg0.getAlcool()==arg1.getAlcool())? 0 : 1);
+			return ret;
+		}
+		
+	}
+	
+	
+	public static class ComparatorBeerPriceAscending implements Comparator<Beer> {
+
+		@Override
+		public int compare(Beer arg0, Beer arg1) {
+			int ret;
+			//ugly but compact
+			ret = (arg0.getPrice()>arg1.getPrice()? 1: (arg0.getPrice()==arg1.getPrice())? 0 : -1);
+			return ret;
+		}
+		
+	}
+	
+	public static class ComparatorBeerPriceDescending implements Comparator<Beer> {
+
+		@Override
+		public int compare(Beer arg0, Beer arg1) {
+			int ret;
+			//ugly but compact
+			ret = (arg0.getPrice()>arg1.getPrice()? -1: (arg0.getPrice()==arg1.getPrice())? 0 : 1);
+			return ret;
+		}
+		
+	}
+	
+	public static class ComparatorBeerByName implements Comparator<Beer>{
+
+		@Override
+		public int compare(Beer arg0, Beer arg1) {
+			return arg0.getName().compareToIgnoreCase(arg1.getName());
 		}
 		
 	}

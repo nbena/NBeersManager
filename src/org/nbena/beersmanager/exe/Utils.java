@@ -422,7 +422,7 @@ public class Utils {
 //		array[5]=res;
 ////		System.out.println(b.getAverage());
 //		System.out.println("Brewery : "+b.getName()+", average: "+b.getAverage()+" is NaN?"+ (b.getAverage()==Double.NaN));
-		array[5] = (Double.isNaN(b.getAverage()) ? 0.0 : b.getAverage());
+		array[5] = (Double.isNaN(b.getAverage()) ? 0.0 : truncateDouble(b.getAverage()));
 		return array;
 	}
 	
@@ -769,6 +769,7 @@ public class Utils {
 		return normals;
 	}
 	
+	private static final String BEER_SORTING_ALGORITHM_NAME = "Nome";
 	private static final String BEER_SORTING_ALGORITHM_COUNTRY_OF_BREWERY_STYLE = "Nazione birrificio, stile";
 	private static final String BEER_SORTING_ALGORITHM_FERMENTATION_STYLE_COUNTRY_OF_BREWERY = "Fermentazione, stile, nazione birrificio";
 	private static final String BEER_SORTING_ALGORITHM_FERMENTATION_COUNTRY_OF_STYLE_BREWERY = "Fermentazione, nazione origine stile, birrificio";
@@ -776,6 +777,10 @@ public class Utils {
 	private static final String BEER_SORTING_ALGORITHM_MARK_STAR_DESCENDING = "Voto, stelle (discendente)";
 	private static final String BEER_SORTING_ALGORITHM_STAR_MARK_ASCENDING = "Stelle, voto (ascendente)";
 	private static final String BEER_SORTING_ALGORITHM_STAR_MARK_DESCENDING = "Stelle, voto (discendente)";
+	private static final String BEER_SORTING_ALGORITHM_ABV_ASCENDING = "ABV% (ascendente)";
+	private static final String BEER_SORTING_ALGORITHM_PRICE_ASCENDING = "Prezzo (ascendente)";
+	private static final String BEER_SORTING_ALGORITHM_ABV_DESCENDING = "ABV% (dicendente)";
+	private static final String BEER_SORTING_ALGORITHM_PRICE_DESCENDING = "Prezzo (discendente)";
 	
 	
 	public static String getBeerSortingAlgorithmDescription(QueryRunner.BeerSortingAlgorithm algorithm){
@@ -801,6 +806,21 @@ public class Utils {
 			break;
 		case STAR_MARK_DESCENDING:
 			value =BEER_SORTING_ALGORITHM_STAR_MARK_DESCENDING ;
+			break;
+		case ABV_ASCENDING:
+			value = BEER_SORTING_ALGORITHM_ABV_ASCENDING;
+			break;
+		case ABV_DESCENDING:
+			value = BEER_SORTING_ALGORITHM_ABV_DESCENDING;
+			break;
+		case PRICE_ASCENDING:
+			value = BEER_SORTING_ALGORITHM_PRICE_ASCENDING;
+			break;
+		case PRICE_DESCENDING:
+			value = BEER_SORTING_ALGORITHM_PRICE_DESCENDING;
+			break;
+		case NAME:
+			value = BEER_SORTING_ALGORITHM_NAME;
 			break;
 		
 		}
@@ -842,6 +862,22 @@ public class Utils {
 			break;
 		case BEER_SORTING_ALGORITHM_STAR_MARK_DESCENDING:
 			algorithm = QueryRunner.BeerSortingAlgorithm.STAR_MARK_DESCENDING;
+			break;
+		case BEER_SORTING_ALGORITHM_ABV_ASCENDING:
+			algorithm = QueryRunner.BeerSortingAlgorithm.ABV_ASCENDING;
+			break;
+		case BEER_SORTING_ALGORITHM_PRICE_ASCENDING:
+			algorithm = QueryRunner.BeerSortingAlgorithm.PRICE_ASCENDING;
+			break;
+		case BEER_SORTING_ALGORITHM_ABV_DESCENDING:
+			algorithm = QueryRunner.BeerSortingAlgorithm.ABV_DESCENDING;
+			break;
+		case BEER_SORTING_ALGORITHM_PRICE_DESCENDING:
+			algorithm = QueryRunner.BeerSortingAlgorithm.PRICE_DESCENDING;
+			break;
+		case BEER_SORTING_ALGORITHM_NAME:
+			algorithm = QueryRunner.BeerSortingAlgorithm.NAME;
+			break;
 		default:
 			algorithm = null;
 			break;
@@ -1594,6 +1630,21 @@ public class Utils {
 			break;
 		case STAR_MARK_DESCENDING:
 			function=QueryRunner::beersSortedByStarMarkDescending;
+			break;
+		case ABV_ASCENDING:
+			function=QueryRunner::beersSortedByABVAscending;
+			break;
+		case ABV_DESCENDING:
+			function=QueryRunner::beersSortedByABVDescending;
+			break;
+		case PRICE_ASCENDING:
+			function=QueryRunner::beersSortedByPriceAscending;
+			break;
+		case PRICE_DESCENDING:
+			function=QueryRunner::beersSortedByPriceDescending;
+			break;
+		case NAME:
+			function=QueryRunner::beersSortedByName;
 			break;
 		}
 		return function;
