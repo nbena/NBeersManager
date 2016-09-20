@@ -1,15 +1,15 @@
 package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.exe.Utils;
 
 import java.awt.GridBagLayout;
@@ -38,7 +38,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 	private JButton btnModify;
 	private JButton btnDelete;
 	
-	private JTextArea textAreaDescription;
+	private JEditorPane editorDescription;
 	private JButton btnViewStyle;
 	private JButton btnViewBrewery;
 	private JLabel lblLuogo;
@@ -84,7 +84,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 		textFieldMark.setEditable(false);
 		textFieldPrice.setEditable(false);
 		textFieldTried.setEditable(false);
-		textAreaDescription.setEditable(false);
+		editorDescription.setEditable(false);
 	}
 	
 	public void setBeerName(String t){
@@ -116,7 +116,12 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 	}
 	
 	public void setDescription(String t){
-		textAreaDescription.setText(t);
+		editorDescription.setText(t);
+		editorDescription.setCaretPosition(0);
+	}
+	
+	public void setContentType(String type){
+		editorDescription.setContentType(type);
 	}
 	
 	public void setPrice(double price){
@@ -375,15 +380,15 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 			contentPanel.add(scrollPane, gbc_scrollPane);
 		}
 		{
-			textAreaDescription = new JTextArea();
-			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
-			gbc_textAreaDescription.gridwidth = 5;
-			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
-			gbc_textAreaDescription.gridx = 3;
-			gbc_textAreaDescription.gridy = 14;
+			editorDescription = new JEditorPane();
+//			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
+//			gbc_textAreaDescription.gridwidth = 5;
+//			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
+//			gbc_textAreaDescription.gridx = 3;
+//			gbc_textAreaDescription.gridy = 14;
 //			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
-			scrollPane.setViewportView(textAreaDescription);
-			textAreaDescription.setLineWrap(true);
+			scrollPane.setViewportView(editorDescription);
+//			textAreaDescription.setLineWrap(true);
 		}
 		{
 			JPanel buttonPane = new JPanel();

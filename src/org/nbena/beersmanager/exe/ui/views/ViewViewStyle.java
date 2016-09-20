@@ -1,22 +1,22 @@
 package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import org.nbena.beersmanager.coreclasses.Style;
+import javax.swing.JScrollPane;
 
 //public class ViewViewStyle extends JDialog {
 public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
@@ -29,7 +29,7 @@ public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
 	private JTextField textFieldStyleCountry;
 	private JTextField textFieldFermentation;
 	
-	private JTextArea textAreaDescription;
+	private JEditorPane editorDescription;
 	
 	
 	private JButton okButton;
@@ -37,6 +37,7 @@ public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
 	private JButton btnModify;
 	private JButton btnDelete;
 	private JButton btnViewBeers;
+	private JScrollPane scrollPane;
 	
 	public void addActionListenerViewBeersButton(ActionListener listener){
 		btnViewBeers.addActionListener(listener);
@@ -65,7 +66,7 @@ public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
 		textFieldStyleSubcategory.setText(style.getStyleSubCategory());
 		textFieldStyleCountry.setText(style.getStyleCountryOrigin());
 		textFieldFermentation.setText(style.getFermentation().toFirstUpperCase());
-		textAreaDescription.setText(style.getDescription());
+		editorDescription.setText(style.getDescription());
 	}
 	
 	private void setEditable(){
@@ -73,7 +74,7 @@ public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
 		textFieldStyleSubcategory.setEditable(false);
 		textFieldStyleCountry.setEditable(false);
 		textFieldFermentation.setEditable(false);
-		textAreaDescription.setEditable(false);
+		editorDescription.setEditable(false);
 	}
 	
 	public void setStyleMainName(String t){
@@ -93,7 +94,12 @@ public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
 	}
 	
 	public void setDescription(String t){
-		textAreaDescription.setText(t);
+		editorDescription.setText(t);
+		editorDescription.setCaretPosition(0);
+	}
+	
+	public void setContentType(String type){
+		editorDescription.setContentType(type);
 	}
 
 	/**
@@ -225,13 +231,22 @@ public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
 			contentPanel.add(lblDescrizione, gbc_lblDescrizione);
 		}
 		{
-			textAreaDescription = new JTextArea();
-			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
-			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
-			gbc_textAreaDescription.gridx = 3;
-			gbc_textAreaDescription.gridy = 10;
-			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
-			textAreaDescription.setLineWrap(true);
+			scrollPane = new JScrollPane();
+			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+			gbc_scrollPane.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane.gridx = 3;
+			gbc_scrollPane.gridy = 10;
+			contentPanel.add(scrollPane, gbc_scrollPane);
+		}
+		{
+			editorDescription = new JEditorPane();
+//			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
+//			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
+//			gbc_textAreaDescription.gridx = 3;
+//			gbc_textAreaDescription.gridy = 10;
+//			contentPanel.add(editorDescription, gbc_textAreaDescription);
+//			textAreaDescription.setLineWrap(true);
+			scrollPane.setViewportView(editorDescription);
 		}
 //		{
 //			JPanel buttonPane = new JPanel();

@@ -2,7 +2,7 @@ package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
 
-import java.awt.FlowLayout;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,9 +10,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -31,7 +31,7 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 	private JTextField textFieldTown;
 	private JTextField textFieldCountry;
 	private JTextField textFieldWebsite;
-	private JTextArea textAreaDescription;
+	private JEditorPane editorDescription;
 	private JTextField textFieldAverage;
 	private JTextField textFieldTrappist;
 	
@@ -82,7 +82,12 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 	}
 	
 	public void setBreweryDescription(String text){
-		textAreaDescription.setText(text);
+		editorDescription.setText(text);
+		editorDescription.setCaretPosition(0);
+	}
+	
+	public void setContentType(String type){
+		editorDescription.setContentType(type);
 	}
 	
 	public void setBreweryAverage(String text){
@@ -129,7 +134,7 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 		textFieldTown.setEditable(false);
 		textFieldCountry.setEditable(false);
 		textFieldWebsite.setEditable(false);
-		textAreaDescription.setEditable(false);
+		editorDescription.setEditable(false);
 		textFieldAverage.setEditable(false);
 		textFieldTrappist.setEditable(false);
 	}
@@ -140,7 +145,7 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 		textFieldTown.setText(b.getTown());
 		textFieldCountry.setText(b.getCountry());
 		textFieldWebsite.setText(b.getWebsite());
-		textAreaDescription.setText(b.getBreweryDescription());
+		editorDescription.setText(b.getBreweryDescription());
 	}
 
 	/**
@@ -261,13 +266,13 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 			contentPanel.add(lblDescrizione, gbc_lblDescrizione);
 		}
 		{
-			textAreaDescription = new JTextArea();
-			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
-			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
-			gbc_textAreaDescription.gridx = 3;
-			gbc_textAreaDescription.gridy = 10;
+			editorDescription = new JEditorPane();
+//			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
+//			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
+//			gbc_textAreaDescription.gridx = 3;
+//			gbc_textAreaDescription.gridy = 10;
 //			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
-			textAreaDescription.setLineWrap(true);
+//			textAreaDescription.setLineWrap(true);
 		}
 		{
 			scrollPane = new JScrollPane();
@@ -278,7 +283,7 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 			gbc_scrollPane.gridy = 10;
 			contentPanel.add(scrollPane, gbc_scrollPane);
 			
-			scrollPane.setViewportView(textAreaDescription);
+			scrollPane.setViewportView(editorDescription);
 		}
 		
 		

@@ -1540,6 +1540,10 @@ public class Utils {
 		public static final String ERR_SAVE_DEFAULT_CONFIG = "Errore mentre si salvava la configurazione di default.\nAl prossimo avvio si ritetnterà.";
 		
 		
+		public static final String WARN_BREWERY_NAME = "Il nome non può contenere ';'";
+		public static final String WARN_BREWERY_TOWN = "La città non può contenere ';'";
+		
+		
 //		public static final Integer MARK_SPINNER_STEP_VALUE = new Integer(1);
 //		public static final Integer MARK_SPINNER_MIN_VALUE = new Integer(0);
 //		public static final Integer MARK_SPINNER_MAX_VALUE = new Integer(5);
@@ -2051,10 +2055,14 @@ public class Utils {
 		return ret;
 		
 	}
-
 	
-//	private static String getDefaultViews(){
-//		
-//	}
+	/**
+	 * Method that checks if a brewery name is ok. It must not contains ";".
+	 * @param name	the name of the brewery
+	 * @return	<code>true</code> if the name does not contain ";".
+	 */
+	public static boolean isBreweryNameOk(String name){
+		return !name.contains(";");
+	}
 
 }

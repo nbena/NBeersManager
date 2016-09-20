@@ -2,10 +2,12 @@ package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
 
+
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -17,7 +19,6 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
@@ -27,7 +28,7 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 	private final JPanel contentPanel = new JPanel();
 	
 	private JTextField textFieldStyleSubcategory;
-	private JTextArea textAreaDescription;
+	private JEditorPane editorDescription;
 	private JComboBox<String> comboBoxCountry;
 	private JComboBox<String> comboBoxMainStyle;
 	private JComboBox<String> comboBoxFermentation;
@@ -95,7 +96,8 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 	}
 	
 	public void setDescription(String t){
-		textAreaDescription.setText(t);
+		editorDescription.setText(t);
+		editorDescription.setCaretPosition(0);
 	}
 	
 	public String getStyleMainName(){
@@ -111,7 +113,7 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 	}
 	
 	public String getDescription(){
-		return textAreaDescription.getText();
+		return editorDescription.getText();
 	}
 	
 	public String getFermentation(){
@@ -157,6 +159,10 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setContentType(String type){
+		editorDescription.setContentType(type);
 	}
 
 	/**
@@ -267,14 +273,14 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 			contentPanel.add(scrollPane, gbc_scrollPane);
 		}
 		{
-			textAreaDescription = new JTextArea();
-			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
-			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
-			gbc_textAreaDescription.gridx = 3;
-			gbc_textAreaDescription.gridy = 10;
+			editorDescription = new JEditorPane();
+//			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
+//			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
+//			gbc_textAreaDescription.gridx = 3;
+//			gbc_textAreaDescription.gridy = 10;
 //			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
-			scrollPane.setViewportView(textAreaDescription);
-			textAreaDescription.setLineWrap(true);
+			scrollPane.setViewportView(editorDescription);
+//			textAreaDescription.setLineWrap(true);
 		}
 		{
 			JPanel buttonPane = new JPanel();

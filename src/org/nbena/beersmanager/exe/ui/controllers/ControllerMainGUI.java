@@ -1688,7 +1688,7 @@ public class ControllerMainGUI {
 				addBreweryDialog.setVisible(false);
 				
 				Brewery b = getBreweryInAddNewBreweryDialog();
-				Utils.printBrewery(b, System.out);
+//				Utils.printBrewery(b, System.out);
 				
 				
 					try{
@@ -1963,6 +1963,14 @@ public class ControllerMainGUI {
 		});
 	}
 	
+	/**
+	 * Wrap in a single functions for future uses: maybe more ToolTip will be used.
+	 */
+	private void unsetBreweryToolTip(){
+		addBreweryDialog.removeToolTipName();
+		addBreweryDialog.removeToolTipTown();
+	}
+	
 	private void setOkButtonEnabledBrewery(){
 		addBreweryDialog.addDocumentListenerName(new DocumentListener(){
 
@@ -1970,7 +1978,22 @@ public class ControllerMainGUI {
 			public void changedUpdate(DocumentEvent arg0) {
 				
 				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
-					addBreweryDialog.setOkButtonEnabled(true);
+					
+					if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryName())){
+						if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryTown())){
+							addBreweryDialog.setOkButtonEnabled(true);
+							unsetBreweryToolTip();
+						}else{
+							addBreweryDialog.setOkButtonEnabled(false);
+							addBreweryDialog.setBreweryTownToolTip(Utils.Constants.WARN_BREWERY_TOWN);
+						}
+					}else{
+						addBreweryDialog.setOkButtonEnabled(false);
+						addBreweryDialog.setBreweryNameToolTip(Utils.Constants.WARN_BREWERY_NAME);
+					}
+					
+
+
 				}
 				else{
 					addBreweryDialog.setOkButtonEnabled(false);
@@ -1990,7 +2013,22 @@ public class ControllerMainGUI {
 			public void insertUpdate(DocumentEvent arg0) {
 				
 				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
-					addBreweryDialog.setOkButtonEnabled(true);
+					
+					if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryName())){
+						if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryTown())){
+							addBreweryDialog.setOkButtonEnabled(true);
+							unsetBreweryToolTip();
+						}else{
+							addBreweryDialog.setOkButtonEnabled(false);
+							addBreweryDialog.setBreweryTownToolTip(Utils.Constants.WARN_BREWERY_TOWN);
+						}
+					}else{
+						addBreweryDialog.setOkButtonEnabled(false);
+						addBreweryDialog.setBreweryNameToolTip(Utils.Constants.WARN_BREWERY_NAME);
+					}
+					
+
+
 				}
 				else{
 					addBreweryDialog.setOkButtonEnabled(false);
@@ -2010,7 +2048,22 @@ public class ControllerMainGUI {
 			public void removeUpdate(DocumentEvent arg0) {
 				
 				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
-					addBreweryDialog.setOkButtonEnabled(true);
+					
+					if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryName())){
+						if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryTown())){
+							addBreweryDialog.setOkButtonEnabled(true);
+							unsetBreweryToolTip();
+						}else{
+							addBreweryDialog.setOkButtonEnabled(false);
+							addBreweryDialog.setBreweryTownToolTip(Utils.Constants.WARN_BREWERY_TOWN);
+						}
+					}else{
+						addBreweryDialog.setOkButtonEnabled(false);
+						addBreweryDialog.setBreweryNameToolTip(Utils.Constants.WARN_BREWERY_NAME);
+					}
+					
+
+
 				}
 				else{
 					addBreweryDialog.setOkButtonEnabled(false);
@@ -2033,11 +2086,28 @@ public class ControllerMainGUI {
 			public void changedUpdate(DocumentEvent e) {
 				
 				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
-					addBreweryDialog.setOkButtonEnabled(true);
+					
+					if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryName())){
+						if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryTown())){
+							addBreweryDialog.setOkButtonEnabled(true);
+							unsetBreweryToolTip();
+						}else{
+							addBreweryDialog.setOkButtonEnabled(false);
+							addBreweryDialog.setBreweryTownToolTip(Utils.Constants.WARN_BREWERY_TOWN);
+						}
+					}else{
+						addBreweryDialog.setOkButtonEnabled(false);
+						addBreweryDialog.setBreweryNameToolTip(Utils.Constants.WARN_BREWERY_NAME);
+					}
+					
+
+
 				}
 				else{
 					addBreweryDialog.setOkButtonEnabled(false);
 				}
+				
+				
 				
 //				if(Utils.isOnlySpace(addBreweryDialog.getBreweryName())){
 //					addBreweryDialog.setOkButtonEnabled(false);
@@ -2053,7 +2123,22 @@ public class ControllerMainGUI {
 			public void insertUpdate(DocumentEvent e) {
 				
 				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
-					addBreweryDialog.setOkButtonEnabled(true);
+					
+					if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryName())){
+						if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryTown())){
+							addBreweryDialog.setOkButtonEnabled(true);
+							unsetBreweryToolTip();
+						}else{
+							addBreweryDialog.setOkButtonEnabled(false);
+							addBreweryDialog.setBreweryTownToolTip(Utils.Constants.WARN_BREWERY_TOWN);
+						}
+					}else{
+						addBreweryDialog.setOkButtonEnabled(false);
+						addBreweryDialog.setBreweryNameToolTip(Utils.Constants.WARN_BREWERY_NAME);
+					}
+					
+
+
 				}
 				else{
 					addBreweryDialog.setOkButtonEnabled(false);
@@ -2073,7 +2158,22 @@ public class ControllerMainGUI {
 			public void removeUpdate(DocumentEvent e) {
 				
 				if(!Utils.isOnlySpace(addBreweryDialog.getBreweryName()) && !Utils.isOnlySpace(addBreweryDialog.getBreweryTown())){
-					addBreweryDialog.setOkButtonEnabled(true);
+					
+					if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryName())){
+						if(Utils.isBreweryNameOk(addBreweryDialog.getBreweryTown())){
+							addBreweryDialog.setOkButtonEnabled(true);
+							unsetBreweryToolTip();
+						}else{
+							addBreweryDialog.setOkButtonEnabled(false);
+							addBreweryDialog.setBreweryTownToolTip(Utils.Constants.WARN_BREWERY_TOWN);
+						}
+					}else{
+						addBreweryDialog.setOkButtonEnabled(false);
+						addBreweryDialog.setBreweryNameToolTip(Utils.Constants.WARN_BREWERY_NAME);
+					}
+					
+
+
 				}
 				else{
 					addBreweryDialog.setOkButtonEnabled(false);
@@ -2336,6 +2436,7 @@ public class ControllerMainGUI {
 		Beer b =model.getSelectedBeer(row);
 		model.setBeerShown(b);
 		viewBeerDialog=new ViewViewBeer();
+		viewBeerDialog.setContentType("text/plain");
 		setBeerInDialog(viewBeerDialog);
 				
 		setOkCancelViewDialog(viewBeerDialog);
@@ -2356,6 +2457,7 @@ public class ControllerMainGUI {
 			model.setBreweryShown(b); //call then
 		}
 		viewBreweryDialog=new ViewViewBrewery();
+		viewBreweryDialog.setContentType("text/plain");
 		setBreweryInDialog(viewBreweryDialog);
 		
 		setOkCancelViewDialog(viewBreweryDialog);
@@ -2378,6 +2480,7 @@ public class ControllerMainGUI {
 			model.setStyleShown(s);
 		}
 		viewStyleDialog=new ViewViewStyle();
+		viewStyleDialog.setContentType("text/plain");
 		setStyleInDialog(viewStyleDialog);
 			
 		setOkCancelViewDialog(viewStyleDialog);
@@ -2398,7 +2501,7 @@ public class ControllerMainGUI {
 		
 		addBeerDialog = new ViewAddNewBeer();
 		addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryDataAlphaOrder()), Utils.getStyleStringListMainSub(model.getStyleDataMainSubOrder()));
-		
+		addBeerDialog.setContentType("text/plain");
 		addBeerDialog.setOkButtonEnabled(true); //must be set to true because default is false
 		//and it is set to true just inside the text field document listener event
 		
@@ -2432,9 +2535,12 @@ public class ControllerMainGUI {
 		
 		addBreweryDialog.setOkButtonEnabled(true); //must be set to true because default is false
 		//and it is set to true just inside the text field document listener event
-		
+		addBreweryDialog.setContentType("text/plain");
 		addBreweryDialog.fillThings(model.getCountries());
 		setBreweryInDialog(addBreweryDialog);
+		
+		
+		setOkButtonEnabledBrewery();
 		
 		setAddNewBreweryOkButton();
 		setAddNewBreweryCancelButton();;
@@ -2455,7 +2561,7 @@ public class ControllerMainGUI {
 		
 		addStyleDialog.setOkButtonEnabled(true); //must be set to true because default is false
 		//and it is set to true just inside the text field document listener event
-		
+		addStyleDialog.setContentType("text/plain");
 		addStyleDialog.fillThings(Utils.getMainStyleString(model.getOnlyMainStyles()), Utils.getFermentationsItalianString(), model.getCountries());
 		setStyleInDialog(addStyleDialog);
 		

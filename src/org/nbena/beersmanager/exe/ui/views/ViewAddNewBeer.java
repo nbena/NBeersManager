@@ -2,31 +2,26 @@ package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
 
+
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentListener;
 
 import org.nbena.beersmanager.exe.Utils;
-import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel;
-import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.ABVSpinnerNumberModel;
-import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.MarkSpinnerNumberModel;
-import org.nbena.beersmanager.exe.ui.models.CustomSpinnerModel.PriceSpinnerNumberModel;
 
 import java.awt.Insets;
 import java.awt.event.ActionListener;
-import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -34,8 +29,6 @@ import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import java.awt.event.MouseAdapter;
-import java.beans.PropertyChangeListener;
-import java.text.ParseException;
 
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -44,18 +37,18 @@ import javax.swing.JSlider;
 public class ViewAddNewBeer extends JDialog implements BeerDialog{
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textFieldABV;
+//	private JTextField textFieldABV;
 	private JTextField textFieldBeerName;
 	private JTextField textFieldPrice;
-	private JTextField textFieldStars;
-	private JTextField textFieldMark;
+//	private JTextField textFieldStars;
+//	private JTextField textFieldMark;
 	private JTextField textFieldPlace;
 	
 	private JButton okButton;
 	private JButton cancelButton;
 
 	
-	private JTextArea textAreaDescription;
+	private JEditorPane editorDescription;
 	private JComboBox<String> comboBoxBrewery;
 	private JComboBox<String> comboBoxStyle;
 	private JRadioButton rdbtnTriedYes;
@@ -151,7 +144,12 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	}
 	
 	public void setDescription(String t){
-		textAreaDescription.setText(t);
+		editorDescription.setText(t);
+		editorDescription.setCaretPosition(0);
+	}
+	
+	public void setContentType(String type){
+		editorDescription.setContentType(type);
 	}
 	
 	public void setPlace(String t){
@@ -211,7 +209,7 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 //	}
 	
 	public String getDescription(){
-		return textAreaDescription.getText();
+		return editorDescription.getText();
 	}
 	
 //	public String getPrice(){
@@ -630,11 +628,11 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 	}
 	
 	
-	private boolean checkArgs(SpinnerNumberModel [] models){
-		return models[0] instanceof MarkSpinnerNumberModel &&
-				models[1] instanceof ABVSpinnerNumberModel &&
-				models[2] instanceof PriceSpinnerNumberModel;
-	}
+//	private boolean checkArgs(SpinnerNumberModel [] models){
+//		return models[0] instanceof MarkSpinnerNumberModel &&
+//				models[1] instanceof ABVSpinnerNumberModel &&
+//				models[2] instanceof PriceSpinnerNumberModel;
+//	}
 	
 	/**
 	 * Launch the application.
@@ -918,15 +916,15 @@ public class ViewAddNewBeer extends JDialog implements BeerDialog{
 			contentPanel.add(scrollPane, gbc_scrollPane);
 		}
 		{
-			textAreaDescription = new JTextArea();
-			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
-			gbc_textAreaDescription.gridwidth = 5;
-			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
-			gbc_textAreaDescription.gridx = 3;
-			gbc_textAreaDescription.gridy = 14;
+			editorDescription = new JEditorPane();
+//			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
+//			gbc_textAreaDescription.gridwidth = 5;
+//			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
+//			gbc_textAreaDescription.gridx = 3;
+//			gbc_textAreaDescription.gridy = 14;
 //			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
-			textAreaDescription.setLineWrap(true);
-			scrollPane.setViewportView(textAreaDescription);
+//			textAreaDescription.setLineWrap(true);
+			scrollPane.setViewportView(editorDescription);
 		}
 //		{
 //			JPanel buttonPane = new JPanel();

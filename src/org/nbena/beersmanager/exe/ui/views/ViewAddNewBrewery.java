@@ -2,11 +2,13 @@ package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
 
+
 import java.awt.FlowLayout;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
@@ -22,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JTextField;
-import javax.swing.JTextArea;
+import javax.swing.ToolTipManager;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 
@@ -34,7 +36,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 	private JTextField textFieldWebsite;
 	private JTextField textFieldAverage;
 	
-	private JTextArea textAreaDescription;
+	private JEditorPane editorDescription;
 	
 	private JButton okButton;
 	private JButton cancelButton;
@@ -81,7 +83,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 	}
 	
 	public String getDescription(){
-		return textAreaDescription.getText();
+		return editorDescription.getText();
 	}
 	
 	public boolean isTrappist(){
@@ -106,7 +108,12 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 	}
 	
 	public void setBreweryDescription(String text){
-		textAreaDescription.setText(text);
+		editorDescription.setText(text);
+		editorDescription.setCaretPosition(0);
+	}
+	
+	public void setContentType(String type){
+		editorDescription.setContentType(type);
 	}
 	
 	public void setBreweryAverage(String t) {
@@ -146,7 +153,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 		textFieldTown.setText(b.getTown());
 		comboBoxCountry.setSelectedItem(b.getCountry());
 		textFieldWebsite.setText(b.getWebsite());
-		textAreaDescription.setText(b.getBreweryDescription());
+		editorDescription.setText(b.getBreweryDescription());
 	}
 	
 	public void addDocumentListenerName(DocumentListener listener){
@@ -159,6 +166,24 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 	
 	public void addDocumentListenerWebsite(DocumentListener listener){
 		textFieldWebsite.getDocument().addDocumentListener(listener);
+	}
+	
+	
+	public void setBreweryNameToolTip(String text){
+		textFieldName.setToolTipText(text);
+	}
+	
+	public void setBreweryTownToolTip(String text){
+		textFieldTown.setToolTipText(text);
+//		ToolTipManager.sharedInstance().unregisterComponent(textFieldTown);
+	}
+	
+	public void removeToolTipName(){
+		setBreweryNameToolTip(null);
+	}
+	
+	public void removeToolTipTown(){
+		setBreweryTownToolTip(null);
 	}
 
 	/**
@@ -276,16 +301,16 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 			contentPanel.add(lblDescrizione, gbc_lblDescrizione);
 		}
 		{
-			textAreaDescription = new JTextArea();
-			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
-			gbc_textAreaDescription.gridwidth = 3;
-			gbc_textAreaDescription.gridheight = 2;
-			gbc_textAreaDescription.insets = new Insets(0, 0, 5, 5);
-			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
-			gbc_textAreaDescription.gridx = 3;
-			gbc_textAreaDescription.gridy = 9;
+			editorDescription = new JEditorPane();
+//			GridBagConstraints gbc_textAreaDescription = new GridBagConstraints();
+//			gbc_textAreaDescription.gridwidth = 3;
+//			gbc_textAreaDescription.gridheight = 2;
+//			gbc_textAreaDescription.insets = new Insets(0, 0, 5, 5);
+//			gbc_textAreaDescription.fill = GridBagConstraints.BOTH;
+//			gbc_textAreaDescription.gridx = 3;
+//			gbc_textAreaDescription.gridy = 9;
 //			contentPanel.add(textAreaDescription, gbc_textAreaDescription);
-			textAreaDescription.setLineWrap(true);
+//			textAreaDescription.setLineWrap(true);
 		}
 		{
 			scrollPane = new JScrollPane();
@@ -297,7 +322,7 @@ public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 			gbc_scrollPane.gridy = 9;
 			contentPanel.add(scrollPane, gbc_scrollPane);
 			
-			scrollPane.setViewportView(textAreaDescription);
+			scrollPane.setViewportView(editorDescription);
 		}
 		
 		
