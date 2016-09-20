@@ -1,3 +1,19 @@
+/*   NBeersManager: manages what you drink.
+    Copyright (C) 2016  Nicola Bena
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>
+    */
 package org.nbena.beersmanager.conf;
 
 
@@ -358,12 +374,18 @@ public class Configuration {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((beerFilePath == null) ? 0 : beerFilePath.hashCode());
 		result = prime * result + ((beerFilterAlgorithm == null) ? 0 : beerFilterAlgorithm.hashCode());
 		result = prime * result + ((beerFilterValue == null) ? 0 : beerFilterValue.hashCode());
 		result = prime * result + ((beerSortingAlgorithm == null) ? 0 : beerSortingAlgorithm.hashCode());
+		result = prime * result + ((breweryFilePath == null) ? 0 : breweryFilePath.hashCode());
 		result = prime * result + ((breweryFilterAlgorithm == null) ? 0 : breweryFilterAlgorithm.hashCode());
 		result = prime * result + ((breweryFilterValue == null) ? 0 : breweryFilterValue.hashCode());
 		result = prime * result + ((brewerySortingAlgorithm == null) ? 0 : brewerySortingAlgorithm.hashCode());
+		result = prime * result + ((countriesFilePath == null) ? 0 : countriesFilePath.hashCode());
+		result = prime * result + ((defaultView == null) ? 0 : defaultView.hashCode());
+		result = prime * result + ((pwd == null) ? 0 : pwd.hashCode());
+		result = prime * result + ((styleFilePath == null) ? 0 : styleFilePath.hashCode());
 		result = prime * result + ((styleFilterAlgorithm == null) ? 0 : styleFilterAlgorithm.hashCode());
 		result = prime * result + ((styleFilterValue == null) ? 0 : styleFilterValue.hashCode());
 		result = prime * result + ((styleSortingAlgorithm == null) ? 0 : styleSortingAlgorithm.hashCode());
@@ -382,6 +404,11 @@ public class Configuration {
 		if (getClass() != obj.getClass())
 			return false;
 		Configuration other = (Configuration) obj;
+		if (beerFilePath == null) {
+			if (other.beerFilePath != null)
+				return false;
+		} else if (!beerFilePath.equals(other.beerFilePath))
+			return false;
 		if (beerFilterAlgorithm != other.beerFilterAlgorithm)
 			return false;
 		if (beerFilterValue == null) {
@@ -391,6 +418,11 @@ public class Configuration {
 			return false;
 		if (beerSortingAlgorithm != other.beerSortingAlgorithm)
 			return false;
+		if (breweryFilePath == null) {
+			if (other.breweryFilePath != null)
+				return false;
+		} else if (!breweryFilePath.equals(other.breweryFilePath))
+			return false;
 		if (breweryFilterAlgorithm != other.breweryFilterAlgorithm)
 			return false;
 		if (breweryFilterValue == null) {
@@ -399,6 +431,23 @@ public class Configuration {
 		} else if (!breweryFilterValue.equals(other.breweryFilterValue))
 			return false;
 		if (brewerySortingAlgorithm != other.brewerySortingAlgorithm)
+			return false;
+		if (countriesFilePath == null) {
+			if (other.countriesFilePath != null)
+				return false;
+		} else if (!countriesFilePath.equals(other.countriesFilePath))
+			return false;
+		if (defaultView != other.defaultView)
+			return false;
+		if (pwd == null) {
+			if (other.pwd != null)
+				return false;
+		} else if (!pwd.equals(other.pwd))
+			return false;
+		if (styleFilePath == null) {
+			if (other.styleFilePath != null)
+				return false;
+		} else if (!styleFilePath.equals(other.styleFilePath))
 			return false;
 		if (styleFilterAlgorithm != other.styleFilterAlgorithm)
 			return false;
@@ -411,6 +460,10 @@ public class Configuration {
 			return false;
 		return true;
 	}
+
+
+
+
 	
 	
 

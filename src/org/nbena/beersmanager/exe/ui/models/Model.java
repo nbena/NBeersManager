@@ -1,6 +1,23 @@
+/*   NBeersManager: manages what you drink.
+    Copyright (C) 2016  Nicola Bena
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>
+    */
 package org.nbena.beersmanager.exe.ui.models;
 
 import java.io.File;
+
 
 
 
@@ -23,7 +40,6 @@ import org.nbena.beersmanager.conf.Configuration.ShowDefault;
 import org.nbena.beersmanager.conf.ConfigurationFactory;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
-import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exceptions.ObjectNotFoundException;
 import org.nbena.beersmanager.exceptions.RecomposingException;
@@ -62,7 +78,7 @@ public class Model {
 	
 	private MyModelAbstractTable tableModel;
 	
-	private MyModelAbstractDialog dialogModel;
+//	private MyModelAbstractDialog dialogModel;
 	
 	private boolean showAlsoAverage=false;
 	
@@ -166,20 +182,20 @@ public class Model {
 //		initSpinner();
 	}
 	
-	public Model(MyModelAbstractDialog dialogModel) {
-		super();
-		this.dialogModel = dialogModel;
-//		initLabelTable();
-//		initSpinner();
-	}
-
-	public Model(MyModelAbstractTable tableModel, MyModelAbstractDialog dialogModel) {
-		super();
-		this.tableModel = tableModel;
-		this.dialogModel = dialogModel;
-//		initLabelTable();
-//		initSpinner();
-	}
+//	public Model(MyModelAbstractDialog dialogModel) {
+//		super();
+//		this.dialogModel = dialogModel;
+////		initLabelTable();
+////		initSpinner();
+//	}
+//
+//	public Model(MyModelAbstractTable tableModel, MyModelAbstractDialog dialogModel) {
+//		super();
+//		this.tableModel = tableModel;
+//		this.dialogModel = dialogModel;
+////		initLabelTable();
+////		initSpinner();
+//	}
 
 	/**
 	 * @return the tableModel
@@ -282,19 +298,19 @@ public class Model {
 		return QueryRunner.getAllPlaces(beerData);
 	}
 
-	/**
-	 * @return the dialogModel
-	 */
-	public MyModelAbstractDialog getDialogModel() {
-		return dialogModel;
-	}
-
-	/**
-	 * @param dialogModel the dialogModel to set
-	 */
-	public void setDialogModel(MyModelAbstractDialog dialogModel) {
-		this.dialogModel = dialogModel;
-	}
+//	/**
+//	 * @return the dialogModel
+//	 */
+//	public MyModelAbstractDialog getDialogModel() {
+//		return dialogModel;
+//	}
+//
+//	/**
+//	 * @param dialogModel the dialogModel to set
+//	 */
+//	public void setDialogModel(MyModelAbstractDialog dialogModel) {
+//		this.dialogModel = dialogModel;
+//	}
 
 	/**
 	 * @return the dialogShown
@@ -711,88 +727,88 @@ public class Model {
 	}
 	
 	
-	public void beersSortedByCountryOfBreweryStyle(){
-//		beerData=QueryRunner.beersSortedByCountryOfBreweryStyle(beerData);
-		beerData=QueryRunner.beersSortedByCountryOfBreweryStyle(filteredBeers);
-		filteredBeers=beerData;
-	}
-	
-	public void beersSortedByFermentationCountryOfStyleBrewery(){
-		beerData=QueryRunner.beersSortedByFermentationCountryOfStyleBrewery(filteredBeers);
-		filteredBeers=beerData;
-	}
-	
-	public void beersSortedByFermentationStyleCountryOfBrewery(){
-		beerData=QueryRunner.beersSortedByFermentationStyleCountryOfBrewery(filteredBeers);
-		filteredBeers=beerData;
-	}
-	
-	public void beersSortedByMarkStarAscending(){
-		beerData=QueryRunner.beersSortedByMarkStarAscending(filteredBeers);
-		filteredBeers=beerData;
-	}
-	
-	public void beersSortedByStarMarkAsending(){
-		beerData=QueryRunner.beersSortedByStarMarkAscending(filteredBeers);
-		filteredBeers=beerData;
-	}
-	
-	public void beersSortedByMarkStarDescending(){
-		beerData=QueryRunner.beersSortedByMarkStarDescending(filteredBeers);
-		filteredBeers=beerData;
-	}
-	
-	public void beersSortedByStarMarkDesending(){
-		beerData=QueryRunner.beersSortedByStarMarkDescending(filteredBeers);
-		filteredBeers=beerData;
-	}
-
-	public void styleSortedByFermentationThenCountry(){
-		styleData=QueryRunner.styleSortedByFermentationThenCountry(filteredStyles);
-		filteredStyles=styleData;
-	}
-	
-	public void styleSortedByCountryThenFermentationy(){
-		styleData=QueryRunner.styleSortedByCountryThenFermentationy(filteredStyles);
-		filteredStyles=styleData;
-	}
-	
-	
-	
-	
-	public void breweriesSortedByCountryThenName(){
-		breweryData=QueryRunner.breweriesSortedByCountryThenNameWithAverage(filteredBreweries);
-		filteredBreweries=breweryData;
-	}
-	
-	
-	public void breweriesSortedBynName(List<Brewery> breweries){
-		breweryData=QueryRunner.breweriesSortedByNameWithAverage(filteredBreweries);
-		filteredBreweries=breweryData;
-	}
-	
-	
-	public void breweriesSortedByAverageAscending(){
-		breweryData=QueryRunner.breweriesSortedByAverageAscending(filteredBreweries);
-		filteredBreweries=breweryData;
-	}
-	
-	
-	public void breweriesSortedByCountryThenAverageAscending(){
-		breweryData=QueryRunner.breweriesSortedByCountryThenAverageAscending(filteredBreweries);
-		filteredBreweries=breweryData;
-	}
-	
-	public void breweriesSortedByAverageDescending(){
-		breweryData=QueryRunner.breweriesSortedByAverageDescending(filteredBreweries);
-		filteredBreweries=breweryData;
-	}
-	
-	
-	public void breweriesSortedByCountryThenAverageDescending(){
-		breweryData=QueryRunner.breweriesSortedByCountryThenAverageDescending(filteredBreweries);
-		filteredBreweries=breweryData;
-	}
+//	public void beersSortedByCountryOfBreweryStyle(){
+////		beerData=QueryRunner.beersSortedByCountryOfBreweryStyle(beerData);
+//		beerData=QueryRunner.beersSortedByCountryOfBreweryStyle(filteredBeers);
+//		filteredBeers=beerData;
+//	}
+//	
+//	public void beersSortedByFermentationCountryOfStyleBrewery(){
+//		beerData=QueryRunner.beersSortedByFermentationCountryOfStyleBrewery(filteredBeers);
+//		filteredBeers=beerData;
+//	}
+//	
+//	public void beersSortedByFermentationStyleCountryOfBrewery(){
+//		beerData=QueryRunner.beersSortedByFermentationStyleCountryOfBrewery(filteredBeers);
+//		filteredBeers=beerData;
+//	}
+//	
+//	public void beersSortedByMarkStarAscending(){
+//		beerData=QueryRunner.beersSortedByMarkStarAscending(filteredBeers);
+//		filteredBeers=beerData;
+//	}
+//	
+//	public void beersSortedByStarMarkAsending(){
+//		beerData=QueryRunner.beersSortedByStarMarkAscending(filteredBeers);
+//		filteredBeers=beerData;
+//	}
+//	
+//	public void beersSortedByMarkStarDescending(){
+//		beerData=QueryRunner.beersSortedByMarkStarDescending(filteredBeers);
+//		filteredBeers=beerData;
+//	}
+//	
+//	public void beersSortedByStarMarkDesending(){
+//		beerData=QueryRunner.beersSortedByStarMarkDescending(filteredBeers);
+//		filteredBeers=beerData;
+//	}
+//
+//	public void styleSortedByFermentationThenCountry(){
+//		styleData=QueryRunner.styleSortedByFermentationThenCountry(filteredStyles);
+//		filteredStyles=styleData;
+//	}
+//	
+//	public void styleSortedByCountryThenFermentationy(){
+//		styleData=QueryRunner.styleSortedByCountryThenFermentationy(filteredStyles);
+//		filteredStyles=styleData;
+//	}
+//	
+//	
+//	
+//	
+//	public void breweriesSortedByCountryThenName(){
+//		breweryData=QueryRunner.breweriesSortedByCountryThenNameWithAverage(filteredBreweries);
+//		filteredBreweries=breweryData;
+//	}
+//	
+//	
+//	public void breweriesSortedBynName(List<Brewery> breweries){
+//		breweryData=QueryRunner.breweriesSortedByNameWithAverage(filteredBreweries);
+//		filteredBreweries=breweryData;
+//	}
+//	
+//	
+//	public void breweriesSortedByAverageAscending(){
+//		breweryData=QueryRunner.breweriesSortedByAverageAscending(filteredBreweries);
+//		filteredBreweries=breweryData;
+//	}
+//	
+//	
+//	public void breweriesSortedByCountryThenAverageAscending(){
+//		breweryData=QueryRunner.breweriesSortedByCountryThenAverageAscending(filteredBreweries);
+//		filteredBreweries=breweryData;
+//	}
+//	
+//	public void breweriesSortedByAverageDescending(){
+//		breweryData=QueryRunner.breweriesSortedByAverageDescending(filteredBreweries);
+//		filteredBreweries=breweryData;
+//	}
+//	
+//	
+//	public void breweriesSortedByCountryThenAverageDescending(){
+//		breweryData=QueryRunner.breweriesSortedByCountryThenAverageDescending(filteredBreweries);
+//		filteredBreweries=breweryData;
+//	}
 	
 	
 	/**
@@ -809,81 +825,81 @@ public class Model {
 		this.showAlsoAverage = showAlsoAverage;
 	}
 
-	public void beersFilteredByStyle(Style style){
-		filteredBeers=QueryRunner.beersFilteredByStyle(filteredBeers, style);
-	}
-	
-	public void beersFilteredByMainStyle(Style style){
-		filteredBeers=QueryRunner.beersFilteredByMainStyle(filteredBeers, style);
-	}
-	
-
-	
-	public void beersFilteredByBrewery(Brewery brewery){
-		filteredBeers=QueryRunner.beersFilteredByBrewery(filteredBeers, brewery);
-	}
-	
-		
-	public void beersFilteredByMiminumMark(int mark){
-		filteredBeers=QueryRunner.beersFilteredByMiminumMark(filteredBeers, mark);
-	}
-
-	public void beersFilteredByExactMark(int mark){
-		filteredBeers=QueryRunner.beersFilteredByExactMark(filteredBeers, mark);
-	}
-	
-	
-	
-	public void beersFilteredByIsTried(boolean isTried){
-		filteredBeers=QueryRunner.beersFilteredByIsTried(filteredBeers, isTried);
-	}
-	
-	
-	
-	public void beersFilteredByMinimumNumberOfStars(int numberOfStar){
-		filteredBeers=QueryRunner.beersFilteredByMinimumNumberOfStars(filteredBeers, numberOfStar);
-	}
-	
-	public void beersFilteredByExactNumberOfStars(int numberOfStar){
-		filteredBeers=QueryRunner.beersFilteredByExactNumberOfStars(filteredBeers, numberOfStar);
-	}
-	
-	
-	
-	public void beersFilteredByMinimumAlcool(double alcool){
-		filteredBeers=QueryRunner.beersFilteredByMinimumAlcool(filteredBeers, alcool);
-	}
-	
-	public void beersFilteredByExatcAlcool(double alcool){
-		filteredBeers=QueryRunner.beersFilteredByExatcAlcool(filteredBeers, alcool);
-	}
-	
-	public void beersFilteredByTrappist(boolean trappist){
-		filteredBeers=QueryRunner.beersFilteredByTrappist(filteredBeers, trappist);
-	}
-	
-	
-//	public void beersFilteredByColour(String color){
-//		filteredBeers=QueryRunner.beersFilteredByColour(filteredBeers, color);
+//	public void beersFilteredByStyle(Style style){
+//		filteredBeers=QueryRunner.beersFilteredByStyle(filteredBeers, style);
 //	}
 //	
-		
+//	public void beersFilteredByMainStyle(Style style){
+//		filteredBeers=QueryRunner.beersFilteredByMainStyle(filteredBeers, style);
+//	}
+//	
+//
+//	
+//	public void beersFilteredByBrewery(Brewery brewery){
+//		filteredBeers=QueryRunner.beersFilteredByBrewery(filteredBeers, brewery);
+//	}
+//	
+//		
+//	public void beersFilteredByMiminumMark(int mark){
+//		filteredBeers=QueryRunner.beersFilteredByMiminumMark(filteredBeers, mark);
+//	}
+//
+//	public void beersFilteredByExactMark(int mark){
+//		filteredBeers=QueryRunner.beersFilteredByExactMark(filteredBeers, mark);
+//	}
 	
-	public void beersFilteredByFermentation(Fermentation fermentation){
-		filteredBeers=QueryRunner.beersFilteredByFermentation(filteredBeers, fermentation);
-	}
 	
 	
-
-	public void beersFilteredByBreweryCountry(String country){	
-		filteredBeers=QueryRunner.beersFilteredByBreweryCountry(filteredBeers, country);
-			
-	}
-	
-	
-	public void beersFilteredByStyleProvenience(String provenience){
-		filteredBeers=QueryRunner.beersFilteredByStyleProvenience(filteredBeers, provenience);
-	}
+//	public void beersFilteredByIsTried(boolean isTried){
+//		filteredBeers=QueryRunner.beersFilteredByIsTried(filteredBeers, isTried);
+//	}
+//	
+//	
+//	
+//	public void beersFilteredByMinimumNumberOfStars(int numberOfStar){
+//		filteredBeers=QueryRunner.beersFilteredByMinimumNumberOfStars(filteredBeers, numberOfStar);
+//	}
+//	
+//	public void beersFilteredByExactNumberOfStars(int numberOfStar){
+//		filteredBeers=QueryRunner.beersFilteredByExactNumberOfStars(filteredBeers, numberOfStar);
+//	}
+//	
+//	
+//	
+//	public void beersFilteredByMinimumAlcool(double alcool){
+//		filteredBeers=QueryRunner.beersFilteredByMinimumAlcool(filteredBeers, alcool);
+//	}
+//	
+//	public void beersFilteredByExatcAlcool(double alcool){
+//		filteredBeers=QueryRunner.beersFilteredByExatcAlcool(filteredBeers, alcool);
+//	}
+//	
+//	public void beersFilteredByTrappist(boolean trappist){
+//		filteredBeers=QueryRunner.beersFilteredByTrappist(filteredBeers, trappist);
+//	}
+//	
+//	
+////	public void beersFilteredByColour(String color){
+////		filteredBeers=QueryRunner.beersFilteredByColour(filteredBeers, color);
+////	}
+////	
+//		
+//	
+//	public void beersFilteredByFermentation(Fermentation fermentation){
+//		filteredBeers=QueryRunner.beersFilteredByFermentation(filteredBeers, fermentation);
+//	}
+//	
+//	
+//
+//	public void beersFilteredByBreweryCountry(String country){	
+//		filteredBeers=QueryRunner.beersFilteredByBreweryCountry(filteredBeers, country);
+//			
+//	}
+//	
+//	
+//	public void beersFilteredByStyleProvenience(String provenience){
+//		filteredBeers=QueryRunner.beersFilteredByStyleProvenience(filteredBeers, provenience);
+//	}
 	
 	public static enum ExportType{
 		JSON,
@@ -1543,6 +1559,7 @@ public class Model {
 	
 	public void saveConfiguration() throws FileNotFoundException{
 		ConfigurationFactory.writeConfiguration(configuration, ConfigurationFactory.getDefaultConfigurationPath());
+		System.out.println("Salvataggio");
 	}
 	
 	@Deprecated

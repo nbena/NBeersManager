@@ -1,6 +1,24 @@
+/*   NBeersManager: manages what you drink.
+
+    Copyright (C) 2016  Nicola Bena
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>
+    */
 package org.nbena.beersmanager.json.conf;
 
 import java.io.InputStream;
+
 import java.io.OutputStream;
 import java.io.PrintStream;
 
@@ -12,10 +30,7 @@ import org.nbena.beersmanager.conf.Configuration;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
-import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.json.coreclasses.Converter;
-import org.nbena.beersmanager.json.coreclasses.JSONExporterCoreClasses;
-import org.nbena.beersmanager.json.coreclasses.StyleJSONSpecialClass;
 import org.nbena.beersmanager.query.QueryRunner;
 
 public class JSONExporterConfiguration {
@@ -102,42 +117,42 @@ public class JSONExporterConfiguration {
 	
 	
 	
-	private static String[] getBeerFilterValueAndType(Object o){
-		String[] value = new String[2];
-		value[0]="";
-		value[1]="";
-		if(o instanceof Double){
-			value[0] = JSON_BEER_FILTER_VALUE_TYPE_DOUBLE;
-			value[1] = Double.toString((Double)o);
-		}
-		else if(o instanceof Integer){
-			value[0] = JSON_BEER_FILTER_VALUE_TYPE_INT;
-			value[1] = Integer.toString((Integer)o);
-		}
-		else if(o instanceof Boolean){
-			value[0] = JSON_BEER_FILTER_VALUE_TYPE_BOOLEAN;
-			value[1] = Boolean.toString((Boolean)o);
-		}
-		else if(o instanceof Style){
-			value[0] = JSON_BEER_FILTER_VALUE_TYPE_STYLE;
-//			value[1] = JSONExporterCoreClasses.writeStyleSpecial((Style)o);
-			value[1] = Utils.getStyleStringForExport((Style)o);
-		}
-		else if(o instanceof Brewery){
-			value[0] = JSON_BEER_FILTER_VALUE_TYPE_BREWERY;
-//			value[1] = JSONExporterCoreClasses.writeBrewery((Brewery)o);
-			value[1] = Utils.getBreweryStringForExport((Brewery)o);
-		}
-		else if(o instanceof String){
-			value[0] = JSON_BEER_FILTER_VALUE_TYPE_STRING;
-			value[1] = (String)o;
-		}
-		else if(o instanceof Fermentation){
-			value[0] = JSON_BEER_FILTER_VALUE_TYPE_FERMENTATION;
-			value[1] = Fermentation.toFirstUpperCase((Fermentation)o).toString();
-		}
-		return value;
-	}
+//	private static String[] getBeerFilterValueAndType(Object o){
+//		String[] value = new String[2];
+//		value[0]="";
+//		value[1]="";
+//		if(o instanceof Double){
+//			value[0] = JSON_BEER_FILTER_VALUE_TYPE_DOUBLE;
+//			value[1] = Double.toString((Double)o);
+//		}
+//		else if(o instanceof Integer){
+//			value[0] = JSON_BEER_FILTER_VALUE_TYPE_INT;
+//			value[1] = Integer.toString((Integer)o);
+//		}
+//		else if(o instanceof Boolean){
+//			value[0] = JSON_BEER_FILTER_VALUE_TYPE_BOOLEAN;
+//			value[1] = Boolean.toString((Boolean)o);
+//		}
+//		else if(o instanceof Style){
+//			value[0] = JSON_BEER_FILTER_VALUE_TYPE_STYLE;
+////			value[1] = JSONExporterCoreClasses.writeStyleSpecial((Style)o);
+//			value[1] = Utils.getStyleStringForExport((Style)o);
+//		}
+//		else if(o instanceof Brewery){
+//			value[0] = JSON_BEER_FILTER_VALUE_TYPE_BREWERY;
+////			value[1] = JSONExporterCoreClasses.writeBrewery((Brewery)o);
+//			value[1] = Utils.getBreweryStringForExport((Brewery)o);
+//		}
+//		else if(o instanceof String){
+//			value[0] = JSON_BEER_FILTER_VALUE_TYPE_STRING;
+//			value[1] = (String)o;
+//		}
+//		else if(o instanceof Fermentation){
+//			value[0] = JSON_BEER_FILTER_VALUE_TYPE_FERMENTATION;
+//			value[1] = Fermentation.toFirstUpperCase((Fermentation)o).toString();
+//		}
+//		return value;
+//	}
 	
 	
 	private static WriteObject getBeerFilterValueAndTypeObject(Object o){
@@ -177,16 +192,16 @@ public class JSONExporterConfiguration {
 	
 
 	
-	private static String[] getBreweryFilterValueAndTypeType(Object o){
-		String[] value = new String[2];
-		value[0]="";
-		value[1]="";
-		if(o instanceof String){
-			value[0] = JSON_BREWERY_FILTER_VALUE_TYPE_STRING;
-			value[1] = (String)o;
-		}
-		return value;
-	}
+//	private static String[] getBreweryFilterValueAndTypeType(Object o){
+//		String[] value = new String[2];
+//		value[0]="";
+//		value[1]="";
+//		if(o instanceof String){
+//			value[0] = JSON_BREWERY_FILTER_VALUE_TYPE_STRING;
+//			value[1] = (String)o;
+//		}
+//		return value;
+//	}
 	
 	private static WriteObject getBreweryFilterValueAndTypeTypeObject(Object o){
 		WriteObject obj = new WriteObject();
@@ -197,32 +212,32 @@ public class JSONExporterConfiguration {
 		return obj;
 	}
 	
-	private static String[] getStyleFilterValueAndType(Object o){
-		System.out.println(o.getClass());
-		String[] value = new String[2];
-		value[0]="";
-		value[1]="";
-		if(o instanceof Style){
-			value[0] = JSON_STYLE_FILTER_VALUE_TYPE_STYLE;
-			value[1] = Utils.getStyleStringForExport((Style)o);
-		}
-		else if(o instanceof String){
-			value[0] = JSON_STYLE_FILTER_VALUE_TYPE_STRING;
-			value[1] = (String)o;
-		}
-		else if(o instanceof Fermentation){
-			value[0] = JSON_STYLE_FILTER_VALUE_TYPE_FERMENTATION;
-			value[1] = ((Fermentation)o).toString();
-		}
-		return value;
-	}
+//	private static String[] getStyleFilterValueAndType(Object o){
+//		System.out.println(o.getClass());
+//		String[] value = new String[2];
+//		value[0]="";
+//		value[1]="";
+//		if(o instanceof Style){
+//			value[0] = JSON_STYLE_FILTER_VALUE_TYPE_STYLE;
+//			value[1] = Utils.getStyleStringForExport((Style)o);
+//		}
+//		else if(o instanceof String){
+//			value[0] = JSON_STYLE_FILTER_VALUE_TYPE_STRING;
+//			value[1] = (String)o;
+//		}
+//		else if(o instanceof Fermentation){
+//			value[0] = JSON_STYLE_FILTER_VALUE_TYPE_FERMENTATION;
+//			value[1] = ((Fermentation)o).toString();
+//		}
+//		return value;
+//	}
 	
 	
 	private static WriteObject getStyleFilterValueAndTypeObject(Object o){
 		WriteObject obj = new WriteObject();
 		if(o instanceof Style){
 			obj.setType(JSON_STYLE_FILTER_VALUE_TYPE_STYLE);
-			String value = JSONObject.valueToString(Converter.toStyleSpecialClass((Style)o));
+//			String value = JSONObject.valueToString(Converter.toStyleSpecialClass((Style)o)); !!!!!!
 //			obj.setValue(Converter.toStyleSpecialClass((Style)o));
 //			obj.setValue(value);
 			obj.setValue(new JSONObject(Converter.toStyleSpecialClass((Style)o)));
@@ -242,7 +257,7 @@ public class JSONExporterConfiguration {
 		c.setBeerFilterAlgorithm(QueryRunner.BeerFilterAlgorithm.valueOf(json.getString(JSON_BEER_FILTER_ALGORITHM)));
 		String value = json.getString(JSON_BEER_FILTER_VALUE_TYPE);
 		
-		System.out.println("Beer filter type: "+value);
+//		System.out.println("Beer filter type: "+value);
 		
 		if(value.equals(JSON_BEER_FILTER_VALUE_TYPE_DOUBLE)){
 			c.setBeerFilterValue(json.getDouble(JSON_BEER_FILTER_VALUE));
@@ -254,14 +269,14 @@ public class JSONExporterConfiguration {
 //			c.setBeerFilterValue(JSONExporterCoreClasses.readStyle(json.getJSONObject(JSON_BEER_FILTER_VALUE).toString()));	
 //			c.setBeerFilterValue(Utils.getStyleFromStringExport(json.getString(JSON_BEER_FILTER_VALUE)));
 			
-			String objString = json.getJSONObject(JSON_BEER_FILTER_VALUE).toString();
+//			String objString = json.getJSONObject(JSON_BEER_FILTER_VALUE).toString();
 //			c.setBeerFilterValue(JSONExporterCoreClasses.readStyle(objString));
 			
 		}else if(value.equals(JSON_BEER_FILTER_VALUE_TYPE_BREWERY)){
 //			c.setBeerFilterValue(JSONExporterCoreClasses.readBrewery(json.getJSONObject(JSON_BEER_FILTER_VALUE).toString()));
 //			c.setBeerFilterValue(Utils.getBreweryFromStringExport(json.getString(JSON_BEER_FILTER_VALUE)));
 			
-			String objString = json.getJSONObject(JSON_BEER_FILTER_VALUE).toString();
+//			String objString = json.getJSONObject(JSON_BEER_FILTER_VALUE).toString();
 //			c.setBeerFilterValue(JSONExporterCoreClasses.readBrewery(objString));	
 			
 		}else if(value.equals(JSON_BEER_FILTER_VALUE_TYPE_STRING)){
@@ -279,7 +294,7 @@ public class JSONExporterConfiguration {
 		c.setBreweryFilterAlgorithm(QueryRunner.BreweryFilterAlgorithm.valueOf(json.getString(JSON_BREWERY_FILTER_ALGORITHM)));
 		String value = json.getString(JSON_BREWERY_FILTER_VALUE_TYPE);
 		
-		System.out.println("Brewery filter type: "+value);
+//		System.out.println("Brewery filter type: "+value);
 		
 		if (value.equals(JSON_BREWERY_FILTER_VALUE_TYPE_STRING)){
 			c.setBreweryFilterValue(json.get(JSON_BREWERY_FILTER_VALUE));
@@ -306,7 +321,7 @@ public class JSONExporterConfiguration {
 			
 //			c.setStyleFilterValue(Utils.getStyleFromStringExport(json.getString(JSON_STYLE_FILTER_VALUE)));
 			
-			String objString = json.getJSONObject(JSON_STYLE_FILTER_VALUE).toString();
+//			String objString = json.getJSONObject(JSON_STYLE_FILTER_VALUE).toString();
 //			c.setStyleFilterValue(JSONExporterCoreClasses.readStyle(objString));
 			
 			
