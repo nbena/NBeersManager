@@ -323,7 +323,7 @@ public class Utils {
 	}
 	
 	public static String gplPath(String pwd){
-		return pwd+="license";
+		return pwd+="license.txt";
 	}
 	
 	@Deprecated
