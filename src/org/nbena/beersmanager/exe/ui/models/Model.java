@@ -1559,7 +1559,7 @@ public class Model {
 	
 	public void saveConfiguration() throws FileNotFoundException{
 		ConfigurationFactory.writeConfiguration(configuration, ConfigurationFactory.getDefaultConfigurationPath());
-		System.out.println("Salvataggio");
+
 	}
 	
 	@Deprecated
@@ -1620,37 +1620,110 @@ public class Model {
 	
 	public void importBeers(File f) throws FileNotFoundException, JSONException, RecomposingException{
 		List<Beer> beerDiff = JSONImporter.getBeersDifference(beerData,  f);
-		System.out.println("Le birre diiff:");
-		Utils.printBeers(beerDiff, System.out);
+//		System.out.println("Le birre diiff:");
+//		Utils.printBeers(beerDiff, System.out);
 		if(!beerDiff.isEmpty()){
 			beerData.addAll(beerDiff);
 			filteredBeers = beerData;
 		}
 		
+		//now add the breweries if necessary.
+		
+		List<Brewery> breweryTemp = QueryRunner.getAllBreweries(beerDiff);
+//		System.out.println("I birrifici ottenuti:");
+//		Utils.printBreweries(breweryTemp, System.out);
+//		
+//		
+//		System.out.println("Il birrificio esiste? ");
+//		System.out.println(QueryRunner.BinarySearch.isBreweryExists(Utils.fromBreweriesAverageToBrewery(breweryData), breweryTemp.get(0), false));
+		
+		wrapperImportBreweries(null, breweryTemp);
+		
+		List<Style> styleTemp = QueryRunner.getAllStyles(beerDiff);
+		importStylesBridge(styleTemp);
 //		beerSortingCurrentAlgorithm.apply(beerData);
 //		clearFilter(false, true, true);
 	}
 	
-	public void importBreweries(File f) throws FileNotFoundException, JSONException{
-		List<Brewery> breweriesDiff = JSONImporter.getBreweriesDifference(Utils.fromBreweriesAverageToBrewery(breweryData), f);
+	private void importBreweriesBridge(List<Brewery> breweriesDiff){
 		if(!breweriesDiff.isEmpty()){
 			breweryData.addAll(Utils.fromBreweriesToBreweriesAverage(breweriesDiff));
 			setAverages();
 			filteredBreweries = breweryData;
 		}
-		
-//		brewerySortingCurrentAlgorithm.apply(breweryData);
-//		clearFilter(true, false, true);
 	}
 	
-	public void importStyles(File f) throws FileNotFoundException, JSONException{
+	private List<Brewery> getBreweryDiffFromFile(File f) throws FileNotFoundException, JSONException{
+		List<Brewery> breweriesDiff = JSONImporter.getBreweriesDifference(Utils.fromBreweriesAverageToBrewery(breweryData), f);
+		return breweriesDiff;
+	}
+	
+	
+	public void wrapperImportBreweries(File f, List<Brewery> allBreweries) throws FileNotFoundException, JSONException{
+		
+//		System.out.println("Il param è: ");
+//		Utils.printBreweries(allBreweries, System.out);
+//		
+//		System.out.println("Il birrificio esiste dentro il param? ");
+//		System.out.println(QueryRunner.BinarySearch.isBreweryExists(Utils.fromBreweriesAverageToBrewery(breweryData), allBreweries.get(0), false));
+		
+		List<Brewery> breweries;
+		if(f!=null){
+			breweries = getBreweryDiffFromFile(f);
+		}
+		else{
+			breweries =  QueryRunner.Diff.breweryDiff(Utils.fromBreweriesAverageToBrewery(breweryData), allBreweries, false, false);
+//			System.out.println("Differenza birrifici::");
+//			Utils.printBreweries(breweries, System.out);
+		}
+		importBreweriesBridge(breweries);
+	}
+	
+//	public void importBreweries(File f) throws FileNotFoundException, JSONException{
+//		List<Brewery> breweriesDiff = JSONImporter.getBreweriesDifference(Utils.fromBreweriesAverageToBrewery(breweryData), f);
+//		if(!breweriesDiff.isEmpty()){
+//			breweryData.addAll(Utils.fromBreweriesToBreweriesAverage(breweriesDiff));
+//			setAverages();
+//			filteredBreweries = breweryData;
+//		}
+//		
+////		brewerySortingCurrentAlgorithm.apply(breweryData);
+////		clearFilter(true, false, true);
+//	}
+	
+	private List<Style> getStyleDiffFromFile(File f) throws FileNotFoundException, JSONException{
 		List<Style> stylesDiff = JSONImporter.getStylesDifference(styleData, f);
+		return stylesDiff;
+	}
+	
+	private void importStylesBridge(List<Style> stylesDiff){
 		if(!stylesDiff.isEmpty()){
 			styleData.addAll(stylesDiff);
 			filteredStyles = styleData;
 			
 		}
 	}
+	
+	public void wrapperImportStyles(File f, List<Style> allStyles) throws FileNotFoundException, JSONException{
+		List<Style> styles;
+		if(f!=null){
+			styles = getStyleDiffFromFile(f);
+		}
+		else{
+			styles =  QueryRunner.Diff.styleDiff(styleData, allStyles, false, false);
+		}
+		
+		importStylesBridge(styles);
+	}
+	
+//	public void importStyles(File f) throws FileNotFoundException, JSONException{
+//		List<Style> stylesDiff = JSONImporter.getStylesDifference(styleData, f);
+//		if(!stylesDiff.isEmpty()){
+//			styleData.addAll(stylesDiff);
+//			filteredStyles = styleData;
+//			
+//		}
+//	}
 		
 //		styleSortingCurrentAlgorithm.apply(styleData);
 //		clearFilter(true, true, false);

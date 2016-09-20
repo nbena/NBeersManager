@@ -118,6 +118,7 @@ public class QueryRunner {
 		BY_COUNTRY,
 		BY_MAIN_STYLE
 	}
+	
 
 
 
@@ -836,7 +837,7 @@ public class QueryRunner {
 				}
 				
 				for(Brewery b: secondSort){
-					if(BinarySearch.isBreweryExists(baseSort, b, true)){
+					if(!BinarySearch.isBreweryExists(baseSort, b, true)){
 						breweryDiff.add(b);
 					}
 				}
@@ -858,7 +859,7 @@ public class QueryRunner {
 				}
 				
 				for(Style s: secondSort){
-					if(BinarySearch.isStyleExists(baseSort, s, true)){
+					if(!BinarySearch.isStyleExists(baseSort, s, true)){
 						styleDiff.add(s);
 					}
 				}
@@ -868,6 +869,11 @@ public class QueryRunner {
 			}
 			
 		}
+		
+//		public static List<Brewery> getAllBreweries(List<Beer> beers){
+//			List<Brewery> ret = new LinkedList<Brewery>();
+//			return ret;
+//		}
 	
 	
 

@@ -1352,7 +1352,7 @@ public class Controller {
 //		File [] files = initImportBreweries();
 		File file = initImport();
 		if(file!=null){
-			model.importBreweries(file);
+			model.wrapperImportBreweries(file, null);
 //			refreshData();
 		}		
 	}
@@ -1361,7 +1361,7 @@ public class Controller {
 //		File [] files = initImportStyles();
 		File file = initImport();
 		if(file!=null){
-			model.importStyles(file);
+			model.wrapperImportStyles(file, null);
 //			refreshData();
 		}
 		
