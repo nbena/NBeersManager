@@ -33,6 +33,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import javax.swing.JEditorPane;
 
+@SuppressWarnings("serial")
 public class ViewAbout extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();

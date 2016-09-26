@@ -1640,7 +1640,10 @@ public class Model {
 		wrapperImportBreweries(null, breweryTemp);
 		
 		List<Style> styleTemp = QueryRunner.getAllStyles(beerDiff);
-		importStylesBridge(styleTemp);
+		
+		
+//		importStylesBridge(styleTemp);
+		wrapperImportStyles(null, styleTemp);
 //		beerSortingCurrentAlgorithm.apply(beerData);
 //		clearFilter(false, true, true);
 	}

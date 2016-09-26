@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="brewery")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Brewery implements Comparable<Brewery> {
+public class Brewery/* implements Comparable<Brewery> */{
 
 
 	private String breweryName;
@@ -138,26 +138,26 @@ public class Brewery implements Comparable<Brewery> {
 		this.isAuthenticTrappist = isAuthenticTrappist;
 	}
 
-
-	@Override
-	//basic comparation algorithm based just on the name.
-	//assuming that don't exist two breweries with the same name.
-	public int compareTo(Brewery o) {
-		/*
-		int ret;
-		if(o.getName().equals(getName())){
-			ret=0;
-		}
-		else{
-			if(getCountry().equals(o.getCountry())){
-				if(getTown().equals(o.getTown())){
-					ret=getName().codePointAt(o.getName());
-				}
-			}*/
-//		System.out.println(name+"\n");
-//		System.out.println(o.getName()+"\n");
-		return getBreweryName().compareTo(o.getBreweryName());
-	}
+//
+//	@Override
+//	//basic comparation algorithm based just on the name.
+//	//assuming that don't exist two breweries with the same name.
+//	public int compareTo(Brewery o) {
+//		/*
+//		int ret;
+//		if(o.getName().equals(getName())){
+//			ret=0;
+//		}
+//		else{
+//			if(getCountry().equals(o.getCountry())){
+//				if(getTown().equals(o.getTown())){
+//					ret=getName().codePointAt(o.getName());
+//				}
+//			}*/
+////		System.out.println(name+"\n");
+////		System.out.println(o.getName()+"\n");
+//		return getBreweryName().compareTo(o.getBreweryName());
+//	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()

@@ -34,6 +34,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class ViewPreferences extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();

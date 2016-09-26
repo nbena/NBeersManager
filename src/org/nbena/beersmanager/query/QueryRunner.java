@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 
 import org.nbena.beersmanager.coreclasses.*;
 import org.nbena.beersmanager.query.Comparators.ComparatorBeerForBinarySearch;
+import org.nbena.beersmanager.query.Comparators.StyleComparator;
 public class QueryRunner {
 	
 	public static enum ORDER_BY_BEER{}
@@ -123,7 +124,7 @@ public class QueryRunner {
 
 
 	public static List<Beer> beersFilteredByStyle(List<Beer> beers, Style style){
-		return beers.stream().filter(b -> b.getStyle().compareTo(style)==0)
+		return beers.stream().filter(b -> b.getStyle().equals(style))
 				.collect(Collectors.toList());
 	}
 	
@@ -135,7 +136,7 @@ public class QueryRunner {
 
 	
 	public static List<Beer> beersFilteredByBrewery(List<Beer> beers, Brewery brewery){
-		return beers.stream().filter(b -> b.getBrewery().compareTo(brewery)==0)
+		return beers.stream().filter(b -> b.getBrewery().equals(brewery))
 		.collect(Collectors.toList());
 	}
 	
@@ -515,13 +516,13 @@ public class QueryRunner {
 	//SORT FUNCTIONS
 	public static List<Style> styleSortedByFermentationThenCountry(List<Style> styles){
 		List<Style> sortedStyles=new LinkedList<Style>(styles);
-		Collections.sort(sortedStyles , new Comparators.ComparatorStyleFermentationComplete());
+		Collections.sort(sortedStyles , new StyleComparator.ComparatorStyleFermentationCountry());
 		return sortedStyles;
 	}
 	
 	public static List<Style> styleSortedByCountryThenFermentationy(List<Style> styles){
 		List<Style> sortedStyles=new LinkedList<Style>(styles);
-		Collections.sort(sortedStyles , new Comparators.ComparatorStyleCountryComplete());
+		Collections.sort(sortedStyles , new StyleComparator.ComparatorStyleCountryFermentation());
 		return sortedStyles;
 	}
 	
@@ -532,15 +533,19 @@ public class QueryRunner {
 		return sortedStyles;
 	}
 	
+	
+	
+	//not directly available to user but necessary
 	public static List<Style> stylesSortedByMainCategorySubCategory(List<Style> styles){
 		List<Style> sortedStyles = new LinkedList<Style>(styles);
-		Collections.sort(sortedStyles, new Comparators.ComparatorStyleByCategoryAndSubcategory());
+		Collections.sort(sortedStyles, new StyleComparator.ComparatorStyleMainCategorySubCategory());
 		return sortedStyles;
 	}
 	
+	//not directly available to user but necessary
 	public static List<Style> stylesSortedByOnlyMainCategory(List<Style> styles){
 		List<Style> sortedStyles = new LinkedList<Style>(styles);
-		Collections.sort(sortedStyles, new Comparators.ComparatorStyleOnlyMainCategory());
+		Collections.sort(sortedStyles, new StyleComparator.ComparatorStyleOnlyMainCategory());
 		return sortedStyles;
 	}
 	
@@ -723,7 +728,7 @@ public class QueryRunner {
 		public static List<Style> stylesSortedForBinarySearch(List<Style> styles){
 			List<Style> orderedStyles = new LinkedList<Style>(styles);
 //			Collections.sort(orderedStyles, new Comparators.ComparatorStyleForBinarySearch());
-			Collections.sort(orderedStyles, new Comparators.ComparatorStyleByCategoryAndSubcategory());
+			Collections.sort(orderedStyles, new StyleComparator.ComparatorStyleMainCategorySubCategory());
 			return orderedStyles;
 		}
 		
@@ -734,7 +739,7 @@ public class QueryRunner {
 				styles = stylesSortedForBinarySearch(styles);		
 			}
 //			ret = Collections.binarySearch(styles, style, new Comparators.ComparatorStyleForBinarySearch());
-			ret = Collections.binarySearch(styles, style, new Comparators.ComparatorStyleByCategoryAndSubcategory());
+			ret = Collections.binarySearch(styles, style, new StyleComparator.ComparatorStyleMainCategorySubCategory());
 			return ret;
 		}
 

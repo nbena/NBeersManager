@@ -44,6 +44,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 
+@SuppressWarnings("serial")
 public class ViewAddNewBrewery extends JDialog implements BreweryDialog{
 
 	private final JPanel contentPanel = new JPanel();

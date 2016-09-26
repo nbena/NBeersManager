@@ -36,6 +36,7 @@ import org.nbena.beersmanager.coreclasses.Style;
 import javax.swing.JScrollPane;
 
 //public class ViewViewStyle extends JDialog {
+@SuppressWarnings("serial")
 public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
 //public class ViewViewStyle extends JDialog implements ViewAbstractDialog{
 

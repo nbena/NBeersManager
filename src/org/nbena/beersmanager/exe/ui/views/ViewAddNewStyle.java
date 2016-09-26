@@ -40,6 +40,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 
+@SuppressWarnings("serial")
 public class ViewAddNewStyle extends JDialog implements StyleDialog{
 
 	private final JPanel contentPanel = new JPanel();
@@ -163,6 +164,10 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 	
 	public void setOkButtonEnabled(boolean enabled){
 		okButton.setEnabled(enabled);
+	}
+	
+	public int getComboBoxSelectedItemIndex(){
+		return comboBoxMainStyle.getSelectedIndex();
 	}
 
 	/**

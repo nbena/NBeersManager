@@ -23,6 +23,7 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.query.BreweryAverage;
 
+@SuppressWarnings("serial")
 public class UpdateSavingException extends Exception {
 
 	public UpdateSavingException() {

@@ -38,6 +38,7 @@ import org.nbena.beersmanager.exe.Utils;
 import javax.swing.JScrollPane;
 
 //public class ViewViewBrewery extends JDialog {
+@SuppressWarnings("serial")
 public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog{
 	
 //	public class ViewViewBrewery extends JDialog implements ViewAbstractDialog {

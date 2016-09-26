@@ -19,6 +19,7 @@ package org.nbena.beersmanager.exceptions;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
 
+@SuppressWarnings("serial")
 public class RecomposingException extends Exception {
 
 //	public RecomposingException() {

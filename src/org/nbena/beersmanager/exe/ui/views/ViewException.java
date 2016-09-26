@@ -36,6 +36,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollBar;
 
+@SuppressWarnings("serial")
 public class ViewException extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();

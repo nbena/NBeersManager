@@ -27,6 +27,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class ViewCredits extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();

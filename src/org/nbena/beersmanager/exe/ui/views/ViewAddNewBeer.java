@@ -51,6 +51,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSlider;
 
+@SuppressWarnings("serial")
 public class ViewAddNewBeer extends JDialog implements BeerDialog{
 
 	private final JPanel contentPanel = new JPanel();

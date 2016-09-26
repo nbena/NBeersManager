@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="style")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Style implements Comparable<Style>{
+public class Style /*implements Comparable<Style>*/{
 	
 	private String styleMainName;
 	private String styleSubCategory;
@@ -134,22 +134,22 @@ public class Style implements Comparable<Style>{
 
 
 
-	@Override
-	public int compareTo(Style o) {
-		int ret;
-		if(o.getStyleMainName().equals(styleMainName)){
-			if(o.getStyleSubCategory().equals(o.styleSubCategory)){
-				ret=0;
-			}
-			else{
-				ret=getStyleSubCategory().compareTo(o.styleSubCategory);
-			}
-		}
-		else{
-			ret=getStyleMainName().compareTo(o.styleMainName);
-		}
-		return ret;
-	}
+//	@Override
+//	public int compareTo(Style o) {
+//		int ret;
+//		if(o.getStyleMainName().equals(styleMainName)){
+//			if(o.getStyleSubCategory().equals(o.styleSubCategory)){
+//				ret=0;
+//			}
+//			else{
+//				ret=getStyleSubCategory().compareTo(o.styleSubCategory);
+//			}
+//		}
+//		else{
+//			ret=getStyleMainName().compareTo(o.styleMainName);
+//		}
+//		return ret;
+//	}
 
 
 

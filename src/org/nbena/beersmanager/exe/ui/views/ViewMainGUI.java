@@ -54,12 +54,9 @@ import java.awt.Point;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 
+@SuppressWarnings("serial")
 public class ViewMainGUI extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6973734778443148904L;
 	private JPanel contentPane;
 	
 	

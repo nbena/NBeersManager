@@ -2252,18 +2252,37 @@ public class Controller {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
+				if(addStyleDialog.getComboBoxSelectedItemIndex()>=0){	//good to put in a listener
+					
+					String mainStyle = addStyleDialog.getStyleMainName();
+					if(mainStyle.equals(Utils.Constants.NEW_STYLE_STRING)){
 						
-				String mainStyle = addStyleDialog.getStyleMainName();
-				if(mainStyle.equals(Utils.Constants.NEW_STYLE_STRING)){
-					
-					addStyleDialog.removeComboBoxSelection();
-					addStyleDialog.closeComboBox();
-					
-					mainStyle = askNewMainStyleName();
-					
-					if(mainStyle!=null && mainStyle.length()>0){
-						addStyleDialog.addComboBoxItem(mainStyle);
+						addStyleDialog.removeComboBoxSelection();
+						addStyleDialog.closeComboBox();
+						
+						mainStyle = askNewMainStyleName();
+						
+						if(mainStyle!=null && mainStyle.length()>0){
+							addStyleDialog.addComboBoxItem(mainStyle);
+							addStyleDialog.setOkButtonEnabled(true);
+						}
+						else{
+							//here if the user choose "cancel" to the optionpane the ask a new style
+							addStyleDialog.setOkButtonEnabled(false);
+						}
 					}
+					
+					//if the selection is not "Nuovo stile" we can enable the "ok button"
+					else{
+						addStyleDialog.setOkButtonEnabled(true);
+					}
+					
+					
+				}
+				//here if the selected item index is less than 0. It can happen
+				else{
+					addStyleDialog.setOkButtonEnabled(false);
 				}
 			}
 			
@@ -2291,7 +2310,8 @@ public class Controller {
 		setAddNewStyleOkButton();
 		setAddNewStyleCancelButton();
 		
-		setOkButtonEnabledStyle();
+//		setOkButtonEnabledStyle();	no more needed. The only element that can enable or disable it 
+//		is the combobox. The combo box listener already manager the ok button, a new listener (like other dialog has textfield's listeners) is not necessary.
 		
 		addAddStyleComboBoxStyleListener();
 		
