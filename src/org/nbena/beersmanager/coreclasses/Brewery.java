@@ -15,13 +15,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
     */
 package org.nbena.beersmanager.coreclasses;
+;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name="brewery")
-@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlRootElement(name="brewery")
+//@XmlAccessorType(XmlAccessType.FIELD)
+/**
+ * Brewery class represents a Brewery object.
+ * @author nbena
+ *
+ */
 public class Brewery/* implements Comparable<Brewery> */{
 
 

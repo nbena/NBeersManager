@@ -20,12 +20,14 @@ package org.nbena.beersmanager.coreclasses;
 
 import java.util.Arrays;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="beer")
-@XmlAccessorType(XmlAccessType.FIELD)
+
+
+/**
+ * Beer class represents a beer object.
+ * @author nbena
+ *
+ */
 public class Beer {
 
 

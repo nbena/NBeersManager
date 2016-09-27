@@ -19,6 +19,7 @@ package org.nbena.beersmanager.exe;
 
 import java.io.FileNotFoundException;
 
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -30,6 +31,11 @@ import org.nbena.beersmanager.exe.ui.Controller;
 import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.views.ViewMainGUI;
 
+/**
+ * The main class. It creates instance of View, Model and Controller.
+ * @author nbena
+ *
+ */
 public class Main {
 	
 //	private static final String GUI = "gui";

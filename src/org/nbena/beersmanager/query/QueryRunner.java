@@ -34,6 +34,7 @@ import org.nbena.beersmanager.query.Comparators.BeerComparator;
 import org.nbena.beersmanager.query.Comparators.Binary;
 import org.nbena.beersmanager.query.Comparators.BreweryComparator;
 import org.nbena.beersmanager.query.Comparators.StyleComparator;
+import org.nbena.beersmanager.query.QueryRunner.BeerQuery.BeerFilter;
 import org.nbena.beersmanager.sclasses.BreweryAverage;
 public class QueryRunner {
 	
@@ -124,551 +125,539 @@ public class QueryRunner {
 		BY_COUNTRY,
 		BY_MAIN_STYLE
 	}
+
 	
-
-
-
-	public static List<Beer> beersFilteredByStyle(List<Beer> beers, Style style){
-//		return beers.stream().filter(b -> b.getStyle().equals(style))
-//				.collect(Collectors.toList());
+	public static class BeerQuery{
 		
-		return beers.stream().filter(b -> Comparators.Binary.styleBooleanBinarySearch(b.getStyle(), style))
-				.collect(Collectors.toList());
-	}
-	
-	public static List<Beer> beersFilteredByMainStyle(List<Beer> beers, Style style){
-		return beers.stream().filter(b -> b.getStyle().getStyleMainName().equalsIgnoreCase(style.getStyleMainName()))
-				.collect(Collectors.toList());
-	}
-	
+		public static class BeerSort{
 
-	
-	public static List<Beer> beersFilteredByBrewery(List<Beer> beers, Brewery brewery){
-//		return beers.stream().filter(b -> b.getBrewery().equals(brewery))
-//		.collect(Collectors.toList());
-		
-		return beers.stream().filter(b -> Comparators.Binary.breweryBooleanBinarySearch(b.getBrewery(), brewery))
-		.collect(Collectors.toList());
-	}
-	
-	
-	
-	public static List<Beer> beersFilteredByMiminumMark(List<Beer> beers, int mark){
-		return beers.stream().filter(b -> b.getMark()>=mark)
-				.collect(Collectors.toList());
-	}
+			/**
+			 * Sort beers by their brewery (country, town, name), and then by their style (fermentation, name, subcategory)
+			 * @param beers
+			 * @return
+			 */
+			public static List<Beer> beersSortedByCountryOfBreweryStyle(List<Beer> beers){
+				List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByCountryBreweryStyleName());
+				return sortedBeers;
+			}
 
-	public static List<Beer> beersFilteredByExactMark(List<Beer> beers, int mark){
-		return beers.stream().filter(b -> b.getMark()==mark)
-				.collect(Collectors.toList());
-	}
-	
-	
-	
-	public static List<Beer> beersFilteredByIsTried(List<Beer> beers, boolean isTried){
-		return beers.stream().filter(b -> b.isTried()==isTried)
-				.collect(Collectors.toList());
-	}
-	
-	
-	
-	
-	public static List<Beer> beersFilteredByMinimumNumberOfStars(List<Beer> beers, int numberOfStar){
-		return beers.stream().filter(b -> b.getNumberOfStars()>=numberOfStar)
-				.collect(Collectors.toList());
-	}
-	
-	public static List<Beer> beersFilteredByExactNumberOfStars(List<Beer> beers, int numberOfStar){
-		return beers.stream().filter(b -> b.getNumberOfStars()==numberOfStar)
-				.collect(Collectors.toList());
-	}
-	
-	
-	
-	
-	public static List<Beer> beersFilteredByMinimumAlcool(List<Beer> beers, double alcool){
-		return beers.stream().filter(b -> b.getAlcool()>=alcool)
-				.collect(Collectors.toList());
-	}
-	
-	public static List<Beer> beersFilteredByExatcAlcool(List<Beer> beers, double alcool){
-		return beers.stream().filter(b -> b.getAlcool()==alcool)
-				.collect(Collectors.toList());
-	}
-	
-	
+			/**
+			 * Sort beers by fermentation, then style (origin country, name, subcategory), and then brewery (town, name).
+			 * @param beers
+			 * @return
+			 */
+			public static List<Beer> beersSortedByFermentationCountryOfStyleBrewery(List<Beer> beers){
+				List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByFermentationCountryOfStyleBreweryName());
+				return sortedBeers;
+			}
 
-	
-	//this can be done by using multiple QueryRunner function, but I think it's not efficient
-	
-	public static List<Beer> beersFilteredByTrappist(List<Beer> beers, boolean trappist){
-		return beers.stream().filter(b -> b.getBrewery().isAuthenticTrappist()==trappist)
-				.collect(Collectors.toList());
-	}
-	
-	
-	
-//	public static List<Beer> beersFilteredByColour(List<Beer> beers, String color){
-//		return beers.stream().filter(b -> b.getColor().equalsIgnoreCase(color))
-//				.collect(Collectors.toList());
-//	}
-//	
-	
-	
-	
-	public static List<Beer> beersFilteredByFermentation(List<Beer> beers, Fermentation fermentation){
-		return beers.stream().filter(b -> b.getStyle().getFermentation()==fermentation)
-				.collect(Collectors.toList());
-	}
-	
-	
-	
-	
-	public static List<Beer> beersFilteredByBreweryCountry(List<Beer> beers, String country){	
-		return beers.stream().filter(b -> b.getBrewery().getCountry().equalsIgnoreCase(country))
-				.collect(Collectors.toList());
+			/**
+			 * Sort beers by fermentation, style (name and subcategory) then brewery (country, town, name).
+			 * @param beers
+			 * @return
+			 */
+			public static List<Beer> beersSortedByFermentationStyleCountryOfBrewery(List<Beer> beers){
+				List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByFermentationStyleCountryBreweryName());
+				return sortedBeers;
+			}
+
+			public static List<Beer> beersSortedByMarkStarAscending(List<Beer> beers){
+				List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByMarkStarAscending());
+				return sortedBeers;
+			}
+
+			public static List<Beer> beersSortedByStarMarkAscending(List<Beer> beers){
+				List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByStarMarkAscending());
+				return sortedBeers;
+			}
+
+			public static List<Beer> beersSortedByMarkStarDescending(List<Beer> beers){
+				List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByMarkStarDescending());
+				return sortedBeers;
+			}
+
+			public static List<Beer> beersSortedByStarMarkDescending(List<Beer> beers){
+				List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByStarMarkDescending());
+				return sortedBeers;
+			}
+
+			public static List<Beer> beersSortedByABVAscending(List<Beer> beers){
+				List<Beer> sortedBeers = new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerABVAscending());
+				return sortedBeers;
+			}
+
+			public static List<Beer> beersSortedByPriceAscending(List<Beer> beers){
+				List<Beer> sortedBeers = new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerPriceAscending());
+				return sortedBeers;
+			}
+
+			public static List<Beer> beersSortedByABVDescending(List<Beer> beers){
+				List<Beer> sortedBeers = new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerABVDescending());
+				return sortedBeers;
+			}
+
+			public static List<Beer> beersSortedByPriceDescending(List<Beer> beers){
+				List<Beer> sortedBeers = new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerPriceDescending());
+				return sortedBeers;
+			}
+
+			public static List<Beer> beersSortedByName(List<Beer> beers){
+				List<Beer> sortedBeers = new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByName());
+				return sortedBeers;
+			}
 			
-	}
-	
-	
-	
-	public static List<Beer> beersFilteredByStyleProvenience(List<Beer> beers, String provenience){
-		return beers.stream().filter(b -> b.getStyle().getStyleCountryOrigin().equalsIgnoreCase(provenience))
-				.collect(Collectors.toList());
-	}
-	
-	
-	public static List<Beer> beersFilteredByPlaceTried(List<Beer> beers, String place){
-		return beers.stream().filter(b -> b.getPlaceTried().equalsIgnoreCase(place))
-				.collect(Collectors.toList());
-	}
-	
-	///******************************************************************
-	// EXTRACTION QUERY
-	//*****************************************************************
-	public static List<Brewery> getAllBreweries(List<Beer> beers){
-		List<Brewery> breweries=new LinkedList<Brewery>();
-		for(Beer b: beers){
-			if(breweries.contains(b.getBrewery())==false){
-				breweries.add(b.getBrewery());
-			}
 		}
-		return breweries;
-	}
-	
-	public static List<Style> getAllStyles(List<Beer> beers){
-		List<Style> styles=new LinkedList<Style>();
-		for(Beer b: beers){
-			if(styles.contains(b.getStyle())==false){
-				styles.add(b.getStyle());
-			}
-		}
-		return styles;
-	}
-	
-	
-	//*******************************************************************
-	// BREWERIES QUERY
-	//*****************************************************************
-	
-	public static List<Brewery> breweriesFilteredByCountry(List<Brewery> breweries, String country){
-		return breweries.stream().filter(br -> br.getCountry().equalsIgnoreCase(country))
-				.collect(Collectors.toList());
-	}
-	
-	public static List<Brewery> breweriesFilteredByTrappist(List<Brewery> breweries, Boolean trappist){
-		return breweries.stream().filter(b -> b.isAuthenticTrappist()==trappist)
-				.collect(Collectors.toList());
-	}
-	
-	
-	public static List<BreweryAverage> breweriesAverageFilteredByCountry(List<BreweryAverage> breweries, String country){
-		return breweries.stream().filter(br -> br.getCountry().equalsIgnoreCase(country))
-				.collect(Collectors.toList());
-	}
-	
-	public static List<BreweryAverage> breweriesAverageFilteredByTrappist(List<BreweryAverage> breweries, Boolean trappist){
-		return breweries.stream().filter(b -> b.isAuthenticTrappist()==trappist)
-				.collect(Collectors.toList());
-	}
+		
+		
+		public static class BeerFilter {
 
-	
-	//*******************************************************************
-	// STYLES QUERY
-	//*****************************************************************
-	
-	
-	public static List<Style> stylesFilteredByFermentation(List<Style> styles, Fermentation fermentation){
-		return styles.stream().filter(s -> s.getFermentation()==fermentation)
-				.collect(Collectors.toList());
-	}
-	
-	public static List<Style> stylesFilteredByCountryOrigin(List<Style> styles, String country){
-		return styles.stream().filter(s -> s.getStyleCountryOrigin().equalsIgnoreCase(country))
-				.collect(Collectors.toList());
-	}
-	
-	public static final List<Style> stylesFilteredByMainStyle(List<Style> styles, Style style){
-		return styles.stream().filter(s -> s.getStyleMainName().equals(style.getStyleMainName()))
-				.collect(Collectors.toList());
-	}
-	
-	public static List<Style> onlyMainStyles(List<Style> styles){
-		List<Style> filteredStyles=new LinkedList<Style>();
-		//Style nakedStyle;
-		for(Style s: styles){
-			//nakedStyle=Utils.getNakedStyle(s);
-			//if(Collections.binarySearch(filteredStyles, nakedStyle, new Comparators.ComparatorStyleOnlyMain())<0){
-			if(!searchForMainStyle(filteredStyles, s)){
-//				filteredStyles.add(nakedStyle);
-				filteredStyles.add(s);
-			}
-		}
-		
-//		Utils.printStyles(filteredStyles, System.out);
-		
-		return stylesSortedByOnlyMainCategory(filteredStyles);
-	}
-	
-	private static boolean searchForMainStyle(List<Style> styles, Style style){
-		boolean ret=false;
-		for(int i=0;i<styles.size();i++){
-			Style s=styles.get(i);
-			if (s.getStyleMainName().equalsIgnoreCase(style.getStyleMainName())){
-				i=styles.size();
-				ret=true;
-			}
-		}
-		return ret;
-	}
-	
-	public static List<String> onlyMainStylesAsString(List<Style> styles){
-		List<Style> filtered=onlyMainStyles(styles);
-		List<String> strings=new LinkedList<String>();
-		for(Style s: filtered){
-			strings.add(s.getStyleMainName());
-		}
-		
-		
-		
-		return strings;
-	}
-	
+			public static List<Beer> beersFilteredByStyle(List<Beer> beers, Style style){
+			//		return beers.stream().filter(b -> b.getStyle().equals(style))
+			//				.collect(Collectors.toList());
+					
+					return beers.stream().filter(b -> Comparators.Binary.styleBooleanBinarySearch(b.getStyle(), style))
+							.collect(Collectors.toList());
+				}
 
-	
-	
-	public static List<Beer> theBestBeersBasedOnMark(List<Beer> beers){
-		int i, j;
-		List<Beer> bestBeers=new LinkedList<Beer>();
-		bestBeers.add(beers.get(0));
-		j=0;
-		for(i=1;i<beers.size();i++){
-			if(beers.get(i).getMark()>=bestBeers.get(j).getMark()){
-				if(beers.get(i).getMark()==bestBeers.get(j).getMark()){
-					//need to check if empty because of the remove 
-					if(bestBeers.isEmpty()){
-						bestBeers.add(j, beers.get(i));
+			public static List<Beer> beersFilteredByMainStyle(List<Beer> beers, Style style){
+				return beers.stream().filter(b -> b.getStyle().getStyleMainName().equalsIgnoreCase(style.getStyleMainName()))
+						.collect(Collectors.toList());
+			}
+
+			public static List<Beer> beersFilteredByBrewery(List<Beer> beers, Brewery brewery){
+			//		return beers.stream().filter(b -> b.getBrewery().equals(brewery))
+			//		.collect(Collectors.toList());
+					
+					return beers.stream().filter(b -> Comparators.Binary.breweryBooleanBinarySearch(b.getBrewery(), brewery))
+					.collect(Collectors.toList());
+				}
+
+			public static List<Beer> beersFilteredByMiminumMark(List<Beer> beers, int mark){
+				return beers.stream().filter(b -> b.getMark()>=mark)
+						.collect(Collectors.toList());
+			}
+
+			public static List<Beer> beersFilteredByExactMark(List<Beer> beers, int mark){
+				return beers.stream().filter(b -> b.getMark()==mark)
+						.collect(Collectors.toList());
+			}
+
+			public static List<Beer> beersFilteredByIsTried(List<Beer> beers, boolean isTried){
+				return beers.stream().filter(b -> b.isTried()==isTried)
+						.collect(Collectors.toList());
+			}
+
+			public static List<Beer> beersFilteredByMinimumNumberOfStars(List<Beer> beers, int numberOfStar){
+				return beers.stream().filter(b -> b.getNumberOfStars()>=numberOfStar)
+						.collect(Collectors.toList());
+			}
+
+			public static List<Beer> beersFilteredByExactNumberOfStars(List<Beer> beers, int numberOfStar){
+				return beers.stream().filter(b -> b.getNumberOfStars()==numberOfStar)
+						.collect(Collectors.toList());
+			}
+
+			public static List<Beer> beersFilteredByMinimumAlcool(List<Beer> beers, double alcool){
+				return beers.stream().filter(b -> b.getAlcool()>=alcool)
+						.collect(Collectors.toList());
+			}
+
+			public static List<Beer> beersFilteredByExatcAlcool(List<Beer> beers, double alcool){
+				return beers.stream().filter(b -> b.getAlcool()==alcool)
+						.collect(Collectors.toList());
+			}
+
+			public static List<Beer> beersFilteredByTrappist(List<Beer> beers, boolean trappist){
+				return beers.stream().filter(b -> b.getBrewery().isAuthenticTrappist()==trappist)
+						.collect(Collectors.toList());
+			}
+
+			public static List<Beer> beersFilteredByFermentation(List<Beer> beers, Fermentation fermentation){
+				return beers.stream().filter(b -> b.getStyle().getFermentation()==fermentation)
+						.collect(Collectors.toList());
+			}
+
+			public static List<Beer> beersFilteredByBreweryCountry(List<Beer> beers, String country){	
+				return beers.stream().filter(b -> b.getBrewery().getCountry().equalsIgnoreCase(country))
+						.collect(Collectors.toList());
+					
+			}
+
+			public static List<Beer> beersFilteredByStyleProvenience(List<Beer> beers, String provenience){
+				return beers.stream().filter(b -> b.getStyle().getStyleCountryOrigin().equalsIgnoreCase(provenience))
+						.collect(Collectors.toList());
+			}
+
+			public static List<Beer> beersFilteredByPlaceTried(List<Beer> beers, String place){
+				return beers.stream().filter(b -> b.getPlaceTried().equalsIgnoreCase(place))
+						.collect(Collectors.toList());
+			}
+			
+		}
+
+
+		///******************************************************************
+		// EXTRACTION QUERY
+		//*****************************************************************
+		public static List<Brewery> getAllBreweries(List<Beer> beers){
+			List<Brewery> breweries=new LinkedList<Brewery>();
+			for(Beer b: beers){
+				if(breweries.contains(b.getBrewery())==false){
+					breweries.add(b.getBrewery());
+				}
+			}
+			return breweries;
+		}
+
+
+		public static List<Style> getAllStyles(List<Beer> beers){
+			List<Style> styles=new LinkedList<Style>();
+			for(Beer b: beers){
+				if(styles.contains(b.getStyle())==false){
+					styles.add(b.getStyle());
+				}
+			}
+			return styles;
+		}
+
+
+		/**
+		 * @deprecated
+		 * @param beers
+		 * @return
+		 */
+		public static List<Beer> theBestBeersBasedOnMark(List<Beer> beers){
+			int i, j;
+			List<Beer> bestBeers=new LinkedList<Beer>();
+			bestBeers.add(beers.get(0));
+			j=0;
+			for(i=1;i<beers.size();i++){
+				if(beers.get(i).getMark()>=bestBeers.get(j).getMark()){
+					if(beers.get(i).getMark()==bestBeers.get(j).getMark()){
+						//need to check if empty because of the remove 
+						if(bestBeers.isEmpty()){
+							bestBeers.add(j, beers.get(i));
+						}
+						else{
+							bestBeers.add(j, beers.get(i));
+							j++;
+						}
 					}
 					else{
-						bestBeers.add(j, beers.get(i));
-						j++;
+						//if more remove the precedent
+						Beer beerToCheck=beers.get(i); //necessary because the removeIf doesn't want beers.get(i);
+						bestBeers.removeIf(b -> b.getMark()<= beerToCheck.getMark());
+						if(bestBeers.isEmpty()){
+							bestBeers.add(j, beers.get(i));
+						}
+						else{
+							bestBeers.add(j, beers.get(i));
+							j++;					
+						}
 					}
+				}
+			}
+			return bestBeers;
+		}
+
+
+		/**
+		 * Method that returns the best beer in the list basing only on the beer's mark.
+		 * If two or more beers have the same mark, the first of them is chosen.
+		 * @param beers
+		 * @return the beer with the highest mark
+		 * @deprecated
+		 */
+		public static Beer theBestBeerBasedOnMark(List<Beer> beers){
+			Beer b=beers.get(0);
+			for(int i=1;i<beers.size();i++){
+				Beer beerGet=beers.get(i);
+				if(beerGet.getMark()>b.getMark()){
+					b=beerGet;
+				}
+			}
+			return b;
+		}
+		
+	}
+	
+	
+	
+	
+	public static class BreweryQuery{
+		
+		public static class BrewerySort{
+
+			public static List<Brewery> breweriesSortedByCountryThenName(List<Brewery> breweries){
+				List<Brewery>  sortedBreweries=new LinkedList<Brewery>(breweries);
+				Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryName());
+				return sortedBreweries;
+			}
+
+			public static List<BreweryAverage> breweriesSortedByCountryThenNameWithAverage(List<BreweryAverage> breweries){
+				List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+				Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryName());
+				return sortedBreweries;
+			}
+
+			public static List<Brewery> breweriesSortedByName(List<Brewery> breweries){
+				List<Brewery>  sortedBreweries=new LinkedList<Brewery>(breweries);
+				Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByName());
+				return sortedBreweries;
+			}
+
+			public static List<BreweryAverage> breweriesSortedByNameWithAverage(List<BreweryAverage> breweries){
+				List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+				Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByName());
+				return sortedBreweries;
+			}
+
+			public static List<BreweryAverage> breweriesSortedByAverageAscending(List<BreweryAverage> breweries) {	
+				List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+				Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByAverageAscending());
+				return sortedBreweries;
+			}
+
+			public static List<BreweryAverage> breweriesSortedByCountryThenAverageAscending(List<BreweryAverage> breweries){
+				List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+				Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryThenAverageAscending());
+				return sortedBreweries;
+			}
+
+			public static List<BreweryAverage> breweriesSortedByAverageDescending(List<BreweryAverage> breweries) {	
+				List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+				Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByAverageDescending());
+				return sortedBreweries;
+			}
+
+			public static List<BreweryAverage> breweriesSortedByCountryThenAverageDescending(List<BreweryAverage> breweries){
+				List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
+				Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryThenAverageDescending());
+				return sortedBreweries;
+			}
+			
+		}
+		
+		
+		public static class BreweryFilter{
+
+			public static List<Brewery> breweriesFilteredByCountry(List<Brewery> breweries, String country){
+				return breweries.stream().filter(br -> br.getCountry().equalsIgnoreCase(country))
+						.collect(Collectors.toList());
+			}
+
+			public static List<Brewery> breweriesFilteredByTrappist(List<Brewery> breweries, Boolean trappist){
+				return breweries.stream().filter(b -> b.isAuthenticTrappist()==trappist)
+						.collect(Collectors.toList());
+			}
+
+			public static List<BreweryAverage> breweriesAverageFilteredByCountry(List<BreweryAverage> breweries, String country){
+				return breweries.stream().filter(br -> br.getCountry().equalsIgnoreCase(country))
+						.collect(Collectors.toList());
+			}
+
+			public static List<BreweryAverage> breweriesAverageFilteredByTrappist(List<BreweryAverage> breweries, Boolean trappist){
+				return breweries.stream().filter(b -> b.isAuthenticTrappist()==trappist)
+						.collect(Collectors.toList());
+			}
+			
+		}
+
+
+		//	@Deprecated //wait
+		//	public static List<Beer> sortBeerByCountryBreweryAverage(List<Beer> beers){
+		//		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+		//		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByCountryMark());
+		//		return sortedBeers;
+		//	}
+		//	
+			/**
+			 * @deprecated no need to have an hashmap now that I have BreweryAverage class.
+			 * @param beers
+			 * @param average
+			 * @param isTried
+			 * @return
+			 */
+			public static HashMap<Brewery, Double> breweryWithAvrerageMoreThan(LinkedList<Beer> beers, double average, boolean isTried){
+				HashMap<Brewery, Double> bestBreweriesMap=new HashMap<Brewery, Double>();
+				List<Brewery> breweries=new LinkedList<Brewery>();
+				double forEachAverage=0;
+				breweries=QueryRunner.BeerQuery.getAllBreweries(beers);
+				HashMap<Brewery, Double> breweryAverage=new HashMap<Brewery, Double>();
+				for(Brewery brewery: breweries){
+					forEachAverage=0;
+					List<Beer> beerBrewery=BeerFilter.beersFilteredByBrewery(beers, brewery);
+					for(Beer b: beerBrewery){
+						if(b.isTried()==isTried){
+							forEachAverage+=b.getMark();
+						}
+					}
+					forEachAverage/=beerBrewery.size();
+					breweryAverage.put(brewery, forEachAverage);
+				}
+				breweryAverage.forEach((k, v) -> {
+					if(v>=average){
+						bestBreweriesMap.put(k, v);
+					}
+				});
+				return bestBreweriesMap;
+			}
+
+
+			/**
+			 * Computes the average for the given brewery, based on the mark of each beer of the list.
+			 * The provided beer list can be already filtered for the brewery <code>b</code> or not. If it is
+			 * not filtered, the third argument <code>beersAlreadyFilteredByBrewery</code> must be set to <code>true</code>.
+			 * If not, the average will be wrong, because this method does <b>NOT</b> check if the already-filtered-list
+			 * is correct. 
+			 * @param beers	the list of beers to work on. Can be a list of all the beer, not just the beer for this specific brewery.
+			 * @param b	the brewery on which you want to known the average. 
+			 * @param beersAlreadyFilteredByBrewery	tells to the method if it had to filter the beers or not.
+			 * @return	the average for the brewery. If the brewery has no beer, result will be {@link Double.NaN}
+			 */
+			public static double breweryAverage(List<Beer> beers, Brewery b, boolean beersAlreadyFilteredByBrewery){
+				double average=0.0;
+				List<Beer> beersFiltered;
+				if(beersAlreadyFilteredByBrewery){
+					beersFiltered=new LinkedList<Beer>(beers);
 				}
 				else{
-					//if more remove the precedent
-					Beer beerToCheck=beers.get(i); //necessary because the removeIf doesn't want beers.get(i);
-					bestBeers.removeIf(b -> b.getMark()<= beerToCheck.getMark());
-					if(bestBeers.isEmpty()){
-						bestBeers.add(j, beers.get(i));
-					}
-					else{
-						bestBeers.add(j, beers.get(i));
-						j++;					
-					}
+					beersFiltered = BeerFilter.beersFilteredByBrewery(beers, b);
 				}
+				for (Beer beer: beersFiltered){
+					average+=(double)beer.getMark();
+				}
+				return average/(double)beersFiltered.size();
 			}
-		}
-		return bestBeers;
-	}
-	
-	
-	
-	//************************************************************************************************************************************
-	//SIGNLE OBJECT-RETURNED QUERY
-	//***********************************************************************************************************************************
-	
-	/**
-	 * Method that returns the best beer in the list basing only on the beer's mark.
-	 * If two or more beers have the same mark, the first of them is chosen.
-	 * @param beers
-	 * @return the beer with the highest mark
-	 */
-	public static Beer theBestBeerBasedOnMark(List<Beer> beers){
-		Beer b=beers.get(0);
-		for(int i=1;i<beers.size();i++){
-			Beer beerGet=beers.get(i);
-			if(beerGet.getMark()>b.getMark()){
-				b=beerGet;
-			}
-		}
-		return b;
-	}
-	
 
-	
-	
-	/**
-	 * Sort beers by their brewery (country, town, name), and then by their style (fermentation, name, subcategory)
-	 * @param beers
-	 * @return
-	 */
-	public static List<Beer> beersSortedByCountryOfBreweryStyle(List<Beer> beers){
-		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByCountryBreweryStyleName());
-		return sortedBeers;
-	}
-	
-	/**
-	 * Sort beers by fermentation, then style (origin country, name, subcategory), and then brewery (town, name).
-	 * @param beers
-	 * @return
-	 */
-	public static List<Beer> beersSortedByFermentationCountryOfStyleBrewery(List<Beer> beers){
-		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByFermentationCountryOfStyleBreweryName());
-		return sortedBeers;
-	}
-	
-	/**
-	 * Sort beers by fermentation, style (name and subcategory) then brewery (country, town, name).
-	 * @param beers
-	 * @return
-	 */
-	public static List<Beer> beersSortedByFermentationStyleCountryOfBrewery(List<Beer> beers){
-		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByFermentationStyleCountryBreweryName());
-		return sortedBeers;
-	}
-	
-	public static List<Beer> beersSortedByMarkStarAscending(List<Beer> beers){
-		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByMarkStarAscending());
-		return sortedBeers;
-	}
-	
-	public static List<Beer> beersSortedByStarMarkAscending(List<Beer> beers){
-		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByStarMarkAscending());
-		return sortedBeers;
-	}
-	
-	public static List<Beer> beersSortedByMarkStarDescending(List<Beer> beers){
-		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByMarkStarDescending());
-		return sortedBeers;
-	}
-	
-	public static List<Beer> beersSortedByStarMarkDescending(List<Beer> beers){
-		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByStarMarkDescending());
-		return sortedBeers;
-	}
-	
-	public static List<Beer> beersSortedByABVAscending(List<Beer> beers){
-		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerABVAscending());
-		return sortedBeers;
-	}
-	
-	public static List<Beer> beersSortedByPriceAscending(List<Beer> beers){
-		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerPriceAscending());
-		return sortedBeers;
-	}
-	
-	public static List<Beer> beersSortedByABVDescending(List<Beer> beers){
-		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerABVDescending());
-		return sortedBeers;
-	}
-	
-	public static List<Beer> beersSortedByPriceDescending(List<Beer> beers){
-		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerPriceDescending());
-		return sortedBeers;
-	}
-	
-	public static List<Beer> beersSortedByName(List<Beer> beers){
-		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByName());
-		return sortedBeers;
-	}
-	
-//	@Deprecated 
-//	/**
-//	 * Only internal use for binary search.
-//	 * @param beers
-//	 * @return
-//	 */
-//	public static List<Beer> sortBeerByNameStyleBrewery(List<Beer> beers){
-//		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-//		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByNameStyleBrewery());
-//		return sortedBeers;
-//	}
-	
-//	@Deprecated //wait
-//	public static List<Beer> sortBeerByCountryBreweryAverage(List<Beer> beers){
-//		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-//		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByCountryMark());
-//		return sortedBeers;
-//	}
-//	
-	
-	//SORT FUNCTIONS
-	public static List<Style> styleSortedByFermentationThenCountry(List<Style> styles){
-		List<Style> sortedStyles=new LinkedList<Style>(styles);
-		Collections.sort(sortedStyles , new StyleComparator.ComparatorStyleFermentationCountry());
-		return sortedStyles;
-	}
-	
-	public static List<Style> styleSortedByCountryThenFermentationy(List<Style> styles){
-		List<Style> sortedStyles=new LinkedList<Style>(styles);
-		Collections.sort(sortedStyles , new StyleComparator.ComparatorStyleCountryFermentation());
-		return sortedStyles;
-	}
-	
-	
-	public static List<Style> stylesSortedByFermentationCategorySubcategory(List<Style> styles){
-		List<Style> sortedStyles=new LinkedList<Style>(styles);
-		Collections.sort(sortedStyles , new StyleComparator.ComparatorStyleByFermentationCategorySubcategory());
-		return sortedStyles;
+
+			/**
+			 * @deprecated no need to have an hashmap with breweryAverage.
+			 * @param beers
+			 * @param breweries
+			 * @param beersAlreadyFiltered
+			 * @return
+			 */
+			public static HashMap<Brewery, Double> breweriesAverage(List<Beer> beers, List<Brewery> breweries, boolean beersAlreadyFiltered){
+				HashMap<Brewery, Double> map=new HashMap<Brewery, Double>();
+				for(Brewery b: breweries){
+					map.put(b, QueryRunner.BreweryQuery.breweryAverage(beers, b, beersAlreadyFiltered));
+				}
+				return map;
+			}
 	}
 	
 	
 	
-	//not directly available to user but necessary
-	public static List<Style> stylesSortedByMainCategorySubCategory(List<Style> styles){
-		List<Style> sortedStyles = new LinkedList<Style>(styles);
-		Collections.sort(sortedStyles, new StyleComparator.ComparatorStyleMainCategorySubCategory());
-		return sortedStyles;
-	}
-	
-	//not directly available to user but necessary
-	public static List<Style> stylesSortedByOnlyMainCategory(List<Style> styles){
-		List<Style> sortedStyles = new LinkedList<Style>(styles);
-		Collections.sort(sortedStyles, new StyleComparator.ComparatorStyleOnlyMainCategory());
-		return sortedStyles;
-	}
-	
-	
-	public static HashMap<Brewery, Double> breweryWithAvrerageMoreThan(LinkedList<Beer> beers, double average, boolean isTried){
-		HashMap<Brewery, Double> bestBreweriesMap=new HashMap<Brewery, Double>();
-		List<Brewery> breweries=new LinkedList<Brewery>();
-		double forEachAverage=0;
-		breweries=getAllBreweries(beers);
-		HashMap<Brewery, Double> breweryAverage=new HashMap<Brewery, Double>();
-		for(Brewery brewery: breweries){
-			forEachAverage=0;
-			List<Beer> beerBrewery=beersFilteredByBrewery(beers, brewery);
-			for(Beer b: beerBrewery){
-				if(b.isTried()==isTried){
-					forEachAverage+=b.getMark();
+	public static class StyleQuery{
+		
+		public static class StyleFilter{
+
+			public static List<Style> stylesFilteredByCountryOrigin(List<Style> styles, String country){
+				return styles.stream().filter(s -> s.getStyleCountryOrigin().equalsIgnoreCase(country))
+						.collect(Collectors.toList());
+			}
+
+			public static final List<Style> stylesFilteredByMainStyle(List<Style> styles, Style style){
+				return styles.stream().filter(s -> s.getStyleMainName().equals(style.getStyleMainName()))
+						.collect(Collectors.toList());
+			}
+
+			public static List<Style> stylesFilteredByFermentation(List<Style> styles, Fermentation fermentation){
+				return styles.stream().filter(s -> s.getFermentation()==fermentation)
+						.collect(Collectors.toList());
+			}
+			
+		}
+
+		public static class StyleSort{
+		
+			//SORT FUNCTIONS
+			public static List<Style> styleSortedByFermentationThenCountry(List<Style> styles){
+				List<Style> sortedStyles=new LinkedList<Style>(styles);
+				Collections.sort(sortedStyles , new StyleComparator.ComparatorStyleFermentationCountry());
+				return sortedStyles;
+			}
+		
+			public static List<Style> styleSortedByCountryThenFermentationy(List<Style> styles){
+				List<Style> sortedStyles=new LinkedList<Style>(styles);
+				Collections.sort(sortedStyles , new StyleComparator.ComparatorStyleCountryFermentation());
+				return sortedStyles;
+			}
+		
+			public static List<Style> stylesSortedByFermentationCategorySubcategory(List<Style> styles){
+				List<Style> sortedStyles=new LinkedList<Style>(styles);
+				Collections.sort(sortedStyles , new StyleComparator.ComparatorStyleByFermentationCategorySubcategory());
+				return sortedStyles;
+			}
+		
+			//not directly available to user but necessary
+			public static List<Style> stylesSortedByMainCategorySubCategory(List<Style> styles){
+				List<Style> sortedStyles = new LinkedList<Style>(styles);
+				Collections.sort(sortedStyles, new StyleComparator.ComparatorStyleMainCategorySubCategory());
+				return sortedStyles;
+			}
+		
+			//not directly available to user but necessary
+			public static List<Style> stylesSortedByOnlyMainCategory(List<Style> styles){
+				List<Style> sortedStyles = new LinkedList<Style>(styles);
+				Collections.sort(sortedStyles, new StyleComparator.ComparatorStyleOnlyMainCategory());
+				return sortedStyles;
+			}
+			
+		}
+		
+		private static boolean searchForMainStyle(List<Style> styles, Style style){
+			boolean ret = false;
+			for(int i=0;i<styles.size();i++){
+				if(Comparators.StyleComparator.styleOnlyMainEqual(styles.get(i), style)){
+					ret = true;
+					i = styles.size();
 				}
 			}
-			forEachAverage/=beerBrewery.size();
-			breweryAverage.put(brewery, forEachAverage);
+			return ret;
 		}
-		breweryAverage.forEach((k, v) -> {
-			if(v>=average){
-				bestBreweriesMap.put(k, v);
+
+		public static List<Style> onlyMainStyles(List<Style> styles){
+				List<Style> filteredStyles=new LinkedList<Style>();
+				//Style nakedStyle;
+				for(Style s: styles){
+					//nakedStyle=Utils.getNakedStyle(s);
+					//if(Collections.binarySearch(filteredStyles, nakedStyle, new Comparators.ComparatorStyleOnlyMain())<0){
+					if(!searchForMainStyle(filteredStyles, s)){
+		//				filteredStyles.add(nakedStyle);
+						filteredStyles.add(s);
+					}
+				}
+				
+		//		Utils.printStyles(filteredStyles, System.out);
+				
+				return StyleSort.stylesSortedByOnlyMainCategory(filteredStyles);
 			}
-		});
-		return bestBreweriesMap;
-	}
-	
-	
-	public static double breweryAverage(List<Beer> beers, Brewery b, boolean beersAlreadyFilteredByBrewery){
-		double average=0.0;
-		List<Beer> beersFiltered;
-		if(beersAlreadyFilteredByBrewery){
-			beersFiltered=new LinkedList<Beer>(beers);
+
+		public static List<String> onlyMainStylesAsString(List<Style> styles){
+			List<Style> filtered=QueryRunner.StyleQuery.onlyMainStyles(styles);
+			List<String> strings=new LinkedList<String>();
+			for(Style s: filtered){
+				strings.add(s.getStyleMainName());
+			}
+			
+			
+			
+			return strings;
 		}
-		else{
-			beersFiltered = beersFilteredByBrewery(beers, b);
-		}
-		for (Beer beer: beersFiltered){
-			average+=(double)beer.getMark();
-		}
-		return average/(double)beersFiltered.size();
-	}
-	
-	
-	
-	
-	public static HashMap<Brewery, Double> breweriesAverage(List<Beer> beers, List<Brewery> breweries, boolean beersAlreadyFiltered){
-		HashMap<Brewery, Double> map=new HashMap<Brewery, Double>();
-		for(Brewery b: breweries){
-			map.put(b, breweryAverage(beers, b, beersAlreadyFiltered));
-		}
-		return map;
-	}
-	
-	
-	public static List<Brewery> breweriesSortedByCountryThenName(List<Brewery> breweries){
-		List<Brewery>  sortedBreweries=new LinkedList<Brewery>(breweries);
-		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryName());
-		return sortedBreweries;
-	}
-	
-	public static List<BreweryAverage> breweriesSortedByCountryThenNameWithAverage(List<BreweryAverage> breweries){
-		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryName());
-		return sortedBreweries;
-	}
-	
-	
-	
-	public static List<Brewery> breweriesSortedByName(List<Brewery> breweries){
-		List<Brewery>  sortedBreweries=new LinkedList<Brewery>(breweries);
-		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByName());
-		return sortedBreweries;
-	}
-	
-	public static List<BreweryAverage> breweriesSortedByNameWithAverage(List<BreweryAverage> breweries){
-		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByName());
-		return sortedBreweries;
-	}
-	
-	
-	public static List<BreweryAverage> breweriesSortedByAverageAscending(List<BreweryAverage> breweries) {	
-		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByAverageAscending());
-		return sortedBreweries;
-	}
-	
-	
-	public static List<BreweryAverage> breweriesSortedByCountryThenAverageAscending(List<BreweryAverage> breweries){
-		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryThenAverageAscending());
-		return sortedBreweries;
-	}
-	
-	public static List<BreweryAverage> breweriesSortedByAverageDescending(List<BreweryAverage> breweries) {	
-		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByAverageDescending());
-		return sortedBreweries;
-	}
-	
-	
-	public static List<BreweryAverage> breweriesSortedByCountryThenAverageDescending(List<BreweryAverage> breweries){
-		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryThenAverageDescending());
-		return sortedBreweries;
-	}
-	
-	public static class Sorting{
-		
 	}
 	
 	
@@ -890,7 +879,7 @@ public class QueryRunner {
 //			List<Brewery> ret = new LinkedList<Brewery>();
 //			return ret;
 //		}
-	
+
 	
 
 }

@@ -1,5 +1,6 @@
 /*   NBeersManager: manages what you drink.
 
+
     Copyright (C) 2016  Nicola Bena
 
     This program is free software: you can redistribute it and/or modify
@@ -135,7 +136,10 @@ public class Comparators {
 				}
 				
 			}
+		
 
+
+		 
 		private static int styleCompareToWithFermentation(Style o1, Style o2){
 			int ret;
 			ret = StyleComparator.styleCompareToWithoutFermentation(o1, o2);
@@ -204,6 +208,14 @@ public class Comparators {
 //			}
 //			return ret;
 //		}
+		
+		static int styleCompareOnlyMain(Style o1, Style o2){
+			return o1.getStyleMainName().compareToIgnoreCase(o2.getStyleMainName());
+		}
+		
+		static boolean styleOnlyMainEqual(Style o1, Style o2){
+			return styleCompareOnlyMain(o1, o2)==0? true : false;
+		}
 		
 	}
 	

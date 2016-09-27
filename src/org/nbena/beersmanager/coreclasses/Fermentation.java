@@ -16,6 +16,11 @@
     */
 package org.nbena.beersmanager.coreclasses;
 
+/**
+ * Enum that represents the different type of fermentation of a beer.
+ * @author nbena
+ *
+ */
 public enum Fermentation { HIGH, LOW, SPONTANEOUS;
 	
 	

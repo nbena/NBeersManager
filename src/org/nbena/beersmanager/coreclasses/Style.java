@@ -16,12 +16,14 @@
     */
 package org.nbena.beersmanager.coreclasses;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="style")
-@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlRootElement(name="style")
+//@XmlAccessorType(XmlAccessType.FIELD)
+/**
+ * Style class represents a Beer style object.
+ * @author nbena
+ *
+ */
 public class Style /*implements Comparable<Style>*/{
 	
 	private String styleMainName;

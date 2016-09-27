@@ -77,6 +77,11 @@ import org.nbena.beersmanager.exe.ui.views.ViewViewStyle;
 import org.nbena.beersmanager.query.QueryRunner;
 import org.nbena.beersmanager.sclasses.BreweryAverage;
 
+/**
+ * The controller class in the MVC. It takes care of the GUI update and inform the model on what to do.
+ * @author nb
+ *
+ */
 public class Controller {
 	
 	private ViewMainGUI gui;
@@ -149,7 +154,7 @@ public class Controller {
 	}
 	
 	
-	public void showBeers(){
+	/*public*/private void showBeers(){
 		enableShowBeersItems();
 		
 		model.setTableModel(new ModelBeerTable());
@@ -158,7 +163,7 @@ public class Controller {
 		gui.setTableModel(model.getTableModel());
 	}
 	
-	public void showBreweries(){
+	/*public*/private void showBreweries(){
 		if(model.isShowAlsoAverage()){
 			showBreweriesAverage();
 		}else{
@@ -166,7 +171,7 @@ public class Controller {
 		}
 	}
 	
-	public void showBreweriesNormal(){
+	/*public*/private void showBreweriesNormal(){
 		enableShowBreweriesItems();
 		
 		model.setTableModel(new ModelBreweryTable());
@@ -175,7 +180,7 @@ public class Controller {
 		gui.setTableModel(model.getTableModel());
 	}
 	
-	public void showBreweriesAverage(){
+	/*public*/private void showBreweriesAverage(){
 		enableShowBreweriesItems();
 		
 		model.setAverages();
@@ -186,7 +191,7 @@ public class Controller {
 		gui.setTableModel(model.getTableModel());
 	}
 	
-	public void showStyles(){
+	/*public*/private void showStyles(){
 		enableShowStylesItems();
 		
 		model.setTableModel(new ModelStyleTable());
@@ -217,7 +222,7 @@ public class Controller {
 		gui.setQueryEnabledItemsStyle(true);
 	}
 	
-	public void beersFilteredByBrewery(Brewery b){
+	/*public*/private void beersFilteredByBrewery(Brewery b){
 //		model.beersFilteredByBrewery(b);
 		model.setBeerFilteringCurrentValue(b);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_BREWERY));
@@ -225,7 +230,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByBreweryCountry(String country){
+	/*public*/private void beersFilteredByBreweryCountry(String country){
 //		model.beersFilteredByBreweryCountry(country);
 		model.setBeerFilteringCurrentValue(country);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_COUNTRY));
@@ -233,7 +238,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByExactABV(double abv){
+	/*public*/private void beersFilteredByExactABV(double abv){
 //		model.beersFilteredByExatcAlcool(abv);
 		model.setBeerFilteringCurrentValue((Double)abv);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_MINIMUM_ABV));
@@ -241,7 +246,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByMinimumABV(double abv){
+	/*public*/private void beersFilteredByMinimumABV(double abv){
 //		model.beersFilteredByMinimumAlcool(abv);
 		model.setBeerFilteringCurrentValue((Double)abv);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_MINIMUM_ABV));
@@ -249,7 +254,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByMinimumMark(int mark){
+	/*public*/private void beersFilteredByMinimumMark(int mark){
 //		model.beersFilteredByMiminumMark(mark);
 		model.setBeerFilteringCurrentValue((Integer)mark);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_MINIMUM_MARK));
@@ -258,7 +263,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByExactMark(int mark){
+	/*public*/private void beersFilteredByExactMark(int mark){
 //		model.beersFilteredByExactMark(mark);
 		model.setBeerFilteringCurrentValue((Integer)mark);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_EXACT_MARK));
@@ -266,7 +271,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByMinimumNumberOfStars(int number){
+	/*public*/private void beersFilteredByMinimumNumberOfStars(int number){
 //		model.beersFilteredByMinimumNumberOfStars(number);
 		model.setBeerFilteringCurrentValue((Integer)number);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_MINIMUM_STARS));
@@ -274,7 +279,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByExactNumberOfStars(int number){
+	/*public*/private void beersFilteredByExactNumberOfStars(int number){
 //		model.beersFilteredByExactNumberOfStars(number);
 		model.setBeerFilteringCurrentValue((Integer)number);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_EXACT_STAR));
@@ -282,7 +287,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByFermentation(Fermentation f){
+	/*public*/private void beersFilteredByFermentation(Fermentation f){
 //		model.beersFilteredByFermentation(f);
 		model.setBeerFilteringCurrentValue(f);
 		if(f==Fermentation.HIGH){
@@ -297,7 +302,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByStyle(Style s){
+	/*public*/private void beersFilteredByStyle(Style s){
 //		model.beersFilteredByStyle(s);
 		model.setBeerFilteringCurrentValue(s);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_STYLE));
@@ -305,7 +310,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByMainStyle(Style s){
+	/*public*/private void beersFilteredByMainStyle(Style s){
 //		model.beersFilteredByMainStyle(s);
 		model.setBeerFilteringCurrentValue(s);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_MAIN_STYLE));
@@ -313,7 +318,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByStyleProvenience(String s){
+	/*public*/private void beersFilteredByStyleProvenience(String s){
 //		model.beersFilteredByStyleProvenience(s);
 		model.setBeerFilteringCurrentValue(s);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_STYLE_PROVENIENCE));
@@ -321,7 +326,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByTrappist(boolean trappist){
+	/*public*/private void beersFilteredByTrappist(boolean trappist){
 //		model.beersFilteredByTrappist(trappist);
 		model.setBeerFilteringCurrentValue((Boolean)trappist);
 		if(trappist){
@@ -333,7 +338,7 @@ public class Controller {
 		showBeers();
 	}
 	
-	public void beersFilteredByIsTried(boolean tried){
+	/*public*/private void beersFilteredByIsTried(boolean tried){
 //		model.beersFilteredByIsTried(tried);
 		model.setBeerFilteringCurrentValue(tried);
 		if(tried){
@@ -346,7 +351,7 @@ public class Controller {
 	}
 	
 	
-	public void beersFilteredByPlaceTried(String place){
+	/*public*/private void beersFilteredByPlaceTried(String place){
 //		model.beersFilteredByPlaceTried(place);
 		model.setBeerFilteringCurrentValue(place);
 		model.setBeersFilteringCurrentAlgorithm(Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.BY_PLACE_TRIED));
@@ -623,20 +628,20 @@ public class Controller {
 	}
 	
 	
-	public void breweriesFilteredByTrappistYes(){
+	/*public*/private void breweriesFilteredByTrappistYes(){
 		model.setBreweryFilteringCurrentAlgorithm(Utils.getBreweryAverageFilteringAlgorithm(QueryRunner.BreweryFilterAlgorithm.TRAPPIST_YES));
 		model.applyFilteringToBreweries();
 		showBreweries();
 	}
 	
 
-	public void breweriesFilteredByTrappistNo(){
+	/*public*/private void breweriesFilteredByTrappistNo(){
 		model.setBreweryFilteringCurrentAlgorithm(Utils.getBreweryAverageFilteringAlgorithm(QueryRunner.BreweryFilterAlgorithm.TRAPPIST_NO));
 		model.applyFilteringToBreweries();
 		showBreweries();
 	}
 	
-	public void breweriesFilteredByCountry(String country){
+	/*public*/private void breweriesFilteredByCountry(String country){
 		model.setBreweryFilteringCurrentValue(country);
 		model.setBreweryFilteringCurrentAlgorithm(Utils.getBreweryAverageFilteringAlgorithm(QueryRunner.BreweryFilterAlgorithm.COUNTRY));
 		model.applyFilteringToBreweries();
@@ -684,32 +689,32 @@ public class Controller {
 	}
 	
 	
-	public void stylesFilteredByFermentationHigh(){
+	/*public*/private void stylesFilteredByFermentationHigh(){
 		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_FERMENTATION_HIGH));
 		model.applyFilteringToStyles();
 		showStyles();
 	}
 	
-	public void stylesFilteredByFermentationSpontan(){
+	/*public*/private void stylesFilteredByFermentationSpontan(){
 		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_FERMENTATION_SPONTANEOUS));
 		model.applyFilteringToStyles();
 		showStyles();
 	}
 	
-	public void stylesFilteredByFermentationLow(){
+	/*public*/private void stylesFilteredByFermentationLow(){
 		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_FERMENTATION_LOW));
 		model.applyFilteringToStyles();
 		showStyles();
 	}
 	
-	public void stylesFilteredByCountry(String country){
+	/*public*/private void stylesFilteredByCountry(String country){
 		model.setStyleFilteringCurrentValue(country);
 		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_COUNTRY));
 		model.applyFilteringToStyles();
 		showStyles();
 	}
 	
-	public void stylesFilteredByMainStyle(Style main){
+	/*public*/private void stylesFilteredByMainStyle(Style main){
 		model.setStyleFilteringCurrentValue(main);
 		model.setStyleFilteringCurrentAlgorithm(Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.BY_MAIN_STYLE));
 		model.applyFilteringToStyles();
@@ -846,71 +851,71 @@ public class Controller {
 	}
 	
 	
-	//order function are public because I need to call them at the start of the program.
+	/////order function are public because I need to call them at the start of the program.
 	
-	public void beersSortedByCountryOfBreweryStyle(){
+	/*public*/private void beersSortedByCountryOfBreweryStyle(){
 //		model.beersSortedByCountryOfBreweryStyle();
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.COUNTRY_OF_BREWERY_STYLE));
 		showBeers();
 	}
 	
-	public void beersSortedByFermentationCountryOfStyleBrewery(){
+	/*public*/private void beersSortedByFermentationCountryOfStyleBrewery(){
 //		model.beersSortedByFermentationCountryOfStyleBrewery();
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.FERMENTATION_COUNTRY_OF_STYLE_BREWERY));
 		showBeers();	
 	}
 	
-	public void beersSortedByFermentationStyleCountryOfBrewery(){
+	/*public*/private void beersSortedByFermentationStyleCountryOfBrewery(){
 //		model.beersSortedByFermentationStyleCountryOfBrewery();
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.FERMENTATIOM_STYLE_COUNTRY_OF_BREWERY));
 		showBeers();
 	}
 	
-	public void beersSortedByMarkStarAscending(){
+	/*public*/private void beersSortedByMarkStarAscending(){
 //		model.beersSortedByMarkStarAscending();
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.MARK_STAR_ASCENDING));
 		showBeers();
 	}
 	
-	public void beersSortedByMarkStarDescending(){
+	/*public*/private void beersSortedByMarkStarDescending(){
 //		model.beersSortedByMarkStarDescending();
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.MARK_STAR_DESCENDING));
 		showBeers();
 	}
 	
-	public void beersSortedByStarMarkAscending(){
+	/*public*/private void beersSortedByStarMarkAscending(){
 //		model.beersSortedByStarMarkAsending();
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.STAR_MARK_ASCENDING));
 		showBeers();
 	}
 	
-	public void beersSortedByStarMarkDescending(){
+	/*public*/private void beersSortedByStarMarkDescending(){
 //		model.beersSortedByStarMarkDesending();
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.STAR_MARK_DESCENDING));
 		showBeers();
 	}
 	
-	public void beersSortedByABVAscending(){
+	/*public*/private void beersSortedByABVAscending(){
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.ABV_ASCENDING));
 		showBeers();
 	}
 	
-	public void beersSortedByABVDescending(){
+	/*public*/private void beersSortedByABVDescending(){
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.ABV_DESCENDING));
 		showBeers();
 	}
 	
-	public void beersSortedByPriceAscending(){
+	/*public*/private void beersSortedByPriceAscending(){
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.PRICE_ASCENDING));
 		showBeers();
 	}
 	
-	public void beersSortedByPriceDescending(){
+	/*public*/private void beersSortedByPriceDescending(){
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.PRICE_DESCENDING));
 		showBeers();
 	}
 	
-	public void beersSortedByName(){
+	/*public*/private void beersSortedByName(){
 		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.NAME));
 		showBeers();
 	}
@@ -1043,18 +1048,18 @@ public class Controller {
 		});
 	}
 	
-	public void stylesSortedByFermentationCategorySubcategory(){
+	/*public*/private void stylesSortedByFermentationCategorySubcategory(){
 		model.setStyleSortingCurrentAlgorithm(Utils.getStylesSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.FERMENTATION_CATEGORY));
 		showStyles();
 	}
 	
-	public void stylesSortedByFermentationThenCountry(){
+	/*public*/private void stylesSortedByFermentationThenCountry(){
 //		model.styleSortedByFermentationThenCountry();
 		model.setStyleSortingCurrentAlgorithm(Utils.getStylesSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.FERMENTATION_COUNTRY));
 		showStyles();
 	}
 	
-	public void stylesSortedByCountryThenFermentation(){
+	/*public*/private void stylesSortedByCountryThenFermentation(){
 //		model.styleSortedByCountryThenFermentationy();
 		model.setStyleSortingCurrentAlgorithm(Utils.getStylesSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.COUNTRY_FERMENTATION));
 		showStyles();
@@ -1091,37 +1096,37 @@ public class Controller {
 	}
 	
 	
-	public void breweriesSortedByCountryThenName(){
+	/*public*/private void breweriesSortedByCountryThenName(){
 //		model.breweriesSortedByCountryThenName();
 		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.COUNTRY_NAME));
 		showBreweries();
 	}
 	
-	public void breweriesSortedByName(){
+	/*public*/private void breweriesSortedByName(){
 //		model.breweriesSortedBynName(null);
 		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.NAME));
 		showBreweries();
 	}
 	
-	public void breweriesSortedByCountryThenAverageAscending(){
+	/*public*/private void breweriesSortedByCountryThenAverageAscending(){
 //		model.breweriesSortedByCountryThenAverageAscending();
 		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.COUNTRY_AVERAGE_ASCENDING));
 		showBreweries();
 	}
 	
-	public void breweriesSortedByAverageAscending(){
+	/*public*/private void breweriesSortedByAverageAscending(){
 //		model.breweriesSortedByAverageAscending();
 		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.AVERAGE_ASCENDING));
 		showBreweries();
 	}
 	
-	public void breweriesSortedByCountryThenAverageDescending(){
+	/*public*/private void breweriesSortedByCountryThenAverageDescending(){
 //		model.breweriesSortedByCountryThenAverageDescending();
 		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.COUNTRY_AVERAGE_DESCENDING));
 		showBreweries();
 	}
 	
-	public void breweriesSortedByAverageDescending(){
+	/*public*/private void breweriesSortedByAverageDescending(){
 //		model.breweriesSortedByAverageDescending();
 		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.COUNTRY_AVERAGE_ASCENDING));
 		showBreweries();
@@ -1238,7 +1243,7 @@ public class Controller {
 		}
 	}
 	
-	public void export()throws Exception{
+	/*public*/private void export()throws Exception{
 			if(model.getDataShownNow()==DataShownNow.BEER){
 				exportBeers();
 			}
@@ -1339,7 +1344,7 @@ public class Controller {
 //		return files;
 //	}
 	
-	public void importBeers() throws FileNotFoundException, JSONException, RecomposingException {
+	/*public*/private void importBeers() throws FileNotFoundException, JSONException, RecomposingException {
 //		File [] files = initImportBeers();
 		File file = initImport();
 		if(file!=null){
@@ -1348,7 +1353,7 @@ public class Controller {
 		}
 	}
 	
-	public void importBreweries() throws FileNotFoundException, JSONException {
+	/*public*/private void importBreweries() throws FileNotFoundException, JSONException {
 //		File [] files = initImportBreweries();
 		File file = initImport();
 		if(file!=null){
@@ -1357,7 +1362,7 @@ public class Controller {
 		}		
 	}
 	
-	public void importStyles() throws FileNotFoundException, JSONException {
+	/*public*/private void importStyles() throws FileNotFoundException, JSONException {
 //		File [] files = initImportStyles();
 		File file = initImport();
 		if(file!=null){
@@ -1442,7 +1447,7 @@ public class Controller {
 		dialog.setDescription(s.getDescription());
 	}
 	
-	public void setBreweryInDialog(BreweryDialog dialog){
+	/*public*/private void setBreweryInDialog(BreweryDialog dialog){
 		BreweryAverage b=model.getBreweryShown();
 		dialog.setBreweryName(b.getBreweryName());
 		dialog.setBreweryTown(b.getTown());
@@ -1800,7 +1805,7 @@ public class Controller {
 	 * @param fromDialog: <code>true</code> if the action come from the dialog that show the element 
 	 * 					without modify it.
 	 */
-	public void showAddOrModifyBeer(boolean addNewBeerOrModify, boolean fromDialog){
+	/*public*/private void showAddOrModifyBeer(boolean addNewBeerOrModify, boolean fromDialog){
 		if(addNewBeerOrModify){
 			model.setAddNewBeerOrModifyBeer(true);
 			showAddBeerDialog();
@@ -1812,7 +1817,7 @@ public class Controller {
 		}
 	}
 	
-	public void showAddOrModifyBrewery(boolean addNewBreweryOrModify, boolean fromDialog){
+	/*public*/private void showAddOrModifyBrewery(boolean addNewBreweryOrModify, boolean fromDialog){
 		if(addNewBreweryOrModify){
 			model.setAddNewBreweryOrModifyBrewery(true);
 			showAddBreweryDialog();
@@ -1822,7 +1827,7 @@ public class Controller {
 		}
 	}
 	
-	public void showAddOrModifyStyle(boolean addNewStyleOrModify, boolean fromDialog){
+	/*public*/private void showAddOrModifyStyle(boolean addNewStyleOrModify, boolean fromDialog){
 		if(addNewStyleOrModify){
 			model.setAddNewStyleOrModifyStyle(true);
 			showAddStyleDialog();
@@ -2208,12 +2213,12 @@ public class Controller {
 		});
 	}
 	
-	private void setOkButtonEnabledStyle(){
-		addStyleDialog.setOkButtonEnabled(true); //no need to textfield check
-	}
+//	private void setOkButtonEnabledStyle(){
+//		addStyleDialog.setOkButtonEnabled(true); //no need to textfield check
+//	}
 
 	
-	public void showAddBeerDialog(){
+	/*public*/private void showAddBeerDialog(){
 		addBeerDialog = new ViewAddNewBeer();
 		addBeerDialog.fillThings(Utils.getBreweriesString(model.getBreweryDataAlphaOrder()), Utils.getStyleStringListMainSub(model.getStyleDataMainSubOrder()));
 		
@@ -2234,7 +2239,7 @@ public class Controller {
 		addBeerDialog.setVisible(true);
 	}
 	
-	public void showAddBreweryDialog(){
+	/*public*/private void showAddBreweryDialog(){
 		addBreweryDialog = new ViewAddNewBrewery();
 		addBreweryDialog.fillThings(model.getCountries());
 		
@@ -2302,7 +2307,7 @@ public class Controller {
 		return styles;
 	}
 	
-	public void showAddStyleDialog(){
+	/*public*/private void showAddStyleDialog(){
 		addStyleDialog = new ViewAddNewStyle();
 		
 		addStyleDialog.fillThings(getStylesListToAddToAddNewStyle(), Utils.getFermentationsItalianString(), model.getCountries());
@@ -3028,7 +3033,7 @@ public class Controller {
 //		});
 //	}
 	
-	public Configuration getConfigurationFromConfigurationDialog(){
+	/*public*/private Configuration getConfigurationFromConfigurationDialog(){
 		Configuration newConf = new Configuration();
 		
 		newConf.setBeerSortingAlgorithm(Utils.getBeerSortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingBeerSelectedItem()));
@@ -3206,7 +3211,7 @@ public class Controller {
 		fillPreferencesDefaultView(conf);
 	}
 	
-	public void showPreferencesDialog(){
+	/*public*/private void showPreferencesDialog(){
 		
 		preferencesDialog = new ViewPreferences();
 		fillPreferences(model.getConfiguration());
@@ -3221,7 +3226,7 @@ public class Controller {
 		preferencesDialog.setVisible(true);
 	}
 	
-	public void showAboutDialog(){
+	/*public*/private void showAboutDialog(){
 		viewAbout = new ViewAbout();
 		viewAbout.addActionListenerOkButton(new ActionListener(){
 
@@ -3568,7 +3573,7 @@ public class Controller {
 	}
 	
 	
-	public boolean askSureToDeleteBeer(){
+	/*public*/private boolean askSureToDeleteBeer(){
 		optionPane.setParent(gui);
 		boolean ret = false;
 		int res = optionPane.showOkCancel(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_BEFORE_DELETE);
@@ -3578,7 +3583,7 @@ public class Controller {
 		return ret;
 	}
 	
-	public boolean askSureToDeleteBrewery(){
+	/*public*/private boolean askSureToDeleteBrewery(){
 		optionPane.setParent(gui);
 		boolean ret = false;
 		int res = optionPane.showOkCancel(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_BEFORE_DELETE_BREWERY);
@@ -3588,7 +3593,7 @@ public class Controller {
 		return ret;
 	}
 	
-	public boolean askSureToDeleteStyle(){
+	/*public*/private boolean askSureToDeleteStyle(){
 		optionPane.setParent(gui);
 		boolean ret = false;
 		int res = optionPane.showOkCancel(Utils.Constants.QUESTION, Utils.Constants.CONFIRMATION_BEFORE_DELETE_STYLE);

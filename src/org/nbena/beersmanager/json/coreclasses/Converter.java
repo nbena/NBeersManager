@@ -33,6 +33,11 @@ import org.nbena.beersmanager.sclasses.BeerJSONExportSpecialClass;
 import org.nbena.beersmanager.sclasses.BeerJSONSaveSpecialClass;
 import org.nbena.beersmanager.sclasses.StyleJSONSpecialClass;
 
+/**
+ * That kind of class ugly but necessary. It performs conversions between "normal" and "special" classes.
+ * @author nbena
+ *
+ */
 public class Converter {
 	
 	

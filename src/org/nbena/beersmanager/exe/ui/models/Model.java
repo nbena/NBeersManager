@@ -55,10 +55,22 @@ import org.nbena.beersmanager.export.MSExcelOldOutExporter;
 import org.nbena.beersmanager.export.MSExcelNewOutExporter;
 import org.nbena.beersmanager.query.QueryRunner;
 import org.nbena.beersmanager.query.QueryRunner.BeerFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.BeerQuery;
+import org.nbena.beersmanager.query.QueryRunner.BeerQuery.BeerFilter;
 import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.BreweryQuery.BrewerySort;
 import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
+import org.nbena.beersmanager.query.QueryRunner.StyleQuery;
+import org.nbena.beersmanager.query.QueryRunner.StyleQuery.StyleSort;
 import org.nbena.beersmanager.sclasses.BreweryAverage;
 
+/**
+ * The model class in MVC. Model keeps the business logic, it contains the data, it works on them.
+ * It can happen that model act just as a wrapper for other method, because I try to use all-in-one
+ * method.
+ * @author nbena
+ *
+ */
 public class Model {
 	
 
@@ -453,7 +465,7 @@ public class Model {
 	@Deprecated
 	public void setAverages(List<Beer> beers){
 		for(BreweryAverage av: breweryData){
-			List<Beer> itsBeers=QueryRunner.beersFilteredByBrewery(beers, (Brewery)av);
+			List<Beer> itsBeers=BeerFilter.beersFilteredByBrewery(beers, (Brewery)av);
 			av.setAverage(itsBeers);
 		}
 		filteredBreweries=this.breweryData;
@@ -463,7 +475,7 @@ public class Model {
 //		System.out.println("The beers");
 //		Utils.printBeers(beerData, System.out);
 		for(BreweryAverage av: breweryData){
-			List<Beer> itsBeers=QueryRunner.beersFilteredByBrewery(beerData, (Brewery)av);
+			List<Beer> itsBeers=BeerFilter.beersFilteredByBrewery(beerData, (Brewery)av);
 			av.setAverage(itsBeers);
 //			System.out.println("------------\nThe beers for: "+av.getBreweryName());
 //			Utils.printBeers(itsBeers, System.out);
@@ -705,7 +717,7 @@ public class Model {
 	
 	public void setBreweryShown(Brewery brewery){
 		breweryShown=Utils.fromBreweryToBreweryAverage(brewery);
-		breweryShown.setAverage(QueryRunner.beersFilteredByBrewery(beerData, brewery));
+		breweryShown.setAverage(BeerFilter.beersFilteredByBrewery(beerData, brewery));
 	}
 
 	/**
@@ -724,11 +736,11 @@ public class Model {
 
 	
 	public List<Style> getOnlyMainStyles(){
-		return QueryRunner.onlyMainStyles(styleData);
+		return StyleQuery.onlyMainStyles(styleData);
 	}
 	
 	public List<String> getOnlyMainStylesString(){
-		return QueryRunner.onlyMainStylesAsString(styleData);
+		return StyleQuery.onlyMainStylesAsString(styleData);
 	}
 	
 	
@@ -1358,7 +1370,7 @@ public class Model {
 			breweryData.add(newBrewery);
 			filteredBreweries = breweryData;
 			
-			List<Beer> beersToUpdate = QueryRunner.beersFilteredByBrewery(beerData, breweryShown);
+			List<Beer> beersToUpdate = BeerFilter.beersFilteredByBrewery(beerData, breweryShown);
 			if(!beersToUpdate.isEmpty()){
 				for(Beer b : beersToUpdate){
 					b.setBrewery(newBrewery);
@@ -1381,7 +1393,7 @@ public class Model {
 			styleData.add(newStyle);
 			filteredStyles = styleData;
 			
-			List<Beer> beersToUpdate = QueryRunner.beersFilteredByStyle(beerData, styleShown);
+			List<Beer> beersToUpdate = BeerFilter.beersFilteredByStyle(beerData, styleShown);
 			if(!beersToUpdate.isEmpty()){
 				for(Beer b : beersToUpdate){
 					b.setStyle(newStyle);
@@ -1448,7 +1460,7 @@ public class Model {
 		if(breweryData.remove(toDelete)){
 			filteredBreweries = breweryData;
 			
-			List<Beer> beersToDelete = QueryRunner.beersFilteredByBrewery(beerData, Utils.fromBreweryAverageToBrewery(toDelete));
+			List<Beer> beersToDelete = BeerFilter.beersFilteredByBrewery(beerData, Utils.fromBreweryAverageToBrewery(toDelete));
 			if(!beersToDelete.isEmpty()){
 				try{
 					deleteBeers(beersToDelete);
@@ -1479,7 +1491,7 @@ public class Model {
 		if(styleData.remove(toDelete)){
 			filteredStyles = styleData;
 			
-			List<Beer> beersToDelete = QueryRunner.beersFilteredByStyle(beerData, toDelete);
+			List<Beer> beersToDelete = BeerFilter.beersFilteredByStyle(beerData, toDelete);
 			if(!beersToDelete.isEmpty()){
 				try{
 					deleteBeers(beersToDelete);
@@ -1643,12 +1655,12 @@ public class Model {
 	}
 	
 	public List<Brewery> getBreweryDataAlphaOrder(){
-		List<Brewery> sorted = QueryRunner.breweriesSortedByName(Utils.fromBreweriesAverageToBrewery(breweryData));
+		List<Brewery> sorted = BrewerySort.breweriesSortedByName(Utils.fromBreweriesAverageToBrewery(breweryData));
 		return sorted;
 	}
 	
 	public List<Style> getStyleDataMainSubOrder(){
-		List<Style> sorted = QueryRunner.stylesSortedByMainCategorySubCategory(styleData);
+		List<Style> sorted = StyleQuery.StyleSort.stylesSortedByMainCategorySubCategory(styleData);
 		return sorted;
 	}
 	
@@ -1674,7 +1686,7 @@ public class Model {
 		
 		//now add the breweries if necessary.
 		
-		List<Brewery> breweryTemp = QueryRunner.getAllBreweries(beerDiff);
+		List<Brewery> breweryTemp = BeerQuery.getAllBreweries(beerDiff);
 //		System.out.println("I birrifici ottenuti:");
 //		Utils.printBreweries(breweryTemp, System.out);
 //		
@@ -1684,7 +1696,7 @@ public class Model {
 		
 		wrapperImportBreweries(null, breweryTemp);
 		
-		List<Style> styleTemp = QueryRunner.getAllStyles(beerDiff);
+		List<Style> styleTemp = BeerQuery.getAllStyles(beerDiff);
 		
 		
 //		importStylesBridge(styleTemp);
@@ -1840,7 +1852,7 @@ public class Model {
 	}
 	
 	public List<Brewery> getBreweryDataSortedByName(){
-		return QueryRunner.breweriesSortedByName(getBreweryData());
+		return BrewerySort.breweriesSortedByName(getBreweryData());
 	}
 	
 	public String getLicense(){

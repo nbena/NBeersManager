@@ -20,6 +20,7 @@ import java.io.OutputStream;
 
 
 
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -62,6 +63,11 @@ import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
 import org.nbena.beersmanager.sclasses.BeerJSONSaveSpecialClass;
 import org.nbena.beersmanager.sclasses.BreweryAverage;
 
+/**
+ * Utils contains a range of utilities methods, that logically are not a part of other classes.
+ * @author nbena
+ *
+ */
 public class Utils {
 	
 	//here things not strictly connected with business logic.
@@ -170,22 +176,56 @@ public class Utils {
 ////		printStylesNew(styles, output);
 //	}
 	
-	public static void printConfiguration(Configuration c, OutputStream output){
-		PrintStream out = new PrintStream(output);
-		out.println("Beer sorting algorithm: "+ c.getBeerSortingAlgorithm().toString());
-		out.println("Brewery sorting algorithm: "+ c.getBrewerySortingAlgorithm().toString());
-		out.println("Style sorting algorithm: "+ c.getStyleSortingAlgorithm().toString());
+	/**
+	 * Creates a string representation of the configuration.
+	 * @param c	the configuration you want to print.
+	 * @return	the string representation of the object.
+	 */
+	public static String configurationToString(Configuration c){
+		StringBuilder sb = new StringBuilder();
+		sb.append("Beer sorting algorithm: "+ c.getBeerSortingAlgorithm().toString()+"\n");
+		sb.append("Brewery sorting algorithm: "+ c.getBrewerySortingAlgorithm().toString()+"\n");
+		sb.append("Style sorting algorithm: "+ c.getStyleSortingAlgorithm().toString()+"\n");
 		
-		out.println("Beer filtering algorithm: "+ c.getBeerFilterAlgorithm().toString());
-		out.println("\tBeer filtering value: "+c.getBeerFilterValue());
-		out.println("Brewery filtering algorithm: "+ c.getBreweryFilterAlgorithm().toString());
-		out.println("\tBrewery filtering value: "+c.getBreweryFilterValue());
-		out.println("Style filtering algorithm: "+ c.getStyleFilterAlgorithm().toString());
-		out.println("\tStyle filtering value: "+c.getStyleFilterValue());
+		sb.append("Beer filtering algorithm: "+ c.getBeerFilterAlgorithm().toString()+"\n");
+		sb.append("\tBeer filtering value: "+c.getBeerFilterValue()+"\n");
+		sb.append("Brewery filtering algorithm: "+ c.getBreweryFilterAlgorithm().toString()+"\n");
+		sb.append("\tBrewery filtering value: "+c.getBreweryFilterValue()+"\n");
+		sb.append("Style filtering algorithm: "+ c.getStyleFilterAlgorithm().toString()+"\n");
+		sb.append("\tStyle filtering value: "+c.getStyleFilterValue()+"\n");
 		
-		out.print("Default view: "+c.getDefaultView().toString());
+		sb.append("Default view: "+c.getDefaultView().toString()+"\n");
+		return sb.toString();
 	}
 	
+	/**
+	 * Prints the current configuration in a string format.
+	 * @param c	the configuration to print.
+	 * @param output the OutputStream
+	 * @see configurationToString()
+	 */
+	public static void printConfiguration(Configuration c, OutputStream output){
+		PrintStream out = new PrintStream(output);
+//		out.println("Beer sorting algorithm: "+ c.getBeerSortingAlgorithm().toString());
+//		out.println("Brewery sorting algorithm: "+ c.getBrewerySortingAlgorithm().toString());
+//		out.println("Style sorting algorithm: "+ c.getStyleSortingAlgorithm().toString());
+//		
+//		out.println("Beer filtering algorithm: "+ c.getBeerFilterAlgorithm().toString());
+//		out.println("\tBeer filtering value: "+c.getBeerFilterValue());
+//		out.println("Brewery filtering algorithm: "+ c.getBreweryFilterAlgorithm().toString());
+//		out.println("\tBrewery filtering value: "+c.getBreweryFilterValue());
+//		out.println("Style filtering algorithm: "+ c.getStyleFilterAlgorithm().toString());
+//		out.println("\tStyle filtering value: "+c.getStyleFilterValue());
+//		
+//		out.print("Default view: "+c.getDefaultView().toString());
+		out.print(configurationToString(c));
+	}
+	
+	/**
+	 * Creates a string representation of the beer.
+	 * @param beer	the beer you want to print.
+	 * @return	the string representation of the object.
+	 */
 	public static String beerToString(Beer beer){
 		StringBuilder builder = new StringBuilder();
 //		builder.append("-------");
@@ -208,6 +248,11 @@ public class Utils {
 		return builder.toString();
 	}
 	
+	/**
+	 * Creates a string representation of the brewery.
+	 * @param brewery	the beer you want to print.
+	 * @return	the string representation of the object.
+	 */
 	public static String breweryToString(Brewery brewery){
 		StringBuilder builder = new StringBuilder();
 		builder.append(brewery.getBreweryName()+" - "+brewery.getTown()+" - "+brewery.getCountry()+" - "+brewery.getWebsite()+"\n");
@@ -216,6 +261,11 @@ public class Utils {
 		return builder.toString();
 	}
 	
+	/**
+	 * Creates a string representation of the style.
+	 * @param style	the beer you want to print.
+	 * @return	the string representation of the object.
+	 */
 	public static String styleToString(Style style){
 		StringBuilder builder = new StringBuilder();
 		builder.append(style.getStyleSubCategory()+" "+style.getStyleMainName()+", Fermentazione "+getFermentationItalianString(style.getFermentation())+"\n");
@@ -233,6 +283,13 @@ public class Utils {
 		return beersString;
 	}
 	
+	/**
+	 * Prints a string representation of the list of beers.
+	 * In practice, for each object a string representation is printed.
+	 * @param beers	the list of beer you want to print.
+	 * @return	the string representation of the object.
+	 * @see beerToString()
+	 */
 	public static void printBeers(List<Beer> beers, OutputStream out){
 		PrintStream output = new PrintStream(out);
 		for(Beer b : beers){
@@ -241,6 +298,14 @@ public class Utils {
 		}
 	}
 	
+	/**
+	 * Prints a string representation of the list of beers.
+	 * In practice, for each object a string representation is printed.
+	 * The total price is then printed.
+	 * @param beers	the list of beer you want to print.
+	 * @return	the string representation of the object.
+	 * @see beerToString()
+	 */
 	public static void printBeersTotal(List<Beer> beers, OutputStream out){
 		//get the totale here because we loop on the list
 		PrintStream output = new PrintStream(out);
@@ -253,6 +318,13 @@ public class Utils {
 		output.print("Totale: "+total);
 	}
 	
+	/**
+	 * Prints a string representation of the list of breweries.
+	 * In practice, for each object a string representation is printed.
+	 * @param breweries	the list of breweries you want to print.
+	 * @return	the string representation of the object.
+	 * @see breweryToString()
+	 */
 	public static void printBreweries(List<Brewery> breweries, OutputStream out){
 		PrintStream output = new PrintStream(out);
 		for(Brewery b : breweries){
@@ -261,6 +333,13 @@ public class Utils {
 		}
 	}
 	
+	/**
+	 * Prints a string representation of the list of styles.
+	 * In practice, for each object a string representation is printed.
+	 * @param styles	the list of styles you want to print.
+	 * @return	the string representation of the object.
+	 * @see styleToString()
+	 */
 	public static void printStyles(List<Style> styles, OutputStream out){
 		PrintStream output = new PrintStream(out);
 		for(Style b : styles){
@@ -269,6 +348,10 @@ public class Utils {
 		}
 	}
 	
+	/**
+	 * Get the <i>pwd</i>
+	 * @return  the absolute path of the <i>pwd</i>
+	 */
 	public static String currentDirectory(){
 		String path=new File(".").getAbsolutePath();
 		return path.substring(0, path.length()-1);
@@ -793,7 +876,7 @@ public class Utils {
 	public static List<BreweryAverage> fromBreweriesToBreweriesAverage(List<Brewery> breweries, List<Beer> beers){
 		List<BreweryAverage> breweriesAv=new LinkedList<BreweryAverage>();
 		for(Brewery b: breweries){
-			List<Beer> itsBeers=QueryRunner.beersFilteredByBrewery(beers, b);
+			List<Beer> itsBeers=QueryRunner.BeerQuery.BeerFilter.beersFilteredByBrewery(beers, b);
 			BreweryAverage av=fromBreweryToBreweryAverage(b, itsBeers);
 			breweriesAv.add(av);
 		}
@@ -1675,40 +1758,40 @@ public class Utils {
 		Function<List<Beer>, List<Beer>> function=null;
 		switch(algorithm){
 		case COUNTRY_OF_BREWERY_STYLE:
-			function=QueryRunner::beersSortedByCountryOfBreweryStyle;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByCountryOfBreweryStyle;
 			break;
 		case FERMENTATIOM_STYLE_COUNTRY_OF_BREWERY:
-			function=QueryRunner::beersSortedByFermentationStyleCountryOfBrewery;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByFermentationStyleCountryOfBrewery;
 			break;
 		case FERMENTATION_COUNTRY_OF_STYLE_BREWERY:
-			function=QueryRunner::beersSortedByFermentationCountryOfStyleBrewery;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByFermentationCountryOfStyleBrewery;
 			break;
 		case MARK_STAR_ASCENDING:
-			function=QueryRunner::beersSortedByMarkStarAscending;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByMarkStarAscending;
 			break;
 		case STAR_MARK_ASCENDING:
-			function=QueryRunner::beersSortedByStarMarkAscending;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByStarMarkAscending;
 			break;
 		case MARK_STAR_DESCENDING:
-			function=QueryRunner::beersSortedByMarkStarDescending;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByMarkStarDescending;
 			break;
 		case STAR_MARK_DESCENDING:
-			function=QueryRunner::beersSortedByStarMarkDescending;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByStarMarkDescending;
 			break;
 		case ABV_ASCENDING:
-			function=QueryRunner::beersSortedByABVAscending;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByABVAscending;
 			break;
 		case ABV_DESCENDING:
-			function=QueryRunner::beersSortedByABVDescending;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByABVDescending;
 			break;
 		case PRICE_ASCENDING:
-			function=QueryRunner::beersSortedByPriceAscending;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByPriceAscending;
 			break;
 		case PRICE_DESCENDING:
-			function=QueryRunner::beersSortedByPriceDescending;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByPriceDescending;
 			break;
 		case NAME:
-			function=QueryRunner::beersSortedByName;
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByName;
 			break;
 		}
 		return function;
@@ -1719,22 +1802,22 @@ public class Utils {
 		Function<List<BreweryAverage>, List<BreweryAverage>> function=null;
 		switch(algorithm){
 		case AVERAGE_ASCENDING:
-			function=QueryRunner::breweriesSortedByAverageAscending;
+			function=QueryRunner.BreweryQuery.BrewerySort::breweriesSortedByAverageAscending;
 			break;
 		case COUNTRY_AVERAGE_ASCENDING:
-			function=QueryRunner::breweriesSortedByCountryThenAverageAscending;
+			function=QueryRunner.BreweryQuery.BrewerySort::breweriesSortedByCountryThenAverageAscending;
 			break;
 		case AVERAGE_DESCENDING:
-			function=QueryRunner::breweriesSortedByAverageDescending;
+			function=QueryRunner.BreweryQuery.BrewerySort::breweriesSortedByAverageDescending;
 			break;
 		case COUNTRY_AVERAGE_DESCENDING:
-			function=QueryRunner::breweriesSortedByCountryThenAverageDescending;
+			function=QueryRunner.BreweryQuery.BrewerySort::breweriesSortedByCountryThenAverageDescending;
 			break;
 		case COUNTRY_NAME:
-			function=QueryRunner::breweriesSortedByCountryThenNameWithAverage;
+			function=QueryRunner.BreweryQuery.BrewerySort::breweriesSortedByCountryThenNameWithAverage;
 			break;
 		case NAME:
-			function=QueryRunner::breweriesSortedByNameWithAverage;
+			function=QueryRunner.BreweryQuery.BrewerySort::breweriesSortedByNameWithAverage;
 			break;
 		}
 		return function;
@@ -1744,13 +1827,13 @@ public class Utils {
 		Function<List<Style>, List<Style>> function=null;
 		switch(algorithm){
 		case COUNTRY_FERMENTATION:
-			function=QueryRunner::styleSortedByCountryThenFermentationy;
+			function=QueryRunner.StyleQuery.StyleSort::styleSortedByCountryThenFermentationy;
 			break;
 		case FERMENTATION_COUNTRY:
-			function=QueryRunner::styleSortedByFermentationThenCountry;
+			function=QueryRunner.StyleQuery.StyleSort::styleSortedByFermentationThenCountry;
 			break;
 		case FERMENTATION_CATEGORY:
-			function=QueryRunner::stylesSortedByFermentationCategorySubcategory;
+			function=QueryRunner.StyleQuery.StyleSort::stylesSortedByFermentationCategorySubcategory;
 			break;
 		}
 		return function;
@@ -1851,19 +1934,19 @@ public class Utils {
 		BiFunction <List<Style>, Object, List<Style>> function = null;
 		switch(algorithm){
 		case BY_COUNTRY:
-			function = (List<Style> styles, Object o) -> QueryRunner.stylesFilteredByCountryOrigin(styles, (String)o);
+			function = (List<Style> styles, Object o) -> QueryRunner.StyleQuery.StyleFilter.stylesFilteredByCountryOrigin(styles, (String)o);
 			break;
 		case BY_FERMENTATION_HIGH:
-			function = (List<Style> styles, Object o) -> QueryRunner.stylesFilteredByFermentation(styles, Fermentation.HIGH);
+			function = (List<Style> styles, Object o) -> QueryRunner.StyleQuery.StyleFilter.stylesFilteredByFermentation(styles, Fermentation.HIGH);
 			break;
 		case BY_FERMENTATION_LOW:
-			function = (List<Style> styles, Object o) -> QueryRunner.stylesFilteredByFermentation(styles, Fermentation.LOW);
+			function = (List<Style> styles, Object o) -> QueryRunner.StyleQuery.StyleFilter.stylesFilteredByFermentation(styles, Fermentation.LOW);
 			break;
 		case BY_FERMENTATION_SPONTANEOUS:
-			function = (List<Style> styles, Object o) -> QueryRunner.stylesFilteredByFermentation(styles, Fermentation.SPONTANEOUS);
+			function = (List<Style> styles, Object o) -> QueryRunner.StyleQuery.StyleFilter.stylesFilteredByFermentation(styles, Fermentation.SPONTANEOUS);
 			break;
 		case BY_MAIN_STYLE:
-			function = (List<Style> styles, Object o) -> QueryRunner.stylesFilteredByMainStyle(styles, (Style)o);
+			function = (List<Style> styles, Object o) -> QueryRunner.StyleQuery.StyleFilter.stylesFilteredByMainStyle(styles, (Style)o);
 			break;
 		case NONE:
 			function = (List<Style> styles, Object o) -> styles;
@@ -1877,16 +1960,16 @@ public class Utils {
 		BiFunction<List<Brewery>, Object, List<Brewery>> function = null;
 		switch(algorithm){
 		case COUNTRY:
-			function = (List<Brewery> breweries, Object o) -> QueryRunner.breweriesFilteredByCountry(breweries, (String)o);
+			function = (List<Brewery> breweries, Object o) -> QueryRunner.BreweryQuery.BreweryFilter.breweriesFilteredByCountry(breweries, (String)o);
 			break;
 		case NONE:
 			function = (List<Brewery> breweries, Object o) -> breweries;
 			break;
 		case TRAPPIST_NO:
-			function = (List<Brewery> breweries, Object o) -> QueryRunner.breweriesFilteredByTrappist(breweries, false);
+			function = (List<Brewery> breweries, Object o) -> QueryRunner.BreweryQuery.BreweryFilter.breweriesFilteredByTrappist(breweries, false);
 			break;
 		case TRAPPIST_YES:
-			function = (List<Brewery> breweries, Object o) -> QueryRunner.breweriesFilteredByTrappist(breweries, true);
+			function = (List<Brewery> breweries, Object o) -> QueryRunner.BreweryQuery.BreweryFilter.breweriesFilteredByTrappist(breweries, true);
 			break;		
 		}
 		return function;
@@ -1896,16 +1979,16 @@ public class Utils {
 		BiFunction<List<BreweryAverage>, Object, List<BreweryAverage>> function = null;
 		switch(algorithm){
 		case COUNTRY:
-			function = (List<BreweryAverage> breweries, Object o) -> QueryRunner.breweriesAverageFilteredByCountry(breweries, (String)o);
+			function = (List<BreweryAverage> breweries, Object o) -> QueryRunner.BreweryQuery.BreweryFilter.breweriesAverageFilteredByCountry(breweries, (String)o);
 			break;
 		case NONE:
 			function = (List<BreweryAverage> breweries, Object o) -> breweries;
 			break;
 		case TRAPPIST_NO:
-			function = (List<BreweryAverage> breweries, Object o) -> QueryRunner.breweriesAverageFilteredByTrappist(breweries, false);
+			function = (List<BreweryAverage> breweries, Object o) -> QueryRunner.BreweryQuery.BreweryFilter.breweriesAverageFilteredByTrappist(breweries, false);
 			break;
 		case TRAPPIST_YES:
-			function = (List<BreweryAverage> breweries, Object o) -> QueryRunner.breweriesAverageFilteredByTrappist(breweries, true);
+			function = (List<BreweryAverage> breweries, Object o) -> QueryRunner.BreweryQuery.BreweryFilter.breweriesAverageFilteredByTrappist(breweries, true);
 			break;		
 		}
 		return function;
@@ -1917,64 +2000,64 @@ public class Utils {
 		BiFunction<List<Beer>, Object, List<Beer>> function = null;
 		switch(algorithm){
 		case BY_MINIMUM_ABV:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByMinimumAlcool(beers,(Double)o);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByMinimumAlcool(beers,(Double)o);
 			break;
 		case BY_COUNTRY:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByBreweryCountry(beers, (String)o);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByBreweryCountry(beers, (String)o);
 			break;
 		case BY_FERMENTATION_HIGH:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByFermentation(beers, Fermentation.HIGH);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByFermentation(beers, Fermentation.HIGH);
 			break;
 		case BY_FERMENTATION_LOW:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByFermentation(beers, Fermentation.LOW);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByFermentation(beers, Fermentation.LOW);
 			break;
 		case BY_FERMENTATION_SPONTANEOUS:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByFermentation(beers, Fermentation.SPONTANEOUS);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByFermentation(beers, Fermentation.SPONTANEOUS);
 			break;
 		case BY_MINIMUM_MARK:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByMiminumMark(beers, (Integer)o);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByMiminumMark(beers, (Integer)o);
 			break;
 		case BY_MINIMUM_STARS:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByMinimumNumberOfStars(beers, (Integer)o);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByMinimumNumberOfStars(beers, (Integer)o);
 			break;
 		case BY_STYLE_PROVENIENCE:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByStyleProvenience(beers, (String)o);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByStyleProvenience(beers, (String)o);
 			break;
 		case BY_IS_TRIED_NO:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByIsTried(beers, false);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByIsTried(beers, false);
 			break;
 		case BY_IS_TRIED_YES:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByIsTried(beers, true);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByIsTried(beers, true);
 			break;
 		case BY_MAIN_STYLE:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByMainStyle(beers, (Style)o);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByMainStyle(beers, (Style)o);
 			break;
 		case NONE:
 			function = (List<Beer> beers, Object o) -> beers;
 			break;
 		case BY_STYLE:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByStyle(beers, (Style)o);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByStyle(beers, (Style)o);
 			break;
 		case BY_BREWERY:
-			function =  (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByBrewery(beers, (Brewery)o);
+			function =  (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByBrewery(beers, (Brewery)o);
 			break;
 		case BY_EXACT_ABV:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByExatcAlcool(beers, (Double)o);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByExatcAlcool(beers, (Double)o);
 			break;
 		case BY_EXACT_MARK:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByExactMark(beers, (Integer)o);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByExactMark(beers, (Integer)o);
 			break;
 		case BY_EXACT_STAR:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByExactNumberOfStars(beers, (Integer)o);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByExactNumberOfStars(beers, (Integer)o);
 			break;
 		case BY_TRAPPIST_NO:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByTrappist(beers, false);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByTrappist(beers, false);
 			break;
 		case BY_TRAPPIST_YES:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByTrappist(beers, true);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByTrappist(beers, true);
 			break;
 		case BY_PLACE_TRIED:
-			function = (List<Beer> beers, Object o) -> QueryRunner.beersFilteredByPlaceTried(beers, (String)o);
+			function = (List<Beer> beers, Object o) -> QueryRunner.BeerQuery.BeerFilter.beersFilteredByPlaceTried(beers, (String)o);
 			break;
 		}
 		return function;

@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
-import org.nbena.beersmanager.query.QueryRunner;
+import org.nbena.beersmanager.query.QueryRunner.BreweryQuery;
 
 /**
  * A modified version of {@link #org.nbena.beersmanager.coreclasses.Brewery()()}. It contains one more property, which it consists of the average
@@ -97,7 +97,7 @@ public class BreweryAverage extends Brewery {
 	 * a filter on this should be done before.
 	 */
 	public void setAverage(List<Beer> thisBreweryBeers){
-		average=QueryRunner.breweryAverage(thisBreweryBeers, this, true);
+		average=BreweryQuery.breweryAverage(thisBreweryBeers, this, true);
 		average=(Double.isNaN(average) ? 0.0 : average);
 	}
 
