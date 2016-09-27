@@ -1,5 +1,6 @@
 /*   NBeersManager: manages what you drink.
 
+
     Copyright (C) 2016  Nicola Bena
 
     This program is free software: you can redistribute it and/or modify
@@ -22,17 +23,21 @@ import java.util.List;
 
 
 
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 import org.nbena.beersmanager.coreclasses.*;
-import org.nbena.beersmanager.query.Comparators.ComparatorBeerForBinarySearch;
+import org.nbena.beersmanager.query.Comparators.BeerComparator;
+import org.nbena.beersmanager.query.Comparators.Binary;
+import org.nbena.beersmanager.query.Comparators.BreweryComparator;
 import org.nbena.beersmanager.query.Comparators.StyleComparator;
+import org.nbena.beersmanager.sclasses.BreweryAverage;
 public class QueryRunner {
 	
-	public static enum ORDER_BY_BEER{}
+	
 	
 	
 	
@@ -124,19 +129,25 @@ public class QueryRunner {
 
 
 	public static List<Beer> beersFilteredByStyle(List<Beer> beers, Style style){
-		return beers.stream().filter(b -> b.getStyle().equals(style))
+//		return beers.stream().filter(b -> b.getStyle().equals(style))
+//				.collect(Collectors.toList());
+		
+		return beers.stream().filter(b -> Comparators.Binary.styleBooleanBinarySearch(b.getStyle(), style))
 				.collect(Collectors.toList());
 	}
 	
 	public static List<Beer> beersFilteredByMainStyle(List<Beer> beers, Style style){
-		return beers.stream().filter(b -> b.getStyle().getStyleMainName().equals(style.getStyleMainName()))
+		return beers.stream().filter(b -> b.getStyle().getStyleMainName().equalsIgnoreCase(style.getStyleMainName()))
 				.collect(Collectors.toList());
 	}
 	
 
 	
 	public static List<Beer> beersFilteredByBrewery(List<Beer> beers, Brewery brewery){
-		return beers.stream().filter(b -> b.getBrewery().equals(brewery))
+//		return beers.stream().filter(b -> b.getBrewery().equals(brewery))
+//		.collect(Collectors.toList());
+		
+		return beers.stream().filter(b -> Comparators.Binary.breweryBooleanBinarySearch(b.getBrewery(), brewery))
 		.collect(Collectors.toList());
 	}
 	
@@ -413,7 +424,7 @@ public class QueryRunner {
 	 */
 	public static List<Beer> beersSortedByCountryOfBreweryStyle(List<Beer> beers){
 		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByCountryBreweryStyleName());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByCountryBreweryStyleName());
 		return sortedBeers;
 	}
 	
@@ -424,7 +435,7 @@ public class QueryRunner {
 	 */
 	public static List<Beer> beersSortedByFermentationCountryOfStyleBrewery(List<Beer> beers){
 		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByFermentationCountryStyleBreweryName());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByFermentationCountryOfStyleBreweryName());
 		return sortedBeers;
 	}
 	
@@ -435,83 +446,83 @@ public class QueryRunner {
 	 */
 	public static List<Beer> beersSortedByFermentationStyleCountryOfBrewery(List<Beer> beers){
 		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByFermentationStyleCountryBreweryName());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByFermentationStyleCountryBreweryName());
 		return sortedBeers;
 	}
 	
 	public static List<Beer> beersSortedByMarkStarAscending(List<Beer> beers){
 		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByMarkStarAscending());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByMarkStarAscending());
 		return sortedBeers;
 	}
 	
 	public static List<Beer> beersSortedByStarMarkAscending(List<Beer> beers){
 		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByStarMarkAscending());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByStarMarkAscending());
 		return sortedBeers;
 	}
 	
 	public static List<Beer> beersSortedByMarkStarDescending(List<Beer> beers){
 		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByMarkStarDescending());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByMarkStarDescending());
 		return sortedBeers;
 	}
 	
 	public static List<Beer> beersSortedByStarMarkDescending(List<Beer> beers){
 		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByStarMarkDescending());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByStarMarkDescending());
 		return sortedBeers;
 	}
 	
 	public static List<Beer> beersSortedByABVAscending(List<Beer> beers){
 		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerABVAscending());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerABVAscending());
 		return sortedBeers;
 	}
 	
 	public static List<Beer> beersSortedByPriceAscending(List<Beer> beers){
 		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerPriceAscending());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerPriceAscending());
 		return sortedBeers;
 	}
 	
 	public static List<Beer> beersSortedByABVDescending(List<Beer> beers){
 		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerABVDescending());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerABVDescending());
 		return sortedBeers;
 	}
 	
 	public static List<Beer> beersSortedByPriceDescending(List<Beer> beers){
 		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerPriceDescending());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerPriceDescending());
 		return sortedBeers;
 	}
 	
 	public static List<Beer> beersSortedByName(List<Beer> beers){
 		List<Beer> sortedBeers = new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByName());
+		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByName());
 		return sortedBeers;
 	}
 	
-	@Deprecated 
-	/**
-	 * Only internal use for binary search.
-	 * @param beers
-	 * @return
-	 */
-	public static List<Beer> sortBeerByNameStyleBrewery(List<Beer> beers){
-		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByNameStyleBrewery());
-		return sortedBeers;
-	}
+//	@Deprecated 
+//	/**
+//	 * Only internal use for binary search.
+//	 * @param beers
+//	 * @return
+//	 */
+//	public static List<Beer> sortBeerByNameStyleBrewery(List<Beer> beers){
+//		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+//		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByNameStyleBrewery());
+//		return sortedBeers;
+//	}
 	
-	@Deprecated //wait
-	public static List<Beer> sortBeerByCountryBreweryAverage(List<Beer> beers){
-		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
-		Collections.sort(sortedBeers, new Comparators.ComparatorBeerByCountryBreweryAverage());
-		return sortedBeers;
-	}
-	
+//	@Deprecated //wait
+//	public static List<Beer> sortBeerByCountryBreweryAverage(List<Beer> beers){
+//		List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+//		Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByCountryMark());
+//		return sortedBeers;
+//	}
+//	
 	
 	//SORT FUNCTIONS
 	public static List<Style> styleSortedByFermentationThenCountry(List<Style> styles){
@@ -529,7 +540,7 @@ public class QueryRunner {
 	
 	public static List<Style> stylesSortedByFermentationCategorySubcategory(List<Style> styles){
 		List<Style> sortedStyles=new LinkedList<Style>(styles);
-		Collections.sort(sortedStyles , new Comparators.ComparatorStyleByFermentationCategorySubcategory());
+		Collections.sort(sortedStyles , new StyleComparator.ComparatorStyleByFermentationCategorySubcategory());
 		return sortedStyles;
 	}
 	
@@ -586,9 +597,9 @@ public class QueryRunner {
 			beersFiltered = beersFilteredByBrewery(beers, b);
 		}
 		for (Beer beer: beersFiltered){
-			average+=beer.getMark();
+			average+=(double)beer.getMark();
 		}
-		return average/beersFiltered.size();
+		return average/(double)beersFiltered.size();
 	}
 	
 	
@@ -605,13 +616,13 @@ public class QueryRunner {
 	
 	public static List<Brewery> breweriesSortedByCountryThenName(List<Brewery> breweries){
 		List<Brewery>  sortedBreweries=new LinkedList<Brewery>(breweries);
-		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByCountryName());
+		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryName());
 		return sortedBreweries;
 	}
 	
 	public static List<BreweryAverage> breweriesSortedByCountryThenNameWithAverage(List<BreweryAverage> breweries){
 		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByCountryName());
+		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryName());
 		return sortedBreweries;
 	}
 	
@@ -619,40 +630,40 @@ public class QueryRunner {
 	
 	public static List<Brewery> breweriesSortedByName(List<Brewery> breweries){
 		List<Brewery>  sortedBreweries=new LinkedList<Brewery>(breweries);
-		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByName());
+		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByName());
 		return sortedBreweries;
 	}
 	
 	public static List<BreweryAverage> breweriesSortedByNameWithAverage(List<BreweryAverage> breweries){
 		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByName());
+		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByName());
 		return sortedBreweries;
 	}
 	
 	
 	public static List<BreweryAverage> breweriesSortedByAverageAscending(List<BreweryAverage> breweries) {	
 		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByAverageAscending());
+		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByAverageAscending());
 		return sortedBreweries;
 	}
 	
 	
 	public static List<BreweryAverage> breweriesSortedByCountryThenAverageAscending(List<BreweryAverage> breweries){
 		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByCountryThenAverageAscending());
+		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryThenAverageAscending());
 		return sortedBreweries;
 	}
 	
 	public static List<BreweryAverage> breweriesSortedByAverageDescending(List<BreweryAverage> breweries) {	
 		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByAverageDescending());
+		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByAverageDescending());
 		return sortedBreweries;
 	}
 	
 	
 	public static List<BreweryAverage> breweriesSortedByCountryThenAverageDescending(List<BreweryAverage> breweries){
 		List<BreweryAverage>  sortedBreweries=new LinkedList<BreweryAverage>(breweries);
-		Collections.sort(sortedBreweries, new Comparators.ComparatorBreweryByCountryThenAverageDescending());
+		Collections.sort(sortedBreweries, new BreweryComparator.ComparatorBreweryByCountryThenAverageDescending());
 		return sortedBreweries;
 	}
 	
@@ -666,7 +677,7 @@ public class QueryRunner {
 		
 		public static List<Beer> beersSortedForBinarySearch(List<Beer> beers){
 			List<Beer> orderedBeers = new LinkedList<Beer>(beers);
-			Collections.sort(orderedBeers, new Comparators.ComparatorBeerForBinarySearch());
+			Collections.sort(orderedBeers, new Binary.ComparatorBeerForBinarySearch());
 			return orderedBeers;
 		}
 		
@@ -675,7 +686,7 @@ public class QueryRunner {
 			if(!sorted){
 				beers = beersSortedForBinarySearch(beers);		
 			}
-			ret = Collections.binarySearch(beers, beer, new ComparatorBeerForBinarySearch());
+			ret = Collections.binarySearch(beers, beer, new Binary.ComparatorBeerForBinarySearch());
 			return ret;
 		}
 		
@@ -687,7 +698,7 @@ public class QueryRunner {
 		
 		public static List<Brewery> breweriesSortedForBinarySearch(List<Brewery> breweries){
 			List<Brewery> orderedBreweries = new LinkedList<Brewery>(breweries);
-			Collections.sort(orderedBreweries, new Comparators.ComparatorBreweryForBinarySearch());
+			Collections.sort(orderedBreweries, new Binary.ComparatorBreweryForBinarySearch());
 			return orderedBreweries;
 		}
 		
@@ -696,7 +707,7 @@ public class QueryRunner {
 			if(!sorted){
 				breweries = breweriesSortedForBinarySearch(breweries);		
 			}
-			ret = Collections.binarySearch(breweries, brewery, new Comparators.ComparatorBreweryForBinarySearch());
+			ret = Collections.binarySearch(breweries, brewery, new Binary.ComparatorBreweryForBinarySearch());
 			return ret;
 		}
 		
@@ -707,7 +718,7 @@ public class QueryRunner {
 		
 		public static List<BreweryAverage> breweriesAverageSortedForBinarySearch(List<BreweryAverage> breweries){
 			List<BreweryAverage> orderedBreweries = new LinkedList<BreweryAverage>(breweries);
-			Collections.sort(orderedBreweries, new Comparators.ComparatorBreweryAverageForBinarySearch());
+			Collections.sort(orderedBreweries, new Binary.ComparatorBreweryAverageForBinarySearch());
 			return orderedBreweries;
 		}
 		
@@ -716,7 +727,7 @@ public class QueryRunner {
 			if(!sorted){
 				breweries = breweriesAverageSortedForBinarySearch(breweries);		
 			}
-			ret = Collections.binarySearch(breweries, brewery, new Comparators.ComparatorBreweryAverageForBinarySearch());
+			ret = Collections.binarySearch(breweries, brewery, new Binary.ComparatorBreweryAverageForBinarySearch());
 			return ret;
 		}
 		
@@ -756,7 +767,7 @@ public class QueryRunner {
 		 */
 		public static List<Brewery> breweriesSortedForBinaySearchConverter(List<Brewery> breweries){
 			List<Brewery> orderedBreweries = new LinkedList<Brewery>(breweries);
-			Collections.sort(orderedBreweries, new Comparators.ComparatorBreweryForBinarySearchConverter());
+			Collections.sort(orderedBreweries, new Binary.ComparatorBreweryForBinarySearchConverter());
 			return orderedBreweries;
 		}
 		
@@ -772,7 +783,7 @@ public class QueryRunner {
 			if(!sorted){
 				breweries = breweriesSortedForBinarySearch(breweries);		
 			}
-			ret = Collections.binarySearch(breweries, brewery, new Comparators.ComparatorBreweryForBinarySearchConverter());
+			ret = Collections.binarySearch(breweries, brewery, new Binary.ComparatorBreweryForBinarySearchConverter());
 			return ret;
 		}
 		

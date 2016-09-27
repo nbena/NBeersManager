@@ -28,7 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.nbena.beersmanager.coreclasses.*;
-import org.nbena.beersmanager.export.BeerJSONExportSpecialClass;
+import org.nbena.beersmanager.sclasses.BeerJSONExportSpecialClass;
+import org.nbena.beersmanager.sclasses.BeerJSONSaveSpecialClass;
+import org.nbena.beersmanager.sclasses.StyleJSONSpecialClass;
 
 
 

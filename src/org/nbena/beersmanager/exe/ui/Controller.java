@@ -74,8 +74,8 @@ import org.nbena.beersmanager.exe.ui.views.ViewPreferences;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBeer;
 import org.nbena.beersmanager.exe.ui.views.ViewViewBrewery;
 import org.nbena.beersmanager.exe.ui.views.ViewViewStyle;
-import org.nbena.beersmanager.query.BreweryAverage;
 import org.nbena.beersmanager.query.QueryRunner;
+import org.nbena.beersmanager.sclasses.BreweryAverage;
 
 public class Controller {
 	
@@ -597,7 +597,7 @@ public class Controller {
 				
 				String string = askStyleBeersFilteredByStyle();
 				if(string!=null && string!=""){
-					Style s= Utils.getStyleFromStringSubMain(string);
+					Style s= Utils.getStyleFromStringMainSub(string);
 					beersFilteredByStyle(s);
 				}
 				
@@ -3459,7 +3459,8 @@ public class Controller {
 	private String askStyleBeersFilteredByStyle(){
 		optionPane.setParent(gui);
 		String ret = null;
-		String[] styles = Utils.getStyleStringArraySubMain(model.getStyleData());
+//		String[] styles = Utils.getStyleStringArraySubMain(model.getStyleData());
+		String[] styles = Utils.getStyleStringArrayMainSub(model.getStyleDataMainSubOrder());
 		if(styles.length==0){
 			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_STYLES);
 		}else{

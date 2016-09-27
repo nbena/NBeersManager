@@ -138,6 +138,70 @@ public class Brewery/* implements Comparable<Brewery> */{
 		this.isAuthenticTrappist = isAuthenticTrappist;
 	}
 
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((breweryDescription == null) ? 0 : breweryDescription.hashCode());
+		result = prime * result + ((breweryName == null) ? 0 : breweryName.hashCode());
+		result = prime * result + ((country == null) ? 0 : country.hashCode());
+		result = prime * result + (isAuthenticTrappist ? 1231 : 1237);
+		result = prime * result + ((town == null) ? 0 : town.hashCode());
+		result = prime * result + ((website == null) ? 0 : website.hashCode());
+		return result;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Brewery other = (Brewery) obj;
+		if (breweryDescription == null) {
+			if (other.breweryDescription != null)
+				return false;
+		} else if (!breweryDescription.equals(other.breweryDescription))
+			return false;
+		if (breweryName == null) {
+			if (other.breweryName != null)
+				return false;
+		} else if (!breweryName.equals(other.breweryName))
+			return false;
+		if (country == null) {
+			if (other.country != null)
+				return false;
+		} else if (!country.equals(other.country))
+			return false;
+		if (isAuthenticTrappist != other.isAuthenticTrappist)
+			return false;
+		if (town == null) {
+			if (other.town != null)
+				return false;
+		} else if (!town.equals(other.town))
+			return false;
+		if (website == null) {
+			if (other.website != null)
+				return false;
+		} else if (!website.equals(other.website))
+			return false;
+		return true;
+	}
+	
+
+
 //
 //	@Override
 //	//basic comparation algorithm based just on the name.
@@ -159,63 +223,9 @@ public class Brewery/* implements Comparable<Brewery> */{
 //		return getBreweryName().compareTo(o.getBreweryName());
 //	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((country == null) ? 0 : country.hashCode());
-		result = prime * result + ((breweryDescription == null) ? 0 : breweryDescription.hashCode());
-		result = prime * result + (isAuthenticTrappist ? 1231 : 1237);
-		result = prime * result + ((breweryName == null) ? 0 : breweryName.hashCode());
-		result = prime * result + ((town == null) ? 0 : town.hashCode());
-		result = prime * result + ((website == null) ? 0 : website.hashCode());
-		return result;
-	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Brewery other = (Brewery) obj;
-		if (country == null) {
-			if (other.country != null)
-				return false;
-		} else if (!country.equals(other.country))
-			return false;
-		if (breweryDescription == null) {
-			if (other.breweryDescription != null)
-				return false;
-		} else if (!breweryDescription.equals(other.breweryDescription))
-			return false;
-		if (isAuthenticTrappist != other.isAuthenticTrappist)
-			return false;
-		if (breweryName == null) {
-			if (other.breweryName != null)
-				return false;
-		} else if (!breweryName.equals(other.breweryName))
-			return false;
-		if (town == null) {
-			if (other.town != null)
-				return false;
-		} else if (!town.equals(other.town))
-			return false;
-		if (website == null) {
-			if (other.website != null)
-				return false;
-		} else if (!website.equals(other.website))
-			return false;
-		return true;
-	}
+
+
 	
 	
 

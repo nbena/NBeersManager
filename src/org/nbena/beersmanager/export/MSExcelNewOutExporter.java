@@ -32,7 +32,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
-import org.nbena.beersmanager.json.coreclasses.BeerJSONSaveSpecialClass;
+import org.nbena.beersmanager.sclasses.BeerJSONSaveSpecialClass;
 
 public class MSExcelNewOutExporter extends OutExporter{
 

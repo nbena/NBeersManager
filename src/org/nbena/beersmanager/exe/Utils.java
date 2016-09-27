@@ -53,14 +53,14 @@ import org.nbena.beersmanager.exceptions.RecomposingException;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
-import org.nbena.beersmanager.json.coreclasses.BeerJSONSaveSpecialClass;
 import org.nbena.beersmanager.json.coreclasses.Converter;
 import org.nbena.beersmanager.json.coreclasses.JSONExporterCoreClasses;
-import org.nbena.beersmanager.query.BreweryAverage;
 import org.nbena.beersmanager.query.QueryRunner;
 import org.nbena.beersmanager.query.QueryRunner.BeerFilterAlgorithm;
 import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
 import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
+import org.nbena.beersmanager.sclasses.BeerJSONSaveSpecialClass;
+import org.nbena.beersmanager.sclasses.BreweryAverage;
 
 public class Utils {
 	
@@ -551,6 +551,11 @@ public class Utils {
 		return style;
 	}
 	
+	/**
+	 * @deprecated use instead {@link #getStyleFromStringMainSub(String)}
+	 * @param s
+	 * @return
+	 */
 	public static Style getStyleFromStringSubMain(String s){
 		Style style = new Style();
 //		String name = s.substring(0, s.lastIndexOf("-"));

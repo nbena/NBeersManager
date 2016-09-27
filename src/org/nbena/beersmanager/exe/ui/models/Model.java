@@ -53,11 +53,11 @@ import org.nbena.beersmanager.json.coreclasses.JSONExporterCoreClasses;
 import org.nbena.beersmanager.json.coreclasses.JSONImporter;
 import org.nbena.beersmanager.export.MSExcelOldOutExporter;
 import org.nbena.beersmanager.export.MSExcelNewOutExporter;
-import org.nbena.beersmanager.query.BreweryAverage;
 import org.nbena.beersmanager.query.QueryRunner;
 import org.nbena.beersmanager.query.QueryRunner.BeerFilterAlgorithm;
 import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
 import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
+import org.nbena.beersmanager.sclasses.BreweryAverage;
 
 public class Model {
 	
@@ -460,9 +460,14 @@ public class Model {
 	}
 	
 	public void setAverages(){
+//		System.out.println("The beers");
+//		Utils.printBeers(beerData, System.out);
 		for(BreweryAverage av: breweryData){
 			List<Beer> itsBeers=QueryRunner.beersFilteredByBrewery(beerData, (Brewery)av);
 			av.setAverage(itsBeers);
+//			System.out.println("------------\nThe beers for: "+av.getBreweryName());
+//			Utils.printBeers(itsBeers, System.out);
+//			System.out.println("The average is "+av.getAverage());
 		}
 		filteredBreweries=this.breweryData;
 	}
@@ -1499,44 +1504,80 @@ public class Model {
 	
 	
 	
-	public void saveBeers() throws JSONException, FileNotFoundException{
+	private void saveBeers() throws JSONException, FileNotFoundException{
 		JSONExporterCoreClasses.writeBeerSpecial(beerData, new FileOutputStream(configuration.getBeerFilePath()));
 	}
 	
-	public void saveBreweries() throws FileNotFoundException, FileNotFoundException{
+	private void saveBreweries() throws FileNotFoundException, FileNotFoundException{
 		JSONExporterCoreClasses.writeBrewery(Utils.fromBreweriesAverageToBrewery(breweryData), new FileOutputStream(configuration.getBreweryFilePath()));
 	}
 	
-	public void saveStyles() throws JSONException, FileNotFoundException{
+	private void saveStyles() throws JSONException, FileNotFoundException{
 		JSONExporterCoreClasses.writeStyleSpecial(styleData, new FileOutputStream(configuration.getStyleFilePath()));
 	}
 	
+	/**
+	 * Read the breweries from file.
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws JSONException
+	 */
 	private List<Brewery> readBreweries() throws FileNotFoundException, JSONException{
 		List<Brewery> breweries = Utils.readBreweries(new File(configuration.getBreweryFilePath()));
 		setBreweryData(breweries);
 		return breweries;
 	}
 	
+	/**
+	 * Read the styles from file.
+	 * @throws FileNotFoundException
+	 * @throws JSONException
+	 */
 	private void readStyles() throws FileNotFoundException, JSONException{
 		List<Style> styles = Utils.readStyles(new File(configuration.getStyleFilePath()));
 		setStyleData(styles);
 	}
 	
+	/**
+	 * Read the beers, saved to save space.
+	 * Please note that styles must be read first of this.
+	 * @param breweries	the breweries to be linked with the beers.
+	 * @throws FileNotFoundException	if the file where beers are does not exist
+	 * @throws JSONException			if the JSON parsing fails.
+	 * @throws RecomposingException		if the linking between beers, styles, breweries fails. 
+	 */
 	private void readBeers(List<Brewery> breweries) throws FileNotFoundException, JSONException, RecomposingException{
 //		List<Brewery> breweries = Utils.readBreweries(new File(configuration.getBreweryFilePath()));
 //		List<Style> styles = Utils.readStyles(new File(configuration.getStyleFilePath()));
+		if(styleData == null){
+			throw new RuntimeException("You must have already read the style before doing this!"); //should never happen
+		}
 		List<Beer> beers=Utils.readBeersFromSpecial(new File(configuration.getBeerFilePath()), breweries, styleData);
 		setBeerData(beers);
 //		setBreweryData(breweries);
 //		setStyleData(styles);
 	}
 	
+	/**
+	 * Read all the data from the files. 
+	 * Please note: the program does NOT keeps track of the countries, because no linking is done between breweries and countries.
+	 * A modify to the country file can cause horrible problems, so do not touch it please.
+	 * @throws FileNotFoundException	if the beers, or the breweries, or the styles files are not present.
+	 * @throws JSONException			if during the parsing some errors occur.
+	 * @throws RecomposingException		if the linking between beers, breweries and styles fails.
+	 */
 	public void readThings() throws FileNotFoundException, JSONException, RecomposingException{
 		List<Brewery> breweries=readBreweries();
 		readStyles();
 		readBeers(breweries); //so I do not need to convert.
 	}
 	
+	/**
+	 * Save the lists to the file. After some work, this method is smart: this class keeps track of what has been modified
+	 * from the last saving, and so it saves only what is not already "committed".
+	 * @throws JSONException		if the conversion of the data into JSON  fails.
+	 * @throws FileNotFoundException	if the fail where things should be saved does not exist.
+	 */
 	public void saveThings() throws JSONException, FileNotFoundException {
 		if(saveBeer){
 			saveBeers();
@@ -1557,6 +1598,10 @@ public class Model {
 		somethingToSave = false;
 	}
 	
+	/**
+	 * Saves the current configuration to file.
+	 * @throws FileNotFoundException	if the configuration file is not present.
+	 */
 	public void saveConfiguration() throws FileNotFoundException{
 		ConfigurationFactory.writeConfiguration(configuration, ConfigurationFactory.getDefaultConfigurationPath());
 

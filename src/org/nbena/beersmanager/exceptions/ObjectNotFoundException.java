@@ -20,7 +20,7 @@ import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.Utils;
-import org.nbena.beersmanager.query.BreweryAverage;
+import org.nbena.beersmanager.sclasses.BreweryAverage;
 
 @SuppressWarnings("serial")
 public class ObjectNotFoundException extends Exception {

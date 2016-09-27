@@ -20,7 +20,7 @@ import java.util.List;
 
 
 import org.nbena.beersmanager.exe.Utils;
-import org.nbena.beersmanager.query.BreweryAverage;
+import org.nbena.beersmanager.sclasses.BreweryAverage;
 
 public class ModelBreweryAverageTable extends MyModelAbstractTable {
 

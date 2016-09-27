@@ -28,8 +28,10 @@ import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exceptions.RecomposingException;
-import org.nbena.beersmanager.export.BeerJSONExportSpecialClass;
 import org.nbena.beersmanager.query.QueryRunner;
+import org.nbena.beersmanager.sclasses.BeerJSONExportSpecialClass;
+import org.nbena.beersmanager.sclasses.BeerJSONSaveSpecialClass;
+import org.nbena.beersmanager.sclasses.StyleJSONSpecialClass;
 
 public class Converter {
 	

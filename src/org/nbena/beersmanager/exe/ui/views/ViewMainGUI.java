@@ -747,13 +747,13 @@ public class ViewMainGUI extends JFrame {
 		mnBeersSortedByPrice = new JMenu ("Prezzo");
 		mntmBeersSortedByPriceAscending = new JMenuItem("Ascendente");
 		mntmBeersSortedByPriceDescending = new JMenuItem("Discendente");
-		mnBeersSortedByPrice.add(mntmBeersSortedByPriceAscending);
 		mnBeersSortedByPrice.add(mntmBeersSortedByPriceDescending);
+		mnBeersSortedByPrice.add(mntmBeersSortedByPriceAscending);
 		
 		mnOrderBeer.add(mnBeersSortedByABV);
 		mnOrderBeer.add(mnBeersSortedByPrice);
 		
-		mnOrderBrewery = new JMenu("Brewery");
+		mnOrderBrewery = new JMenu("Birrificio");
 		mnOrder.add(mnOrderBrewery);
 		
 		mntmBreweriesSortedByCountryThenName = new JMenuItem("Nazione, nome");
@@ -780,7 +780,7 @@ public class ViewMainGUI extends JFrame {
 		mntmBreweriesSortedByCountryThenAverageAscending = new JMenuItem("Ascendente");
 		mnBreweriesSortedByCountryThenAverage.add(mntmBreweriesSortedByCountryThenAverageAscending);
 		
-		mnOrderStyle = new JMenu("Style");
+		mnOrderStyle = new JMenu("Stile");
 		mnOrder.add(mnOrderStyle);
 		
 		mntmStylesSortedByFermentationThenCountry = new JMenuItem("Fermentazione, nazione origine stile");
