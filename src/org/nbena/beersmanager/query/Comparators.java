@@ -156,6 +156,8 @@ public class Comparators {
 				ret = o1.getStyleSubCategory().compareToIgnoreCase(o2.getStyleSubCategory());
 			}
 			return ret;
+			
+			
 		}
 
 		/**
@@ -259,7 +261,7 @@ public class Comparators {
 			int ret;
 			ret = BreweryComparator.breweryCompareTo(o1.getBrewery(), o2.getBrewery());
 			if(ret == 0){
-				ret = StyleComparator.styleCompareToCountryFermentation(o1.getStyle(), o2.getStyle());
+				ret = StyleComparator.styleCompareToWithoutFermentation(o1.getStyle(), o2.getStyle());
 			}
 			if(ret == 0){
 				ret = beerCompareByName(o1, o2);
@@ -313,35 +315,75 @@ public class Comparators {
 		}
 		
 		private static int beerCompareByABVAscending(Beer o1, Beer o2){
-			return (o1.getAlcool()>o2.getAlcool()? 1: (o1.getAlcool()==o2.getAlcool())? 0 : -1);
+			int ret;
+			ret = (o1.getAlcool()>o2.getAlcool()? 1: (o1.getAlcool()==o2.getAlcool())? 0 : -1);
+			if(ret == 0){
+				ret = beerCompareByName(o1, o2);
+			}
+			return ret; 
 		}
 		
 		private static int beerCompareByABVDescending(Beer o1, Beer o2){
-			return (o1.getAlcool()>o2.getAlcool()? -1: (o1.getAlcool()==o2.getAlcool())? 0 : 1);
+			int ret;
+			ret = (o1.getAlcool()>o2.getAlcool()? -1: (o1.getAlcool()==o2.getAlcool())? 0 : 1);
+			if(ret == 0){
+				ret = beerCompareByName(o1, o2);
+			}
+			return ret;
 		}
 		
 		private static int beerCompareByPriceAscending(Beer o1, Beer o2){
-			return (o1.getPrice()>o2.getPrice()? 1: (o1.getPrice()==o2.getPrice())? 0 : -1);
+			int ret;
+			ret = (o1.getPrice()>o2.getPrice()? 1: (o1.getPrice()==o2.getPrice())? 0 : -1);
+			if(ret == 0){
+				ret = beerCompareByName(o1, o2);
+			}
+			return ret;
 		}
 		
 		private static int beerCompareByPriceDescending(Beer o1, Beer o2){
-			return (o1.getPrice()>o2.getPrice()? -1: (o1.getPrice()==o2.getPrice())? 0 : 1);
+			int ret;
+			ret =(o1.getPrice()>o2.getPrice()? -1: (o1.getPrice()==o2.getPrice())? 0 : 1);
+			if(ret == 0){
+				ret = beerCompareByName(o1, o2);
+			}
+			return ret;
 		}
 		
 		private static int compareBeerByMarkAscending(Beer o1, Beer o2){
-			return (o1.getMark()>o2.getMark()? 1 : (o1.getMark()==o2.getMark())? 0 : -1);
+			int ret;;
+			ret = (o1.getMark()>o2.getMark()? 1 : (o1.getMark()==o2.getMark())? 0 : -1);
+			if(ret == 0){
+				ret = beerCompareByName(o1, o2);
+			}
+			return ret;
 		}
 		
 		private static int compareBeerByMarkDescending(Beer o1, Beer o2){
-			return (o1.getMark()>o2.getMark()? -1 : (o1.getMark()==o2.getMark())? 0 : 1);
+			int ret;
+			ret = (o1.getMark()>o2.getMark()? -1 : (o1.getMark()==o2.getMark())? 0 : 1);
+			if(ret == 0){
+				ret = beerCompareByName(o1, o2);
+			}
+			return ret;
 		}
 		
 		private static int compareBeerByStarAscending(Beer o1, Beer o2){
-			return (o1.getNumberOfStars()>o2.getNumberOfStars()? 1 : (o1.getNumberOfStars()==o2.getNumberOfStars())? 0 : -1);
+			int ret;
+			ret =  (o1.getNumberOfStars()>o2.getNumberOfStars()? 1 : (o1.getNumberOfStars()==o2.getNumberOfStars())? 0 : -1);
+			if(ret == 0){
+				ret = beerCompareByName(o1, o2);
+			}
+			return ret;
 		}
 		
 		private static int compareBeerByStarDescending(Beer o1, Beer o2){
-			return (o1.getNumberOfStars()>o2.getNumberOfStars()? -1 : (o1.getNumberOfStars()==o2.getNumberOfStars())? 0 : 1);
+			int ret;
+			ret = (o1.getNumberOfStars()>o2.getNumberOfStars()? -1 : (o1.getNumberOfStars()==o2.getNumberOfStars())? 0 : 1);
+			if(ret == 0){
+				ret = beerCompareByName(o1, o2);
+			}
+			return ret;
 		}
 		
 		
@@ -1008,25 +1050,36 @@ public class Comparators {
 		
 		private static int breweryCompareByAverageAscending(BreweryAverage o1, BreweryAverage o2){
 			int ret;
-			if(o1.getAverage()>o2.getAverage()){
-				ret=1;
-			}else if(o1.getAverage()==o2.getAverage()){
-				ret=0;
-			}else{
-				ret=-1;
+//			if(o1.getAverage()>o2.getAverage()){
+//				ret=1;
+//			}else if(o1.getAverage()==o2.getAverage()){
+//				ret=0;
+//			}else{
+//				ret=-1;
+//			}
+			ret = (o1.getAverage()>o2.getAverage() ? 1 : (o1.getAverage()==o2.getAverage()? 0 : -1));
+			if(ret == 0){
+				ret = breweryCompareByName(o1, o2);
 			}
 			return ret;
 		}
 		
 		private static int breweryCompareByAverageDescending(BreweryAverage o1, BreweryAverage o2){
 			int ret;
-			if(o2.getAverage()>o1.getAverage()){
-				ret = 1;
-			}else if(o2.getAverage()==o1.getAverage()){
-				ret = 0;
-			}else{
-				ret = -1;
+//			if(o2.getAverage()>o1.getAverage()){
+//				ret = 1;
+//			}else if(o2.getAverage()==o1.getAverage()){
+//				ret = 0;
+//			}else{
+//				ret = -1;
+//			}
+			
+			ret = (o1.getAverage()>o2.getAverage() ? -1 : (o1.getAverage()==o2.getAverage()? 0 : 1));
+			
+			if(ret == 0){
+				ret = breweryCompareByName(o1, o2);
 			}
+			
 			return ret;
 		}
 		

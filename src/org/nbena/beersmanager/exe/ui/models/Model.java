@@ -22,6 +22,7 @@ import java.io.File;
 
 
 
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -61,7 +62,6 @@ import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
 import org.nbena.beersmanager.query.QueryRunner.BreweryQuery.BrewerySort;
 import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
 import org.nbena.beersmanager.query.QueryRunner.StyleQuery;
-import org.nbena.beersmanager.query.QueryRunner.StyleQuery.StyleSort;
 import org.nbena.beersmanager.sclasses.BreweryAverage;
 
 /**
@@ -299,15 +299,18 @@ public class Model {
 	
 	
 	public List<String> getCountriesWithStyle(){
-		return QueryRunner.getAllCountriesWithAStyle(styleData);
+//		return QueryRunner.getAllCountriesWithAStyle(styleData);
+		return QueryRunner.getAllCountriesWithAStyle(filteredStyles);
 	}
 	
 	public List<String> getCountriesWithBrewery(){
-		return QueryRunner.getAllCountriesWithABrewery(Utils.fromBreweriesAverageToBrewery(breweryData));
+//		return QueryRunner.getAllCountriesWithABreweryAverage(breweryData);
+		return QueryRunner.getAllCountriesWithABreweryAverage(filteredBreweries); //because is chained...
 	}
 	
 	public List<String> getAllPlaces(){
-		return QueryRunner.getAllPlaces(beerData);
+//		return QueryRunner.getAllPlaces(beerData);
+		return QueryRunner.getAllPlaces(filteredBeers);
 	}
 
 //	/**
@@ -472,16 +475,18 @@ public class Model {
 	}
 	
 	public void setAverages(){
-//		System.out.println("The beers");
-//		Utils.printBeers(beerData, System.out);
-		for(BreweryAverage av: breweryData){
+//		for(BreweryAverage av: breweryData){
+//			List<Beer> itsBeers=BeerFilter.beersFilteredByBrewery(beerData, (Brewery)av);
+//			av.setAverage(itsBeers);
+//		}
+//		
+//		filteredBreweries=this.breweryData;
+		for(BreweryAverage av: filteredBreweries){
 			List<Beer> itsBeers=BeerFilter.beersFilteredByBrewery(beerData, (Brewery)av);
 			av.setAverage(itsBeers);
-//			System.out.println("------------\nThe beers for: "+av.getBreweryName());
-//			Utils.printBeers(itsBeers, System.out);
-//			System.out.println("The average is "+av.getAverage());
 		}
-		filteredBreweries=this.breweryData;
+		
+//		filteredBreweries=this.breweryData;
 	}
 	
 //	public void setBreweryDataAndShow(List<Brewery> breweryData){
@@ -1857,6 +1862,18 @@ public class Model {
 	
 	public String getLicense(){
 		return Utils.readLicense(Utils.gplPath(configuration.getPwd()));
+	}
+	
+	public boolean enableExportForBeers(){
+		return !filteredBeers.isEmpty();
+	}
+	
+	public boolean enableExportForBreweries(){
+		return !filteredBreweries.isEmpty();
+	}
+	
+	public boolean enableExportForStyles(){
+		return !filteredStyles.isEmpty();
 	}
 
 }

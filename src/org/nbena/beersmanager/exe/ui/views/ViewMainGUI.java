@@ -608,6 +608,11 @@ public class ViewMainGUI extends JFrame {
 	}
 	
 	
+	public void setExportEnabled(boolean enabled){
+		mntmExport.setEnabled(enabled);
+	}
+	
+	
 	public void addActionListenerOnClosing(WindowListener listener){
 		addWindowListener(listener);
 	}

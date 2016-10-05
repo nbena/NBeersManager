@@ -782,13 +782,89 @@ public class QueryRunner {
 	
 		public static List<String> getAllCountriesWithAStyle(List<Style> styles){
 			List<String>  countries = new LinkedList<String>();
-			styles.stream().filter(s -> !countries.contains(s.getStyleCountryOrigin()) ? countries.add(s.getStyleCountryOrigin()) : null);
+//			styles.stream().filter(s -> !countries.contains(s.getStyleCountryOrigin()) ? countries.add(s.getStyleCountryOrigin()) : null);
+			for(Style s: styles){
+				if(!countries.contains(s.getStyleCountryOrigin())){
+					countries.add(s.getStyleCountryOrigin());
+				}
+			}
+			Collections.sort(countries);
+			return countries;
+		}
+		
+		/**
+		 * High complex method in styles.size()*beers.size();. It returns the countries list where each member of it is 
+		 * a country where a style is from and there is at least a beer with that style.
+		 * @param styles	the list of style to extract countries
+		 * @param beers		the list of beers to extract beers with a style from the styles list
+		 * @return	the countries list.
+		 */
+		public static List<String> getAllCountriesWithAStyleAndBeerWithIt(List<Style> styles, List<Beer>  beers){
+			List<String>  countries = new LinkedList<String>();
+			
+			for(Style s: styles){
+				if(!countries.contains(s.getStyleCountryOrigin())){
+					
+					if(!BeerQuery.BeerFilter.beersFilteredByStyle(beers, s).isEmpty()){
+						countries.add(s.getStyleCountryOrigin());
+					}
+				}
+			}
+			Collections.sort(countries);
+			
 			return countries;
 		}
 	
 		public static List<String> getAllCountriesWithABrewery(List<Brewery> breweries){
 			List<String>  countries = new LinkedList<String>();
-			breweries.stream().filter(b -> !countries.contains(b.getCountry()) ? countries.add(b.getCountry()) : null);
+			for(Brewery b: breweries){
+				if(!countries.contains(b.getCountry())){
+					countries.add(b.getCountry());
+				}
+			}
+//			breweries.stream().filter(b -> !countries.contains(b.getCountry()) ? countries.add(b.getCountry()) : null);
+			Collections.sort(countries);
+			return countries;
+		}
+		
+		public static List<String> getAllCountriesWithABreweryAndABeerInIt(List<Brewery> breweries, List<Beer> beers){
+			List<String>  countries = new LinkedList<String>();
+			for(Brewery b: breweries){
+				if(!countries.contains(b.getCountry())){
+					
+					if(!BeerQuery.BeerFilter.beersFilteredByBrewery(beers, b).isEmpty()){
+						countries.add(b.getCountry());
+					}
+					
+				}
+			}
+			Collections.sort(countries);
+			return countries;
+		}
+		
+		public static List<String> getAllCountriesWithABreweryAverage(List<BreweryAverage> breweries){
+			List<String>  countries = new LinkedList<String>();
+//			breweries.stream().filter(b -> countries.contains(b.getCountry()) ? null : countries.add(b.getCountry()));
+			for(BreweryAverage b: breweries){
+				if(!countries.contains(b.getCountry())){
+					countries.add(b.getCountry());
+				}
+			}
+			Collections.sort(countries);
+			return countries;
+		}
+		
+		public static List<String> getAllCountriesWithABreweryAverageAndABeerInIt(List<BreweryAverage> breweries, List<Beer> beers){
+			List<String>  countries = new LinkedList<String>();
+//			breweries.stream().filter(b -> countries.contains(b.getCountry()) ? null : countries.add(b.getCountry()));
+			for(BreweryAverage b: breweries){
+				if(!countries.contains(b.getCountry())){
+					if(!BeerQuery.BeerFilter.beersFilteredByBrewery(beers, b).isEmpty()){
+						countries.add(b.getCountry());
+					}
+				}
+			}
+			Collections.sort(countries);
 			return countries;
 		}
 		

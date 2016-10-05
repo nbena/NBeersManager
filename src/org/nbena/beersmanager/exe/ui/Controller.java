@@ -153,6 +153,36 @@ public class Controller {
 		}
 	}
 	
+	private void enableExport(Model.DialogShownNow view){
+		switch(view){
+		case BEER:
+			if(model.enableExportForBeers()){
+				gui.setExportEnabled(true);
+			}
+			else{
+				gui.setExportEnabled(false);
+			}
+			break;
+		case BREWERY:
+			if(model.enableExportForBreweries()){
+				gui.setExportEnabled(true);
+			}
+			else{
+				gui.setExportEnabled(false);
+			}
+			break;
+		case STYLE:
+			if(model.enableExportForStyles()){
+				gui.setExportEnabled(true);
+			}
+			else{
+				gui.setExportEnabled(false);
+			}
+			break;
+		
+		}
+	}
+	
 	
 	/*public*/private void showBeers(){
 		enableShowBeersItems();
@@ -161,6 +191,8 @@ public class Controller {
 		model.showBeerData();
 		
 		gui.setTableModel(model.getTableModel());
+		
+		enableExport(Model.DialogShownNow.BEER);
 	}
 	
 	/*public*/private void showBreweries(){
@@ -169,6 +201,8 @@ public class Controller {
 		}else{
 			showBreweriesNormal();
 		}
+		
+		enableExport(Model.DialogShownNow.BREWERY);
 	}
 	
 	/*public*/private void showBreweriesNormal(){
@@ -178,6 +212,7 @@ public class Controller {
 		model.showBreweryData();
 		
 		gui.setTableModel(model.getTableModel());
+		
 	}
 	
 	/*public*/private void showBreweriesAverage(){
@@ -189,6 +224,8 @@ public class Controller {
 		model.showBreweryData();
 		
 		gui.setTableModel(model.getTableModel());
+		
+		
 	}
 	
 	/*public*/private void showStyles(){
@@ -198,6 +235,8 @@ public class Controller {
 		model.showStyleData();
 		
 		gui.setTableModel(model.getTableModel());
+		
+		enableExport(Model.DialogShownNow.STYLE);
 	}
 	
 	public void setShowBreweriesAverages(boolean show){
@@ -629,6 +668,7 @@ public class Controller {
 	
 	
 	/*public*/private void breweriesFilteredByTrappistYes(){
+//		model.setBreweryFilteringCurrentValue(Boolean.TRUE);
 		model.setBreweryFilteringCurrentAlgorithm(Utils.getBreweryAverageFilteringAlgorithm(QueryRunner.BreweryFilterAlgorithm.TRAPPIST_YES));
 		model.applyFilteringToBreweries();
 		showBreweries();
@@ -636,6 +676,7 @@ public class Controller {
 	
 
 	/*public*/private void breweriesFilteredByTrappistNo(){
+//		model.setBreweryFilteringCurrentValue(Boolean.FALSE);
 		model.setBreweryFilteringCurrentAlgorithm(Utils.getBreweryAverageFilteringAlgorithm(QueryRunner.BreweryFilterAlgorithm.TRAPPIST_NO));
 		model.applyFilteringToBreweries();
 		showBreweries();
@@ -1120,6 +1161,7 @@ public class Controller {
 		showBreweries();
 	}
 	
+	//conta anche quelli con zero sennò sarebbe un filtraggio
 	/*public*/private void breweriesSortedByCountryThenAverageDescending(){
 //		model.breweriesSortedByCountryThenAverageDescending();
 		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.COUNTRY_AVERAGE_DESCENDING));
@@ -1128,7 +1170,7 @@ public class Controller {
 	
 	/*public*/private void breweriesSortedByAverageDescending(){
 //		model.breweriesSortedByAverageDescending();
-		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.COUNTRY_AVERAGE_ASCENDING));
+		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.AVERAGE_DESCENDING));
 		showBreweries();
 	}
 	
