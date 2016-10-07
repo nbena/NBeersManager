@@ -3112,7 +3112,16 @@ public class Controller {
 		return newConf;
 	}
 	
+	/**
+	 * Just a wrapper to refresh the current data.
+	 */
+	private void applyConfiguration(){
+		refreshData();
+	}
 	
+	/**
+	 * Now when user insert a new configuration, it is immediately applied.
+	 */
 	private void addPreferencesOkButtonListener(){
 		preferencesDialog.addActionListenerOkButton(new ActionListener(){
 
@@ -3132,6 +3141,10 @@ public class Controller {
 				if(!model.getConfiguration().equals(newConf)){
 //					System.out.println("Configuration has changed");
 					model.setConfiguration(newConf);
+					
+					
+					applyConfiguration();
+					
 					try {
 						model.saveConfiguration();
 					} catch (FileNotFoundException e1) {
