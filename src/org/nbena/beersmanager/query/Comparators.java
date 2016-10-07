@@ -117,6 +117,10 @@ public class Comparators {
 			}
 			
 		}
+		
+		/**
+		 * Style comparators are keeped in the easistes way, because nested calls are not frequent.
+		 */
 
 		/**
 		 * Comparator class that is used to compare styles.
@@ -248,6 +252,8 @@ public class Comparators {
 	
 	/**
 	 * This class contains comparator for the {@link org.nbena.beersmanager.coreclasses.Beer} class.
+	 * Each beer comparison, if after all the comparison they are still the same, a comparsion between the
+	 * name is performed.
 	 * @author nbena
 	 *
 	 */
@@ -259,12 +265,9 @@ public class Comparators {
 		
 		private static int beerCompareByBreweryStyle(Beer o1, Beer o2){
 			int ret;
-			ret = BreweryComparator.breweryCompareTo(o1.getBrewery(), o2.getBrewery());
+			ret = BreweryComparator.breweryCompareByCountryName(o1.getBrewery(), o2.getBrewery());
 			if(ret == 0){
 				ret = StyleComparator.styleCompareToWithoutFermentation(o1.getStyle(), o2.getStyle());
-			}
-			if(ret == 0){
-				ret = beerCompareByName(o1, o2);
 			}
 			return ret;
 		}
@@ -294,11 +297,11 @@ public class Comparators {
 			int ret;
 			ret = StyleComparator.styleCompareToFermentationCountry(o1.getStyle(), o2.getStyle());
 			if(ret == 0){
-				ret = BreweryComparator.breweryCompareTo(o1.getBrewery(), o2.getBrewery());
+				ret = BreweryComparator.breweryCompareByName(o1.getBrewery(), o2.getBrewery());
 			}
-			if(ret == 0){
-				ret = beerCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = beerCompareByName(o1, o2);
+//			}
 			return ret;
 		}
 		
@@ -306,83 +309,83 @@ public class Comparators {
 			int ret;
 			ret = StyleComparator.styleCompareToWithFermentation(o1.getStyle(), o2.getStyle());
 			if(ret == 0){
-				ret = BreweryComparator.breweryCompareTo(o1.getBrewery(), o2.getBrewery());
+				ret = BreweryComparator.breweryCompareByCountryName(o1.getBrewery(), o2.getBrewery());
 			}
-			if(ret == 0){
-				ret = beerCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = beerCompareByName(o1, o2);
+//			}
 			return ret;
 		}
 		
 		private static int beerCompareByABVAscending(Beer o1, Beer o2){
 			int ret;
 			ret = (o1.getAlcool()>o2.getAlcool()? 1: (o1.getAlcool()==o2.getAlcool())? 0 : -1);
-			if(ret == 0){
-				ret = beerCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = beerCompareByName(o1, o2);
+//			}
 			return ret; 
 		}
 		
 		private static int beerCompareByABVDescending(Beer o1, Beer o2){
 			int ret;
 			ret = (o1.getAlcool()>o2.getAlcool()? -1: (o1.getAlcool()==o2.getAlcool())? 0 : 1);
-			if(ret == 0){
-				ret = beerCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = beerCompareByName(o1, o2);
+//			}
 			return ret;
 		}
 		
 		private static int beerCompareByPriceAscending(Beer o1, Beer o2){
 			int ret;
 			ret = (o1.getPrice()>o2.getPrice()? 1: (o1.getPrice()==o2.getPrice())? 0 : -1);
-			if(ret == 0){
-				ret = beerCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = beerCompareByName(o1, o2);
+//			}
 			return ret;
 		}
 		
 		private static int beerCompareByPriceDescending(Beer o1, Beer o2){
 			int ret;
 			ret =(o1.getPrice()>o2.getPrice()? -1: (o1.getPrice()==o2.getPrice())? 0 : 1);
-			if(ret == 0){
-				ret = beerCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = beerCompareByName(o1, o2);
+//			}
 			return ret;
 		}
 		
-		private static int compareBeerByMarkAscending(Beer o1, Beer o2){
+		private static int beerCompareByMarkAscending(Beer o1, Beer o2){
 			int ret;;
 			ret = (o1.getMark()>o2.getMark()? 1 : (o1.getMark()==o2.getMark())? 0 : -1);
-			if(ret == 0){
-				ret = beerCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = beerCompareByName(o1, o2);
+//			}
 			return ret;
 		}
 		
-		private static int compareBeerByMarkDescending(Beer o1, Beer o2){
+		private static int beerCompareByMarkDescending(Beer o1, Beer o2){
 			int ret;
 			ret = (o1.getMark()>o2.getMark()? -1 : (o1.getMark()==o2.getMark())? 0 : 1);
-			if(ret == 0){
-				ret = beerCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = beerCompareByName(o1, o2);
+//			}
 			return ret;
 		}
 		
-		private static int compareBeerByStarAscending(Beer o1, Beer o2){
+		private static int beerCompareByStarAscending(Beer o1, Beer o2){
 			int ret;
 			ret =  (o1.getNumberOfStars()>o2.getNumberOfStars()? 1 : (o1.getNumberOfStars()==o2.getNumberOfStars())? 0 : -1);
-			if(ret == 0){
-				ret = beerCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = beerCompareByName(o1, o2);
+//			}
 			return ret;
 		}
 		
-		private static int compareBeerByStarDescending(Beer o1, Beer o2){
+		private static int beerCompareByStarDescending(Beer o1, Beer o2){
 			int ret;
 			ret = (o1.getNumberOfStars()>o2.getNumberOfStars()? -1 : (o1.getNumberOfStars()==o2.getNumberOfStars())? 0 : 1);
-			if(ret == 0){
-				ret = beerCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = beerCompareByName(o1, o2);
+//			}
 			return ret;
 		}
 		
@@ -390,44 +393,53 @@ public class Comparators {
 		private static int beerCompareByCountryMark(Beer o1, Beer o2){
 			int ret;
 			ret = o1.getBrewery().getCountry().compareTo(o2.getBrewery().getCountry());
-			if( ret == 0){
-				ret = compareBeerByMarkAscending(o1, o2);
-			}
+//			if( ret == 0){
+//				ret = compareBeerByMarkAscending(o1, o2);
+//			}
 			return ret;
 		}
 		
 		private static int beerCompareByMarkStarAscending(Beer o1, Beer o2){
 			int ret;
-			ret = compareBeerByMarkAscending(o1, o2);
+			ret = beerCompareByMarkAscending(o1, o2);
 			if(ret == 0){
-				ret = compareBeerByStarAscending(o1, o2);
+				ret = beerCompareByStarAscending(o1, o2);
 			}
 			return ret;
 		}
 		
 		private static int beerCompareByMarkStarDescending(Beer o1, Beer o2){
 			int ret;
-			ret = compareBeerByMarkDescending(o1, o2);
+			ret = beerCompareByMarkDescending(o1, o2);
 			if(ret == 0){
-				ret = compareBeerByStarDescending(o1, o2);
+				ret = beerCompareByStarDescending(o1, o2);
 			}
 			return ret;
 		}
 		
 		private static int beerCompareByStarMarkAscending(Beer o1, Beer o2){
 			int ret;
-			ret = compareBeerByStarAscending(o1, o2);
+			ret = beerCompareByStarAscending(o1, o2);
 			if(ret == 0){
-				ret = compareBeerByMarkAscending(o1, o2);
+				ret = beerCompareByMarkAscending(o1, o2);
 			}
 			return ret;
 		}
 		
 		private static int beerCompareByStarMarkDescending(Beer o1, Beer o2){
 			int ret;
-			ret = compareBeerByStarDescending(o1, o2);
+			ret = beerCompareByStarDescending(o1, o2);
 			if(ret == 0){
-				ret = compareBeerByMarkDescending(o1, o2);
+				ret = beerCompareByMarkDescending(o1, o2);
+			}
+			return ret;
+		}
+		
+		private static int beerCompareByCountryBreweryName(Beer o1, Beer o2){
+			int ret;
+			ret = BreweryComparator.breweryCompareByCountryName(o1.getBrewery(), o2.getBrewery());
+			if(ret==0){
+				ret = beerCompareByName(o1, o2);
 			}
 			return ret;
 		}
@@ -464,7 +476,6 @@ public class Comparators {
 			 * Comparator class that is used to compare beers.
 			 * The algorithm checks in order:<ol>
 			 * <li> Beer's brewery country </li>
-			 * <li> Beer's brewery town</li>
 			 * <li> Beer's brewery name</li>
 			 * <li> Beer's style fermentation </li>
 			 * <li> Beer's style name</li>
@@ -519,8 +530,12 @@ public class Comparators {
 		//				ret = compareBeerByName(arg0, arg1);
 		//			}
 		//			return ret;
-					
-					return beerCompareByBreweryStyle(arg0, arg1);
+					int ret;
+					ret= beerCompareByBreweryStyle(arg0, arg1);
+					if(ret==0){
+						ret=beerCompareByName(arg0, arg1);
+					}
+					return ret;
 				}
 				
 			}
@@ -532,7 +547,6 @@ public class Comparators {
 			 * <li> Beer's style country origin</li>
 			 * <li> Beer's style name</li>
 			 * <li> Beer's style subcategory</li>
-			 * <li> Beer's brewery town</li>
 			 * <li> Beer's brewery name</li>
 			 * <li> Beer name </li>
 			 * </ol>
@@ -584,8 +598,12 @@ public class Comparators {
 		//				ret = compareBeerByName(o1, o2);
 		//			}
 		//			return ret;
-					
-					return beerCompareByFermentationCountryOfStyleBrewery(o1, o2);
+					int ret;
+					ret= beerCompareByFermentationCountryOfStyleBrewery(o1, o2);
+					if(ret==0){
+						ret=beerCompareByName(o1, o2);
+					}
+					return ret;
 				}
 				
 			}
@@ -597,7 +615,6 @@ public class Comparators {
 			 * <li> Beer's style name</li>
 			 * <li> Beer's style subcategory</li>
 			 * <li> Beer's brewery country </li>
-			 * <li> Beer's brewery town</li>
 			 * <li> Beer's brewery name</li>
 			 * <li> Beer name </li>
 			 * </ol>
@@ -650,8 +667,12 @@ public class Comparators {
 		//				ret = compareBeerByName(o1, o2);
 		//			}
 		//			return ret;
-					
-					return beerCompareByFermentationCountryOfBrewery(o1, o2);
+					int ret;
+					ret= beerCompareByFermentationCountryOfBrewery(o1, o2);
+					if(ret==0){
+						ret=beerCompareByName(o1, o2);
+					}
+					return ret;
 				}
 				
 			}
@@ -689,7 +710,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(Beer arg0, Beer arg1) {
-				return beerCompareByABVAscending(arg0, arg1);
+				int ret;
+				ret=beerCompareByABVAscending(arg0, arg1);
+				if(ret==0){
+					ret=beerCompareByName(arg0, arg1);
+				}
+				return ret;
 			}
 			
 		}
@@ -704,7 +730,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(Beer arg0, Beer arg1) {
-				return beerCompareByABVDescending(arg0, arg1);
+				int ret;
+				ret= beerCompareByABVDescending(arg0, arg1);
+				if(ret==0){
+					ret=beerCompareByName(arg0, arg1);
+				}
+				return ret;
 			}
 			
 		}
@@ -719,7 +750,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(Beer arg0, Beer arg1) {
-				return beerCompareByPriceAscending(arg0, arg1);
+				int ret;
+				ret=beerCompareByPriceAscending(arg0, arg1);
+				if(ret==0){
+					ret=beerCompareByName(arg0, arg1);
+				}
+				return ret;
 			}
 			
 		}
@@ -734,7 +770,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(Beer arg0, Beer arg1) {
-				return beerCompareByPriceDescending(arg0, arg1);
+				int ret;
+				ret=beerCompareByPriceDescending(arg0, arg1);
+				if(ret==0){
+					ret=beerCompareByName(arg0, arg1);
+				}
+				return ret;
 				}
 			
 		}
@@ -749,7 +790,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(Beer arg0, Beer arg1) {
-				return beerCompareByName(arg0, arg1);
+				int ret;
+				ret=beerCompareByName(arg0, arg1);
+				if(ret==0){
+					ret=beerCompareByName(arg0, arg1);
+				}
+				return ret;
 			}
 			
 		}
@@ -765,7 +811,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(Beer arg0, Beer arg1) {
-				return beerCompareByCountryMark(arg0, arg1);
+				int ret;
+				ret=beerCompareByCountryMark(arg0, arg1);
+				if(ret==0){
+					ret=beerCompareByName(arg0, arg1);
+				}
+				return ret;
 			}
 			
 		}
@@ -783,7 +834,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(Beer arg0, Beer arg1) {
-				return beerCompareByMarkStarAscending(arg0, arg1);
+				int ret;
+				ret=beerCompareByMarkStarAscending(arg0, arg1);
+				if(ret==0){
+					ret=beerCompareByName(arg0, arg1);
+				}
+				return ret;
 			}
 			
 		}
@@ -801,7 +857,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(Beer arg0, Beer arg1) {
-				return beerCompareByStarMarkAscending(arg0, arg1);
+				int ret;
+				ret=beerCompareByStarMarkAscending(arg0, arg1);
+				if(ret==0){
+					ret=beerCompareByName(arg0, arg1);
+				}
+				return ret;
 			}
 			
 		}
@@ -819,7 +880,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(Beer arg0, Beer arg1) {
-				return beerCompareByMarkStarDescending(arg0, arg1);
+				int ret;
+				ret=beerCompareByMarkStarDescending(arg0, arg1);
+				if(ret==0){
+					ret=beerCompareByName(arg0, arg1);
+				}
+				return ret;
 			}
 			
 		}
@@ -837,7 +903,33 @@ public class Comparators {
 		
 			@Override
 			public int compare(Beer arg0, Beer arg1) {
-				return beerCompareByStarMarkDescending(arg0, arg1);
+				int ret;
+				ret=beerCompareByStarMarkDescending(arg0, arg1);
+				if(ret==0){
+					ret=beerCompareByName(arg0, arg1);
+				}
+				return ret;
+			}
+			
+		}
+		
+		/**
+		 * Comparator class that is used to compare beers
+		 * This algorithm checks:<ol>
+		 * <li>Brewery country</li>
+		 * <li>Brewery name</li>
+		 * <li>Beer name</li>
+		 * @author nbena
+		 *
+		 */
+		public static class ComparatorBeerByCountryBreweryName implements Comparator<Beer>{
+
+			@Override
+			public int compare(Beer arg0, Beer arg1) {
+				int ret;
+				ret = beerCompareByCountryBreweryName(arg0, arg1);
+				//no need to check the name because is a must of the function
+				return ret;
 			}
 			
 		}
@@ -978,7 +1070,9 @@ public class Comparators {
 	 */
 	static class BreweryComparator{
 
-
+/*
+ * As beer comparator, every last comparisom check the name.
+ */
 		
 		static int breweryCompareByName(Brewery o1, Brewery o2){
 			return o1.getBreweryName().compareToIgnoreCase(o2.getBreweryName());
@@ -1006,6 +1100,7 @@ public class Comparators {
 		static int breweryCompareByCountryName(Brewery o1, Brewery o2){
 			int ret;
 			ret = o1.getCountry().compareTo(o2.getCountry());
+			//here we left the name comparison because it is a part of.
 			if(ret == 0){
 				ret = breweryCompareByName(o1, o2);
 			}
@@ -1058,9 +1153,9 @@ public class Comparators {
 //				ret=-1;
 //			}
 			ret = (o1.getAverage()>o2.getAverage() ? 1 : (o1.getAverage()==o2.getAverage()? 0 : -1));
-			if(ret == 0){
-				ret = breweryCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = breweryCompareByName(o1, o2);
+//			}
 			return ret;
 		}
 		
@@ -1076,9 +1171,9 @@ public class Comparators {
 			
 			ret = (o1.getAverage()>o2.getAverage() ? -1 : (o1.getAverage()==o2.getAverage()? 0 : 1));
 			
-			if(ret == 0){
-				ret = breweryCompareByName(o1, o2);
-			}
+//			if(ret == 0){
+//				ret = breweryCompareByName(o1, o2);
+//			}
 			
 			return ret;
 		}
@@ -1095,7 +1190,12 @@ public class Comparators {
 		
 		@Override
 		public int compare(Brewery arg0, Brewery arg1) {
-			return breweryCompareByCountryName(arg0, arg1);
+			int ret;
+			ret=breweryCompareByCountryName(arg0, arg1);
+//			if(ret==0){
+//				ret=breweryCompareByName(arg0, arg1);
+//			}
+			return ret;
 			}
 			
 		}
@@ -1123,7 +1223,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(BreweryAverage arg0, BreweryAverage arg1) {
-				return breweryCompareByAverageAscending(arg0, arg1);
+				int ret;
+				ret=breweryCompareByAverageAscending(arg0, arg1);
+				if(ret==0){
+					ret=breweryCompareByName(arg0, arg1);
+				}
+				return ret;
 			}
 			
 		}
@@ -1137,7 +1242,12 @@ public class Comparators {
 		
 				@Override
 				public int compare(BreweryAverage arg0, BreweryAverage arg1) {
-					return breweryCompareByAverageDescending(arg0, arg1);
+					int ret;
+					ret=breweryCompareByAverageDescending(arg0, arg1);
+					if(ret==0){
+						ret=breweryCompareByName(arg0, arg1);
+					}
+					return ret;
 				}
 				
 			}
@@ -1154,7 +1264,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(BreweryAverage arg0, BreweryAverage arg1) {
-				return breweryCompareByCountryAverageAscending(arg0, arg1);
+				int ret;
+				ret=breweryCompareByCountryAverageAscending(arg0, arg1);
+				if(ret==0){
+					ret=breweryCompareByName(arg0, arg1);
+				}
+				return ret;
 			}
 			
 		}
@@ -1171,7 +1286,12 @@ public class Comparators {
 		
 			@Override
 			public int compare(BreweryAverage arg0, BreweryAverage arg1) {
-				return breweryCompareByCountryAverageDescending(arg0, arg1);
+				int ret;
+				ret=breweryCompareByCountryAverageDescending(arg0, arg1);
+				if(ret==0){
+					ret=breweryCompareByName(arg0, arg1);
+				}
+				return ret;
 			}
 			
 		}
@@ -1375,7 +1495,19 @@ public class Comparators {
 		 * @see ComparatorBreweryForBinarySearch
 		 */
 		static boolean breweryBooleanBinarySearch(Brewery o1, Brewery o2){
-			return Comparators.BreweryComparator.breweryCompareByCountryName(o1, o2) == 0 ? true : false;
+			int ret;
+			boolean booleanRet = true;
+			ret = Comparators.BreweryComparator.breweryCompareByCountryName(o1, o2);
+			if(ret==1){
+				booleanRet=false;
+				//nested if so I avoid a not-necessary call.
+			}
+			else{
+				ret = Comparators.BreweryComparator.breweryCompareByName(o1, o2);
+				booleanRet= (ret==0) ? true : false;
+				
+			}
+			return booleanRet;
 		}
 		
 		/**
@@ -1387,7 +1519,19 @@ public class Comparators {
 		 * @see ComparatorBreweryAvergeForBinarySearch
 		 */
 		static boolean breweryAverageBooleanBinarySearch(BreweryAverage o1, BreweryAverage o2){
-			return Comparators.BreweryComparator.breweryCompareByCountryName(o1, o2) == 0 ? true : false;
+			int ret;
+			boolean booleanRet = true;
+			ret = Comparators.BreweryComparator.breweryCompareByCountryName(o1, o2);
+			if(ret==1){
+				booleanRet=false;
+				//nested if so I avoid a not-necessary call.
+			}
+			else{
+				ret = Comparators.BreweryComparator.breweryCompareByName(o1, o2);
+				booleanRet= (ret==0) ? true : false;
+				
+			}
+			return booleanRet;
 		}
 		
 		/**

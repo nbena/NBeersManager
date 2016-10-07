@@ -52,6 +52,7 @@ public class QueryRunner {
 	
 	public static enum BeerSortingAlgorithm{
 		COUNTRY_OF_BREWERY_STYLE,
+		COUNTRY_OF_BREWERY_NAME,
 		FERMENTATION_COUNTRY_OF_STYLE_BREWERY,
 		FERMENTATIOM_STYLE_COUNTRY_OF_BREWERY,
 		MARK_STAR_ASCENDING,
@@ -141,9 +142,15 @@ public class QueryRunner {
 				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByCountryBreweryStyleName());
 				return sortedBeers;
 			}
+			
+			public static List<Beer> beersSortedByCountryOfBreweryThenName(List<Beer> beers){
+				List<Beer> sortedBeers= new LinkedList<Beer>(beers);
+				Collections.sort(sortedBeers, new BeerComparator.ComparatorBeerByCountryBreweryName());
+				return sortedBeers;
+			}
 
 			/**
-			 * Sort beers by fermentation, then style (origin country, name, subcategory), and then brewery (town, name).
+			 * Sort beers by fermentation, then style (origin country, name, subcategory), and then brewery (name).
 			 * @param beers
 			 * @return
 			 */
@@ -222,7 +229,7 @@ public class QueryRunner {
 		
 		
 		public static class BeerFilter {
-
+		
 			public static List<Beer> beersFilteredByStyle(List<Beer> beers, Style style){
 			//		return beers.stream().filter(b -> b.getStyle().equals(style))
 			//				.collect(Collectors.toList());
@@ -230,12 +237,12 @@ public class QueryRunner {
 					return beers.stream().filter(b -> Comparators.Binary.styleBooleanBinarySearch(b.getStyle(), style))
 							.collect(Collectors.toList());
 				}
-
+		
 			public static List<Beer> beersFilteredByMainStyle(List<Beer> beers, Style style){
 				return beers.stream().filter(b -> b.getStyle().getStyleMainName().equalsIgnoreCase(style.getStyleMainName()))
 						.collect(Collectors.toList());
 			}
-
+		
 			public static List<Beer> beersFilteredByBrewery(List<Beer> beers, Brewery brewery){
 			//		return beers.stream().filter(b -> b.getBrewery().equals(brewery))
 			//		.collect(Collectors.toList());
@@ -243,69 +250,156 @@ public class QueryRunner {
 					return beers.stream().filter(b -> Comparators.Binary.breweryBooleanBinarySearch(b.getBrewery(), brewery))
 					.collect(Collectors.toList());
 				}
-
+		
 			public static List<Beer> beersFilteredByMiminumMark(List<Beer> beers, int mark){
 				return beers.stream().filter(b -> b.getMark()>=mark)
 						.collect(Collectors.toList());
 			}
-
+		
 			public static List<Beer> beersFilteredByExactMark(List<Beer> beers, int mark){
 				return beers.stream().filter(b -> b.getMark()==mark)
 						.collect(Collectors.toList());
 			}
-
+		
 			public static List<Beer> beersFilteredByIsTried(List<Beer> beers, boolean isTried){
 				return beers.stream().filter(b -> b.isTried()==isTried)
 						.collect(Collectors.toList());
 			}
-
+		
 			public static List<Beer> beersFilteredByMinimumNumberOfStars(List<Beer> beers, int numberOfStar){
 				return beers.stream().filter(b -> b.getNumberOfStars()>=numberOfStar)
 						.collect(Collectors.toList());
 			}
-
+		
 			public static List<Beer> beersFilteredByExactNumberOfStars(List<Beer> beers, int numberOfStar){
 				return beers.stream().filter(b -> b.getNumberOfStars()==numberOfStar)
 						.collect(Collectors.toList());
 			}
-
+		
 			public static List<Beer> beersFilteredByMinimumAlcool(List<Beer> beers, double alcool){
 				return beers.stream().filter(b -> b.getAlcool()>=alcool)
 						.collect(Collectors.toList());
 			}
-
+		
 			public static List<Beer> beersFilteredByExatcAlcool(List<Beer> beers, double alcool){
 				return beers.stream().filter(b -> b.getAlcool()==alcool)
 						.collect(Collectors.toList());
 			}
-
+		
 			public static List<Beer> beersFilteredByTrappist(List<Beer> beers, boolean trappist){
 				return beers.stream().filter(b -> b.getBrewery().isAuthenticTrappist()==trappist)
 						.collect(Collectors.toList());
 			}
-
+		
 			public static List<Beer> beersFilteredByFermentation(List<Beer> beers, Fermentation fermentation){
 				return beers.stream().filter(b -> b.getStyle().getFermentation()==fermentation)
 						.collect(Collectors.toList());
 			}
-
+		
 			public static List<Beer> beersFilteredByBreweryCountry(List<Beer> beers, String country){	
 				return beers.stream().filter(b -> b.getBrewery().getCountry().equalsIgnoreCase(country))
 						.collect(Collectors.toList());
 					
 			}
-
+		
 			public static List<Beer> beersFilteredByStyleProvenience(List<Beer> beers, String provenience){
 				return beers.stream().filter(b -> b.getStyle().getStyleCountryOrigin().equalsIgnoreCase(provenience))
 						.collect(Collectors.toList());
 			}
-
+		
 			public static List<Beer> beersFilteredByPlaceTried(List<Beer> beers, String place){
 				return beers.stream().filter(b -> b.getPlaceTried().equalsIgnoreCase(place))
 						.collect(Collectors.toList());
 			}
 			
 		}
+
+
+//		public static class BeerFilter {
+//
+//			public static List<Beer> beersFilteredByStyle(List<Beer> beers, Style style){
+//			//		return beers.stream().filter(b -> b.getStyle().equals(style))
+//			//				.collect(Collectors.toList());
+//					
+//					return beers.stream().filter(b -> Comparators.Binary.styleBooleanBinarySearch(b.getStyle(), style))
+//							.collect(Collectors.toList());
+//				}
+//
+//			public static List<Beer> beersFilteredByMainStyle(List<Beer> beers, Style style){
+//				return beers.stream().filter(b -> b.getStyle().getStyleMainName().equalsIgnoreCase(style.getStyleMainName()))
+//						.collect(Collectors.toList());
+//			}
+//
+//			public static List<Beer> beersFilteredByBrewery(List<Beer> beers, Brewery brewery){
+//			//		return beers.stream().filter(b -> b.getBrewery().equals(brewery))
+//			//		.collect(Collectors.toList());
+//					
+//					return beers.stream().filter(b -> Comparators.Binary.breweryBooleanBinarySearch(b.getBrewery(), brewery))
+//					.collect(Collectors.toList());
+//				}
+//
+//			public static List<Beer> beersFilteredByMiminumMark(List<Beer> beers, int mark){
+//				return beers.stream().filter(b -> b.getMark()>=mark)
+//						.collect(Collectors.toList());
+//			}
+//
+//			public static List<Beer> beersFilteredByExactMark(List<Beer> beers, int mark){
+//				return beers.stream().filter(b -> b.getMark()==mark)
+//						.collect(Collectors.toList());
+//			}
+//
+//			public static List<Beer> beersFilteredByIsTried(List<Beer> beers, boolean isTried){
+//				return beers.stream().filter(b -> b.isTried()==isTried)
+//						.collect(Collectors.toList());
+//			}
+//
+//			public static List<Beer> beersFilteredByMinimumNumberOfStars(List<Beer> beers, int numberOfStar){
+//				return beers.stream().filter(b -> b.getNumberOfStars()>=numberOfStar)
+//						.collect(Collectors.toList());
+//			}
+//
+//			public static List<Beer> beersFilteredByExactNumberOfStars(List<Beer> beers, int numberOfStar){
+//				return beers.stream().filter(b -> b.getNumberOfStars()==numberOfStar)
+//						.collect(Collectors.toList());
+//			}
+//
+//			public static List<Beer> beersFilteredByMinimumAlcool(List<Beer> beers, double alcool){
+//				return beers.stream().filter(b -> b.getAlcool()>=alcool)
+//						.collect(Collectors.toList());
+//			}
+//
+//			public static List<Beer> beersFilteredByExatcAlcool(List<Beer> beers, double alcool){
+//				return beers.stream().filter(b -> b.getAlcool()==alcool)
+//						.collect(Collectors.toList());
+//			}
+//
+//			public static List<Beer> beersFilteredByTrappist(List<Beer> beers, boolean trappist){
+//				return beers.stream().filter(b -> b.getBrewery().isAuthenticTrappist()==trappist)
+//						.collect(Collectors.toList());
+//			}
+//
+//			public static List<Beer> beersFilteredByFermentation(List<Beer> beers, Fermentation fermentation){
+//				return beers.stream().filter(b -> b.getStyle().getFermentation()==fermentation)
+//						.collect(Collectors.toList());
+//			}
+//
+//			public static List<Beer> beersFilteredByBreweryCountry(List<Beer> beers, String country){	
+//				return beers.stream().filter(b -> b.getBrewery().getCountry().equalsIgnoreCase(country))
+//						.collect(Collectors.toList());
+//					
+//			}
+//
+//			public static List<Beer> beersFilteredByStyleProvenience(List<Beer> beers, String provenience){
+//				return beers.stream().filter(b -> b.getStyle().getStyleCountryOrigin().equalsIgnoreCase(provenience))
+//						.collect(Collectors.toList());
+//			}
+//
+//			public static List<Beer> beersFilteredByPlaceTried(List<Beer> beers, String place){
+//				return beers.stream().filter(b -> b.getPlaceTried().equalsIgnoreCase(place))
+//						.collect(Collectors.toList());
+//			}
+//			
+//		}
 
 
 		///******************************************************************
@@ -536,10 +630,18 @@ public class QueryRunner {
 				else{
 					beersFiltered = BeerFilter.beersFilteredByBrewery(beers, b);
 				}
+				int count = 0;
 				for (Beer beer: beersFiltered){
-					average+=(double)beer.getMark();
+					//avoid when mark is 0
+					if(beer.getMark()!=0){
+						
+						average+=(double)beer.getMark();
+						count++;
+					}
+					
 				}
-				return average/(double)beersFiltered.size();
+				 average/=(double)count;
+				 return (Double.isNaN(average) ? 0.0 : average);
 			}
 
 

@@ -1060,7 +1060,7 @@ public class Model {
 	
 	private void exportMsExcelNewBreweries(List<Brewery> data, OutputStream out) throws Exception{
 		exporter = new MSExcelNewOutExporter();
-//		exporter.writeBrewery(filteredBreweries, out);
+		exporter.writeBrewery(data, out);
 	}
 	
 	private void exportMsExcelNewStyles(List<Style> data, OutputStream out) throws Exception{
@@ -1076,7 +1076,7 @@ public class Model {
 	
 	private void exportMsExcelOldBreweries(List<Brewery> data, OutputStream out) throws Exception{
 		exporter = new MSExcelOldOutExporter();
-//		exporter.writeBrewery(filteredBreweries, out);
+		exporter.writeBrewery(data, out);
 	}
 	
 	private void exportMsExcelOldStyles(List<Style> data, OutputStream out) throws Exception{
@@ -1106,7 +1106,7 @@ public class Model {
 	
 	private void exportTXTBreweries(List<Brewery> data, OutputStream out) throws Exception{
 		exporter = new TXTOutExporter();
-//		exporter.writeBrewery(filteredBreweries, out);
+		exporter.writeBrewery(data, out);
 	}
 	
 	private void exportTXTStyles(List<Style> data, OutputStream out) throws Exception{

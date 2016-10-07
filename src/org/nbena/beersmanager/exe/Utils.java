@@ -914,6 +914,7 @@ public class Utils {
 	
 	private static final String BEER_SORTING_ALGORITHM_NAME = "Nome";
 	private static final String BEER_SORTING_ALGORITHM_COUNTRY_OF_BREWERY_STYLE = "Nazione birrificio, stile";
+	private static final String BEER_SORTING_ALGORITHM_COUNTRY_OF_BREWERY_NAME = "Nazione e nome birrifcio, nome birra";
 	private static final String BEER_SORTING_ALGORITHM_FERMENTATION_STYLE_COUNTRY_OF_BREWERY = "Fermentazione, stile, nazione birrificio";
 	private static final String BEER_SORTING_ALGORITHM_FERMENTATION_COUNTRY_OF_STYLE_BREWERY = "Fermentazione, nazione origine stile, birrificio";
 	private static final String BEER_SORTING_ALGORITHM_MARK_STAR_ASCENDING = "Voto, stelle (ascendente)";
@@ -964,6 +965,9 @@ public class Utils {
 			break;
 		case NAME:
 			value = BEER_SORTING_ALGORITHM_NAME;
+			break;
+		case COUNTRY_OF_BREWERY_NAME:
+			value = BEER_SORTING_ALGORITHM_COUNTRY_OF_BREWERY_NAME;
 			break;
 		
 		}
@@ -1020,6 +1024,9 @@ public class Utils {
 			break;
 		case BEER_SORTING_ALGORITHM_NAME:
 			algorithm = QueryRunner.BeerSortingAlgorithm.NAME;
+			break;
+		case BEER_SORTING_ALGORITHM_COUNTRY_OF_BREWERY_NAME:
+			algorithm = QueryRunner.BeerSortingAlgorithm.COUNTRY_OF_BREWERY_NAME;
 			break;
 		default:
 			algorithm = null;
@@ -1707,12 +1714,13 @@ public class Utils {
 	}
 	
 	public static FileNameExtensionFilter[] getAllFileFilters(){
-		FileNameExtensionFilter[] filters = new FileNameExtensionFilter[5];
+//		FileNameExtensionFilter[] filters = new FileNameExtensionFilter[5];
+		FileNameExtensionFilter[] filters = new FileNameExtensionFilter[4];
 		filters[0]=new FileNameExtensionFilter(Constants.EXCEL_NEW[0], Constants.EXCEL_NEW[1]);
 		filters[1]=new FileNameExtensionFilter(Constants.EXCEL_OLD[0], Constants.EXCEL_OLD[1]);
 		filters[2]=new FileNameExtensionFilter(Constants.JSON[0], Constants.JSON[1]);
-		filters[3]=new FileNameExtensionFilter(Constants.PDF[0], Constants.PDF[1]);
-		filters[4]=new FileNameExtensionFilter(Constants.TXT[0], Constants.TXT[1]);
+//		filters[3]=new FileNameExtensionFilter(Constants.PDF[0], Constants.PDF[1]);
+		filters[3]=new FileNameExtensionFilter(Constants.TXT[0], Constants.TXT[1]);
 		return filters;
 	}
 	
@@ -1792,6 +1800,9 @@ public class Utils {
 			break;
 		case NAME:
 			function=QueryRunner.BeerQuery.BeerSort::beersSortedByName;
+			break;
+		case COUNTRY_OF_BREWERY_NAME:
+			function=QueryRunner.BeerQuery.BeerSort::beersSortedByCountryOfBreweryThenName;
 			break;
 		}
 		return function;

@@ -961,6 +961,11 @@ public class Controller {
 		showBeers();
 	}
 	
+	private void beersSortedByCountryOfBreweryName(){
+		model.setBeerSortingCurrentAlgorithm(Utils.getBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.COUNTRY_OF_BREWERY_NAME));
+		showBeers();
+	}
+	
 	private void addSortBeersListeners(){
 		gui.addActionMenuBeersSortedByCountryOfBreweryStyle(new ActionListener(){
 
@@ -1077,12 +1082,23 @@ public class Controller {
 			
 		});
 		
-		gui.addActionMenubeersSortedByName(new ActionListener(){
+		gui.addActionMenuBeersSortedByName(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
 				beersSortedByName();
+				
+			}
+			
+		});
+		
+		gui.addActionMenuBeersSortedByCountryOfBreweryName(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				beersSortedByCountryOfBreweryName();
 				
 			}
 			
@@ -1232,7 +1248,7 @@ public class Controller {
 	
 	private File initExport() throws FileNotFoundException{
 		File returned=null;
-		JFileChooser guiChooser = ViewMainGUI.initJFileChooser(Utils.getAllFileFilters(), new File(model.getLastDirectory()), false);
+		JFileChooser guiChooser = ViewMainGUI.initJFileChooser(Utils.getAllFileFilters(), false);
 		if(guiChooser.showSaveDialog(gui)==JFileChooser.APPROVE_OPTION){
 			returned=guiChooser.getSelectedFile();
 			
@@ -1369,8 +1385,7 @@ public class Controller {
 	
 	private File initImport(){
 		File file = null;
-		JFileChooser chooser = ViewMainGUI.initJFileChooser(Utils.getSingleFileFilterAsArray(Model.ExportType.JSON),
-				new File(model.getLastDirectory()), false);
+		JFileChooser chooser = ViewMainGUI.initJFileChooser(Utils.getSingleFileFilterAsArray(Model.ExportType.JSON), false);
 		file = getImportedFile(chooser);
 		return file;
 	}
@@ -3201,21 +3216,21 @@ public class Controller {
 //		});
 	}
 	
-	private void addPreferencesDefaultViewButtonListener(){
-		preferencesDialog.addActionListenerDefaultViewButton(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-				Configuration newConf = model.getConfiguration();
-				newConf = ConfigurationFactory.getDefaultView(newConf);
-				
-				fillPreferencesDefaultView(newConf);
-				
-			}
-			
-		});
-	}
+//	private void addPreferencesDefaultViewButtonListener(){
+//		preferencesDialog.addActionListenerDefaultViewButton(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				
+//				Configuration newConf = model.getConfiguration();
+//				newConf = ConfigurationFactory.getDefaultView(newConf);
+//				
+//				fillPreferencesDefaultView(newConf);
+//				
+//			}
+//			
+//		});
+//	}
 	
 	private void addPreferencesDeafultButtonListener(){
 		preferencesDialog.addActionListenerDefaultButton(new ActionListener(){
@@ -3248,21 +3263,21 @@ public class Controller {
 		preferencesDialog.setComboBoxSortingStyleSelectedItem(Utils.getStyleSortingAlgorithmDescription(conf.getStyleSortingAlgorithm()));
 	}
 	
-	private void fillPreferencesFilteringAlgorithm(Configuration conf){
-//		preferencesDialog.fillComboBoxFilteringBeer(Utils.getBeerFilterAlgorithmDescriptionList());
-//		preferencesDialog.setComboBoxFilteringBeerSelectedItem(Utils.getBeerFilterAlgorithmDescription(conf.getBeerFilterAlgorithm()));
-//		
-//		preferencesDialog.fillComboBoxFilteringBrewery(Utils.getBreweryFilterAlgorithmDescriptionList());
-//		preferencesDialog.setComboBoxFilteringBrewerySelectedItem(Utils.getBreweryFilterAlgorithmDescription(conf.getBreweryFilterAlgorithm()));
-//		
-//		preferencesDialog.fillComboBoxFilteringStyle(Utils.getStyleFilterAlgorithmDescriptionList());
-//		preferencesDialog.setComboBoxFilteringStyleSelectedItem(Utils.getStyleFilterAlgorithmDescription(conf.getStyleFilterAlgorithm()));
-//		System.out.println("Preferences");
-	}
+//	private void fillPreferencesFilteringAlgorithm(Configuration conf){
+////		preferencesDialog.fillComboBoxFilteringBeer(Utils.getBeerFilterAlgorithmDescriptionList());
+////		preferencesDialog.setComboBoxFilteringBeerSelectedItem(Utils.getBeerFilterAlgorithmDescription(conf.getBeerFilterAlgorithm()));
+////		
+////		preferencesDialog.fillComboBoxFilteringBrewery(Utils.getBreweryFilterAlgorithmDescriptionList());
+////		preferencesDialog.setComboBoxFilteringBrewerySelectedItem(Utils.getBreweryFilterAlgorithmDescription(conf.getBreweryFilterAlgorithm()));
+////		
+////		preferencesDialog.fillComboBoxFilteringStyle(Utils.getStyleFilterAlgorithmDescriptionList());
+////		preferencesDialog.setComboBoxFilteringStyleSelectedItem(Utils.getStyleFilterAlgorithmDescription(conf.getStyleFilterAlgorithm()));
+////		System.out.println("Preferences");
+//	}
 	
 	private void fillPreferences(Configuration conf){
 		fillPreferencesSortingAlgorithm(conf);
-		fillPreferencesFilteringAlgorithm(conf);
+//		fillPreferencesFilteringAlgorithm(conf);
 		fillPreferencesDefaultView(conf);
 	}
 	
@@ -3275,7 +3290,7 @@ public class Controller {
 		addPreferencesCancelButtonListener();
 		addPreferencesDefaultSortingButtonListener();
 		addPreferencesDefaultFilteringButtonListener();
-		addPreferencesDefaultViewButtonListener();
+//		addPreferencesDefaultViewButtonListener();
 		addPreferencesDeafultButtonListener();
 		
 		preferencesDialog.setVisible(true);
@@ -3381,7 +3396,7 @@ public class Controller {
 						
 					File returned= null;
 					JFileChooser  guiChooser = ViewMainGUI.initJFileChooser(Utils.getSingleFileFilterAsArray(Model.ExportType.TXT),
-								new File(System.getProperty("user.home")), false);
+								 false);
 							
 					if(guiChooser.showSaveDialog(null)==JFileChooser.APPROVE_OPTION){
 						returned = guiChooser.getSelectedFile();

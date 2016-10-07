@@ -23,6 +23,7 @@ package org.nbena.beersmanager.exe.ui.views;
 
 
 import javax.swing.JFileChooser;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -42,7 +43,6 @@ import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowListener;
-import java.io.File;
 import javax.swing.JTable;
 
 import java.awt.GridBagConstraints;
@@ -166,6 +166,7 @@ public class ViewMainGUI extends JFrame {
 	private JMenuItem mntmBeersSortedByPriceAscending;
 	private JMenuItem mntmBeersSortedByPriceDescending;
 	private JMenuItem mntmBeersSortedByName;
+	private JMenuItem mntmBeersSortedByCountryOfBreweryName;
 	
 	
 	
@@ -450,8 +451,12 @@ public class ViewMainGUI extends JFrame {
 		mntmBeersSortedByPriceDescending.addActionListener(listener);
 	}
 	
-	public void addActionMenubeersSortedByName(ActionListener listener){
+	public void addActionMenuBeersSortedByName(ActionListener listener){
 		mntmBeersSortedByName.addActionListener(listener);
+	}
+	
+	public void addActionMenuBeersSortedByCountryOfBreweryName(ActionListener listener){
+		mntmBeersSortedByCountryOfBreweryName.addActionListener(listener);
 	}
 	
 	
@@ -586,13 +591,13 @@ public class ViewMainGUI extends JFrame {
 	}
 	
 	//static because I need to call when the gui is not ready
-	public static JFileChooser initJFileChooser(FileNameExtensionFilter[] filters, File directory, boolean multiSelectionEnabled){
+	public static JFileChooser initJFileChooser(FileNameExtensionFilter[] filters,  boolean multiSelectionEnabled){
 		JFileChooser chooser=new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		
 		setFilters(chooser, filters);
 		
-		chooser.setCurrentDirectory(directory);
+//		chooser.setCurrentDirectory(directory);
 		chooser.setAcceptAllFileFilterUsed(false);
 		chooser.setMultiSelectionEnabled(multiSelectionEnabled);
 		return chooser;
@@ -716,6 +721,9 @@ public class ViewMainGUI extends JFrame {
 		mntmBeersSortedByName = new JMenuItem("Nome");
 		mnOrderBeer.add(mntmBeersSortedByName);
 		
+		mntmBeersSortedByCountryOfBreweryName = new JMenuItem("Nazione e nome birrificio, nome birra");
+		mnOrderBeer.add(mntmBeersSortedByCountryOfBreweryName);
+		
 		mntmSortBeersByCountryOfBreweryStyle = new JMenuItem("Nazione e nome birrificio, stile");
 		mnOrderBeer.add(mntmSortBeersByCountryOfBreweryStyle);
 		
@@ -746,8 +754,9 @@ public class ViewMainGUI extends JFrame {
 		mnBeersSortedByABV = new JMenu ("ABV%");
 		mntmBeersSortedByABVAscending = new JMenuItem("Ascendente");
 		mntmBeersSortedByABVDescending = new JMenuItem("Discendente");
-		mnBeersSortedByABV.add(mntmBeersSortedByABVAscending);
 		mnBeersSortedByABV.add(mntmBeersSortedByABVDescending);
+		mnBeersSortedByABV.add(mntmBeersSortedByABVAscending);
+		
 		
 		mnBeersSortedByPrice = new JMenu ("Prezzo");
 		mntmBeersSortedByPriceAscending = new JMenuItem("Ascendente");

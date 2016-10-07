@@ -23,3 +23,139 @@
 Here there all the GUI classes.
  </body>
  </html>
+ 
+ 
+ <!-- temp for old prferences
+ 			{
+				JPanel panelFiltering = new JPanel();
+//				tabbedPane.addTab("New tab", null, panelFiltering, null);
+				GridBagLayout gbl_panelFiltering = new GridBagLayout();
+				gbl_panelFiltering.columnWidths = new int[]{0, 0, 0, 0};
+				gbl_panelFiltering.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+				gbl_panelFiltering.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+				gbl_panelFiltering.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+				panelFiltering.setLayout(gbl_panelFiltering);
+				{
+					JLabel lblImpostazioniPerIl = new JLabel("Impostazioni per il filtraggio dei dati");
+					GridBagConstraints gbc_lblImpostazioniPerIl = new GridBagConstraints();
+					gbc_lblImpostazioniPerIl.insets = new Insets(0, 0, 5, 5);
+					gbc_lblImpostazioniPerIl.gridx = 0;
+					gbc_lblImpostazioniPerIl.gridy = 0;
+					panelFiltering.add(lblImpostazioniPerIl, gbc_lblImpostazioniPerIl);
+				}
+				{
+					JLabel lblBirre_1 = new JLabel("Birre:");
+					GridBagConstraints gbc_lblBirre_1 = new GridBagConstraints();
+					gbc_lblBirre_1.insets = new Insets(0, 0, 5, 5);
+					gbc_lblBirre_1.gridx = 0;
+					gbc_lblBirre_1.gridy = 2;
+					panelFiltering.add(lblBirre_1, gbc_lblBirre_1);
+				}
+				{
+					comboBoxFilteringBeer = new JComboBox<String>();
+					GridBagConstraints gbc_comboBoxFilteringBeer = new GridBagConstraints();
+					gbc_comboBoxFilteringBeer.insets = new Insets(0, 0, 5, 0);
+					gbc_comboBoxFilteringBeer.fill = GridBagConstraints.HORIZONTAL;
+					gbc_comboBoxFilteringBeer.gridx = 2;
+					gbc_comboBoxFilteringBeer.gridy = 2;
+					panelFiltering.add(comboBoxFilteringBeer, gbc_comboBoxFilteringBeer);
+				}
+				{
+					JLabel lblValoreDiFiltraggio = new JLabel("Valore di filtraggio:");
+					GridBagConstraints gbc_lblValoreDiFiltraggio = new GridBagConstraints();
+					gbc_lblValoreDiFiltraggio.insets = new Insets(0, 0, 5, 5);
+					gbc_lblValoreDiFiltraggio.gridx = 0;
+					gbc_lblValoreDiFiltraggio.gridy = 3;
+					panelFiltering.add(lblValoreDiFiltraggio, gbc_lblValoreDiFiltraggio);
+				}
+				{
+					textFieldFilteringBeer = new JTextField();
+					GridBagConstraints gbc_textFieldFilteringBeer = new GridBagConstraints();
+					gbc_textFieldFilteringBeer.insets = new Insets(0, 0, 5, 0);
+					gbc_textFieldFilteringBeer.anchor = GridBagConstraints.WEST;
+					gbc_textFieldFilteringBeer.fill = GridBagConstraints.VERTICAL;
+					gbc_textFieldFilteringBeer.gridx = 2;
+					gbc_textFieldFilteringBeer.gridy = 3;
+					panelFiltering.add(textFieldFilteringBeer, gbc_textFieldFilteringBeer);
+					textFieldFilteringBeer.setColumns(10);
+				}
+				{
+					JLabel lblBirrifici_1 = new JLabel("Birrifici:");
+					GridBagConstraints gbc_lblBirrifici_1 = new GridBagConstraints();
+					gbc_lblBirrifici_1.insets = new Insets(0, 0, 5, 5);
+					gbc_lblBirrifici_1.gridx = 0;
+					gbc_lblBirrifici_1.gridy = 5;
+					panelFiltering.add(lblBirrifici_1, gbc_lblBirrifici_1);
+				}
+				{
+					comboBoxFilteringBrewery = new JComboBox<String>();
+					GridBagConstraints gbc_comboBoxFilteringBrewery = new GridBagConstraints();
+					gbc_comboBoxFilteringBrewery.insets = new Insets(0, 0, 5, 0);
+					gbc_comboBoxFilteringBrewery.fill = GridBagConstraints.HORIZONTAL;
+					gbc_comboBoxFilteringBrewery.gridx = 2;
+					gbc_comboBoxFilteringBrewery.gridy = 5;
+					panelFiltering.add(comboBoxFilteringBrewery, gbc_comboBoxFilteringBrewery);
+				}
+				{
+					JLabel lblValoreDiFiltraggio_1 = new JLabel("Valore di filtraggio:");
+					GridBagConstraints gbc_lblValoreDiFiltraggio_1 = new GridBagConstraints();
+					gbc_lblValoreDiFiltraggio_1.insets = new Insets(0, 0, 5, 5);
+					gbc_lblValoreDiFiltraggio_1.gridx = 0;
+					gbc_lblValoreDiFiltraggio_1.gridy = 6;
+					panelFiltering.add(lblValoreDiFiltraggio_1, gbc_lblValoreDiFiltraggio_1);
+				}
+				{
+					textFieldFilteringBrewery = new JTextField();
+					GridBagConstraints gbc_textFieldFilteringBrewery = new GridBagConstraints();
+					gbc_textFieldFilteringBrewery.insets = new Insets(0, 0, 5, 0);
+					gbc_textFieldFilteringBrewery.fill = GridBagConstraints.HORIZONTAL;
+					gbc_textFieldFilteringBrewery.gridx = 2;
+					gbc_textFieldFilteringBrewery.gridy = 6;
+					panelFiltering.add(textFieldFilteringBrewery, gbc_textFieldFilteringBrewery);
+					textFieldFilteringBrewery.setColumns(10);
+				}
+				{
+					JLabel lblStili_1 = new JLabel("Stili:");
+					GridBagConstraints gbc_lblStili_1 = new GridBagConstraints();
+					gbc_lblStili_1.insets = new Insets(0, 0, 5, 5);
+					gbc_lblStili_1.gridx = 0;
+					gbc_lblStili_1.gridy = 8;
+					panelFiltering.add(lblStili_1, gbc_lblStili_1);
+				}
+				{
+					comboBoxFilteringStyle = new JComboBox<String>();
+					GridBagConstraints gbc_comboBoxFilteringStyle = new GridBagConstraints();
+					gbc_comboBoxFilteringStyle.insets = new Insets(0, 0, 5, 0);
+					gbc_comboBoxFilteringStyle.fill = GridBagConstraints.HORIZONTAL;
+					gbc_comboBoxFilteringStyle.gridx = 2;
+					gbc_comboBoxFilteringStyle.gridy = 8;
+					panelFiltering.add(comboBoxFilteringStyle, gbc_comboBoxFilteringStyle);
+				}
+				{
+					JLabel lblValoreDiFiltraggio_2 = new JLabel("Valore di filtraggio:");
+					GridBagConstraints gbc_lblValoreDiFiltraggio_2 = new GridBagConstraints();
+					gbc_lblValoreDiFiltraggio_2.insets = new Insets(0, 0, 5, 5);
+					gbc_lblValoreDiFiltraggio_2.gridx = 0;
+					gbc_lblValoreDiFiltraggio_2.gridy = 9;
+					panelFiltering.add(lblValoreDiFiltraggio_2, gbc_lblValoreDiFiltraggio_2);
+				}
+				{
+					textFieldFilteringStyle = new JTextField();
+					GridBagConstraints gbc_textFieldFilteringStyle = new GridBagConstraints();
+					gbc_textFieldFilteringStyle.insets = new Insets(0, 0, 5, 0);
+					gbc_textFieldFilteringStyle.fill = GridBagConstraints.HORIZONTAL;
+					gbc_textFieldFilteringStyle.gridx = 2;
+					gbc_textFieldFilteringStyle.gridy = 9;
+					panelFiltering.add(textFieldFilteringStyle, gbc_textFieldFilteringStyle);
+					textFieldFilteringStyle.setColumns(10);
+				}
+				{
+					btnDefaultFiltering = new JButton("Default");
+					GridBagConstraints gbc_btnDefault_1 = new GridBagConstraints();
+					gbc_btnDefault_1.insets = new Insets(0, 0, 0, 5);
+					gbc_btnDefault_1.gridx = 0;
+					gbc_btnDefault_1.gridy = 11;
+					panelFiltering.add(btnDefaultFiltering, gbc_btnDefault_1);
+				}
+			}
+  -->

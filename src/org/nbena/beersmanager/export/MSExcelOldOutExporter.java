@@ -19,6 +19,7 @@ package org.nbena.beersmanager.export;
 
 import java.io.FileOutputStream;
 
+
 import java.io.OutputStream;
 import java.util.List;
 
@@ -133,19 +134,21 @@ public class MSExcelOldOutExporter extends OutExporter{
 		cellIntestation[10].setCellValue(OutExporter.BEER_ALCOOL);
 		cellIntestation[11].setCellValue(OutExporter.BEER_PLACE_TRIED);
 		cellIntestation[12].setCellValue(OutExporter.BEER_STARS);
-		cellIntestation[13].setCellValue(OutExporter.BEER_DESCRIPTION);
+		cellIntestation[13].setCellValue(OutExporter.BEER_PRICE);
+		cellIntestation[14].setCellValue(OutExporter.BEER_DESCRIPTION);
 		
 		
 		
 		//content
-		cells=new Cell[14];
+		cells=new Cell[15];
 		int i=1;
+		double total=0.0;
 		//for(int i=0/*, j=0*/;i<=beers.size();i++){
 		for(Beer beer: beers){
 			
 		Row row=sheet.createRow(i);
 			
-			for(int f=0;f<14;f++){
+			for(int f=0;f<15;f++){
 				cells[f]=row.createCell(f);
 			}
 			
@@ -163,9 +166,19 @@ public class MSExcelOldOutExporter extends OutExporter{
 			cells[10].setCellValue(beer.getAlcool());
 			cells[11].setCellValue(beer.getPlaceTried());
 			cells[12].setCellValue(beer.getNumberOfStars());
-			cells[13].setCellValue(beer.getDescription());
+			cells[13].setCellValue(beer.getPrice());
+			cells[14].setCellValue(beer.getDescription());
 			
 			i++;
+			total+=beer.getPrice();
+		}
+		
+		if(writeTotalPrice){
+			Row row = sheet.createRow(i);
+			Cell type = row.createCell(12);
+			Cell value = row.createCell(13);
+			type.setCellValue(OutExporter.BEER_TOTAL);
+			value.setCellValue(total);
 		}
 		
 		workbook.write(out);
@@ -263,6 +276,7 @@ public class MSExcelOldOutExporter extends OutExporter{
 			
 			i++;
 		}
+		
 		
 		workbook.write(out);
 		out.close();

@@ -35,34 +35,37 @@ public abstract class OutExporter {
 	protected HashMap<String, String> styleIntestationMap;
 	*/
 	
-	public static final String BEER_BREWERY_NAME = "Brewery name";
-	public static final String BEER_BREWERY_TOWN = "Brewery town";
-	public static final String BEER_BREWERY_COUNTRY = "Brewery country";
-	public static final String BEER_NAME = "Name";
-	public static final String BEER_BREWERY_TRAPPIST = "Trappist beer?";
-	public static final String BEER_FERMENTATION = "Fermentation";
-	public static final String BEER_STYLE_MAIN = "Style";
-	public static final String BEER_STYLE_SUBCATEGORY = "Style subcategory";
-	public static final String BEER_STYLE_COUNTRY = "Style origin";
-	public static final String BEER_COLOR = "Color";
-	public static final String BEER_MARK = "Mark";
-	public static final String BEER_ALCOOL = "Alcool";
-	public static final String BEER_PLACE_TRIED = "Location";
-	public static final String BEER_STARS = "Stars";
-	public static final String BEER_DESCRIPTION = "Description";
+	public static final String BEER_BREWERY_NAME = "Birrificio";
+	public static final String BEER_BREWERY_TOWN = "Città";
+	public static final String BEER_BREWERY_COUNTRY = "Nazione";
+	public static final String BEER_NAME = "Nome";
+	public static final String BEER_BREWERY_TRAPPIST = "Trappista?";
+	public static final String BEER_FERMENTATION = "Fermentazione";
+	public static final String BEER_STYLE_MAIN = "Stile principale";
+	public static final String BEER_STYLE_SUBCATEGORY = "Sotto stile";
+	public static final String BEER_STYLE_COUNTRY = "Paese origine stile";
+	public static final String BEER_COLOR = "Colore";
+	public static final String BEER_MARK = "Voto";
+	public static final String BEER_ALCOOL = "ABV%";
+	public static final String BEER_PLACE_TRIED = "Luogo di bevuta/acquisto";
+	public static final String BEER_STARS = "Stelle";
+	public static final String BEER_PRICE = "Prezzo";
+	public static final String BEER_DESCRIPTION = "Descrizione";
 	
-	public static final String BREWERY_NAME = "Name";
-	public static final String BREWERY_TOWN = "Town";
-	public static final String BREWERY_COUNTRY = "Country";
-	public static final String BREWERY_WEBSITE = "Website";
-	public static final String BREWERY_DESCRIPTION = "Description";
-	public static final String BREWERY_IS_TRAPPIST = "Trappist brewery?";
+	public static final String BEER_TOTAL = "Totale";
 	
-	public static final String STYLE_NAME = "Name";
-	public static final String STYLE_SUB = "Subcategory";
-	public static final String STYLE_COUNTRY = "Country style origin";
-	public static final String STYLE_FERMENTATION = "Fermentation";
-	public static final String STYLE_DESCRIPTION = "Description";
+	public static final String BREWERY_NAME = "Nome";
+	public static final String BREWERY_TOWN = "Città";
+	public static final String BREWERY_COUNTRY = "Nazione";
+	public static final String BREWERY_WEBSITE = "Web";
+	public static final String BREWERY_DESCRIPTION = "Descrizione";
+	public static final String BREWERY_IS_TRAPPIST = "Trappista?";
+	
+	public static final String STYLE_NAME = "Nome stile principale";
+	public static final String STYLE_SUB = "Sotto stile";
+	public static final String STYLE_COUNTRY = "Nazione di origine";
+	public static final String STYLE_FERMENTATION = "Fermentazione";
+	public static final String STYLE_DESCRIPTION = "Descrizione";
 	
 	protected OutExporter(){
 		
