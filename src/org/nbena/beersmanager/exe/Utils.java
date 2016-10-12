@@ -52,6 +52,7 @@ import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exceptions.RecomposingException;
+import org.nbena.beersmanager.exceptions.UpdateSavingException.ErrorWhile;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
@@ -2182,6 +2183,45 @@ public class Utils {
 	 */
 	public static boolean isBreweryNameOk(String name){
 		return !name.contains(";");
+	}
+	
+	public static String errorWhileToItalianString(ErrorWhile error){
+		String ret=null;
+		switch(error){
+		case ADDING:
+			ret = "aggiunta: ";
+			break;
+		case DELETING:
+			ret = "cancellazione: ";
+			break;
+		case DELETING_TRAVERSAL:
+			ret = "cancellazione dati relativi a questo oggetto: ";
+			break;
+		case SAVING:
+			ret = "salvataggio ";
+			break;
+		case UPDATING:
+			break;
+		case UPDATING_TRAVERSAL:
+			ret = "modifica dati relativi a questo oggetto: ";
+			break;		
+		}
+		return ret;
+	}
+	
+	public static String errorWhileAppendCause(String s, ErrorWhile error){
+		String ret = s;
+		if(error == ErrorWhile.ADDING){
+			ret+= " E' probabile che l'oggetto sia già presente.";
+		}else if(error == ErrorWhile.DELETING_TRAVERSAL || error == ErrorWhile.UPDATING_TRAVERSAL){
+			ret += "E' dovuto ad un errore interno.";
+		}else if(error == ErrorWhile.SAVING){
+			ret += " Controllare che il file non sia già in uso";
+		}else {
+			//delte, update
+			ret += "La ricerca dell'oggetto non ha dato risultati. Chiudere e riavviare.";
+		}
+		return ret;
 	}
 
 }

@@ -1337,13 +1337,7 @@ public class Model {
 	
 	
 	public void addNewStyle(Style style) throws UpdateSavingException{
-		
-//		System.out.println("Lo stile da cercare");
-//		Utils.printStyle(style, System.out);
-//		System.out.println("Gli stili: ");
-//		Utils.printStyles(styleData, System.out);
-		boolean res = QueryRunner.BinarySearch.isStyleExists(styleData, style, false);
-		if(!res){
+		if(!QueryRunner.BinarySearch.isStyleExists(styleData, style, false)){
 			styleData.add(style);
 			filteredStyles = styleData;
 			somethingToSave = true;
