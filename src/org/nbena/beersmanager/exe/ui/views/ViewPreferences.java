@@ -65,8 +65,8 @@ public class ViewPreferences extends JDialog {
 	private JButton okButton;
 	private JButton cancelButton;
 	
-	private JButton btnDefaultSorting;
-	private JButton btnDefaultFiltering;
+//	private JButton btnDefaultSorting;
+//	private JButton btnDefaultFiltering;
 	
 	private JButton btnDefault;
 	
@@ -209,14 +209,14 @@ public class ViewPreferences extends JDialog {
 		btnDefault.addActionListener(listener);
 	}
 	
-	public void addActionListenerDefaultSortingButton(ActionListener listener){
-		btnDefaultSorting.addActionListener(listener);
-	}
-	
-	public void addActionListenerDefaultFilteringButton(ActionListener listener){
-		btnDefaultFiltering.addActionListener(listener);
-	}
-	
+//	public void addActionListenerDefaultSortingButton(ActionListener listener){
+//		btnDefaultSorting.addActionListener(listener);
+//	}
+//	
+//	public void addActionListenerDefaultFilteringButton(ActionListener listener){
+//		btnDefaultFiltering.addActionListener(listener);
+//	}
+//	
 
 	/**
 	 * Create the dialog.
@@ -224,6 +224,7 @@ public class ViewPreferences extends JDialog {
 	public ViewPreferences() {
 
 		setBounds(100, 100, 461, 306);
+		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -313,14 +314,14 @@ public class ViewPreferences extends JDialog {
 				contentPanel.add(comboBoxDefaultView, gbc_comboBoxDefaultView);
 			}
 			
-			{
-				btnDefaultSorting = new JButton("Default");
-				GridBagConstraints gbc_btnDefaultSorting = new GridBagConstraints();
-				gbc_btnDefaultSorting.insets = new Insets(0, 0, 0, 5);
-				gbc_btnDefaultSorting.gridx = 0;
-				gbc_btnDefaultSorting.gridy = 10;
-				contentPanel.add(btnDefaultSorting, gbc_btnDefaultSorting);
-			}
+//			{
+//				btnDefaultSorting = new JButton("Default");
+//				GridBagConstraints gbc_btnDefaultSorting = new GridBagConstraints();
+//				gbc_btnDefaultSorting.insets = new Insets(0, 0, 0, 5);
+//				gbc_btnDefaultSorting.gridx = 0;
+//				gbc_btnDefaultSorting.gridy = 10;
+//				contentPanel.add(btnDefaultSorting, gbc_btnDefaultSorting);
+//			}
 		}
 		
 		{

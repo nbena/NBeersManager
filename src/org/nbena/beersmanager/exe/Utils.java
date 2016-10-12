@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -824,7 +825,7 @@ public class Utils {
 	public static Fermentation getFermentationFromString(String s){
 		Fermentation f = null;
 		if(s.equals("Spontanea")){
-			f = Fermentation.HIGH;
+			f = Fermentation.SPONTANEOUS;
 		}
 		else if(s.equals("Bassa")){
 			f= Fermentation.LOW;
@@ -982,6 +983,7 @@ public class Utils {
 			
 			values[i]=getBeerSortingAlgorithmDescription(algorithms[i]);
 		}
+		Arrays.sort(values);
 		return values;
 	}
 	
@@ -1077,6 +1079,7 @@ public class Utils {
 			
 			values[i]=getBrewerySortingAlgorithmDescription(algorithms[i]);
 		}
+		Arrays.sort(values);
 		return values;
 	}
 	
@@ -1140,6 +1143,7 @@ public class Utils {
 			
 			values[i]=getStyleSortingAlgorithmDescription(algorithms[i]);
 		}
+		Arrays.sort(values);
 		return values;
 	}
 	

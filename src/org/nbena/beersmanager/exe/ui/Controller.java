@@ -2471,14 +2471,17 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				try {
-					deleteBeerLogic(null);
-				} catch (UpdateSavingException e) {
-					showExceptionDialog(e);
+				if(askSureToDeleteBeer()){
+					try {
+						deleteBeerLogic(null);
+					} catch (UpdateSavingException e) {
+						showExceptionDialog(e);
+					}
+					
+					viewBeerDialog.setVisible(false);
+					viewBeerDialog.dispose();
 				}
 				
-				viewBeerDialog.setVisible(false);
-				viewBeerDialog.dispose();
 			}
 			
 		});
@@ -2491,14 +2494,17 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				try {
-					deleteBreweryLogic(null);
-				} catch (UpdateSavingException e1) {
-					showExceptionDialog(e1);
+				if(askSureToDeleteBrewery()){
+					try {
+						deleteBreweryLogic(null);
+					} catch (UpdateSavingException e1) {
+						showExceptionDialog(e1);
+					}
+					
+					viewBreweryDialog.setVisible(false);
+					viewBreweryDialog.dispose();
 				}
-				
-				viewBreweryDialog.setVisible(false);
-				viewBreweryDialog.dispose();
+
 			}
 			
 		});
@@ -2510,15 +2516,17 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				try {
-					deleteStyleLogic(null);
-				} catch (UpdateSavingException e1) {
-					showExceptionDialog(e1);
+				if(askSureToDeleteStyle()){
+					try {
+						deleteStyleLogic(null);
+					} catch (UpdateSavingException e1) {
+						showExceptionDialog(e1);
+					}
+					
+					
+					viewStyleDialog.setVisible(false);
+					viewStyleDialog.dispose();
 				}
-				
-				
-				viewStyleDialog.setVisible(false);
-				viewStyleDialog.dispose();
 				
 			}
 			
@@ -3184,20 +3192,20 @@ public class Controller {
 		});
 	}
 	
-	private void addPreferencesDefaultSortingButtonListener(){
-		preferencesDialog.addActionListenerDefaultSortingButton(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				Configuration newConf = model.getConfiguration();			
-				newConf = ConfigurationFactory.getDefaultSortingConfiguration(newConf);
-				
-				fillPreferencesSortingAlgorithm(newConf);
-			}
-			
-		});
-	}
+//	private void addPreferencesDefaultSortingButtonListener(){
+//		preferencesDialog.addActionListenerDefaultSortingButton(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				Configuration newConf = model.getConfiguration();			
+//				newConf = ConfigurationFactory.getDefaultSortingConfiguration(newConf);
+//				
+//				fillPreferencesSortingAlgorithm(newConf);
+//			}
+//			
+//		});
+//	}
 	
 	//comment the body function and not the function so no warming.
 	private void addPreferencesDefaultFilteringButtonListener(){
@@ -3288,7 +3296,7 @@ public class Controller {
 		
 		addPreferencesOkButtonListener();
 		addPreferencesCancelButtonListener();
-		addPreferencesDefaultSortingButtonListener();
+//		addPreferencesDefaultSortingButtonListener();
 		addPreferencesDefaultFilteringButtonListener();
 //		addPreferencesDefaultViewButtonListener();
 		addPreferencesDeafultButtonListener();

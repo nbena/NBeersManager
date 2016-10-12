@@ -101,6 +101,7 @@ public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
 		textFieldStars.setEditable(false);
 		textFieldMark.setEditable(false);
 		textFieldPrice.setEditable(false);
+		textFieldPlace.setEditable(false);
 		textFieldTried.setEditable(false);
 		editorDescription.setEditable(false);
 	}
