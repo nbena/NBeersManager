@@ -2309,7 +2309,50 @@ public class Controller {
 	}
 	
 	
-	private void addAddStyleComboBoxStyleListener(){
+	private void addModifyStyleComboBoxListener(){
+		addStyleDialog.addActionComboBoxSelectedItem(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(addStyleDialog.getComboBoxSelectedItemIndex()>=0){
+					
+					String mainStyle = addStyleDialog.getStyleMainName();
+					if(mainStyle.equals(Utils.Constants.RENAME_STYLE_STRING)){
+						
+						addStyleDialog.removeComboBoxSelection();
+						addStyleDialog.closeComboBox();
+						
+						mainStyle = askRenameMainStyleName();
+						
+						if(mainStyle!=null && mainStyle.length()>0){
+							addStyleDialog.addComboBoxItem(mainStyle);
+							addStyleDialog.setOkButtonEnabled(true);
+						}
+						else{
+							//here if the user choose "cancel" to the optionpane the ask a new style
+							addStyleDialog.setOkButtonEnabled(false);
+						}
+					}
+					//if the selection is not "Rinomina" we can enable the "ok button"
+					else{
+						addStyleDialog.setOkButtonEnabled(true);
+					}
+					
+				}
+				
+				//here if the selected item index is less than 0. It can happen
+				else{
+					addStyleDialog.setOkButtonEnabled(false);
+				}
+				
+			}
+			
+		});
+	}
+	
+	
+	private void addAddNewStyleComboBoxStyleListener(){
 		addStyleDialog.addActionComboBoxSelectedItem(new ActionListener(){
 
 			@Override
@@ -2320,6 +2363,7 @@ public class Controller {
 					String mainStyle = addStyleDialog.getStyleMainName();
 					if(mainStyle.equals(Utils.Constants.NEW_STYLE_STRING)){
 						
+						//voluntary remotion
 						addStyleDialog.removeComboBoxSelection();
 						addStyleDialog.closeComboBox();
 						
@@ -2351,6 +2395,16 @@ public class Controller {
 		});
 	}
 	
+	
+	private List<String> getStyleListToAddToModifyStyle(){
+		
+		List<String> styles = new LinkedList<String>();
+		styles.add(Utils.Constants.RENAME_STYLE_STRING);
+		styles.addAll(model.getOnlyMainStylesString());
+		
+		return styles;
+	}
+	
 	/**
 	 * From the model's list of main style as string, it adds a new String 'New style'. (User will select and it will have the possibilility to add a new style).
 	 * @return the string list of main styles plus 'New Style'. 
@@ -2375,7 +2429,7 @@ public class Controller {
 //		setOkButtonEnabledStyle();	no more needed. The only element that can enable or disable it 
 //		is the combobox. The combo box listener already manager the ok button, a new listener (like other dialog has textfield's listeners) is not necessary.
 		
-		addAddStyleComboBoxStyleListener();
+		addAddNewStyleComboBoxStyleListener();
 		
 		addStyleDialog.setVisible(true);
 	}
@@ -2668,8 +2722,11 @@ public class Controller {
 		addStyleDialog.setOkButtonEnabled(true); //must be set to true because default is false
 		//and it is set to true just inside the text field document listener event
 		addStyleDialog.setContentType("text/plain");
-		addStyleDialog.fillThings(Utils.getMainStyleString(model.getOnlyMainStyles()), Utils.getFermentationsItalianString(), model.getCountries());
+		addStyleDialog.fillThings(/*Utils.getMainStyleString(model.getOnlyMainStyles()),*/getStyleListToAddToModifyStyle(),
+				Utils.getFermentationsItalianString(), model.getCountries());
 		setStyleInDialog(addStyleDialog);
+		
+		addModifyStyleComboBoxListener();
 		
 		setAddNewStyleOkButton();
 		setAddNewStyleCancelButton();
@@ -3478,7 +3535,15 @@ public class Controller {
 	
 	private String askNewMainStyleName(){
 		optionPane.setParent(addStyleDialog);
-		String mainStyleName = optionPane.showBlankTextInput(Utils.Constants.NEW_STYLE_TITLE, Utils.Constants.NEW_STYLE_MESSAGE,Utils.Constants.NEW_STYLE_TITLE);
+		String mainStyleName = optionPane.showBlankTextInput(Utils.Constants.NEW_STYLE_TITLE, Utils.Constants.NEW_STYLE_MESSAGE,
+				Utils.Constants.NEW_STYLE_TITLE);
+		return mainStyleName;
+	}
+	
+	private String askRenameMainStyleName(){
+		optionPane.setParent(addStyleDialog);
+		String mainStyleName = optionPane.showBlankTextInput(Utils.Constants.RENAME_STYLE_TITLE, Utils.Constants.RENAME_STYLE_MESSAGE,
+				model.getStyleShown().getStyleMainName());
 		return mainStyleName;
 	}
 	
@@ -3566,32 +3631,38 @@ public class Controller {
 	
 	private String askExactMarkBeersFilteredByExactMark(){
 		optionPane.setParent(gui);
-		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_EXACT_MARK, Utils.Constants.DEFAULT_MARK);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_EXACT_MARK, 
+				Utils.Constants.DEFAULT_MARK);
 	}
 	
 	private String askExactStarsBeersFilteredByExactStars(){
 		optionPane.setParent(gui);
-		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_EXACT_STAR, Utils.Constants.DEFAULT_STAR);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_EXACT_STAR, 
+				Utils.Constants.DEFAULT_STAR);
 	}
 	
 	private String askMinimumMarkBeersFilteredByMinimumMark(){
 		optionPane.setParent(gui);
-		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_MINIMUM_MARK, Utils.Constants.DEFAULT_MARK);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_MINIMUM_MARK, 
+				Utils.Constants.DEFAULT_MARK);
 	}
 	
 	private String askMinimumStarsBeersFilteredByMinimumStars(){
 		optionPane.setParent(gui);
-		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_MINIMUM_STAR, Utils.Constants.DEFAULT_STAR);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_MINIMUM_STAR, 
+				Utils.Constants.DEFAULT_STAR);
 	}
 	
 	private String askMinimumABVBeersFilteredByMinimumABV(){
 		optionPane.setParent(gui);
-		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_MINIMUM_ABV, Utils.Constants.DEFAULT_ABV);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_MINIMUM_ABV, 
+				Utils.Constants.DEFAULT_ABV);
 	}
 	
 	private String askExactABVBeersFilteredByExactABV(){
 		optionPane.setParent(gui);
-		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_EXACT_ABV, Utils.Constants.DEFAULT_ABV);
+		return optionPane.showBlankTextInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_EXACT_ABV,
+				Utils.Constants.DEFAULT_ABV);
 	}
 	
 	private String askCountryBreweriesFilteredByCountry(){

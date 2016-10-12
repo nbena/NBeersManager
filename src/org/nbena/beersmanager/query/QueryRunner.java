@@ -32,6 +32,10 @@ import java.util.stream.Collectors;
 import org.nbena.beersmanager.coreclasses.*;
 import org.nbena.beersmanager.query.Comparators.BeerComparator;
 import org.nbena.beersmanager.query.Comparators.Binary;
+import org.nbena.beersmanager.query.Comparators.Binary.ComparatorBeerForBinarySearch;
+import org.nbena.beersmanager.query.Comparators.Binary.ComparatorBreweryAverageForBinarySearch;
+import org.nbena.beersmanager.query.Comparators.Binary.ComparatorBreweryForBinarySearch;
+import org.nbena.beersmanager.query.Comparators.Binary.ComparatorStyleForBinarySearch;
 import org.nbena.beersmanager.query.Comparators.BreweryComparator;
 import org.nbena.beersmanager.query.Comparators.StyleComparator;
 import org.nbena.beersmanager.query.QueryRunner.BeerQuery.BeerFilter;
@@ -774,10 +778,11 @@ public class QueryRunner {
 		
 		public static int beerSearch(List<Beer> beers, Beer beer, boolean sorted){
 			int ret;
+			List<Beer> temp = new LinkedList<Beer>(beers);
 			if(!sorted){
-				beers = beersSortedForBinarySearch(beers);		
+				temp = beersSortedForBinarySearch(temp);		
 			}
-			ret = Collections.binarySearch(beers, beer, new Binary.ComparatorBeerForBinarySearch());
+			ret = Collections.binarySearch(temp, beer, new Binary.ComparatorBeerForBinarySearch());
 			return ret;
 		}
 		
@@ -795,10 +800,11 @@ public class QueryRunner {
 		
 		public static int brewerySearch(List<Brewery> breweries, Brewery brewery, boolean sorted){
 			int ret;
+			List<Brewery> temp = new LinkedList<Brewery>(breweries);
 			if(!sorted){
-				breweries = breweriesSortedForBinarySearch(breweries);		
+				temp = breweriesSortedForBinarySearch(temp);		
 			}
-			ret = Collections.binarySearch(breweries, brewery, new Binary.ComparatorBreweryForBinarySearch());
+			ret = Collections.binarySearch(temp, brewery, new Binary.ComparatorBreweryForBinarySearch());
 			return ret;
 		}
 		
@@ -815,10 +821,11 @@ public class QueryRunner {
 		
 		public static int breweryAverageSearch(List<BreweryAverage> breweries, BreweryAverage brewery, boolean sorted){
 			int ret;
+			List<BreweryAverage> temp = new LinkedList<BreweryAverage>(breweries);
 			if(!sorted){
-				breweries = breweriesAverageSortedForBinarySearch(breweries);		
+				temp = breweriesAverageSortedForBinarySearch(temp);		
 			}
-			ret = Collections.binarySearch(breweries, brewery, new Binary.ComparatorBreweryAverageForBinarySearch());
+			ret = Collections.binarySearch(temp, brewery, new Binary.ComparatorBreweryAverageForBinarySearch());
 			return ret;
 		}
 		
@@ -837,11 +844,12 @@ public class QueryRunner {
 		
 		public static int styleSearch(List<Style> styles, Style style, boolean sorted){
 			int ret;
+			List<Style> temp = new LinkedList<Style>(styles);
 			if(!sorted){
-				styles = stylesSortedForBinarySearch(styles);		
+				temp = stylesSortedForBinarySearch(temp);		
 			}
 //			ret = Collections.binarySearch(styles, style, new Comparators.ComparatorStyleForBinarySearch());
-			ret = Collections.binarySearch(styles, style, new StyleComparator.ComparatorStyleMainCategorySubCategory());
+			ret = Collections.binarySearch(temp, style, new StyleComparator.ComparatorStyleMainCategorySubCategory());
 			return ret;
 		}
 
@@ -875,6 +883,66 @@ public class QueryRunner {
 				breweries = breweriesSortedForBinarySearch(breweries);		
 			}
 			ret = Collections.binarySearch(breweries, brewery, new Binary.ComparatorBreweryForBinarySearchConverter());
+			return ret;
+		}
+		
+		public static boolean isBeerExistsMoreThanOne(List<Beer> beers, Beer beer){
+			return beersSearchCountEntries(beers, beer)>1 ? true : false;
+		}
+		
+		public static int beersSearchCountEntries(List<Beer> beers, Beer beer){
+			int ret = 0;
+			ComparatorBeerForBinarySearch cmp = new Comparators.Binary.ComparatorBeerForBinarySearch();
+			for(Beer b: beers){
+				if(cmp.compare(b, beer)==0){
+					ret++;
+				}
+			}
+			return ret;
+		}
+		
+		public static boolean isBreweryExistsMoreThanOne(List<Brewery> breweries, Brewery brewery){
+			return breweriesSearchCountEntries(breweries, brewery)>1 ? true : false;
+		}
+		
+		public static int breweriesSearchCountEntries(List<Brewery> breweries, Brewery brewery){
+			int ret = 0;
+			ComparatorBreweryForBinarySearch cmp = new Comparators.Binary.ComparatorBreweryForBinarySearch();
+			for(Brewery b: breweries){
+				if(cmp.compare(b, brewery)==0){
+					ret++;
+				}
+			}
+			return ret;
+		}
+		
+		public static boolean isBreweryAverageExistsMoreThanOne(List<BreweryAverage> breweries, BreweryAverage brewery){
+			return breweriesAverageSearchCountEntries(breweries, brewery)>1 ? true : false;
+		}
+		
+		public static int breweriesAverageSearchCountEntries(List<BreweryAverage> breweries, BreweryAverage brewery){
+			int ret = 0;
+			ComparatorBreweryAverageForBinarySearch cmp = new Comparators.Binary.ComparatorBreweryAverageForBinarySearch();
+			for(BreweryAverage b: breweries){
+				if(cmp.compare(b, brewery)==0){
+					ret++;
+				}
+			}
+			return ret;
+		}
+		
+		public static boolean isStyleExistsMoreThanOne(List<Style> styles, Style style){
+			return stylesSearchCountEntries(styles, style)>1 ? true : false;
+		}
+		
+		public static int stylesSearchCountEntries(List<Style> styles, Style style){
+			int ret=0;
+			ComparatorStyleForBinarySearch cmp = new Comparators.Binary.ComparatorStyleForBinarySearch();
+			for(Style s: styles){
+				if(cmp.compare(s, style)==0){
+					ret++;
+				}
+			}
 			return ret;
 		}
 		
@@ -983,7 +1051,11 @@ public class QueryRunner {
 			
 			Collections.sort(places);	//get the places already sorted
 			return places;
+		
+			
 		}
+		
+
 	
 		public static class Diff {
 			

@@ -21,6 +21,7 @@ import java.io.OutputStream;
 
 
 
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -52,7 +53,6 @@ import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exceptions.RecomposingException;
-import org.nbena.beersmanager.exceptions.UpdateSavingException.ErrorWhile;
 import org.nbena.beersmanager.coreclasses.Fermentation;
 import org.nbena.beersmanager.exe.ui.models.Model;
 import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
@@ -1586,6 +1586,9 @@ public class Utils {
 				"txt"
 		};
 		
+		public static final String RENAME_STYLE_STRING = "Rinomina questo stile";
+		public static final String RENAME_STYLE_TITLE = "Nuovo nome";
+		public static final String RENAME_STYLE_MESSAGE = "Inserisci il nuovo nome dello stile";
 		
 		public static final String NEW_STYLE_STRING = "Nuovo";
 		public static final String NEW_STYLE_TITLE = "Nuovo stile";
@@ -2185,43 +2188,86 @@ public class Utils {
 		return !name.contains(";");
 	}
 	
-	public static String errorWhileToItalianString(ErrorWhile error){
-		String ret=null;
-		switch(error){
-		case ADDING:
-			ret = "aggiunta: ";
-			break;
-		case DELETING:
-			ret = "cancellazione: ";
-			break;
-		case DELETING_TRAVERSAL:
-			ret = "cancellazione dati relativi a questo oggetto: ";
-			break;
-		case SAVING:
-			ret = "salvataggio ";
-			break;
-		case UPDATING:
-			break;
-		case UPDATING_TRAVERSAL:
-			ret = "modifica dati relativi a questo oggetto: ";
-			break;		
+
+	
+	
+	
+//	public static String errorWhileToItalianString(ErrorWhile error){
+//		String ret=null;
+//		switch(error){
+//		case ADDING:
+//			ret = "aggiunta: ";
+//			break;
+//		case DELETING:
+//			ret = "cancellazione: ";
+//			break;
+//		case DELETING_TRAVERSAL:
+//			ret = "cancellazione dati relativi a questo oggetto: ";
+//			break;
+//		case SAVING:
+//			ret = "salvataggio ";
+//			break;
+//		case UPDATING:
+//			ret = "aggiornamento ";
+//			break;
+//		case UPDATING_TRAVERSAL:
+//			ret = "modifica dati relativi a questo oggetto: ";
+//			break;		
+//		}
+//		return ret;
+//	}
+//	
+//	public static String errorWhileAppendCause(String s, ErrorWhile error){
+//		String ret = s;
+//		if(error == ErrorWhile.ADDING){
+//			ret+= " E' probabile che l'oggetto sia già presente.";
+//		}else if(error == ErrorWhile.DELETING_TRAVERSAL || error == ErrorWhile.UPDATING_TRAVERSAL){
+//			ret += "E' dovuto ad un errore interno.";
+//		}else if(error == ErrorWhile.SAVING){
+//			ret += " Controllare che il file non sia già in uso";
+//		}else {
+//			//delte, update
+//			ret += "La ricerca dell'oggetto è fallita. Può darsi che un oggetto uguale sia già presente.";
+//		}
+//		return ret;
+//	}
+	
+	
+
+	
+	public static String shortDesc(Object o){
+		String s = "";
+		if (o instanceof Beer){
+			s = createShortDescBeer((Beer)o);
+		}else if(o instanceof Brewery || o instanceof BreweryAverage){
+			s = createShortDescBrewery((Brewery)o);
+		}else if(o instanceof Style){
+			s = createShortDescStyle((Style)o);
 		}
-		return ret;
+		return s;
 	}
 	
-	public static String errorWhileAppendCause(String s, ErrorWhile error){
-		String ret = s;
-		if(error == ErrorWhile.ADDING){
-			ret+= " E' probabile che l'oggetto sia già presente.";
-		}else if(error == ErrorWhile.DELETING_TRAVERSAL || error == ErrorWhile.UPDATING_TRAVERSAL){
-			ret += "E' dovuto ad un errore interno.";
-		}else if(error == ErrorWhile.SAVING){
-			ret += " Controllare che il file non sia già in uso";
-		}else {
-			//delte, update
-			ret += "La ricerca dell'oggetto non ha dato risultati. Chiudere e riavviare.";
-		}
-		return ret;
+	public static String createShortDescBeer(Beer b){
+		StringBuilder builder = new StringBuilder();
+		builder.append("birra: ");
+		builder.append(b.getName());
+		return builder.toString();
+	}
+	
+	public static String createShortDescBrewery(Brewery b){
+		StringBuilder builder = new StringBuilder();
+		builder.append("birrificio: ");
+		builder.append(b.getBreweryName());
+		return builder.toString();
+	}
+	
+	public static String createShortDescStyle(Style style){
+		StringBuilder builder = new StringBuilder();
+		builder.append("stile: ");
+		builder.append(style.getStyleMainName());
+		builder.append(" ");
+		builder.append(style.getStyleSubCategory());
+		return builder.toString();
 	}
 
 }

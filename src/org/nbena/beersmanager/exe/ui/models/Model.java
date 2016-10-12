@@ -23,6 +23,7 @@ import java.io.File;
 
 
 
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -45,7 +46,6 @@ import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exceptions.ObjectNotFoundException;
 import org.nbena.beersmanager.exceptions.RecomposingException;
 import org.nbena.beersmanager.exceptions.UpdateSavingException;
-import org.nbena.beersmanager.exceptions.UpdateSavingException.ErrorWhile;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.export.OutExporter;
 import org.nbena.beersmanager.export.JSONOutExporter;
@@ -62,6 +62,7 @@ import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
 import org.nbena.beersmanager.query.QueryRunner.BreweryQuery.BrewerySort;
 import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
 import org.nbena.beersmanager.query.QueryRunner.StyleQuery;
+import org.nbena.beersmanager.query.QueryRunner.StyleQuery.StyleFilter;
 import org.nbena.beersmanager.sclasses.BreweryAverage;
 
 /**
@@ -1316,8 +1317,8 @@ public class Model {
 			saveBeer = true;
 		}
 		else{
-//			throw new UpdateSavingException(beer, UpdateSavingException.ErrorWhile.ADDING);
-			throw new UpdateSavingException(UpdateSavingException.createMessage(beer, ErrorWhile.ADDING));
+			throw new UpdateSavingException(beer, UpdateSavingException.ErrorWhile.ADDING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(beer, ErrorWhile.ADDING));
 		}
 	}
 	
@@ -1329,8 +1330,8 @@ public class Model {
 			saveBrewery = true;
 		}
 		else{
-//			throw new UpdateSavingException(brewery, UpdateSavingException.ErrorWhile.ADDING);
-			throw new UpdateSavingException(UpdateSavingException.createMessage(brewery, ErrorWhile.ADDING));
+			throw new UpdateSavingException(brewery, UpdateSavingException.ErrorWhile.ADDING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(brewery, ErrorWhile.ADDING));
 		}
 
 	}
@@ -1344,13 +1345,19 @@ public class Model {
 			saveStyle = true;
 		}
 		else{
-//			throw new UpdateSavingException(style, UpdateSavingException.ErrorWhile.ADDING);
-			throw new UpdateSavingException(UpdateSavingException.createMessage(style, ErrorWhile.ADDING));
+			throw new UpdateSavingException(style, UpdateSavingException.ErrorWhile.ADDING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(style, ErrorWhile.ADDING));
 		}
 
 	}
 	
 	public void updateBeer(Beer newBeer) throws UpdateSavingException{
+		
+		if(QueryRunner.BinarySearch.isBeerExistsMoreThanOne(beerData, newBeer)){
+			throw new UpdateSavingException(newBeer, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(newBeer, ErrorWhile.UPDATING));
+		}
+		
 		if(beerData.remove(beerShown)){
 			beerData.add(newBeer);
 			filteredBeers = beerData;
@@ -1358,13 +1365,19 @@ public class Model {
 			saveBeer = true;
 		}
 		else{
-//			throw new UpdateSavingException(newBeer, UpdateSavingException.ErrorWhile.UPDATING);
-			throw new UpdateSavingException(UpdateSavingException.createMessage(newBeer, ErrorWhile.UPDATING));
+			throw new UpdateSavingException(newBeer, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(newBeer, ErrorWhile.UPDATING));
 		}
 
 	}
 	
 	public void updateBrewery(BreweryAverage newBrewery) throws UpdateSavingException{
+		
+		if(QueryRunner.BinarySearch.isBreweryAverageExistsMoreThanOne(breweryData, newBrewery)){
+			throw new UpdateSavingException(newBrewery, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(newBrewery, ErrorWhile.UPDATING));
+		}
+		
 		if(breweryData.remove(breweryShown)){
 			breweryData.add(newBrewery);
 			filteredBreweries = breweryData;
@@ -1381,13 +1394,19 @@ public class Model {
 			saveBrewery = true;
 		}
 		else{
-//			throw new UpdateSavingException(newBrewery, UpdateSavingException.ErrorWhile.UPDATING);
-			throw new UpdateSavingException(UpdateSavingException.createMessage(newBrewery, ErrorWhile.UPDATING));
+			throw new UpdateSavingException(newBrewery, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(newBrewery, ErrorWhile.UPDATING));
 		}
 
 	}
 	
 	public void updateStyle(Style newStyle) throws UpdateSavingException{
+		
+		if(QueryRunner.BinarySearch.isStyleExistsMoreThanOne(styleData, newStyle)){
+			throw new UpdateSavingException(newStyle, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(newStyle, ErrorWhile.UPDATING));
+		}
+		
 		if(styleData.remove(styleShown)){
 			styleData.add(newStyle);
 			filteredStyles = styleData;
@@ -1400,14 +1419,21 @@ public class Model {
 				saveBeer = true;
 			}
 			
+			List<Style> stylesToUpdate = StyleFilter.stylesFilteredByMainStyle(styleData, styleShown);
+			if(!stylesToUpdate.isEmpty()){
+				for(Style s: stylesToUpdate){
+					s.setStyleMainName(newStyle.getStyleMainName());
+				}
+				//saveStyle = true;
+			}
+			
 			somethingToSave = true;
 			saveStyle = true;
 		}
 		else{
-//			throw new UpdateSavingException(newStyle, UpdateSavingException.ErrorWhile.UPDATING);
-			throw new UpdateSavingException(UpdateSavingException.createMessage(newStyle, ErrorWhile.UPDATING));
+			throw new UpdateSavingException(newStyle, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(newStyle, ErrorWhile.UPDATING));
 		}
-
 	}
 	
 	public void deleteBeers(List<Beer> beers) throws UpdateSavingException{
@@ -1443,8 +1469,8 @@ public class Model {
 			saveBeer = true;
 		}
 		else{
-//			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
-			throw new UpdateSavingException(UpdateSavingException.createMessage(b, ErrorWhile.DELETING));
+			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(b, ErrorWhile.DELETING));
 		}
 	}
 	
@@ -1465,8 +1491,8 @@ public class Model {
 					deleteBeers(beersToDelete);
 				}catch(UpdateSavingException e){
 					breweryData.add(toDelete);
-//					throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
-					throw new UpdateSavingException(UpdateSavingException.createMessage(toDelete, ErrorWhile.DELETING_TRAVERSAL));
+					throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING);
+//					throw new UpdateSavingException(UpdateSavingException.createMessage(toDelete, ErrorWhile.DELETING_TRAVERSAL));
 				}
 			}
 			
@@ -1475,8 +1501,8 @@ public class Model {
 			saveBeer = true;
 		}
 		else{
-//			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
-			throw new UpdateSavingException(UpdateSavingException.createMessage(toDelete, ErrorWhile.DELETING));
+			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(toDelete, ErrorWhile.DELETING));
 		}
 	}
 	
@@ -1496,8 +1522,8 @@ public class Model {
 					deleteBeers(beersToDelete);
 				}catch(UpdateSavingException e){
 					styleData.add(toDelete);
-//					throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING_TRAVERSAL);
-					throw new UpdateSavingException(UpdateSavingException.createMessage(s, ErrorWhile.DELETING_TRAVERSAL));
+					throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.DELETING_TRAVERSAL);
+//					throw new UpdateSavingException(UpdateSavingException.createMessage(s, ErrorWhile.DELETING_TRAVERSAL));
 				}
 				
 			}
@@ -1508,8 +1534,8 @@ public class Model {
 			saveBeer = true;
 		}
 		else{
-//			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
-			throw new UpdateSavingException(UpdateSavingException.createMessage(toDelete, ErrorWhile.DELETING));
+			throw new UpdateSavingException(toDelete, UpdateSavingException.ErrorWhile.UPDATING);
+//			throw new UpdateSavingException(UpdateSavingException.createMessage(toDelete, ErrorWhile.DELETING));
 		}
 	}
 	

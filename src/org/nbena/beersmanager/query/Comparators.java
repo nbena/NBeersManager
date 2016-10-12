@@ -1438,7 +1438,12 @@ public class Comparators {
 					
 //				}
 //				return ret;
-				return BeerComparator.beerCompareByBreweryStyleFast(o1, o2);
+				int ret;
+				ret = BeerComparator.beerCompareByBreweryStyleFast(o1, o2);
+				if(ret ==0){
+					ret = o1.getName().compareToIgnoreCase(o2.getName());
+				}
+				return ret;
 			}
 			
 		}
