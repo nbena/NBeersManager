@@ -999,6 +999,7 @@ public class ViewMainGUI extends JFrame {
 		table.setComponentPopupMenu(popupMenu);
 		
 		table.getTableHeader().setResizingAllowed(true);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		
 		

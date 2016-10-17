@@ -552,8 +552,9 @@ public class Utils {
 		array[0]=b.getBreweryName();
 		array[1]=b.getCountry();
 		array[2]=b.getTown();
-		array[3]=b.getBreweryDescription();
-		array[4]=b.getWebsite();
+		array[3] = (Double.isNaN(b.getAverage()) ? 0.0 : truncateDouble(b.getAverage()));
+		array[4]=b.getBreweryDescription();
+		array[5]=b.getWebsite();
 ////		array[5]= (  (b.getAverage()==Double.NaN) ? 0.0 : b.getAverage());
 //		double res=b.getAverage();
 //		if(b.getAverage()==Double.NaN){
@@ -562,7 +563,6 @@ public class Utils {
 //		array[5]=res;
 ////		System.out.println(b.getAverage());
 //		System.out.println("Brewery : "+b.getName()+", average: "+b.getAverage()+" is NaN?"+ (b.getAverage()==Double.NaN));
-		array[5] = (Double.isNaN(b.getAverage()) ? 0.0 : truncateDouble(b.getAverage()));
 		return array;
 	}
 	
@@ -1548,9 +1548,9 @@ public class Utils {
 				"Nome",
 				"Nazione",
 				"Città",
+				"Media",
 				"Descizione",
-				"Web",
-				"Media"
+				"Web"
 		};
 		
 		public static final Object[] TABLE_HEADER_STYLE = {
