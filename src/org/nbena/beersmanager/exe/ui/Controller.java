@@ -17,6 +17,7 @@
 package org.nbena.beersmanager.exe.ui;
 
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -28,6 +29,8 @@ import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -1511,7 +1514,7 @@ public class Controller {
 		dialog.setBreweryCountry(b.getCountry());
 		dialog.setBreweryDescription(b.getBreweryDescription());
 		dialog.setBreweryWebsite(b.getWebsite());
-		dialog.setBreweryAverage(Double.toString(b.getAverage()));
+		dialog.setBreweryAverage(Double.toString(Utils.truncateDouble(b.getAverage())));
 		dialog.setBreweryTrappist(b.isAuthenticTrappist());
 	}
 	
@@ -2624,6 +2627,8 @@ public class Controller {
 		setBreweryModifyButtonListener();
 		setBreweryViewBeersButtonListener();
 		setDeleteBreweryButtonListener();
+		
+		addBreweryWebsiteHyperlink();
 		
 		viewBreweryDialog.setVisible(true);	
 	}
@@ -3841,7 +3846,68 @@ public class Controller {
 		});
 	}
 	
+	
+	private void browse() {
+		//check if legit
+		//just the first that is not ' ' because it is how JSON saves files.
+		String website = model.getBreweryShown().getWebsite();
+		if(Desktop.isDesktopSupported() && Utils.isNotBlankWebsite(website)){
+			URI uri = URI.create(website);
+			try {
+				Desktop.getDesktop().browse(uri);
+			} catch (IOException e) {
+				showExceptionDialog(e);
+			}
+		}
+	}
+	
+	private void setHandCursorForBreweryWebsite(){
+		if(Utils.isNotBlankWebsite(model.getBreweryShown().getWebsite())){
+			viewBreweryDialog.setWebsiteCursorHand();
+		}
+		else{
+			viewBreweryDialog.setWebsiteCursorDefault();
+		}
+	}
+	
+	
+	private void addBreweryWebsiteHyperlink(){
+		viewBreweryDialog.addLinkListener(new MouseListener(){
 
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				
+				setHandCursorForBreweryWebsite();
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				
+				browse();
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	}
 	
 
 }

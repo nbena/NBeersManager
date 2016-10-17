@@ -18,12 +18,12 @@
 package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.BorderLayout;
-
-
+import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -136,6 +136,21 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 	public void addActionListenerViewBeersButton(ActionListener listener){
 		btnViewBeers.addActionListener(listener);
 	}
+	
+	public void addLinkListener(MouseListener listener){
+//		textFieldWebsite.addH
+		textFieldWebsite.addMouseListener(listener);
+	}
+	
+	public void setWebsiteCursorHand(){
+		textFieldWebsite.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+	
+	public void setWebsiteCursorDefault(){
+		textFieldWebsite.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+	
+	
 	
 	
 	

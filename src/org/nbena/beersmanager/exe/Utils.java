@@ -2269,5 +2269,9 @@ public class Utils {
 		builder.append(style.getStyleSubCategory());
 		return builder.toString();
 	}
+	
+	public static boolean isNotBlankWebsite(String website){
+		return !(website.equals(" ") || website.equals(""));
+	}
 
 }
