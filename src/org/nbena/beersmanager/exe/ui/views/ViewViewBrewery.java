@@ -434,7 +434,7 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 			
 			
 			{
-				okButton = new JButton("OK");
+				okButton = new JButton("Ok");
 				okButton.setActionCommand("OK");
 				GridBagConstraints gbc_okButton = new GridBagConstraints();
 //				gbc_okButton.gridx = 2;
@@ -445,7 +445,7 @@ public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Annulla");
 				cancelButton.setActionCommand("Cancel");
 				GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 //				gbc_cancelButton.gridx = 3;

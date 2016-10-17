@@ -309,14 +309,14 @@ public class ViewAddNewStyle extends JDialog implements StyleDialog{
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("OK");
+				okButton = new JButton("Ok");
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 				okButton.setEnabled(false);
 			}
 			{
-				cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Annulla");
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

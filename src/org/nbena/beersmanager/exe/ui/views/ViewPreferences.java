@@ -330,7 +330,7 @@ public class ViewPreferences extends JDialog {
 			GridBagLayout gbl_buttonPane = new GridBagLayout();
 			buttonPane.setLayout(gbl_buttonPane);
 			{
-				okButton = new JButton("OK");
+				okButton = new JButton("Ok");
 				okButton.setActionCommand("OK");
 				GridBagConstraints gbc_okButton = new GridBagConstraints();
 				gbc_okButton.gridx = 1;
@@ -348,7 +348,7 @@ public class ViewPreferences extends JDialog {
 				buttonPane.add(btnDefault, gbc_btnDefault);
 			}
 			{
-				cancelButton = new JButton("Cancella");
+				cancelButton = new JButton("Annulla");
 				cancelButton.setActionCommand("Cancel");
 				GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 				gbc_cancelButton.gridx = 3;

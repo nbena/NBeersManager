@@ -353,7 +353,7 @@ public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
 			
 			
 			{
-				okButton = new JButton("OK");
+				okButton = new JButton("Ok");
 				okButton.setActionCommand("OK");
 				GridBagConstraints gbc_okButton = new GridBagConstraints();
 				gbc_okButton.gridx = 3;
@@ -364,7 +364,7 @@ public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Annulla");
 				cancelButton.setActionCommand("Cancel");
 				GridBagConstraints gbc_cancelButton = new GridBagConstraints();
 				gbc_cancelButton.gridx = 4;
