@@ -25,12 +25,10 @@ import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.exe.Utils.Constants;
 import org.nbena.beersmanager.coreclasses.Style;
 
+@SuppressWarnings("serial")
 public class ModelStyleTable extends /*DefaultTableModel*/MyModelAbstractTable{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7295474355055930967L;
+
 	private List<Style> styleData;
 	
 	public ModelStyleTable(){
@@ -85,7 +83,13 @@ public class ModelStyleTable extends /*DefaultTableModel*/MyModelAbstractTable{
 	}
 
 
-
+	/* (non-Javadoc)
+	 * @see javax.swing.table.DefaultTableModel#isCellEditable(int, int)
+	 */
+	@Override
+	public boolean isCellEditable(int arg0, int arg1) {
+		return false;
+	}
 
 		
 	}

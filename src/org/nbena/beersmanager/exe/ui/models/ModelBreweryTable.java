@@ -24,12 +24,10 @@ import java.util.List;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.exe.Utils;
 
+@SuppressWarnings("serial")
 public class ModelBreweryTable extends /*DefaultTableModel*/MyModelAbstractTable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6446731013288090993L;
+
 
 	public ModelBreweryTable() {
 		super(new Object[][]{}, Utils.Constants.TABLE_HEADER_BREWERY);
@@ -81,6 +79,14 @@ public class ModelBreweryTable extends /*DefaultTableModel*/MyModelAbstractTable
 	public Object getSelectedObject(int row) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/* (non-Javadoc)
+	 * @see javax.swing.table.DefaultTableModel#isCellEditable(int, int)
+	 */
+	@Override
+	public boolean isCellEditable(int arg0, int arg1) {
+		return false;
 	}
 
 }

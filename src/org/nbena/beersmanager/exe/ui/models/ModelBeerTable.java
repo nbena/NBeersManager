@@ -25,12 +25,10 @@ import java.util.List;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.exe.Utils;
 
+@SuppressWarnings("serial")
 public class ModelBeerTable extends /*DefaultTableModel*/MyModelAbstractTable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6465689985503079210L;
+
 	
 	
 
@@ -77,6 +75,16 @@ public class ModelBeerTable extends /*DefaultTableModel*/MyModelAbstractTable {
 	public Object getSelectedObject(int row) {
 		return null;
 	}
+
+	/* (non-Javadoc)
+	 * @see javax.swing.table.DefaultTableModel#isCellEditable(int, int)
+	 */
+	@Override
+	public boolean isCellEditable(int arg0, int arg1) {
+		return false;
+	}
+	
+	
 
 	
 

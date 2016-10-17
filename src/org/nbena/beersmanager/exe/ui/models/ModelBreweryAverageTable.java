@@ -22,12 +22,10 @@ import java.util.List;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.sclasses.BreweryAverage;
 
+@SuppressWarnings("serial")
 public class ModelBreweryAverageTable extends MyModelAbstractTable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7478980599280631956L;
+
 
 
 	public ModelBreweryAverageTable() {
@@ -83,6 +81,13 @@ public class ModelBreweryAverageTable extends MyModelAbstractTable {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see javax.swing.table.DefaultTableModel#isCellEditable(int, int)
+	 */
+	@Override
+	public boolean isCellEditable(int arg0, int arg1) {
+		return false;
+	}
 
 
 }
