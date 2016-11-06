@@ -396,6 +396,9 @@ public class Model {
 //		clearFilter(true, true, false);
 		
 		tableModel.setData(filteredStyles); //it work||
+		
+//		clearFilter(true, true, false);
+
 	}
 
 	/**
@@ -442,6 +445,8 @@ public class Model {
 //		clearFilter(false, true, true);
 		
 		tableModel.setData(filteredBeers); //it work||
+		
+//		clearFilter(false, true, true);
 	}
 
 
@@ -517,6 +522,8 @@ public class Model {
 			
 			
 			tableModel.setData(filteredBreweries); //it work||
+			
+//			clearFilter(true, false, true);
 		}
 		
 //		clearFilter(true, false, true);

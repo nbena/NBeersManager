@@ -2825,6 +2825,7 @@ public class Controller {
 				
 				BreweryAverage b = model.getBreweryShown();
 				
+				model.resetBeerFilter();//so, if previously there was a filter on beer now it is resetted
 				
 				
 				beersFilteredByBrewery(b);
@@ -2845,7 +2846,7 @@ public class Controller {
 				
 				Style s = model.getStyleShown();
 				
-				beersFilteredByStyle(s);
+				beersFilteredByStyle(s);//so, if previously there was a filter on beer now it is resetted
 			}
 			
 		});
@@ -2867,6 +2868,8 @@ public class Controller {
 				
 				Style s = model.getBeerShown().getStyle();
 				
+				model.resetStyleFilter(); //so, if previously there was a filter on style now it is resetted
+				
 				model.setStyleShown(s);
 				openStyleDialog(-1);
 			}
@@ -2885,6 +2888,8 @@ public class Controller {
 				viewBeerDialog.dispose();
 				
 				Brewery b =  model.getBeerShown().getBrewery();
+				
+				model.resetBreweryFilter(); //so, if previously there was a filter on brewery now it is resetted
 				
 				model.setBreweryShown(b);
 				openBreweryDialog(-1);
