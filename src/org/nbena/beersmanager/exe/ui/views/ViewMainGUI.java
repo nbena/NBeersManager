@@ -675,8 +675,9 @@ public class ViewMainGUI extends JFrame {
 		/*JMenuItem*/ mntmNewBreweriesFromFile = new JMenuItem("Birrificio");
 		
 		mnImport.add(mntmNewBeersFromFile);
-		mnImport.add(mntmNewStylesFromFile);
 		mnImport.add(mntmNewBreweriesFromFile);
+		mnImport.add(mntmNewStylesFromFile);
+		
 		
 		
 			

@@ -1723,32 +1723,23 @@ public class Model {
 	
 	public void importBeers(File f) throws FileNotFoundException, JSONException, RecomposingException{
 		List<Beer> beerDiff = JSONImporter.getBeersDifference(beerData,  f);
-//		System.out.println("Le birre diiff:");
-//		Utils.printBeers(beerDiff, System.out);
 		if(!beerDiff.isEmpty()){
 			beerData.addAll(beerDiff);
 			filteredBeers = beerData;
+			
+			saveBeer=true;
 		}
 		
 		//now add the breweries if necessary.
 		
 		List<Brewery> breweryTemp = BeerQuery.getAllBreweries(beerDiff);
-//		System.out.println("I birrifici ottenuti:");
-//		Utils.printBreweries(breweryTemp, System.out);
-//		
-//		
-//		System.out.println("Il birrificio esiste? ");
-//		System.out.println(QueryRunner.BinarySearch.isBreweryExists(Utils.fromBreweriesAverageToBrewery(breweryData), breweryTemp.get(0), false));
 		
 		wrapperImportBreweries(null, breweryTemp);
 		
 		List<Style> styleTemp = BeerQuery.getAllStyles(beerDiff);
 		
 		
-//		importStylesBridge(styleTemp);
 		wrapperImportStyles(null, styleTemp);
-//		beerSortingCurrentAlgorithm.apply(beerData);
-//		clearFilter(false, true, true);
 	}
 	
 	private void importBreweriesBridge(List<Brewery> breweriesDiff){
@@ -1756,6 +1747,7 @@ public class Model {
 			breweryData.addAll(Utils.fromBreweriesToBreweriesAverage(breweriesDiff));
 			setAverages();
 			filteredBreweries = breweryData;
+			saveBrewery = true;
 		}
 	}
 	
@@ -1767,11 +1759,7 @@ public class Model {
 	
 	public void wrapperImportBreweries(File f, List<Brewery> allBreweries) throws FileNotFoundException, JSONException{
 		
-//		System.out.println("Il param è: ");
-//		Utils.printBreweries(allBreweries, System.out);
-//		
-//		System.out.println("Il birrificio esiste dentro il param? ");
-//		System.out.println(QueryRunner.BinarySearch.isBreweryExists(Utils.fromBreweriesAverageToBrewery(breweryData), allBreweries.get(0), false));
+
 		
 		List<Brewery> breweries;
 		if(f!=null){
@@ -1779,23 +1767,11 @@ public class Model {
 		}
 		else{
 			breweries =  QueryRunner.Diff.breweryDiff(Utils.fromBreweriesAverageToBrewery(breweryData), allBreweries, false, false);
-//			System.out.println("Differenza birrifici::");
-//			Utils.printBreweries(breweries, System.out);
+
 		}
 		importBreweriesBridge(breweries);
 	}
 	
-//	public void importBreweries(File f) throws FileNotFoundException, JSONException{
-//		List<Brewery> breweriesDiff = JSONImporter.getBreweriesDifference(Utils.fromBreweriesAverageToBrewery(breweryData), f);
-//		if(!breweriesDiff.isEmpty()){
-//			breweryData.addAll(Utils.fromBreweriesToBreweriesAverage(breweriesDiff));
-//			setAverages();
-//			filteredBreweries = breweryData;
-//		}
-//		
-////		brewerySortingCurrentAlgorithm.apply(breweryData);
-////		clearFilter(true, false, true);
-//	}
 	
 	private List<Style> getStyleDiffFromFile(File f) throws FileNotFoundException, JSONException{
 		List<Style> stylesDiff = JSONImporter.getStylesDifference(styleData, f);
@@ -1806,7 +1782,7 @@ public class Model {
 		if(!stylesDiff.isEmpty()){
 			styleData.addAll(stylesDiff);
 			filteredStyles = styleData;
-			
+			saveStyle=true;
 		}
 	}
 	

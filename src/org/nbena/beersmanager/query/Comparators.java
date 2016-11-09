@@ -1501,18 +1501,19 @@ public class Comparators {
 		 */
 		static boolean breweryBooleanBinarySearch(Brewery o1, Brewery o2){
 			int ret;
-			boolean booleanRet = true;
+//			boolean booleanRet = true;
 			ret = Comparators.BreweryComparator.breweryCompareByCountryName(o1, o2);
-			if(ret==1){
-				booleanRet=false;
-				//nested if so I avoid a not-necessary call.
-			}
-			else{
-				ret = Comparators.BreweryComparator.breweryCompareByName(o1, o2);
-				booleanRet= (ret==0) ? true : false;
-				
-			}
-			return booleanRet;
+//			if(ret==1){
+//				booleanRet=false;
+//				//nested if so I avoid a not-necessary call.
+//			}
+//			else{
+//				ret = Comparators.BreweryComparator.breweryCompareByName(o1, o2);
+//				booleanRet= ((ret==0) ? true : false);
+//				
+//			}
+//			return booleanRet;
+			return ((ret==0) ? true : false);
 		}
 		
 		/**

@@ -33,6 +33,8 @@ package org.nbena.beersmanager.export;
 //import be.quodlibet.boxable.Cell;
 //import be.quodlibet.boxable.Row;
 //
+
+//one day will be implemented
 public class PDFOutExporter{
 //	
 //	private PDDocument doc;

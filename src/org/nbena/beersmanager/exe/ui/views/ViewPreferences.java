@@ -237,7 +237,7 @@ public class ViewPreferences extends SuperAbstractDialog {
 		
 		{
 			{
-				JLabel lblImpostazioniPerLordinamento = new JLabel("Impostazioni");
+				JLabel lblImpostazioniPerLordinamento = new JLabel("Impostazioni ordinamento");
 				GridBagConstraints gbc_lblImpostazioniPerLordinamento = new GridBagConstraints();
 				gbc_lblImpostazioniPerLordinamento.insets = new Insets(0, 0, 5, 5);
 				gbc_lblImpostazioniPerLordinamento.gridx = 0;
@@ -297,11 +297,20 @@ public class ViewPreferences extends SuperAbstractDialog {
 			}
 			
 			{
+				JLabel lblOtherImpo = new JLabel("Altre impostazioni");
+				GridBagConstraints gbc_lblOtherImpo = new GridBagConstraints();
+				gbc_lblOtherImpo.insets = new Insets(0, 0, 5, 5);
+				gbc_lblOtherImpo.gridx = 0;
+				gbc_lblOtherImpo.gridy = 8;
+				contentPanel.add(lblOtherImpo, gbc_lblOtherImpo);
+			}
+			
+			{
 				JLabel lblDiDefaultMostra = new JLabel("Di default mostra:");
 				GridBagConstraints gbc_lblDiDefaultMostra = new GridBagConstraints();
 				gbc_lblDiDefaultMostra.insets = new Insets(0, 0, 5, 5);
 				gbc_lblDiDefaultMostra.gridx = 0;
-				gbc_lblDiDefaultMostra.gridy = 8;
+				gbc_lblDiDefaultMostra.gridy = 10;
 				contentPanel.add(lblDiDefaultMostra, gbc_lblDiDefaultMostra);
 			}
 			{
@@ -310,7 +319,7 @@ public class ViewPreferences extends SuperAbstractDialog {
 				gbc_comboBoxDefaultView.insets = new Insets(0, 0, 5, 0);
 				gbc_comboBoxDefaultView.fill = GridBagConstraints.HORIZONTAL;
 				gbc_comboBoxDefaultView.gridx = 2;
-				gbc_comboBoxDefaultView.gridy = 8;
+				gbc_comboBoxDefaultView.gridy = 10;
 				contentPanel.add(comboBoxDefaultView, gbc_comboBoxDefaultView);
 			}
 			

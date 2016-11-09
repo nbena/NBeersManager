@@ -19,12 +19,12 @@ package org.nbena.beersmanager.export;
 
 import java.io.OutputStream;
 
+
 import java.util.List;
 
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
-import org.nbena.beersmanager.sclasses.BeerJSONSaveSpecialClass;
 
 
 public abstract class OutExporter {
@@ -114,7 +114,6 @@ public abstract class OutExporter {
 	
 	public abstract void writeBeer(List<Beer> beers, OutputStream out, boolean writeTotalPrice) throws Exception;
 	
-	public abstract void writeBeerSpecialClass(List<BeerJSONSaveSpecialClass> beers, OutputStream out) throws Exception;
 	
 	public abstract void writeStyle(List<Style> styles, OutputStream out) throws Exception;
 	

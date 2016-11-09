@@ -20,6 +20,7 @@ package org.nbena.beersmanager.export;
 import java.io.FileOutputStream;
 
 
+
 import java.io.OutputStream;
 import java.util.List;
 
@@ -30,7 +31,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
-import org.nbena.beersmanager.sclasses.BeerJSONSaveSpecialClass;
 
 public class MSExcelOldOutExporter extends OutExporter{
 	
@@ -185,19 +185,20 @@ public class MSExcelOldOutExporter extends OutExporter{
 		out.close();
 	}
 
-	@Override
-	public void writeBeerSpecialClass(List<BeerJSONSaveSpecialClass> beers, OutputStream out) throws Exception {
-		if(out instanceof FileOutputStream == false)
-			throw new Exception("OutputStream is not a valid instace of FileOutputStream");
-		
-		workbook=new HSSFWorkbook();
-		sheet=workbook.createSheet("Beers");
-		
-		//intestation
-		Row rowIntestation=sheet.createRow(0);
-//		cellIntestation=new Cell[15];
-		cellIntestation=new Cell[9];
-//		for(int j=0;j<15;j++){
+//	@Override
+//	public void writeBeerSpecialClass(List<BeerJSONSaveSpecialClass> beers, OutputStream out) throws Exception {
+//		if(out instanceof FileOutputStream == false)
+//			throw new Exception("OutputStream is not a valid instace of FileOutputStream");
+//		
+//		workbook=new HSSFWorkbook();
+//		sheet=workbook.createSheet("Beers");
+//		
+//		//intestation
+//		Row rowIntestation=sheet.createRow(0);
+////		cellIntestation=new Cell[15];
+//		cellIntestation=new Cell[9];
+//		
+//		for(int j=0;j<9;j++){
 //			cellIntestation[j]=rowIntestation.createCell(j);
 //		}
 //		
@@ -205,83 +206,42 @@ public class MSExcelOldOutExporter extends OutExporter{
 //		cellIntestation[1].setCellValue(OutExporter.BEER_NAME);
 //		cellIntestation[2].setCellValue(OutExporter.BEER_STYLE_MAIN);
 //		cellIntestation[3].setCellValue(OutExporter.BEER_STYLE_SUBCATEGORY);
-//		cellIntestation[4].setCellValue(OutExporter.BEER_COLOR);
-//		cellIntestation[5].setCellValue(OutExporter.BEER_MARK);
-//		cellIntestation[6].setCellValue(OutExporter.BEER_ALCOOL);
-//		cellIntestation[7].setCellValue(OutExporter.BEER_PLACE_TRIED);
-//		cellIntestation[8].setCellValue(OutExporter.BEER_STARS);
-//		cellIntestation[9].setCellValue(OutExporter.BEER_DESCRIPTION);	
+//		cellIntestation[4].setCellValue(OutExporter.BEER_MARK);
+//		cellIntestation[5].setCellValue(OutExporter.BEER_ALCOOL);
+//		cellIntestation[6].setCellValue(OutExporter.BEER_PLACE_TRIED);
+//		cellIntestation[7].setCellValue(OutExporter.BEER_STARS);
+//		cellIntestation[8].setCellValue(OutExporter.BEER_DESCRIPTION);	
 //
 //		
 //		//content
-//		cells=new Cell[15];
+//		cells=new Cell[9];
 //		int i=1;
-//		for(BeerJSONSpecialClass beer: beers){
+//		for(BeerJSONSaveSpecialClass beer: beers){
 //			Row row=sheet.createRow(i);
 //			
-//			for(int f=0;f<15;f++){
+//			for(int f=0;f<14;f++){
 //				cells[f]=row.createCell(f);
 //			}
 //			
 //			cells[0].setCellValue(beer.getBreweryName());
-//			cells[1].setCellValue(beer.getName());
+//			cells[1].setCellValue(beer.getBeerName());
 //			cells[2].setCellValue(beer.getStyleMainName());
 //			cells[3].setCellValue(beer.getStyleSubcategory());
-//			cells[4].setCellValue(beer.getColor());
-//			cells[5].setCellValue(beer.getMark());
-//			cells[6].setCellValue(beer.getAlcool());
-//			cells[7].setCellValue(beer.getPlaceTried());
-//			cells[8].setCellValue(beer.getNumberOfStars());
-//			cells[9].setCellValue(beer.getDescription());
+//			cells[4].setCellValue(beer.getMark());
+//			cells[5].setCellValue(beer.getAlcool());
+//			cells[6].setCellValue(beer.getPlaceTried());
+//			cells[7].setCellValue(beer.getNumberOfStars());
+//			cells[8].setCellValue(beer.getBeerDescription());
 //			
 //			
 //			i++;
 //		}
-		
-		for(int j=0;j<9;j++){
-			cellIntestation[j]=rowIntestation.createCell(j);
-		}
-		
-		cellIntestation[0].setCellValue(OutExporter.BEER_BREWERY_NAME);			
-		cellIntestation[1].setCellValue(OutExporter.BEER_NAME);
-		cellIntestation[2].setCellValue(OutExporter.BEER_STYLE_MAIN);
-		cellIntestation[3].setCellValue(OutExporter.BEER_STYLE_SUBCATEGORY);
-		cellIntestation[4].setCellValue(OutExporter.BEER_MARK);
-		cellIntestation[5].setCellValue(OutExporter.BEER_ALCOOL);
-		cellIntestation[6].setCellValue(OutExporter.BEER_PLACE_TRIED);
-		cellIntestation[7].setCellValue(OutExporter.BEER_STARS);
-		cellIntestation[8].setCellValue(OutExporter.BEER_DESCRIPTION);	
-
-		
-		//content
-		cells=new Cell[9];
-		int i=1;
-		for(BeerJSONSaveSpecialClass beer: beers){
-			Row row=sheet.createRow(i);
-			
-			for(int f=0;f<14;f++){
-				cells[f]=row.createCell(f);
-			}
-			
-			cells[0].setCellValue(beer.getBreweryName());
-			cells[1].setCellValue(beer.getBeerName());
-			cells[2].setCellValue(beer.getStyleMainName());
-			cells[3].setCellValue(beer.getStyleSubcategory());
-			cells[4].setCellValue(beer.getMark());
-			cells[5].setCellValue(beer.getAlcool());
-			cells[6].setCellValue(beer.getPlaceTried());
-			cells[7].setCellValue(beer.getNumberOfStars());
-			cells[8].setCellValue(beer.getBeerDescription());
-			
-			
-			i++;
-		}
-		
-		
-		workbook.write(out);
-		out.close();
-	
-	}
+//		
+//		
+//		workbook.write(out);
+//		out.close();
+//	
+//	}
 
 	@Override
 	public void writeStyle(List<Style> styles, OutputStream out) throws Exception {
