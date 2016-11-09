@@ -30,6 +30,11 @@ import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.exe.Utils;
 import org.nbena.beersmanager.query.QueryRunner;
 
+/**
+ * This class is used to import data from JSON file outside the "DB".
+ * @author nbena
+ *
+ */
 public class JSONImporter {
 	
 //	private List<Beer> baseBeers;

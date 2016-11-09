@@ -24,6 +24,7 @@ import java.io.File;
 
 
 
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -37,9 +38,11 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
 import org.json.JSONException;
-import org.nbena.beersmanager.conf.Configuration;
-import org.nbena.beersmanager.conf.Configuration.ShowDefault;
+//import org.nbena.beersmanager.conf.Configuration;
+//import org.nbena.beersmanager.conf.Configuration.ShowDefault;
 import org.nbena.beersmanager.conf.ConfigurationFactory;
+import org.nbena.beersmanager.conf.ConfigurationNew;
+import org.nbena.beersmanager.conf.ConfigurationNew.ShowDefault;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
@@ -115,7 +118,7 @@ public class Model {
 	private DialogShownNow dialogShown;
 	
 	private OutExporter exporter;
-	private Configuration configuration;
+	private ConfigurationNew configuration;
 	
 	private Function<List<Beer>, List<Beer>> beerSortingDefaultAlgorithm;
 	private Function<List<BreweryAverage>, List<BreweryAverage>> brewerySortingDefaultAlgorithm;
@@ -125,13 +128,13 @@ public class Model {
 	private Function<List<BreweryAverage>, List<BreweryAverage>> brewerySortingCurrentAlgorithm;
 	private Function<List<Style>, List<Style>> styleSortingCurrentAlgorithm;
 	
-	private BiFunction<List<Beer>, Object, List<Beer>> beersFilteringDefaultAlgorithm;
-	private BiFunction<List<BreweryAverage>, Object, List<BreweryAverage>> breweryFilteringDefaultAlgorithm;
-	private BiFunction<List<Style>, Object, List<Style>> styleFilteringDefaultAlgorithm;
-	
-	private Object beerFilteringDefaultValue;
-	private Object breweryFilteringDefaultValue;
-	private Object styleFilteringDefaultValue;
+//	private BiFunction<List<Beer>, Object, List<Beer>> beersFilteringDefaultAlgorithm;
+//	private BiFunction<List<BreweryAverage>, Object, List<BreweryAverage>> breweryFilteringDefaultAlgorithm;
+//	private BiFunction<List<Style>, Object, List<Style>> styleFilteringDefaultAlgorithm;
+//	
+//	private Object beerFilteringDefaultValue;
+//	private Object breweryFilteringDefaultValue;
+//	private Object styleFilteringDefaultValue;
 	
 	private BiFunction<List<Beer>, Object, List<Beer>> beersFilteringCurrentAlgorithm;
 	private BiFunction<List<BreweryAverage>, Object, List<BreweryAverage>> breweryFilteringCurrentAlgorithm;
@@ -505,26 +508,27 @@ public class Model {
 //	}
 	
 	public void showBreweryData(){
-		if(showAlsoAverage){
-			showBreweryAverageData();
-		}
-		else{
-			dataShownNow=DataShownNow.BREWERY;
-			tableModel.clear();
-			ModelBreweryTable tableModelOld=(ModelBreweryTable)tableModel;
-			tableModel=tableModelOld;
-//			tableModel.fireTableStructureChanged();
-			
-			
-			applyFilteringToBreweries();
-			
-			applySortingToBreweries();
-			
-			
-			tableModel.setData(filteredBreweries); //it work||
-			
-//			clearFilter(true, false, true);
-		}
+//		if(showAlsoAverage){
+//			showBreweryAverageData();
+//		}
+//		else{
+//			dataShownNow=DataShownNow.BREWERY;
+//			tableModel.clear();
+//			ModelBreweryTable tableModelOld=(ModelBreweryTable)tableModel;
+//			tableModel=tableModelOld;
+////			tableModel.fireTableStructureChanged();
+//			
+//			
+//			applyFilteringToBreweries();
+//			
+//			applySortingToBreweries();
+//			
+//			
+//			tableModel.setData(filteredBreweries); //it work||
+//			
+//		}
+		//keep the if, maybe in future there will be the possibility to decide
+		showBreweryAverageData();
 		
 //		clearFilter(true, false, true);
 	}
@@ -652,7 +656,7 @@ public class Model {
 	/**
 	 * @return the configuration
 	 */
-	public Configuration getConfiguration() {
+	public ConfigurationNew getConfiguration() {
 		return configuration;
 	}
 	
@@ -666,28 +670,37 @@ public class Model {
 		styleSortingCurrentAlgorithm=styleSortingDefaultAlgorithm;
 	}
 	
+//	private void setFiltering(){
+//		beersFilteringDefaultAlgorithm = Utils.getBeerFilteringAlgorithm(configuration.getBeerFilterAlgorithm());
+//		breweryFilteringDefaultAlgorithm = Utils.getBreweryAverageFilteringAlgorithm(configuration.getBreweryFilterAlgorithm());
+//		styleFilteringDefaultAlgorithm = Utils.getStyleFilteringAlgorithm(configuration.getStyleFilterAlgorithm());
+//		
+//		beerFilteringDefaultValue = configuration.getBeerFilterValue();
+//		breweryFilteringDefaultValue = configuration.getBreweryFilterValue();
+//		styleFilteringDefaultValue = configuration.getStyleFilterValue();
+//		
+//		beersFilteringCurrentAlgorithm = beersFilteringDefaultAlgorithm;
+//		breweryFilteringCurrentAlgorithm = breweryFilteringDefaultAlgorithm;
+//		styleFilteringCurrentAlgorithm = styleFilteringDefaultAlgorithm;
+//		
+//		beerFilteringCurrentValue = beerFilteringDefaultValue;
+//		breweryFilteringCurrentValue = breweryFilteringDefaultValue;
+//		styleFilteringCurrentValue = styleFilteringDefaultValue;
+//	}
+	
 	private void setFiltering(){
-		beersFilteringDefaultAlgorithm = Utils.getBeerFilteringAlgorithm(configuration.getBeerFilterAlgorithm());
-		breweryFilteringDefaultAlgorithm = Utils.getBreweryAverageFilteringAlgorithm(configuration.getBreweryFilterAlgorithm());
-		styleFilteringDefaultAlgorithm = Utils.getStyleFilteringAlgorithm(configuration.getStyleFilterAlgorithm());
-		
-		beerFilteringDefaultValue = configuration.getBeerFilterValue();
-		breweryFilteringDefaultValue = configuration.getBreweryFilterValue();
-		styleFilteringDefaultValue = configuration.getStyleFilterValue();
-		
-		beersFilteringCurrentAlgorithm = beersFilteringDefaultAlgorithm;
-		breweryFilteringCurrentAlgorithm = breweryFilteringDefaultAlgorithm;
-		styleFilteringCurrentAlgorithm = styleFilteringDefaultAlgorithm;
-		
-		beerFilteringCurrentValue = beerFilteringDefaultValue;
-		breweryFilteringCurrentValue = breweryFilteringDefaultValue;
-		styleFilteringCurrentValue = styleFilteringDefaultValue;
+		beersFilteringCurrentAlgorithm = Utils.getBeerFilteringAlgorithm(QueryRunner.BeerFilterAlgorithm.NONE);
+		beerFilteringCurrentValue = "";
+		breweryFilteringCurrentAlgorithm = Utils.getBreweryAverageFilteringAlgorithm(QueryRunner.BreweryFilterAlgorithm.NONE);
+		breweryFilteringCurrentValue = "";
+		styleFilteringCurrentAlgorithm = Utils.getStyleFilteringAlgorithm(QueryRunner.StyleFilterAlgorithm.NONE);
+		styleFilteringCurrentValue = "";
 	}
 
 	/**
 	 * @param configuration the configuration to set
 	 */
-	public void setConfiguration(Configuration configuration) {
+	public void setConfiguration(ConfigurationNew configuration) {
 		this.configuration = configuration;
 //		beerSortingDefaultAlgorithm=Utils.getBeerSortingAlgorithm(configuration.getBeerSortingAlgorithm());
 //		brewerySortingDefaultAlgorithm=Utils.getBreweriesSortingAlgorithm(configuration.getBrewerySortingAlgorithm());
@@ -697,6 +710,7 @@ public class Model {
 //		brewerySortingCurrentAlgorithm=brewerySortingDefaultAlgorithm;
 //		styleSortingCurrentAlgorithm=styleSortingDefaultAlgorithm;
 		setSorting();
+//		setFiltering();
 		setFiltering();
 	}
 

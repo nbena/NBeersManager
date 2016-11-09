@@ -35,7 +35,11 @@ import org.nbena.beersmanager.sclasses.StyleJSONSpecialClass;
 
 
 
-
+/**
+ * This class is used to export/import data for the "DB".
+ * @author nbena
+ *
+ */
 public class JSONExporterCoreClasses {
 	
 	private static final String JSON_BEER_STYLE_MAIN_NAME = "styleMainName";

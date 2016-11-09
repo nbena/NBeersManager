@@ -34,7 +34,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JEditorPane;
 
 @SuppressWarnings("serial")
-public class ViewAbout extends JDialog {
+public class ViewAbout extends JDialog /*not implements super abstract because it does not implement the cancel button*/ {
 
 	private final JPanel contentPanel = new JPanel();
 	private JEditorPane editorPaneGPL;

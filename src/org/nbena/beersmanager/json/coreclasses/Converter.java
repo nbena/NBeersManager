@@ -145,9 +145,10 @@ public class Converter {
 				throw new RecomposingException(beer.getBrewery());
 			}
 			
-			if(index1>=0 && index2>=0){
-				beers.add(j, beer);
-			}
+//			if(index1>=0 && index2>=0){
+//				beers.add(j, beer);
+//			}
+			beers.add(j, beer);
 		}
 		
 		return beers;

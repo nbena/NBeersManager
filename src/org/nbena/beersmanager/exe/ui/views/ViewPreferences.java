@@ -34,7 +34,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 
 @SuppressWarnings("serial")
-public class ViewPreferences extends JDialog {
+public class ViewPreferences extends SuperAbstractDialog {
 
 	private final JPanel contentPanel = new JPanel();
 

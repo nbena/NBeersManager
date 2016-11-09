@@ -31,6 +31,7 @@ import org.nbena.beersmanager.query.QueryRunner.StyleSortingAlgorithm;
 
 @XmlRootElement(name="configuration")
 @XmlAccessorType(XmlAccessType.FIELD)
+@Deprecated
 public class Configuration {
 		
 	

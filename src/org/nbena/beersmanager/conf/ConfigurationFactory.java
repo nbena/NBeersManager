@@ -17,17 +17,16 @@
 package org.nbena.beersmanager.conf;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import org.json.JSONException;
 import org.nbena.beersmanager.exe.Utils;
-import org.nbena.beersmanager.json.conf.JSONExporterConfiguration;
+//import org.nbena.beersmanager.json.conf.JSONExporterConfiguration;
+import org.nbena.beersmanager.json.conf.JSONExporterConfigurationNew;
 import org.nbena.beersmanager.query.QueryRunner;
-import org.nbena.beersmanager.query.QueryRunner.BeerFilterAlgorithm;
-import org.nbena.beersmanager.query.QueryRunner.BreweryFilterAlgorithm;
-import org.nbena.beersmanager.query.QueryRunner.StyleFilterAlgorithm;
 
 public class ConfigurationFactory {
 	
@@ -35,45 +34,34 @@ public class ConfigurationFactory {
 	public ConfigurationFactory(){
 	}
 	
-	public static Configuration getDefaultConfiguration(){
-		Configuration conf=new Configuration();
-//		conf.setBeerFilterAlgorithm(BeerFilterAlgorithm.NONE);
-//		conf.setBeerFilterValue("");
-//		conf.setBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.MARK_STAR_DESCENDING);
-//		
-//		conf.setBreweryFilterAlgorithm(BreweryFilterAlgorithm.NONE);
-//		conf.setBreweryFilterValue("");
-//		conf.setBrewerySortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.AVERAGE_DESCENDING);
-//		
-//		conf.setStyleFilterAlgorithm(StyleFilterAlgorithm.NONE);
-//		conf.setStyleFilterValue("");
-//		conf.setStyleSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.FERMENTATION_COUNTRY);
+	public static ConfigurationNew getDefaultConfiguration(){
+		ConfigurationNew conf=new ConfigurationNew();
 		conf = getDefaultView(conf);
 		conf = getDefaultSortingConfiguration(conf);
-		conf = getDefaultFilteringConfiguration(conf);
+//		conf = getDefaultFilteringConfiguration(conf);
 		conf.setPaths(Utils.currentDirectory());
 		return conf;
 	}
 	
-	public static Configuration getDefaultSortingConfiguration(Configuration conf){
+	public static ConfigurationNew getDefaultSortingConfiguration(ConfigurationNew conf){
 		conf.setBeerSortingAlgorithm(QueryRunner.BeerSortingAlgorithm.MARK_STAR_DESCENDING);
 		conf.setBrewerySortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.AVERAGE_DESCENDING);
 		conf.setStyleSortingAlgorithm(QueryRunner.StyleSortingAlgorithm.FERMENTATION_CATEGORY);
 		return conf;
 	}
 	
-	public static Configuration getDefaultFilteringConfiguration(Configuration conf){
-		conf.setBeerFilterAlgorithm(BeerFilterAlgorithm.NONE);
-		conf.setBeerFilterValue("");
-		conf.setBreweryFilterAlgorithm(BreweryFilterAlgorithm.NONE);
-		conf.setBreweryFilterValue("");		
-		conf.setStyleFilterAlgorithm(StyleFilterAlgorithm.NONE);
-		conf.setStyleFilterValue("");
-		return conf;
-	}
+//	public static Configuration getDefaultFilteringConfiguration(Configuration conf){
+//		conf.setBeerFilterAlgorithm(BeerFilterAlgorithm.NONE);
+//		conf.setBeerFilterValue("");
+//		conf.setBreweryFilterAlgorithm(BreweryFilterAlgorithm.NONE);
+//		conf.setBreweryFilterValue("");		
+//		conf.setStyleFilterAlgorithm(StyleFilterAlgorithm.NONE);
+//		conf.setStyleFilterValue("");
+//		return conf;
+//	}
 	
-	public static Configuration getDefaultView(Configuration conf){
-		conf.setDefaultView(Configuration.ShowDefault.BEER);
+	public static ConfigurationNew getDefaultView(ConfigurationNew conf){
+		conf.setDefaultView(ConfigurationNew.ShowDefault.BEER);
 		return conf;
 	}
 	
@@ -104,13 +92,33 @@ public class ConfigurationFactory {
 		return Utils.jsonConfiguration(Utils.currentDirectory());
 	}
 	
-	public static Configuration setupPath(Configuration c){
+	public static ConfigurationNew setupPath(ConfigurationNew c){
 		c.setPaths(Utils.currentDirectory());
 		return c;
 	}
 	
-	public static Configuration readConfiguration(String configurationPath) throws JSONException, FileNotFoundException{
-		JSONExporterConfiguration exporter=new JSONExporterConfiguration();
+//	public static Configuration readConfiguration(String configurationPath) throws JSONException, FileNotFoundException{
+//		JSONExporterConfiguration exporter=new JSONExporterConfiguration();
+//		exporter.setIn(new FileInputStream(new File(configurationPath)));
+//		return exporter.readConfiguration();
+//	}
+//	
+////	public static Configuration readConfiguration() throws JSONException, FileNotFoundException{
+////		return readConfiguration(getDefaultConfigurationPath());
+////	}
+//	
+//	public static void writeConfiguration(Configuration c, String configurationPath) throws FileNotFoundException{
+//		JSONExporterConfiguration exporter=new JSONExporterConfiguration();
+//		exporter.setOut(new FileOutputStream(new File(configurationPath)));
+//		exporter.writeConfiguration(c);
+//	}
+	
+//	public static void writeConfiguration(Configuration c) throws FileNotFoundException{
+//		writeConfiguration(c, getDefaultConfigurationPath());
+//	}
+	
+	public static ConfigurationNew readConfiguration(String configurationPath) throws JSONException, FileNotFoundException{
+		JSONExporterConfigurationNew exporter=new JSONExporterConfigurationNew();
 		exporter.setIn(new FileInputStream(new File(configurationPath)));
 		return exporter.readConfiguration();
 	}
@@ -119,16 +127,10 @@ public class ConfigurationFactory {
 //		return readConfiguration(getDefaultConfigurationPath());
 //	}
 	
-	public static void writeConfiguration(Configuration c, String configurationPath) throws FileNotFoundException{
-		JSONExporterConfiguration exporter=new JSONExporterConfiguration();
+	public static void writeConfiguration(ConfigurationNew c, String configurationPath) throws FileNotFoundException{
+		JSONExporterConfigurationNew exporter=new JSONExporterConfigurationNew();
 		exporter.setOut(new FileOutputStream(new File(configurationPath)));
 		exporter.writeConfiguration(c);
 	}
-	
-//	public static void writeConfiguration(Configuration c) throws FileNotFoundException{
-//		writeConfiguration(c, getDefaultConfigurationPath());
-//	}
-	
-	
 
 }

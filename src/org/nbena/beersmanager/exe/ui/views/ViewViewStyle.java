@@ -37,7 +37,7 @@ import javax.swing.JScrollPane;
 
 //public class ViewViewStyle extends JDialog {
 @SuppressWarnings("serial")
-public class ViewViewStyle extends ViewAbstractDialog implements StyleDialog{
+public class ViewViewStyle extends SuperAbstractDialog implements ViewViewAbstractDialog, StyleDialog{
 //public class ViewViewStyle extends JDialog implements ViewAbstractDialog{
 
 	private final JPanel contentPanel = new JPanel();

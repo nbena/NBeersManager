@@ -33,6 +33,7 @@ import org.nbena.beersmanager.coreclasses.Style;
 import org.nbena.beersmanager.json.coreclasses.Converter;
 import org.nbena.beersmanager.query.QueryRunner;
 
+@Deprecated
 public class JSONExporterConfiguration {
 	
 	private JSONObject json;

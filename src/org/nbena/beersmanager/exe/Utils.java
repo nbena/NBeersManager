@@ -22,6 +22,7 @@ import java.io.OutputStream;
 
 
 
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -47,8 +48,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
-import org.nbena.beersmanager.conf.Configuration;
-import org.nbena.beersmanager.conf.Configuration.ShowDefault;
+import org.nbena.beersmanager.conf.ConfigurationNew;
+import org.nbena.beersmanager.conf.ConfigurationNew.ShowDefault;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Style;
@@ -183,18 +184,18 @@ public class Utils {
 	 * @param c	the configuration you want to print.
 	 * @return	the string representation of the object.
 	 */
-	public static String configurationToString(Configuration c){
+	public static String configurationToString(ConfigurationNew c){
 		StringBuilder sb = new StringBuilder();
 		sb.append("Beer sorting algorithm: "+ c.getBeerSortingAlgorithm().toString()+"\n");
 		sb.append("Brewery sorting algorithm: "+ c.getBrewerySortingAlgorithm().toString()+"\n");
 		sb.append("Style sorting algorithm: "+ c.getStyleSortingAlgorithm().toString()+"\n");
 		
-		sb.append("Beer filtering algorithm: "+ c.getBeerFilterAlgorithm().toString()+"\n");
-		sb.append("\tBeer filtering value: "+c.getBeerFilterValue()+"\n");
-		sb.append("Brewery filtering algorithm: "+ c.getBreweryFilterAlgorithm().toString()+"\n");
-		sb.append("\tBrewery filtering value: "+c.getBreweryFilterValue()+"\n");
-		sb.append("Style filtering algorithm: "+ c.getStyleFilterAlgorithm().toString()+"\n");
-		sb.append("\tStyle filtering value: "+c.getStyleFilterValue()+"\n");
+//		sb.append("Beer filtering algorithm: "+ c.getBeerFilterAlgorithm().toString()+"\n");
+//		sb.append("\tBeer filtering value: "+c.getBeerFilterValue()+"\n");
+//		sb.append("Brewery filtering algorithm: "+ c.getBreweryFilterAlgorithm().toString()+"\n");
+//		sb.append("\tBrewery filtering value: "+c.getBreweryFilterValue()+"\n");
+//		sb.append("Style filtering algorithm: "+ c.getStyleFilterAlgorithm().toString()+"\n");
+//		sb.append("\tStyle filtering value: "+c.getStyleFilterValue()+"\n");
 		
 		sb.append("Default view: "+c.getDefaultView().toString()+"\n");
 		return sb.toString();
@@ -206,7 +207,7 @@ public class Utils {
 	 * @param output the OutputStream
 	 * @see configurationToString()
 	 */
-	public static void printConfiguration(Configuration c, OutputStream output){
+	public static void printConfiguration(ConfigurationNew c, OutputStream output){
 		PrintStream out = new PrintStream(output);
 //		out.println("Beer sorting algorithm: "+ c.getBeerSortingAlgorithm().toString());
 //		out.println("Brewery sorting algorithm: "+ c.getBrewerySortingAlgorithm().toString());

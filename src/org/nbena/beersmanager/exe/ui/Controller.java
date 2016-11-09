@@ -18,6 +18,7 @@ package org.nbena.beersmanager.exe.ui;
 
 
 import java.awt.Desktop;
+
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -45,8 +46,8 @@ import javax.swing.event.PopupMenuListener;
 
 
 import org.json.JSONException;
-import org.nbena.beersmanager.conf.Configuration;
 import org.nbena.beersmanager.conf.ConfigurationFactory;
+import org.nbena.beersmanager.conf.ConfigurationNew;
 import org.nbena.beersmanager.coreclasses.Beer;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.coreclasses.Fermentation;
@@ -60,13 +61,13 @@ import org.nbena.beersmanager.exe.ui.models.Model.DataShownNow;
 import org.nbena.beersmanager.exe.ui.models.Model.ExportType;
 import org.nbena.beersmanager.exe.ui.models.ModelBeerTable;
 import org.nbena.beersmanager.exe.ui.models.ModelBreweryAverageTable;
-import org.nbena.beersmanager.exe.ui.models.ModelBreweryTable;
+//import org.nbena.beersmanager.exe.ui.models.ModelBreweryTable;
 import org.nbena.beersmanager.exe.ui.models.ModelStyleTable;
 import org.nbena.beersmanager.exe.ui.views.BeerDialog;
 import org.nbena.beersmanager.exe.ui.views.BreweryDialog;
 import org.nbena.beersmanager.exe.ui.views.StyleDialog;
+import org.nbena.beersmanager.exe.ui.views.SuperAbstractDialog;
 import org.nbena.beersmanager.exe.ui.views.ViewAbout;
-import org.nbena.beersmanager.exe.ui.views.ViewAbstractDialog;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewBeer;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewBrewery;
 import org.nbena.beersmanager.exe.ui.views.ViewAddNewStyle;
@@ -199,24 +200,25 @@ public class Controller {
 	}
 	
 	/*public*/private void showBreweries(){
-		if(model.isShowAlsoAverage()){
-			showBreweriesAverage();
-		}else{
-			showBreweriesNormal();
-		}
-		
+//		if(model.isShowAlsoAverage()){
+//			showBreweriesAverage();
+//		}else{
+//			showBreweriesNormal();
+//		}
+		showBreweriesAverage(); //keep the if because maybe in future there will the 
+		//possibility to choose if show average or not.
 		enableExport(Model.DialogShownNow.BREWERY);
 	}
 	
-	/*public*/private void showBreweriesNormal(){
-		enableShowBreweriesItems();
-		
-		model.setTableModel(new ModelBreweryTable());
-		model.showBreweryData();
-		
-		gui.setTableModel(model.getTableModel());
-		
-	}
+//	/*public*/private void showBreweriesNormal(){
+//		enableShowBreweriesItems();
+//		
+//		model.setTableModel(new ModelBreweryTable());
+//		model.showBreweryData();
+//		
+//		gui.setTableModel(model.getTableModel());
+//		
+//	}
 	
 	/*public*/private void showBreweriesAverage(){
 		enableShowBreweriesItems();
@@ -1324,9 +1326,13 @@ public class Controller {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+					gui.setWaitCursor();
 					export();
 				} catch (Exception e) {
 					/*e.printStackTrace();*/showExceptionDialog(e);
+				}
+				finally{
+					gui.setNormalCursor();
 				}
 			}
 			
@@ -2500,7 +2506,7 @@ public class Controller {
 		});
 	}
 	
-	private void setOkCancelViewDialog(ViewAbstractDialog dialog){
+	private void setOkCancelViewDialog(SuperAbstractDialog dialog){
 		dialog.addActionListenerOkButton(new ActionListener(){
 
 			@Override
@@ -3165,8 +3171,8 @@ public class Controller {
 //		});
 //	}
 	
-	/*public*/private Configuration getConfigurationFromConfigurationDialog(){
-		Configuration newConf = new Configuration();
+	/*public*/private ConfigurationNew getConfigurationFromConfigurationDialog(){
+		ConfigurationNew newConf = new ConfigurationNew();
 		
 		newConf.setBeerSortingAlgorithm(Utils.getBeerSortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingBeerSelectedItem()));
 		newConf.setBrewerySortingAlgorithm(Utils.getBrewerySortingAlgorithmFromDescription(preferencesDialog.getComboBoxSortingBrewerySelectedItem()));
@@ -3192,7 +3198,7 @@ public class Controller {
 //		newConf.setBreweryFilterValue("");
 //		newConf.setStyleFilterValue("");
 		
-		newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
+//		newConf = ConfigurationFactory.getDefaultFilteringConfiguration(newConf);
 		
 		newConf.setDefaultView(Utils.getViewDefaultFromDescription(preferencesDialog.getComboBoxDeafultViewSelectedItem()));
 		
@@ -3219,7 +3225,7 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				preferencesDialog.setVisible(false);
 				
-				Configuration newConf = getConfigurationFromConfigurationDialog();
+				ConfigurationNew newConf = getConfigurationFromConfigurationDialog();
 				
 //				System.out.println("La nuova configurazione: ");
 //				Utils.printConfiguration(newConf, System.out);
@@ -3322,12 +3328,12 @@ public class Controller {
 	
 
 	
-	private void fillPreferencesDefaultView(Configuration conf){
+	private void fillPreferencesDefaultView(ConfigurationNew conf){
 		preferencesDialog.fillComboBoxDefaultView(Utils.getDefaultViewDescriptionList());
 		preferencesDialog.setComboBoxDefaultViewSelectedItem(Utils.getViewDefaultDescription(conf.getDefaultView()));
 	}
 	
-	private void fillPreferencesSortingAlgorithm(Configuration conf){
+	private void fillPreferencesSortingAlgorithm(ConfigurationNew conf){
 		preferencesDialog.fillComboBoxSortingBeer(Utils.getBeerSortingAlgorithmDescriptionList());
 		preferencesDialog.setComboBoxSortingBeerSelectedItem(Utils.getBeerSortingAlgorithmDescription(conf.getBeerSortingAlgorithm()));
 		
@@ -3350,7 +3356,7 @@ public class Controller {
 ////		System.out.println("Preferences");
 //	}
 	
-	private void fillPreferences(Configuration conf){
+	private void fillPreferences(ConfigurationNew conf){
 		fillPreferencesSortingAlgorithm(conf);
 //		fillPreferencesFilteringAlgorithm(conf);
 		fillPreferencesDefaultView(conf);
@@ -3634,7 +3640,7 @@ public class Controller {
 		if(countries.length==0){
 			optionPane.showErrorMessageDialog(Utils.Constants.ERROR, Utils.Constants.NO_NATIONS);
 		}else{
-			ret = optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_ORIGIN_STYLE, countries);
+			ret = optionPane.showComboBoxInput(Utils.Constants.FILTER_BY_TITLE, Utils.Constants.BEERS_FILTER_BY_NATION, countries);
 		}		
 		return ret;
 	}

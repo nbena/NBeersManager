@@ -39,7 +39,7 @@ import javax.swing.JScrollPane;
 
 //public class ViewViewBrewery extends JDialog {
 @SuppressWarnings("serial")
-public class ViewViewBrewery extends ViewAbstractDialog implements BreweryDialog{
+public class ViewViewBrewery extends SuperAbstractDialog implements ViewViewAbstractDialog, BreweryDialog{
 	
 //	public class ViewViewBrewery extends JDialog implements ViewAbstractDialog {
 

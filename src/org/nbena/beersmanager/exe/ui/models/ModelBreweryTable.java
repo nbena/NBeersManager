@@ -24,6 +24,12 @@ import java.util.List;
 import org.nbena.beersmanager.coreclasses.Brewery;
 import org.nbena.beersmanager.exe.Utils;
 
+/**
+ * Pretty unnecessary, now always use modelbreweryaverage
+ * @author nicola
+ *
+ */
+@Deprecated
 @SuppressWarnings("serial")
 public class ModelBreweryTable extends /*DefaultTableModel*/MyModelAbstractTable {
 

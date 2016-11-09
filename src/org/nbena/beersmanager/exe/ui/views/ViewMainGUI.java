@@ -45,6 +45,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowListener;
 import javax.swing.JTable;
 
+import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
 import java.awt.Insets;
@@ -1003,6 +1004,14 @@ public class ViewMainGUI extends JFrame {
 
 		
 		
+	}
+	
+	public void setWaitCursor(){
+		setCursor(new Cursor(Cursor.WAIT_CURSOR));
+	}
+	
+	public void setNormalCursor(){
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 
 }

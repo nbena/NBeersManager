@@ -19,15 +19,16 @@ package org.nbena.beersmanager.exe.ui.views;
 
 import java.awt.event.ActionListener;
 
-import javax.swing.JDialog;
 
-@SuppressWarnings("serial")
-public abstract class ViewAbstractDialog extends JDialog {
-	
 
-	public abstract void addActionListenerOkButton(ActionListener listener);
-	
-	public abstract void addActionListenerCancelButton(ActionListener listener);
+/**
+ * 
+ * @author nbena
+ * Used for the view-only dialog, guaranteeing that so it will offer the possibility to modify and delete.
+ *
+ */
+
+public interface ViewViewAbstractDialog  {
 	
 	public abstract void addActionListenerModifyButton(ActionListener listener);
 	

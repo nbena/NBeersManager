@@ -38,7 +38,7 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
-public class ViewViewBeer extends ViewAbstractDialog implements BeerDialog{
+public class ViewViewBeer extends SuperAbstractDialog implements ViewViewAbstractDialog, BeerDialog{
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textFieldABV;
