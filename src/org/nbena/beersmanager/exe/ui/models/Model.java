@@ -1661,7 +1661,7 @@ public class Model {
 	 * @throws FileNotFoundException	if the configuration file is not present.
 	 */
 	public void saveConfiguration() throws FileNotFoundException{
-		ConfigurationFactory.writeConfiguration(configuration, ConfigurationFactory.getDefaultConfigurationPath());
+		ConfigurationFactory.writeConfiguration(configuration/*, ConfigurationFactory.getDefaultConfigurationPath()*/);
 
 	}
 	
@@ -1878,7 +1878,7 @@ public class Model {
 	}
 	
 	public String getLicense(){
-		return Utils.readLicense(Utils.gplPath(configuration.getPwd()));
+		return Utils.readLicense(Utils.gplPath(Utils.getOSIndipendentFolder()));
 	}
 	
 	public boolean enableExportForBeers(){

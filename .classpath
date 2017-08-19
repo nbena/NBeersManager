@@ -2,10 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/Users/nicola/Risorse per programmazione/Librerie/Java-JSP-Servlet/JSON.org/json-20140107.jar"/>
-	<classpathentry kind="lib" path="C:/Users/nicola/Risorse per programmazione/Librerie/Java-JSP-Servlet/Apache POI/poi-3.11/poi-3.11-20141221.jar"/>
-	<classpathentry kind="lib" path="C:/Users/nicola/Risorse per programmazione/Librerie/Java-JSP-Servlet/Apache POI/poi-3.11/poi-ooxml-3.11-20141221.jar"/>
-	<classpathentry kind="lib" path="C:/Users/nicola/Risorse per programmazione/Librerie/Java-JSP-Servlet/Apache POI/poi-3.11/poi-ooxml-schemas-3.11-20141221.jar"/>
-	<classpathentry kind="lib" path="C:/Users/nicola/Risorse per programmazione/Librerie/Java-JSP-Servlet/Apache POI/poi-3.11/ooxml-lib/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="/home/nicola/workspace/Java/Libs/JSON.org/json-20140107.jar"/>
+	<classpathentry kind="lib" path="/home/nicola/workspace/Java/Libs/ApachePOI/poi-3.11/poi-3.11-20141221.jar"/>
+	<classpathentry kind="lib" path="/home/nicola/workspace/Java/Libs/ApachePOI/poi-3.11/poi-ooxml-3.11-20141221.jar"/>
+	<classpathentry kind="lib" path="/home/nicola/workspace/Java/Libs/ApachePOI/poi-3.11/poi-ooxml-schemas-3.11-20141221.jar"/>
+	<classpathentry kind="lib" path="/home/nicola/workspace/Java/Libs/ApachePOI/poi-3.11/ooxml-lib/xmlbeans-2.6.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

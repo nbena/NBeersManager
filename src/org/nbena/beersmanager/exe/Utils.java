@@ -241,7 +241,7 @@ public class Utils {
 		builder.append("\tVoto: "+beer.getMark()+"\n");
 		builder.append("\tStelle: "+beer.getNumberOfStars()+"\n");
 		if(beer.isTried()){
-			builder.append("\tProvata: sì\n");
+			builder.append("\tProvata: sï¿½\n");
 			builder.append("\tLuogo: "+beer.getPlaceTried()+ " Prezzo: "+beer.getPrice()+"\n");
 		}
 		else{
@@ -360,24 +360,59 @@ public class Utils {
 		return path.substring(0, path.length()-1);
 	}
 	
-	public static String jsonStyle(String directory){
+//	public static String jsonStyle(String directory){
+//		return directory.concat("styles.json");
+//	}
+//	
+//	public static String jsonBreweries(String directory){
+//		return directory.concat("breweries.json");
+//	}
+//	
+//	public static String jsonBeers(String directory){
+//		return directory.concat("beers.json");
+//	}
+//	
+//	public static String jsonConfiguration(String directory){
+//		return directory.concat("config.json");
+//	}
+//	
+//	public static String jsonCountries(String directory){
+//		return directory.concat("country_list_it.json");
+//	}
+	
+	public static String getOSIndipendentFolder(){
+		String res = null;
+		if(System.getProperty("os.name").equalsIgnoreCase("linux")){
+			res = System.getProperty("user.home").concat("/.nbeers/");
+		}else if (System.getProperty("os.name").equalsIgnoreCase("windows")){
+			res = System.getProperty("user.home").concat("\\.nbeers\\");
+		}
+		return res;
+	}
+	
+	public static String getStylesPath(){
+		String directory = getOSIndipendentFolder();
 		return directory.concat("styles.json");
 	}
 	
-	public static String jsonBreweries(String directory){
+	public static String getBreweriesPath(){
+		String directory = getOSIndipendentFolder();
 		return directory.concat("breweries.json");
 	}
 	
-	public static String jsonBeers(String directory){
+	public static String getBeersPath(){
+		String directory = getOSIndipendentFolder();
 		return directory.concat("beers.json");
 	}
 	
-	public static String jsonConfiguration(String directory){
-		return directory.concat("config.json");
+	public static String getCountriesPath(){
+		String directory = getOSIndipendentFolder();
+		return directory.concat("country_list_it.json");
 	}
 	
-	public static String jsonCountries(String directory){
-		return directory.concat("country_list_it.json");
+	public static String getConfigurationPath(){
+		String directory = getOSIndipendentFolder();
+		return directory.concat("config.json");
 	}
 	
 	
@@ -401,7 +436,7 @@ public class Utils {
 		return sb.toString();
 	}
 	
-	private static final String GPL = "Questo programma è coperto dalla licenza GPL v3. Il file license non è stato trovato,"
+	private static final String GPL = "Questo programma ï¿½ coperto dalla licenza GPL v3. Il file license non ï¿½ stato trovato,"
 			+ " dovresti procurartnene una copia su www.gun.org/license";
 	
 	public static final String OTHER = "Questo programma utilizza librerie di terze parti: software di Apache Software Foundation e JSON.org";
@@ -794,7 +829,7 @@ public class Utils {
 	
 	
 	public static String getBooleanItalian(boolean b){
-		return b==true ? "Sì" : "No";
+		return b==true ? "Sï¿½" : "No";
 	}
 	
 	public static boolean getBooleanFromItalianString(String s){
@@ -1540,7 +1575,7 @@ public class Utils {
 		public static final Object[] TABLE_HEADER_BREWERY = {
 				"Nome",
 				"Nazione",
-				"Città",
+				"CittÃ ",
 				"Descizione",
 				"Web"
 		};
@@ -1548,7 +1583,7 @@ public class Utils {
 		public static final Object[] TABLE_HEADER_BREWERY_AVERAGE = {
 				"Nome",
 				"Nazione",
-				"Città",
+				"CittÃ ",
 				"Media",
 				"Descizione",
 				"Web"
@@ -1599,10 +1634,10 @@ public class Utils {
 		public static final String CONFIRMATION_BEFORE_EXIT = "Ci sono dei dati da salvare. Uscire comunque?";
 		public static final String CONFIRMATION_BEFORE_DELETE = "Vuoi davvero eliminare questi dati?";
 		public static final String CONFIRMATION_BEFORE_DELETE_STYLE = "Vuoi davvero eliminare questo stile?"
-				+ "\nSarà necessario anche eliminare tutte le birre appartenenti ad esso.";
+				+ "\nSarÃ  necessario anche eliminare tutte le birre appartenenti ad esso.";
 		public static final String CONFIRMATION_BEFORE_DELETE_BREWERY = "Vuoi davvero eliminare questo birrificio?"
-				+ "\nSarà necessario anche eliminare tutte le birre prodotte da esso.";
-		public static final String CONFIRMATION_OVERRIDE_FILE = "Il file esiste già. Vuoi sovrascriverlo?";
+				+ "\nSarÃ  necessario anche eliminare tutte le birre prodotte da esso.";
+		public static final String CONFIRMATION_OVERRIDE_FILE = "Il file esiste giÃ . Vuoi sovrascriverlo?";
 		public static final String CONFIRMATION_SELECTED_THINGS = "Vuoi esportare solo gli elementi selezionati?";
 		
 		public static final String FILTER_BY_TITLE = "Filtra";
@@ -1645,23 +1680,23 @@ public class Utils {
 		public static final String SHOULD_SELECT_3_FILE = "Seleziona i file per l'import delle birre: servono anche i relativi file\n"
 				+ "dei loro birrifici e stili";
 		
-		public static final String MUST_SELECT_3_FILE = "Per poter importare una o più birre, è necessario importare anche i relativi file"
+		public static final String MUST_SELECT_3_FILE = "Per poter importare una o piÃ¹ birre, Ã¨ necessario importare anche i relativi file"
 				+ "dei loro birrifici e stili";
 		
 		public static final String WARN_BREWERY_STYLE_ALREADY_HERE = "Assicurati che i birrifici e gli stili delle birre da importati siano"
-				+ "già presenti nel database locale";
+				+ "giÃ  presenti nel database locale";
 		
-		public static final String WARN_DEFAULT_CONFIGURATION = "A causa dell'errore precedente, verrà usata e salvata la configurazione di default";
-		public static final String ERR_NO_COUNTRY = "A causa dell'errore precedente, non è possibile caricare la lista delle nazioni.\n"
-				+ "Il programma non può funzionare senza.";
+		public static final String WARN_DEFAULT_CONFIGURATION = "A causa dell'errore precedente, verrÃ  usata e salvata la configurazione di default";
+		public static final String ERR_NO_COUNTRY = "A causa dell'errore precedente, non Ã¨ possibile caricare la lista delle nazioni.\n"
+				+ "Il programma non puÃ² funzionare senza.";
 		
 		public static final String ERR_SAVE_EXCEPTION = "Errore mentra si salvava questo errore"; //when trying to save an exception, there is no
 		//need to show another exception dialog if an error occurs
-		public static final String ERR_SAVE_DEFAULT_CONFIG = "Errore mentre si salvava la configurazione di default.\nAl prossimo avvio si ritetnterà.";
+		public static final String ERR_SAVE_DEFAULT_CONFIG = "Errore mentre si salvava la configurazione di default.\nAl prossimo avvio si ritetnterÃ .";
 		
 		
-		public static final String WARN_BREWERY_NAME = "Il nome non può contenere ';'";
-		public static final String WARN_BREWERY_TOWN = "La città non può contenere ';'";
+		public static final String WARN_BREWERY_NAME = "Il nome non puÃ² contenere ';'";
+		public static final String WARN_BREWERY_TOWN = "La cittÃ  non puÃ² contenere ';'";
 		
 		
 //		public static final Integer MARK_SPINNER_STEP_VALUE = new Integer(1);
@@ -2221,14 +2256,14 @@ public class Utils {
 //	public static String errorWhileAppendCause(String s, ErrorWhile error){
 //		String ret = s;
 //		if(error == ErrorWhile.ADDING){
-//			ret+= " E' probabile che l'oggetto sia già presente.";
+//			ret+= " E' probabile che l'oggetto sia giï¿½ presente.";
 //		}else if(error == ErrorWhile.DELETING_TRAVERSAL || error == ErrorWhile.UPDATING_TRAVERSAL){
 //			ret += "E' dovuto ad un errore interno.";
 //		}else if(error == ErrorWhile.SAVING){
-//			ret += " Controllare che il file non sia già in uso";
+//			ret += " Controllare che il file non sia giï¿½ in uso";
 //		}else {
 //			//delte, update
-//			ret += "La ricerca dell'oggetto è fallita. Può darsi che un oggetto uguale sia già presente.";
+//			ret += "La ricerca dell'oggetto ï¿½ fallita. Puï¿½ darsi che un oggetto uguale sia giï¿½ presente.";
 //		}
 //		return ret;
 //	}

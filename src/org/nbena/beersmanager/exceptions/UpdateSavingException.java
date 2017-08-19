@@ -42,9 +42,9 @@ public class UpdateSavingException extends Exception {
 	private static final String SAVING_IT = "salvataggio ";
 	private static final String UPDATING_IT = "aggiornamento ";
 	private static final String UPDATING_TRAVERSAL_IT = "modifica dati relativi a questo oggetto ";
-	private static final String ADDING_FINAL_IT = ", l'oggetto potrebbe essere gi‡ presente";
-	private static final String DEL_UPD_TRAV_FINAL_IT = ", un errore interno Ë successo";
-	private static final String SAVING_FINAL_IT = ", il file potrebbe gi‡ essere aperto";
+	private static final String ADDING_FINAL_IT = ", l'oggetto potrebbe essere gi√† presente";
+	private static final String DEL_UPD_TRAV_FINAL_IT = ", un errore interno √® successo";
+	private static final String SAVING_FINAL_IT = ", il file potrebbe gi√† essere aperto";
 	private static final String OTHER_FINAL_IT = ", ricerca fallita, due oggetti simili o oggetto non trovato";
 	
 	

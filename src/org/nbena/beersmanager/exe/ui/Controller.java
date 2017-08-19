@@ -1182,7 +1182,7 @@ public class Controller {
 		showBreweries();
 	}
 	
-	//conta anche quelli con zero sennò sarebbe un filtraggio
+	//conta anche quelli con zero sennÃ² sarebbe un filtraggio
 	/*public*/private void breweriesSortedByCountryThenAverageDescending(){
 //		model.breweriesSortedByCountryThenAverageDescending();
 		model.setBrewerySortingCurrentAlgorithm(Utils.getBreweriesSortingAlgorithm(QueryRunner.BrewerySortingAlgorithm.COUNTRY_AVERAGE_DESCENDING));
@@ -1804,7 +1804,7 @@ public class Controller {
 				
 				Style s=getStyleInAddNewStyleDialog();
 				
-//				System.out.println("Lo stile ottenuto è: \n");
+//				System.out.println("Lo stile ottenuto Ã¨: \n");
 //				Utils.printStyle(s, System.out);
 				
 

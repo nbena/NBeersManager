@@ -42,7 +42,7 @@ public class Main {
 	private static void tryConfiguration(Model model, ConfigurationNew conf){
 		//here try to read configuration.
 		try {
-			conf = ConfigurationFactory.readConfiguration(ConfigurationFactory.getDefaultConfigurationPath());
+			conf = ConfigurationFactory.readConfiguration(/*ConfigurationFactory.getDefaultConfigurationPath()*/);
 			conf = ConfigurationFactory.setupPath(conf);
 			model.setConfiguration(conf);
 		} catch (JSONException | FileNotFoundException e) {
@@ -84,6 +84,7 @@ public class Main {
 			model.setCountries(Utils.getCountries(model.getConfiguration().getCountriesFilePath()));
 		} catch (JSONException | FileNotFoundException e) {
 			
+			e.printStackTrace();
 			Controller.showExceptionDialog(e);
 			Controller.tellUserErrorNoCountry();
 			System.exit(1);

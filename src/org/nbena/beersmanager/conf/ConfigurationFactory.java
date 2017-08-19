@@ -39,7 +39,7 @@ public class ConfigurationFactory {
 		conf = getDefaultView(conf);
 		conf = getDefaultSortingConfiguration(conf);
 //		conf = getDefaultFilteringConfiguration(conf);
-		conf.setPaths(Utils.currentDirectory());
+		conf.setPaths(/*Utils.currentDirectory()*/);
 		return conf;
 	}
 	
@@ -89,11 +89,11 @@ public class ConfigurationFactory {
 //	}
 	
 	public static String getDefaultConfigurationPath(){
-		return Utils.jsonConfiguration(Utils.currentDirectory());
+		return Utils.getConfigurationPath(/*Utils.getOSIndipendentFolder()*/);
 	}
 	
 	public static ConfigurationNew setupPath(ConfigurationNew c){
-		c.setPaths(Utils.currentDirectory());
+		c.setPaths(/*Utils.currentDirectory()*/);
 		return c;
 	}
 	
@@ -117,7 +117,8 @@ public class ConfigurationFactory {
 //		writeConfiguration(c, getDefaultConfigurationPath());
 //	}
 	
-	public static ConfigurationNew readConfiguration(String configurationPath) throws JSONException, FileNotFoundException{
+	public static ConfigurationNew readConfiguration(/*String configurationPath*/) throws JSONException, FileNotFoundException{
+		String configurationPath = Utils.getConfigurationPath();
 		JSONExporterConfigurationNew exporter=new JSONExporterConfigurationNew();
 		exporter.setIn(new FileInputStream(new File(configurationPath)));
 		return exporter.readConfiguration();
@@ -127,7 +128,8 @@ public class ConfigurationFactory {
 //		return readConfiguration(getDefaultConfigurationPath());
 //	}
 	
-	public static void writeConfiguration(ConfigurationNew c, String configurationPath) throws FileNotFoundException{
+	public static void writeConfiguration(ConfigurationNew c/*, String configurationPath*/) throws FileNotFoundException{
+		String configurationPath = Utils.getConfigurationPath();
 		JSONExporterConfigurationNew exporter=new JSONExporterConfigurationNew();
 		exporter.setOut(new FileOutputStream(new File(configurationPath)));
 		exporter.writeConfiguration(c);

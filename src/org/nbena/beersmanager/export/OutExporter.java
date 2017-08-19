@@ -43,7 +43,7 @@ public abstract class OutExporter {
 	*/
 	
 	protected static final String BEER_BREWERY_NAME = "Birrificio";
-	protected static final String BEER_BREWERY_TOWN = "Citt‡";
+	protected static final String BEER_BREWERY_TOWN = "Citt√†";
 	protected static final String BEER_BREWERY_COUNTRY = "Nazione";
 	protected static final String BEER_NAME = "Nome";
 	protected static final String BEER_BREWERY_TRAPPIST = "Trappista?";
@@ -62,7 +62,7 @@ public abstract class OutExporter {
 	protected static final String BEER_TOTAL = "Totale";
 	
 	protected static final String BREWERY_NAME = "Nome";
-	protected static final String BREWERY_TOWN = "Citt‡";
+	protected static final String BREWERY_TOWN = "Citt√†";
 	protected static final String BREWERY_COUNTRY = "Nazione";
 	protected static final String BREWERY_WEBSITE = "Web";
 	protected static final String BREWERY_DESCRIPTION = "Descrizione";

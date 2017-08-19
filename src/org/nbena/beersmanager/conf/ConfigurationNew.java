@@ -50,9 +50,9 @@ public class ConfigurationNew {
 	private ShowDefault defaultView;
 	
 	
-	private Object beerFilterValue;
-	private Object breweryFilterValue;
-	private Object styleFilterValue;
+//	private Object beerFilterValue;
+//	private Object breweryFilterValue;
+//	private Object styleFilterValue;
 	
 	private String styleFilePath;
 	private String breweryFilePath;
@@ -60,7 +60,7 @@ public class ConfigurationNew {
 	private String countriesFilePath;
 	
 	
-	private String pwd;
+//	private String pwd;
 	
 	
 	
@@ -100,12 +100,17 @@ public class ConfigurationNew {
 	}
 
 	
-	public void setPaths(String pwd){
-		this.pwd=pwd;
-		beerFilePath=Utils.jsonBeers(pwd);
-		breweryFilePath=Utils.jsonBreweries(pwd);
-		styleFilePath=Utils.jsonStyle(pwd);
-		countriesFilePath = Utils.jsonCountries(pwd);
+	public void setPaths(/*String pwd*/){
+//		this.pwd=pwd;
+//		beerFilePath=Utils.jsonBeers(pwd);
+//		breweryFilePath=Utils.jsonBreweries(pwd);
+//		styleFilePath=Utils.jsonStyle(pwd);
+//		countriesFilePath = Utils.jsonCountries(pwd);
+//		String base = Utils.getOSIndipendentFolder();
+		beerFilePath = Utils.getBeersPath();
+		breweryFilePath = Utils.getBreweriesPath();
+		styleFilePath = Utils.getStylesPath();
+		countriesFilePath = Utils.getCountriesPath();
 	}
 
 
@@ -161,9 +166,9 @@ public class ConfigurationNew {
 	/**
 	 * @return the pwd
 	 */
-	public String getPwd() {
-		return pwd;
-	}
+//	public String getPwd() {
+//		return pwd;
+//	}
 
 
 	/**
@@ -180,47 +185,47 @@ public class ConfigurationNew {
 		this.defaultView = defaultView;
 	}
 
-	/**
-	 * @return the beerFilterValue
-	 */
-	public Object getBeerFilterValue() {
-		return beerFilterValue;
-	}
-
-	/**
-	 * @param beerFilterValue the beerFilterValue to set
-	 */
-	public void setBeerFilterValue(Object beerFilterValue) {
-		this.beerFilterValue = beerFilterValue;
-	}
-
-	/**
-	 * @return the breweryFilterValue
-	 */
-	public Object getBreweryFilterValue() {
-		return breweryFilterValue;
-	}
-
-	/**
-	 * @param breweryFilterValue the breweryFilterValue to set
-	 */
-	public void setBreweryFilterValue(Object breweryFilterValue) {
-		this.breweryFilterValue = breweryFilterValue;
-	}
-
-	/**
-	 * @return the styleFilterValue
-	 */
-	public Object getStyleFilterValue() {
-		return styleFilterValue;
-	}
-
-	/**
-	 * @param styleFilterValue the styleFilterValue to set
-	 */
-	public void setStyleFilterValue(Object styleFilterValue) {
-		this.styleFilterValue = styleFilterValue;
-	}
+//	/**
+//	 * @return the beerFilterValue
+//	 */
+//	public Object getBeerFilterValue() {
+//		return beerFilterValue;
+//	}
+//
+//	/**
+//	 * @param beerFilterValue the beerFilterValue to set
+//	 */
+//	public void setBeerFilterValue(Object beerFilterValue) {
+//		this.beerFilterValue = beerFilterValue;
+//	}
+//
+//	/**
+//	 * @return the breweryFilterValue
+//	 */
+//	public Object getBreweryFilterValue() {
+//		return breweryFilterValue;
+//	}
+//
+//	/**
+//	 * @param breweryFilterValue the breweryFilterValue to set
+//	 */
+//	public void setBreweryFilterValue(Object breweryFilterValue) {
+//		this.breweryFilterValue = breweryFilterValue;
+//	}
+//
+//	/**
+//	 * @return the styleFilterValue
+//	 */
+//	public Object getStyleFilterValue() {
+//		return styleFilterValue;
+//	}
+//
+//	/**
+//	 * @param styleFilterValue the styleFilterValue to set
+//	 */
+//	public void setStyleFilterValue(Object styleFilterValue) {
+//		this.styleFilterValue = styleFilterValue;
+//	}
 
 
 
